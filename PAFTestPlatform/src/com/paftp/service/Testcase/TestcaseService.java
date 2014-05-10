@@ -1,0 +1,24 @@
+package com.paftp.service.Testcase;
+
+import java.util.List;
+
+import com.paftp.entity.Testcase;
+import com.paftp.entity.User;
+
+public interface TestcaseService {
+
+	public void saveTestcase(Testcase testcase);
+
+	public void updateTestcase(Testcase testcase);
+
+	public Testcase findTestcaseById(int id);
+
+	public Testcase findTestcaseByName(String name);
+
+	public void deleteTestcase(Testcase testcase);
+
+	public List<Testcase> findAllList();
+
+	//public User findUserByNameAndPassword(String username, String password);
+
+}
