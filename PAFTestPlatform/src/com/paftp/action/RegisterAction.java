@@ -18,20 +18,20 @@ public class RegisterAction extends ActionSupport {
 	@Resource
 	private UserService userService;
 
-	private String username;
+	private String alias;
 	private String password;
 
 	public String register() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		User user = userService.findUserByName(username);
+		User user = userService.findUserByAlias(alias);
 		if (user == null) {
-			request.setAttribute("username", username);
+			request.setAttribute("username", alias);
 			user = new User();
-			user.setUserName(username);
+			user.setAlias(alias);
 			user.setPassword(password);
 			userService.saveUser(user);
-			request.setAttribute("username", username);
+			request.setAttribute("username", alias);
 			return "success";
 		} else {
 			return ERROR;
@@ -39,12 +39,12 @@ public class RegisterAction extends ActionSupport {
 
 	}
 
-	public String getUsername() {
-		return username;
+	public String getAlias() {
+		return alias;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	public String getPassword() {

@@ -3,16 +3,11 @@ package com.paftp.service.sut.impl;
 import java.util.List;
 
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.entity.Sut;
-import com.paftp.entity.Testcase;
-import com.paftp.entity.User;
-import com.paftp.service.Testcase.TestcaseService;
 import com.paftp.service.sut.SutService;
-import com.paftp.service.user.UserService;
 
 @Service("sutService")
 public class SutServiceImpl implements SutService {
@@ -36,26 +31,27 @@ public class SutServiceImpl implements SutService {
 	}
 
 	@Override
+	public Sut findSutByCode(String code) {
+		return baseDAO.get(" from Sut s where s.code = ?",
+				new Object[] { code });
+	}
+	
+	@Override
 	public Sut findSutByName(String name) {
-		return baseDAO.get(" from Sut u where u.name = ?",
+		return baseDAO.get(" from Sut s where s.name = ?",
 				new Object[] { name });
 	}
 
 	@Override
-	public void deleteSut(Sut testcase) {
-		baseDAO.delete(testcase);
+	public void deleteSut(Sut sut) {
+		baseDAO.delete(sut);
 	}
 
 	@Override
 	public List<Sut> findAllList() {
-		return baseDAO.find(" from Sut u order by u.id");
+		return baseDAO.find(" from Sut s order by s.id");
 	}
 
-//	@Override
-//	public User findUserByNameAndPassword(String username, String password) {
-//		return baseDAO.get(
-//				" from User u where u.userName = ? and u.password = ? ",
-//				new Object[] { username, password });
-//	}
+
 
 }

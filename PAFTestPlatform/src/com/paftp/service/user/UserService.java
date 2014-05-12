@@ -12,12 +12,12 @@ public interface UserService {
 
 	public User findUserById(int id);
 
-	public User findUserByName(String name);
+	public User findUserByAlias(String alias);
 
 	public void deleteUser(User user);
 
 	public List<User> findAllList();
 
-	public User findUserByNameAndPassword(String username, String password);
+	public User findUserByAliasAndPassword(String alias, String password);
 
 }

@@ -18,13 +18,13 @@ public class LoginAction extends ActionSupport {
 	@Resource
 	private UserService userService;
 
-	private String username;
+	private String alias;
 	private String password;
 
 	public String login() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		User user = userService.findUserByNameAndPassword(username, password);
+		User user = userService.findUserByAliasAndPassword(alias, password);
 		if (user != null) {
 			// String teamname = user.getTeam().getTeamName();
 			// request.setAttribute("teamname", teamname);
@@ -35,12 +35,12 @@ public class LoginAction extends ActionSupport {
 
 	}
 
-	public String getUsername() {
-		return username;
+	public String getAlias() {
+		return alias;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	public String getPassword() {

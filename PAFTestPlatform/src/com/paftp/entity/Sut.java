@@ -1,17 +1,9 @@
 package com.paftp.entity;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,6 +13,7 @@ public class Sut {
 	private Integer id;
 	private String code;
 	private String name;
+	private String description;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -34,7 +27,7 @@ public class Sut {
 		this.id = id;
 	}
 
-	@Column(name = "name", length = 20)
+	@Column(name = "name", length = 100)
 	public String getName() {
 		return name;
 	}
@@ -50,5 +43,14 @@ public class Sut {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+	
+	@Column(name = "description", length = 20)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

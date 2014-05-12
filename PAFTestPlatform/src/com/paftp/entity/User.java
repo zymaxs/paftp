@@ -23,14 +23,14 @@ import org.hibernate.annotations.GenericGenerator;
 public class User {
 
 	private Integer id;
-	private String userName;
+	private String alias;
 	private String password;
-	private String address;
-	private String phoneNumber;
+	private String displayName;
+	private String status;
 	private Date createTime;
 	private Date updateTime;
-	private Team team;
-	private List<Auth> auths;
+	private UserInfo userInfo;
+	private List<Role> roles;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -44,16 +44,16 @@ public class User {
 		this.id = id;
 	}
 
-	@Column(name = "user_name", length = 20)
-	public String getUserName() {
-		return userName;
+	@Column(name = "alias", length = 30)
+	public String getAlias() {
+		return alias;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
-	@Column(name = "password", length = 20)
+	@Column(name = "password", length = 512)
 	public String getPassword() {
 		return password;
 	}
@@ -62,22 +62,22 @@ public class User {
 		this.password = password;
 	}
 
-	@Column(name = "address", length = 100)
-	public String getAddress() {
-		return address;
+	@Column(name = "displayName", length = 30)
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
-	@Column(name = "phone_number", length = 20)
-	public String getPhoneNumber() {
-		return phoneNumber;
+	@Column(name = "status", length = 20)
+	public String getStatus() {
+		return status;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -100,24 +100,24 @@ public class User {
 		this.updateTime = updateTime;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "tid")
-	public Team getTeam() {
-		return team;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "userinfo_id")
+	public UserInfo getUserInfo() {
+		return userInfo;
 	};
 
-	public void setTeam(Team team) {
-		this.team = team;
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
 	}
 
 	@ManyToMany
-	@JoinTable(name = "user_auth", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "auth_id") })
-	public List<Auth> getAuths() {
-		return auths;
+	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
+	public List<Role> getRoles() {
+		return roles;
 	};
 
-	public void setAuths(List<Auth> auths) {
-		this.auths = auths;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 }

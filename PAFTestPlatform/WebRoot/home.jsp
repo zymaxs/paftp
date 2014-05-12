@@ -27,23 +27,13 @@
 <body>
 
 	<%
-		//List<User> users = (List) request.getAttribute("users");
-		//String s ="";
-		//for (int i = 0; i < users.size(); i++) {
-
-		//	if (users.get(i).getAuths().size()!=0 ) {
-		//		s += "userid:"+users.get(i).getId().toString()+";"+users.get(i).getAuths().get(0).getAuthName() + ";";
-		//	}
-		//}
-		List<Testsuite> testsuites = (List) request
-				.getAttribute("testsuites");
+		List<User> users = (List) request.getAttribute("users");
 		String s = "";
-		for (int i = 0; i < testsuites.size(); i++) {
-			s += "testsuite_id: " + testsuites.get(i).getId().toString()
-					+ " testsuite_name: " + testsuites.get(i).getName()
-					+ " sut_name:" + testsuites.get(i).getSut().getName()
-					+ " testcase_name"
-					+ testsuites.get(i).getTestcases().get(0).getCaseName()+" creator_name:"+testsuites.get(i).getTestcases().get(0).getCreator().getUserName();
+		for (int i = 0; i < users.size(); i++) {
+
+			s += users.get(i).getAlias() + ";"
+					+ users.get(i).getUserInfo().getPosition() + ";";
+
 		}
 	%>
 	<%=s%>

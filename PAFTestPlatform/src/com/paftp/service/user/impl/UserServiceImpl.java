@@ -32,9 +32,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findUserByName(String username) {
-		return baseDAO.get(" from User u where u.userName = ?",
-				new Object[] { username });
+	public User findUserByAlias(String alias) {
+		return baseDAO.get(" from User u where u.alias = ?",
+				new Object[] { alias });
 	}
 
 	@Override
@@ -48,10 +48,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findUserByNameAndPassword(String username, String password) {
+	public User findUserByAliasAndPassword(String alias, String password) {
 		return baseDAO.get(
-				" from User u where u.userName = ? and u.password = ? ",
-				new Object[] { username, password });
+				" from User u where u.alias = ? and u.password = ? ",
+				new Object[] { alias, password });
 	}
 
 }
