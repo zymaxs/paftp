@@ -2,7 +2,7 @@ CREATE TABLE `role_permission` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `role_id` int(11) not NULL,
     `permission_id` int(11) not NULL,
-    `description` varchar(20) default NULL,
+    `description` varchar(30) default NULL,
     INDEX role_ind (role_id),
     FOREIGN KEY (role_id)
         REFERENCES role (id)
