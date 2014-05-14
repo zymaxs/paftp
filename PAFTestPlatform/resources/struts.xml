@@ -18,8 +18,7 @@
 			<result name="success">/success.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="index" method="index"
-			class="com.paftp.action.IndexAction">
+		<action name="index" method="index" class="com.paftp.action.IndexAction">
 			<result name="success">/home.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>

@@ -45,7 +45,7 @@ public class Testsuite {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "testsuite",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "testsuite")
 	public List<Testcase> getTestcases() {
 		return testcases;
 	}

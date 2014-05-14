@@ -27,13 +27,19 @@
 <body>
 
 	<%
-		List<User> users = (List) request.getAttribute("users");
+		List<Testsuite> testsuites = (List) request
+				.getAttribute("testsuites");
 		String s = "";
-		for (int i = 0; i < users.size(); i++) {
+		for (int i = 0; i < testsuites.size(); i++) {
 
-			s += users.get(i).getAlias() + ";"
-					+ users.get(i).getUserInfo().getPosition() + ";";
-
+			String testsuitename = testsuites.get(i).getName() + ";";
+			String sutname = testsuites.get(i).getSut().getName() + ";";
+			//String testcasename = testsuites.get(i).getTestcases().get(0)
+			//		.getCaseName()
+			//		+ ";";
+			//String testcasecontent = testsuites.get(i).getTestcases().get(0).getTestcaseSteps().get(0).getContent()+";";
+			//s+=testsuitename+sutname+testcasename+testcasecontent;
+			s += testsuitename + sutname;
 		}
 	%>
 	<%=s%>
