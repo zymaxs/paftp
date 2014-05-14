@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class TestpassResult {
+public class Testpass {
 
 	private Integer id;
 	private String name;
@@ -127,7 +127,7 @@ public class TestpassResult {
 		this.sut = sut;
 	}
 
-	@OneToMany(mappedBy = "testpassresult")
+	@OneToMany(mappedBy = "testpass")
 	public List<TestsuiteResult> getTestsuite_results() {
 		return testsuite_results;
 	}

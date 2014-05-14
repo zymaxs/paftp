@@ -25,7 +25,7 @@ public class TestsuiteResult {
 	private Integer total;
 	private String passratio;
 	private String failratio;
-	private TestpassResult testpass_result;
+	private Testpass testpass;
 	private List<TestcaseResult> testcase_results;
 	
 	@Id
@@ -105,12 +105,12 @@ public class TestsuiteResult {
 	
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "testpass_id")
-	public TestpassResult getTestpass_result() {
-		return testpass_result;
+	public Testpass getTestpass() {
+		return testpass;
 	}
 	
-	public void setTestpass_result(TestpassResult testpass_result) {
-		this.testpass_result = testpass_result;
+	public void setTestpass(Testpass testpass) {
+		this.testpass = testpass;
 	}
 	
 	@OneToMany(mappedBy = "testsuiteresult")

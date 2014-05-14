@@ -9,6 +9,6 @@ CREATE TABLE 'testsuiteresult'(
 	'failratio' varchar(20) DEFAULT NULL,
 	'testpass_id' int(11) DEFAULT NULL
 	INDEX testpass_ind (testpass_id), 
-	FOREIGN KEY (testpass_id) REFERENCES testpass_result(id) ON DELETE cascade,
+	FOREIGN KEY (testpass_id) REFERENCES testpass(id) ON DELETE cascade,
 	PRIMARY KEY ('id')
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
