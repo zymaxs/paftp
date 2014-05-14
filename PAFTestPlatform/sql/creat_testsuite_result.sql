@@ -1,4 +1,4 @@
-CREATE TABLE 'testsuite_result'(
+CREATE TABLE 'testsuiteresult'(
 	'id' int(11) NOT NULL AUTO_INCREMENT,
 	'suitename' varchar(50) DEFAULT NULL,
 	'description' varchar(150) DEFAULT NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE 'testcase_result_content'(
+CREATE TABLE 'testcaseresultcontent'(
 	'id' int(11) NOT NULL AUTO_INCREMENT,
 	'status' varchar(20) DEFAULT NULL,
 	'value' varchar(100) DEFAULT NULL,
