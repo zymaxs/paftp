@@ -1,9 +1,10 @@
 CREATE TABLE 'testsuite_result'(
 	'id' int(11) NOT NULL AUTO_INCREMENT,
 	'suitename' varchar(50) DEFAULT NULL,
-	'createtime' datetime DEFAULT NULL,
+	'description' varchar(150) DEFAULT NULL,
 	'passcount' int(11) DEFAULT NULL,
 	'failcount' int(11) DEFAULT NULL,
+	'total' int(11) DEFAULT NULL,
 	'passratio' varchar(20) DEFAULT NULL,
 	'failratio' varchar(20) DEFAULT NULL,
 	'testpass_id' int(11) DEFAULT NULL

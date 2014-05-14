@@ -1,7 +1,7 @@
-CREATE TABLE 'testcase_id'(
+CREATE TABLE 'testcase_content_id'(
 	'id' int(11) NOT NULL AUTO_INCREMENT,
-	'stardposition' int(11) NOT NULL,
-	'testsuite_id' int(11) DEFAULT NULL
+	'startposition' int(11) NOT NULL,
+	'testcase_id' int(11) DEFAULT NULL
 	INDEX testcase_ind (testcase_id), 
 	FOREIGN KEY (testcase_id) REFERENCES testcase_result(id) ON DELETE cascade,
 	PRIMARY KEY ('id')

@@ -5,6 +5,7 @@ CREATE TABLE 'testpass_result'(
 	'testset' varchar(20) DEFAULT NULL,
 	'passcount' int(11) DEFAULT NULL,
 	'failcount' int(11) DEFAULT NULL,
+	'total' int(11) DEFAULT NULL,
 	'passratio' varchar(20) DEFAULT NULL,
 	'failratio' varchar(20) DEFAULT NULL,
 	'sut_id' int(11) DEFAULT NULL
