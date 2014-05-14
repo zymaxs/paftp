@@ -15,15 +15,15 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Testcase_Result {
+public class TestcaseResult {
 
 	private Integer id;
 	private String casename;
 	private String description;
 	private String casetype;
 	private Boolean ispass;
-	private Testsuite_Result testsuite_result;
-	private List<Testcase_Result_Content> testcase_result_contents;
+	private TestsuiteResult testsuite_result;
+	private List<TestcaseResultContent> testcase_result_contents;
 	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -75,21 +75,21 @@ public class Testcase_Result {
 	
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "testsuite_id")
-	public Testsuite_Result getTestsuite_result() {
+	public TestsuiteResult getTestsuite_result() {
 		return testsuite_result;
 	}
 	
-	public void setTestsuite_result(Testsuite_Result testsuite_result) {
+	public void setTestsuite_result(TestsuiteResult testsuite_result) {
 		this.testsuite_result = testsuite_result;
 	}
 	
-	@OneToMany(mappedBy = "testcase_result")
-	public List<Testcase_Result_Content> getTestcase_result_contents() {
+	@OneToMany(mappedBy = "testcaseresult")
+	public List<TestcaseResultContent> getTestcase_result_contents() {
 		return testcase_result_contents;
 	}
 	
 	public void setTestcase_result_contents(
-			List<Testcase_Result_Content> testcase_result_contents) {
+			List<TestcaseResultContent> testcase_result_contents) {
 		this.testcase_result_contents = testcase_result_contents;
 	}
 

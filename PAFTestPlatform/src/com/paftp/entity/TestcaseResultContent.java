@@ -2,7 +2,6 @@ package com.paftp.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,12 +10,12 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity
-public class Testcase_Content_Id {
+public class TestcaseResultContent {
 
 	private Integer id;
-	private Integer startposition;
-	private Testcase_Result testcase_result;
+	private String status;
+	private String value;
+	private TestcaseResult testcase_result;
 	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -30,22 +29,31 @@ public class Testcase_Content_Id {
 		this.id = id;
 	}
 	
-	@Column(name = "startposition", length = 11)
-	public Integer getStartposition() {
-		return startposition;
+	@Column(name = "status", length = 20)  
+	public String getStatus() {
+		return status;
 	}
-	
-	public void setStartposition(Integer startposition) {
-		this.startposition = startposition;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	
+
+	@Column(name = "value", length = 100)  
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "testcase_id")
-	public Testcase_Result getTestcase_result() {
+	public TestcaseResult getTestcase_result() {
 		return testcase_result;
 	}
-	
-	public void setTestcase_result(Testcase_Result testcase_result) {
+
+	public void setTestcase_result(TestcaseResult testcase_result) {
 		this.testcase_result = testcase_result;
 	}
 
