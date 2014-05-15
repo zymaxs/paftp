@@ -23,7 +23,7 @@ public class TestcaseResult {
 	private String casetype;
 	private Boolean ispass;
 	private TestsuiteResult testsuite_result;
-	private List<TestcaseResultContent> testcase_result_contents;
+	private List<TestcaseResultContent> testcaseresult_contents;
 	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -83,14 +83,14 @@ public class TestcaseResult {
 		this.testsuite_result = testsuite_result;
 	}
 	
-	@OneToMany(mappedBy = "testcaseresult")
-	public List<TestcaseResultContent> getTestcase_result_contents() {
-		return testcase_result_contents;
+	@OneToMany(mappedBy = "testcase_result")
+	public List<TestcaseResultContent> getTestcaseresult_contents() {
+		return testcaseresult_contents;
 	}
 	
-	public void setTestcase_result_contents(
-			List<TestcaseResultContent> testcase_result_contents) {
-		this.testcase_result_contents = testcase_result_contents;
+	public void setTestcaseresult_contents(
+			List<TestcaseResultContent> testcaseresult_contents) {
+		this.testcaseresult_contents = testcaseresult_contents;
 	}
 
 	

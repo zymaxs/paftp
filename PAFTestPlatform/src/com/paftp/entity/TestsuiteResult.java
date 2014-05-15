@@ -113,7 +113,7 @@ public class TestsuiteResult {
 		this.testpass = testpass;
 	}
 	
-	@OneToMany(mappedBy = "testsuiteresult")
+	@OneToMany(mappedBy = "testsuite_result")
 	public List<TestcaseResult> getTestcase_results() {
 		return testcase_results;
 	}
