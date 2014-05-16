@@ -12,17 +12,17 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class TestcaseResultContent {
+public class AnalyseCommentContent {
 
 	private Integer id;
+	private AnalyseCommentHistory analyseCommentHistory;
 	private String status;
-	private String value;
-	private TestcaseResult testcase_result;
+	private String comment;
 	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
 	@GeneratedValue(generator = "generator")
-	@Column(name = "ID", length = 11)
+	@Column(name = "id", length = 11)
 	public Integer getId() {
 		return id;
 	}
@@ -31,32 +31,32 @@ public class TestcaseResultContent {
 		this.id = id;
 	}
 	
-	@Column(name = "status", length = 20)  
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "analysecommenthistory_id")
+	public AnalyseCommentHistory getAnalyseCommentHistory() {
+		return analyseCommentHistory;
+	}
+	
+	public void setAnalyseCommentHistory(AnalyseCommentHistory analyseCommentHistory) {
+		this.analyseCommentHistory = analyseCommentHistory;
+	}
+	
+	@Column(name = "status", length = 10)
 	public String getStatus() {
 		return status;
 	}
-
+	
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	@Column(name = "value", length = 100)  
-	public String getValue() {
-		return value;
+	
+	@Column(name = "comment", length = 100)
+	public String getComment() {
+		return comment;
 	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	@JoinColumn(name = "testcase_id")
-	public TestcaseResult getTestcase_result() {
-		return testcase_result;
-	}
-
-	public void setTestcase_result(TestcaseResult testcase_result) {
-		this.testcase_result = testcase_result;
+	
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	

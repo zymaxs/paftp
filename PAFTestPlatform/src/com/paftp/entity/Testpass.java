@@ -53,15 +53,6 @@ public class Testpass {
 		this.name = name;
 	}
 
-	@Column(name = "name", length = 20)    
-	public String getTestset() {
-		return testset;
-	}
-
-	public void setTestset(String testset) {
-		this.testset = testset;
-	}
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "createtime")
 	public Date getCreatetime() {
