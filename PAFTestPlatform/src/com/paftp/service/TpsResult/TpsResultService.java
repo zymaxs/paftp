@@ -12,6 +12,6 @@ public interface TpsResultService {
 
 	public void deleteTpsResult(TpsResult tpsResult);
 
-	public List<TpsResult> findTpsResultByStressResultId();
+	public List<TpsResult> findTpsResultByStressResultId( int stressResultId);
 
 }

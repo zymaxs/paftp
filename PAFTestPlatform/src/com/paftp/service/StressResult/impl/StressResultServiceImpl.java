@@ -1,5 +1,7 @@
 package com.paftp.service.StressResult.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -32,23 +34,22 @@ public class StressResultServiceImpl implements StressResultService {
 	}
 
 	@Override
-	public StressResult findStressResultBySceneId(int sceneId) {
-		return baseDAO.get("from stressresult s where s.scene_id = ?",
+	public List<StressResult> findStressResultBySceneId(int sceneId) {
+		return baseDAO.find("from stressresult s where s.scene_id = ?",
 				new Object[] { sceneId });
 	}
 
 	@Override
-	public StressResult findStressResultByStreategyType(int strategyTypeId) {
-		return baseDAO.get("from stresssult s where s.strategytype_id =?",
+	public List<StressResult> findStressResultByStreategyType(int strategyTypeId) {
+		return baseDAO.find("from stressresult s where s.strategytype_id = ?",
 				new Object[] { strategyTypeId });
+
 	}
 
 	@Override
 	public void deleteStressResult(StressResult stressResult) {
-		baseDAO.delete(stressResult);;
+		baseDAO.delete(stressResult);
+		;
 	}
-	
-	
-	public List<User> 
 
 }

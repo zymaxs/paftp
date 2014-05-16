@@ -1,5 +1,7 @@
 package com.paftp.service.StressResult;
 
+import java.util.List;
+
 import com.paftp.entity.StressResult;
 
 public interface StressResultService {
@@ -10,9 +12,9 @@ public interface StressResultService {
 
 	public StressResult findStressResultById(int id);
 
-	public StressResult findStressResultBySceneId(int sceneId);
+	public List<StressResult> findStressResultBySceneId(int sceneId);
 
-	public StressResult findStressResultByStreategyType(int strategyTypeId);
+	public List<StressResult> findStressResultByStreategyType(int strategyTypeId);
 
 	public void deleteStressResult(StressResult stressResult);
 

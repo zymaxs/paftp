@@ -32,9 +32,9 @@ public class TpsResultServiceImpl implements TpsResultService {
 	}
 
 	@Override
-	public List<TpsResult> findTpsResultByStressResultId() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TpsResult> findTpsResultByStressResultId(int stressResultId) {
+		return baseDAO.find("from tpsresult t where t.stress_result_ind = ?",
+				new Object[] { stressResultId });
 	}
 
 }
