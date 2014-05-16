@@ -1,5 +1,6 @@
 package com.paftp.service.user.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -52,6 +53,18 @@ public class UserServiceImpl implements UserService {
 		return baseDAO.get(
 				" from User u where u.alias = ? and u.password = ? ",
 				new Object[] { alias, password });
+	}
+
+	public List<User> queryUserList(String date) {
+		List<User> list = new ArrayList<User>();
+		for (User user : list) {
+
+		}
+		for (int i = 0; i < 10; i++) {
+			User user = list.get(i);
+		}
+		return baseDAO.find(" from User u where t.createtime>to_date('" + date
+				+ "','YYYYMMDD')" + " order by u.createTime");
 	}
 
 }
