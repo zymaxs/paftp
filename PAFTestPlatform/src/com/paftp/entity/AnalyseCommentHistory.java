@@ -55,7 +55,7 @@ public class AnalyseCommentHistory {
 		this.updator = updator;
 	}
 	
-	@OneToMany(mappedBy = "analyseCommentContent")
+	@OneToMany(mappedBy = "analyseCommentHistory")
 	public List<AnalyseCommentContent> getAnalyseCommentContent() {
 		return analyseCommentContent;
 	}

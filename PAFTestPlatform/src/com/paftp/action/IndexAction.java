@@ -50,87 +50,81 @@ public class IndexAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
-		User user = new User();
-		user.setAlias("duanjuding");
-		Date date = new Date();
-		user.setCreateTime(date);
-		user.setPassword("123");
-		UserInfo userInfo = new UserInfo();
-		userInfo.setPosition("测试");
-		userInfo.setDepartment("科技中心");
-		user.setUserInfo(userInfo);
-		user.setStatus("intial");
-		user.setDisplayName("段居鼎");
+		User user = userService.findUserByAlias("duanjuding");
+		Date date = null;
+		if (user == null) {
 
-		if (user != null) {
+			user.setAlias("duanjuding");
+			date = new Date();
+			user.setCreateTime(date);
+			user.setPassword("123");
+			UserInfo userInfo = new UserInfo();
+			userInfo.setPosition("测试");
+			userInfo.setDepartment("科技中心");
+			user.setUserInfo(userInfo);
+			user.setStatus("intial");
+			user.setDisplayName("段居鼎");
 			userService.saveUser(user);
 
-			// create sut: MTP
-			Sut sut = sutService.findSutByCode("MTP");
-			if (sut == null) {
-				sut = new Sut();
-				sut.setCode("MTP");
-				sut.setName("移动接入平台");
-				sut.setDescription("手机接入前置，用于隔离外网与内网");
-				sutService.saveSut(sut);
-			}
-
-			// create testsuite: Ts_login
-			Testsuite testsuite = new Testsuite();
-			testsuite.setName("Ts_login");
-			testsuite.setSut(sut);
-
-		
-			// create testcases
-			List<Testcase> testcases = new ArrayList<Testcase>();
-
-			for (int i = 0; i < 10; i++) {
-				
-				// create testcase
-				Testcase testcase = new Testcase();
-				
-				String testcaseName = "Tc_login_" + i;
-				testcase.setCaseName(testcaseName);
-				testcase.setDescription("Demo testcase");
-				date = new Date();
-				testcase.setCreateTime(date);
-				testcase.setPriority("P1");
-				testcase.setCreator(user);
-
-				// create casecontents
-				List<TestcaseStep> testcasesteps = new ArrayList<TestcaseStep>();
-				for (int j = 0; j < 3; j++) {
-
-					// create casecontent
-					TestcaseStep testcasestep = new TestcaseStep();
-					
-					String content = "操作" + j + ":xxxxx";
-					testcasestep.setContent(content);
-					testcasestep.setType("step");
-					testcasestep.setTestcase(testcase);
-					testcasestepService.saveTestcaseStep(testcasestep);
-					testcasesteps.add(testcasestep);
-				}
-				
-				testcase.setTestcaseSteps(testcasesteps);
-				testcase.setTestsuite(testsuite);
-				
-				testcaseService.saveTestcase(testcase);
-				testcases.add(testcase);
-			}
-			
-			testsuiteService.saveTestsuite(testsuite);
-
-
-
-			
-			
-			request.setAttribute("testsuites", testsuiteService.findAllList());
-
-			return "success";
-		} else {
-			return ERROR;
+		} 
+		// create sut: MTP
+		Sut sut = sutService.findSutByCode("MTP");
+		if (sut == null) {
+			sut = new Sut();
+			sut.setCode("MTP");
+			sut.setName("移动接入平台");
+			sut.setDescription("手机接入前置，用于隔离外网与内网");
+			sutService.saveSut(sut);
 		}
+
+		// create testsuite: Ts_login
+		Testsuite testsuite = new Testsuite();
+		testsuite.setName("Ts_login");
+		testsuite.setSut(sut);
+
+		// create testcases
+		List<Testcase> testcases = new ArrayList<Testcase>();
+
+		for (int i = 0; i < 10; i++) {
+
+			// create testcase
+			Testcase testcase = new Testcase();
+
+			String testcaseName = "Tc_login_" + i;
+			testcase.setCaseName(testcaseName);
+			testcase.setDescription("Demo testcase");
+			date = new Date();
+			testcase.setCreateTime(date);
+			testcase.setPriority("P1");
+			testcase.setCreator(user);
+
+			// create casecontents
+			List<TestcaseStep> testcasesteps = new ArrayList<TestcaseStep>();
+			for (int j = 0; j < 3; j++) {
+
+				// create casecontent
+				TestcaseStep testcasestep = new TestcaseStep();
+
+				String content = "操作" + j + ":xxxxx";
+				testcasestep.setContent(content);
+				testcasestep.setType("step");
+				testcasestep.setTestcase(testcase);
+				testcasestepService.saveTestcaseStep(testcasestep);
+				testcasesteps.add(testcasestep);
+			}
+
+			testcase.setTestcaseSteps(testcasesteps);
+			testcase.setTestsuite(testsuite);
+
+			testcaseService.saveTestcase(testcase);
+			testcases.add(testcase);
+		}
+
+		testsuiteService.saveTestsuite(testsuite);
+
+		request.setAttribute("testsuites", testsuiteService.findAllList());
+
+		return "success";
 
 	}
 
