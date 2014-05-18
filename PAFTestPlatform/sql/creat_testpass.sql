@@ -8,6 +8,7 @@ CREATE TABLE `testpass`(
 	`total` int(11) DEFAULT NULL,
 	`passratio` varchar(20) DEFAULT NULL,
 	`failratio` varchar(20) DEFAULT NULL,
+	`tag` varchar(100) DEFAULT NULL,
 	`sut_id` int(11) DEFAULT NULL,
 	INDEX sut_ind (sut_id), 
 	FOREIGN KEY (sut_id) REFERENCES sut(id) ON DELETE cascade,
