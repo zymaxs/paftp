@@ -5,7 +5,7 @@ CREATE TABLE `networkresult` (
  INDEX stress_result_ind (stress_result_id), 
  FOREIGN KEY (stress_result_id) REFERENCES stressresult(id) ON DELETE set null,
  `timestamp` varchar(20) DEFAULT NULL,
- `networkread` varchar(8) DEFAULT NULL,
- `networkwrite` varchar(8) DEFAULT NULL,
+ `network_read` varchar(8) DEFAULT NULL,
+ `network_write` varchar(8) DEFAULT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
