@@ -1,7 +1,6 @@
 package com.paftp.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,11 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -25,11 +20,11 @@ public class Version {
 
 	private Integer id;
 	private Integer versionNum;
-	private Integer sutId;
 	private Date createTime;
 	private String creatorId;
 	private Date updateTime;
 	private String updatorId;
+	private Sut sut;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -52,15 +47,6 @@ public class Version {
 		this.versionNum = versionNum;
 	}
 
-	@Column(name = "sut_id", length = 11)
-	public Integer getSutId() {
-		return sutId;
-	}
-
-	public void setSutId(Integer sutId) {
-		this.sutId = sutId;
-	}
-	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_time")
 	public Date getCreateTime() {
@@ -97,5 +83,15 @@ public class Version {
 
 	public void setUpdatorId(String updatorId) {
 		this.updatorId = updatorId;
+	}
+	
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "sut_id")
+	public Sut getSut() {
+		return sut;
+	}
+
+	public void setSut(Sut sut) {
+		this.sut = sut;
 	}
 }

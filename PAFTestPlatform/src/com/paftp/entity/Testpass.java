@@ -44,6 +44,16 @@ public class Testpass {
 		this.id = id;
 	}
 	
+
+	@Column(name = "testset", length = 20)
+	public String getTestset() {
+		return testset;
+	}
+
+	public void setTestset(String testset) {
+		this.testset = testset;
+	}
+
 	@Column(name = "name", length = 50)            
 	public String getName() {
 		return name;

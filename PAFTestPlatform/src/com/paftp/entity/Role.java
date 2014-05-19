@@ -2,13 +2,16 @@ package com.paftp.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,6 +23,7 @@ public class Role {
 	private String description;
 	private List<Permission> permissions;
 	private List<User> users;
+	private Sut sut;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -69,5 +73,15 @@ public class Role {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+	
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "sut_id")
+	public Sut getSut() {
+		return sut;
+	}
+
+	public void setSut(Sut sut) {
+		this.sut = sut;
 	}
 }

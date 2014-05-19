@@ -1,9 +1,12 @@
 package com.paftp.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,6 +17,9 @@ public class Sut {
 	private String code;
 	private String name;
 	private String description;
+	private List<Role> role_results;
+	private List<Testpass> testpass_results;
+	private List<Version> version_results;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -52,5 +58,32 @@ public class Sut {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@OneToMany(mappedBy = "sut")
+	public List<Role> getRole_results() {
+		return role_results;
+	}
+
+	public void setRole_results(List<Role> role_results) {
+		this.role_results = role_results;
+	}
+	
+	@OneToMany(mappedBy = "sut")
+	public List<Testpass> getTestpass_results() {
+		return testpass_results;
+	}
+
+	public void setTestpass_results(List<Testpass> testpass_results) {
+		this.testpass_results = testpass_results;
+	}
+	
+	@OneToMany(mappedBy = "sut")
+	public List<Version> getVersion_results() {
+		return version_results;
+	}
+
+	public void setVersion_results(List<Version> version_results) {
+		this.version_results = version_results;
 	}
 }
