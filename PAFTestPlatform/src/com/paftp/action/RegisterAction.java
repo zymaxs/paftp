@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
 import com.paftp.service.user.UserService;
+import com.paftp.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Controller
@@ -29,6 +30,7 @@ public class RegisterAction extends ActionSupport {
 	private String telephone;
 	private String othermail;
 	private String otherinfo;
+	private Util util = new Util();
 	
 	public String register() {
 
@@ -38,6 +40,7 @@ public class RegisterAction extends ActionSupport {
 			user = new User();
 			user.setAlias(alias);
 			/* set the user words*/
+			this.password = util.md5Encryption(request.getAttribute("password").toString());
 			user.setPassword(password);
 			UserInfo userInfo = new UserInfo();
 			user.setUserInfo(userInfo);
