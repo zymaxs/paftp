@@ -7,6 +7,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.paftp.entity.User;
+import com.paftp.entity.UserInfo;
 import com.paftp.service.user.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -20,18 +21,27 @@ public class RegisterAction extends ActionSupport {
 
 	private String alias;
 	private String password;
-
+	private String status;
+	private String displayname;
+	private String departname;
+	private String position;
+	private String mobile;
+	private String telephone;
+	private String othermail;
+	private String otherinfo;
+	
 	public String register() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 		User user = userService.findUserByAlias(alias);
 		if (user == null) {
-			request.setAttribute("username", alias);
 			user = new User();
 			user.setAlias(alias);
+			/* set the user words*/
 			user.setPassword(password);
+			UserInfo userInfo = new UserInfo();
+			user.setUserInfo(userInfo);
 			userService.saveUser(user);
-			request.setAttribute("username", alias);
 			return "success";
 		} else {
 			return ERROR;
@@ -54,5 +64,78 @@ public class RegisterAction extends ActionSupport {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getDisplayname() {
+		return displayname;
+	}
+
+	public void setDisplayname(String displayname) {
+		this.displayname = displayname;
+	}
+
+	public String getDepartname() {
+		return departname;
+	}
+
+	public void setDepartname(String departname) {
+		this.departname = departname;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getOthermail() {
+		return othermail;
+	}
+
+	public void setOthermail(String othermail) {
+		this.othermail = othermail;
+	}
+
+	public String getOtherinfo() {
+		return otherinfo;
+	}
+
+	public void setOtherinfo(String otherinfo) {
+		this.otherinfo = otherinfo;
+	}
+
 
 }

@@ -53,7 +53,7 @@ public class IndexAction extends ActionSupport {
 		User user = userService.findUserByAlias("duanjuding");
 		Date date = null;
 		if (user == null) {
-
+			user = new User();
 			user.setAlias("duanjuding");
 			date = new Date();
 			user.setCreateTime(date);
@@ -66,7 +66,7 @@ public class IndexAction extends ActionSupport {
 			user.setDisplayName("¶Î¾Ó¶¦");
 			userService.saveUser(user);
 
-		} 
+		}
 		// create sut: MTP
 		Sut sut = sutService.findSutByCode("MTP");
 		if (sut == null) {
