@@ -1,9 +1,9 @@
 package com.paftp.action;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
-import org.apache.struts2.ServletActionContext;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 
 import com.paftp.entity.User;
@@ -24,31 +24,59 @@ public class RegisterAction extends ActionSupport {
 	private String password;
 	private String status;
 	private String displayname;
-	private String departname;
+	private Date createtime;
+	private String department;
 	private String position;
 	private String mobile;
 	private String telephone;
 	private String othermail;
 	private String otherinfo;
 	private Util util = new Util();
-	
+
 	public String register() {
 
-		HttpServletRequest request = ServletActionContext.getRequest();
+		// HttpServletRequest request = ServletActionContext.getRequest();
+
 		User user = userService.findUserByAlias(alias);
-		if (user == null) {
-			user = new User();
-			user.setAlias(alias);
-			/* set the user words*/
-			this.password = util.md5Encryption(request.getAttribute("password").toString());
-			user.setPassword(password);
-			UserInfo userInfo = new UserInfo();
-			user.setUserInfo(userInfo);
-			userService.saveUser(user);
-			return "success";
-		} else {
-			return ERROR;
-		}
+
+		if (user != null)
+			return "exist";
+
+		if (this.getAlias() == null || this.getDepartment() == null
+				|| this.getPosition() == null)
+			return "error";
+
+		user = new User();
+
+		setRegisterInfor(user);
+
+		userService.saveUser(user);
+
+		return "success";
+
+	}
+
+	private void setRegisterInfor(User user) {
+
+		this.createtime = new Date();
+		this.password = util.md5Encryption("test"); /*
+													 * Temp password and send it
+													 * to SMTP in future!
+													 */
+		user.setAlias(this.getAlias());
+		user.setDisplayName(this.getDisplayname());
+		user.setCreateTime(this.getCreatetime());
+		user.setPassword(this.getPassword());
+		user.setStatus("initial");
+
+		UserInfo userInfo = new UserInfo();
+		userInfo.setDepartment(this.getDepartment());
+		userInfo.setMobile(this.getMobile());
+		userInfo.setPosition(this.getPosition());
+		userInfo.setTelephone(this.getTelephone());
+		userInfo.setOtherinfo(this.getOtherinfo());
+		userInfo.setOthermail(this.getOthermail());
+		user.setUserInfo(userInfo);
 
 	}
 
@@ -67,7 +95,7 @@ public class RegisterAction extends ActionSupport {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public UserService getUserService() {
 		return userService;
 	}
@@ -92,12 +120,12 @@ public class RegisterAction extends ActionSupport {
 		this.displayname = displayname;
 	}
 
-	public String getDepartname() {
-		return departname;
+	public String getDepartment() {
+		return department;
 	}
 
-	public void setDepartname(String departname) {
-		this.departname = departname;
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
 	public String getPosition() {
@@ -140,5 +168,12 @@ public class RegisterAction extends ActionSupport {
 		this.otherinfo = otherinfo;
 	}
 
+	public Date getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
 
 }
