@@ -112,62 +112,64 @@ $(document).ready(function(){
     </div>
   </div>
   <!--主体-->
-  <form id="signupForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/login.action">
-    <fieldset>
-      <legend>用户注册</legend>
-      <div class="control-group">
-        <label class="control-label" for="alias">用户名 :</label>
-        <div class="controls">
-          <input type="text" class="input-xlarge" id="alias" name="alias">
-          <p class="help-block">请使用各自Alias进行注册，注册完成后将发送密码至平安邮箱。并请各自首次登录完成密码修改。</p>
+  <div>
+    <form id="signupForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/login.action">
+      <fieldset>
+        <legend>用户注册 <small>(带*号标志为必输项)</small></legend>
+        <div class="control-group">
+          <label class="control-label" for="alias"><em>*</em> 用户名 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="alias" name="alias">
+            <p class="help-block">请使用各自Alias进行注册，注册完成后将发送密码至平安邮箱。并请各自首次登录完成密码修改。</p>
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="displayname">真实姓名 :</label>
-        <div class="controls">
-          <input type="text" class="input-xlarge" id="displayname" name="displayname">
+        <div class="control-group">
+          <label class="control-label" for="displayname">真实姓名 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="displayname" name="displayname">
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="department">所属部门 :</label>
-        <div class="controls">
-          <input type="text" class="input-xlarge" id="department" name="department">
+        <div class="control-group">
+          <label class="control-label" for="department">所属部门 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="department" name="department">
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="position">职位 :</label>
-        <div class="controls">
-          <select id="position" class="input-xlarge" name="position">
-            <option>测试</option>
-            <option>开发</option>
-            <option>产品</option>
-            <option>其他</option>
-          </select>
+        <div class="control-group">
+          <label class="control-label" for="position">职位 :</label>
+          <div class="controls">
+            <select id="position" class="input-xlarge" name="position">
+              <option>测试</option>
+              <option>开发</option>
+              <option>产品</option>
+              <option>其他</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="telephone">联系电话 :</label>
-        <div class="controls">
-          <input type="text" class="input-xlarge" id="telephone" name="telephone">
+        <div class="control-group">
+          <label class="control-label" for="telephone">联系电话 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="telephone" name="telephone">
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="mobile">移动电话 :</label>
-        <div class="controls">
-          <input type="text" class="input-xlarge" id="mobile" name="mobile">
+        <div class="control-group">
+          <label class="control-label" for="mobile">移动电话 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="mobile" name="mobile">
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="othermail">其他邮件 :</label>
-        <div class="controls">
-          <input type="text" class="input-xlarge" id="othermail" name="othermail">
+        <div class="control-group">
+          <label class="control-label" for="othermail">其他邮件 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="othermail" name="othermail">
+          </div>
         </div>
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </fieldset>
-  </form>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p><small><b>自动化测试</b>：WebService | App | Web | Stress | Solution<br/>
