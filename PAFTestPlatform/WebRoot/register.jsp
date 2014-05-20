@@ -2,14 +2,17 @@
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ "HOME" + "/";
+			+ request.getServerName() + ":" + request.getServerPort() + "/";
 %>
 <!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
+<link href="css/bootstrap.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -44,10 +47,7 @@ $(document).ready(function(){
 				rangelength: [4, 30]
             },
 			"position":{
-                required: true,
-            },
-            "mobile":{
-                required:true
+                required: true
             },
             "othermail":{
                 email:true
@@ -58,13 +58,10 @@ $(document).ready(function(){
                 required: "请输入用户名"
             },
 			"displayname":{
-                required: "请输入DisplayName"
+                required: "请输入真实姓名"
             },
 			"department":{
                 required: "请输入所属部门"
-            },
-			"mobile":{
-                required: "请输入手机号码"
             },
             "email":{
                 email:"请输入正确的email地址"
@@ -89,7 +86,7 @@ $(document).ready(function(){
         <div class="row-fluid">
           <div class="span2"></div>
           <div class="span8" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
-          <div class="span2 whitelink"><a href="reg.html">注册</a> | 登录</div>
+          <div class="span2 whitelink"><a href="register.jsp">注册</a> | 登录</div>
         </div>
         <div class="row-fluid">
           <div class="span10"> </div>
@@ -106,7 +103,7 @@ $(document).ready(function(){
           <div class="container-fluid">
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
-                <li class="active"> <a href="#">主页</a> </li>
+                <li class="active"><a href="index_1.jsp">主页</a></li>
               </ul>
             </div>
           </div>
@@ -115,7 +112,7 @@ $(document).ready(function(){
     </div>
   </div>
   <!--主体-->
-  <form id="signupForm" class="form-horizontal" method="post" action="">
+  <form id="signupForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/login.action">
     <fieldset>
       <legend>用户注册</legend>
       <div class="control-group">
@@ -126,7 +123,7 @@ $(document).ready(function(){
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="displayname">DisplayName :</label>
+        <label class="control-label" for="displayname">真实姓名 :</label>
         <div class="controls">
           <input type="text" class="input-xlarge" id="displayname" name="displayname">
         </div>

@@ -47,7 +47,7 @@
         <div class="row-fluid">
           <div class="span2"></div>
           <div class="span8" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
-          <div class="span2 whitelink"><a href="register.html">注册</a> | 登录</div>
+          <div class="span2 whitelink"><a href="register.jsp">注册</a> | 登录</div>
         </div>
         <div class="row-fluid">
           <div class="span10"> </div>
