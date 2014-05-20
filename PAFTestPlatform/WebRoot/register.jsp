@@ -112,10 +112,10 @@ $(document).ready(function(){
     </div>
   </div>
   <!--主体-->
-  <div align="center">
+  <div>
     <form id="signupForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/register.action">
       <fieldset>
-        <legend>用户注册</legend>
+        <legend>用户注册 <small>(带*号标志为必输项)</small></legend>
         <div class="control-group">
           <label class="control-label" for="alias"><em>*</em> 用户名 :</label>
           <div class="controls">
