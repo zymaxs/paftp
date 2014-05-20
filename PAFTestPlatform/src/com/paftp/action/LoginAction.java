@@ -1,13 +1,12 @@
 package com.paftp.action;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.paftp.entity.User;
 import com.paftp.service.user.UserService;
+import com.paftp.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Controller
@@ -20,17 +19,21 @@ public class LoginAction extends ActionSupport {
 
 	private String alias;
 	private String password;
+	private Util util = new Util();
 
 	public String login() {
 
-		HttpServletRequest request = ServletActionContext.getRequest();
-		User user = userService.findUserByAliasAndPassword(alias, password);
+		if (this.getAlias() == null || this.getPassword() == null)
+			return "error";
+		
+		String password_md5 = util.md5Encryption(this.password);
+		
+		User user = userService.findUserByAliasAndPassword(alias, password_md5);
+		
 		if (user != null) {
-			// String teamname = user.getTeam().getTeamName();
-			// request.setAttribute("teamname", teamname);
 			return "success";
 		} else {
-			return ERROR;
+			return "error";
 		}
 
 	}

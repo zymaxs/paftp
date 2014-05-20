@@ -11,8 +11,7 @@
 	<package name="s2sh" extends="struts-default">
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
 			<result name="success" type="redirect">/index.jsp</result>
-			<result name="error">/error.jsp</result>
-			<result name="exist" type="redirect">/index.jsp</result>
+			<result name="error" type="redirect">/error.jsp</result>
 		</action>
 		<action name="register" method="register"
 			class="com.paftp.action.RegisterAction">
