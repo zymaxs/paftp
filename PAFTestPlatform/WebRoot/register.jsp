@@ -117,26 +117,26 @@ $(document).ready(function(){
       <fieldset>
         <legend>用户注册 <small>(带*号标志为必输项)</small></legend>
         <div class="control-group">
-          <label class="control-label" for="alias"><em>*</em> 用户名 :</label>
+          <label class="control-label" for="alias">* 用户名 :</label>
           <div class="controls">
             <input type="text" class="input-xlarge" id="alias" name="alias">
             <p class="help-block">请使用各自Alias进行注册，注册完成后将发送密码至平安邮箱。并请各自首次登录完成密码修改。</p>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="displayname">真实姓名 :</label>
+          <label class="control-label" for="displayname">* 真实姓名 :</label>
           <div class="controls">
             <input type="text" class="input-xlarge" id="displayname" name="displayname">
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="department">所属部门 :</label>
+          <label class="control-label" for="department">* 所属部门 :</label>
           <div class="controls">
             <input type="text" class="input-xlarge" id="department" name="department">
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="position">职位 :</label>
+          <label class="control-label" for="position">* 职位 :</label>
           <div class="controls">
             <select id="position" class="input-xlarge" name="position">
               <option>测试</option>
