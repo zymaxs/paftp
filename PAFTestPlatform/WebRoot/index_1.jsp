@@ -2,8 +2,7 @@
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ "HOME" + "/";
+			+ request.getServerName() + ":" + request.getServerPort() + "/";
 %>
 <!DOCTYPE HTML>
 <html>
