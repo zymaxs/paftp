@@ -113,7 +113,7 @@ $(document).ready(function(){
   </div>
   <!--主体-->
   <div align="center">
-    <form id="signupForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/login.action">
+    <form id="signupForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/register.action">
       <fieldset>
         <legend>用户注册</legend>
         <div class="control-group">
