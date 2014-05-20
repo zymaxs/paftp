@@ -1,6 +1,5 @@
 package com.paftp.service.user.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
