@@ -19,6 +19,8 @@ request.getRequestDispatcher("home/index.action").forward(request,response);
  %> 
 <base href="<%=basePath%>">
 
+<%@taglib prefix="s" uri="/struts-tags" %>  
+
 <title>My JSP 'index.jsp' starting page</title>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -31,6 +33,6 @@ request.getRequestDispatcher("home/index.action").forward(request,response);
 </head>
 
 <body>
-
+<h1><s:property value="#session.user"/></h1> 
 </body>
 </html>

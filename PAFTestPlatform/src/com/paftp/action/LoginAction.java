@@ -1,16 +1,20 @@
 package com.paftp.action;
 
-import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.paftp.entity.User;
 import com.paftp.service.user.UserService;
 import com.paftp.util.Util;
-import com.opensymphony.xwork2.ActionSupport;
 
 @Controller
-public class LoginAction extends ActionSupport {
+public class LoginAction extends BaseAction  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,9 +24,12 @@ public class LoginAction extends ActionSupport {
 	private String alias;
 	private String password;
 	private Util util = new Util();
+	private Map<String, Object> session;
 
 	public String login() {
 
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
 		if (this.getAlias() == null || this.getPassword() == null)
 			return "error";
 		
@@ -31,6 +38,13 @@ public class LoginAction extends ActionSupport {
 		User user = userService.findUserByAliasAndPassword(alias, password_md5);
 		
 		if (user != null) {
+			
+			request.setAttribute("displayname", user.getDisplayName());
+			
+			session = new HashMap<String, Object>();
+			session.put("user", user);
+			this.setSession(session);			
+			
 			return "success";
 		} else {
 			return "error";
