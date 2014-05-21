@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.util.*,com.paftp.entity.*"%>
+<%@ taglib uri="/struts-tags" prefix="s" %>  
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -48,8 +49,11 @@
           <div class="span7"></div>
           <% if(session.getAttribute("user")==null){%>
           <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"><a href="register.jsp">注册</a> | <a href="login.jsp" id="login">登录</a></div>
-          <% } else {%>
-          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <%="#session.user.alias"%> | <a href="#loginmodal" id="login">登出</a></div>
+          <% } else {
+          	User user = (User)session.getAttribute("user");
+			String name = user.getAlias();
+			%>
+          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <%=name %> | <a href="#loginmodal" id="login">登出</a></div>
           <%}%>
         </div>
         <div class="row-fluid">
