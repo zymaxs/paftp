@@ -27,25 +27,24 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	private String alias;
 	private String password;
 	private Util util = new Util();
-	private SessionMap<String, Object> session;
+	private SessionMap<String, Object> sessionMap;
 
 	public String login() {
 
-		HttpServletRequest request = ServletActionContext.getRequest();
+		User user  = null;
 		
 		if (this.getAlias() == null || this.getPassword() == null)
 			return "error";
 		
 		String password_md5 = util.md5Encryption(this.password);
-		
-		User user = userService.findUserByAliasAndPassword(alias, password_md5);
+		user = userService.findUserByAliasAndPassword(alias, password_md5);
 		
 		if (user != null) {
 			
-			request.setAttribute("displayname", user.getDisplayName());
-	
-			session.put("user", user);
-			this.setSession(session);			
+			sessionMap.put("user", user);
+			
+			if (user.getStatus().equals("initial"))
+				return "update";
 			
 			return "success";
 		} else {
@@ -54,10 +53,17 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	}
 	
+	public String logout(){
+		 if(sessionMap!=null){  
+		        sessionMap.invalidate();  
+		    }  
+		    return "success"; 
+	}
+	
 	@Override
-	public void setSession(Map<String, Object> map) {
+	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub
-		session = (SessionMap) map;
+		this.sessionMap = (SessionMap) session;
 	}
 
 	public String getAlias() {

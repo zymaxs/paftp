@@ -22,12 +22,11 @@ public class UserInfo {
 	@GenericGenerator(name = "generator", strategy = "increment")
 	@GeneratedValue(generator = "generator")
 	@Column(name = "ID", length = 11)
-	private Integer getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	@SuppressWarnings("unused")
-	private void setId(Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
