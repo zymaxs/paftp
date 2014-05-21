@@ -22,7 +22,9 @@ public class ApplySut {
 	private String action;
 	private String comment;
 	private User user;
-	private Sut sut;
+	private String code;
+	private String name;
+	private String description;
 	
 
 	@Id
@@ -94,19 +96,31 @@ public class ApplySut {
 		this.user = user;
 	}
 	
-	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "sut_id")
-	public Sut getSut() {
-		return sut;
+	@Column(name = "code", length = 20)
+	public String getCode() {
+		return code;
 	}
-	
-	public void setSut(Sut sut) {
-		this.sut = sut;
-	}
-	
 
-	
-	
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	@Column(name = "name", length = 100)
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Column(name = "description", length = 200)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }

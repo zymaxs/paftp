@@ -47,5 +47,19 @@ public class ApplySutImpl implements ApplySutService{
 		return baseDAO.find(" from applysut u order by u.applytime");
 	}
 
+	@Override
+	public ApplySut findApplySutByName(String name) {
+		// TODO Auto-generated method stub
+		return baseDAO.get(" from applysut u where u.name = ?",
+				new Object[] { name });
+	}
+
+	@Override
+	public ApplySut findApplySutByUser(Integer userId) {
+		// TODO Auto-generated method stub
+		return baseDAO.get(" from applysut u where u.user_id = ? or u.approver_id = ?",
+				new Object[] { userId });
+	}
+
 
 }
