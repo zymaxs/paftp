@@ -40,13 +40,17 @@
   <div style="background:#428bca; color:#ffffff; margin:auto">
     <div class="row-fluid">
       <div class="span12">
-      	<div class="row-fluid">
-        <div class="span12"></div>	
+        <div class="row-fluid">
+          <div class="span12"></div>
         </div>
         <div class="row-fluid">
           <div class="span2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</div>
           <div class="span7"></div>
-          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a></div>
+          <% if(session.getAttribute("user")==null){%>
+          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"><a href="register.jsp">注册</a> | <a href="login.jsp" id="login">登录</a></div>
+          <% } else {%>
+          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <%="#session.user.alias"%> | <a href="#loginmodal" id="login">登出</a></div>
+          <%}%>
         </div>
         <div class="row-fluid">
           <div class="span12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
@@ -59,9 +63,10 @@
     </div>
   </div>
   <!--登录-->
+  <!--
   <div id="loginmodal" style="display:none;">
-    <div class="text-center">
-    <p>用户登录</p>
+    <div align="center">
+      <p>用户登录</p>
     </div>
     <form id="loginform" name="loginform" method="post" action="${pageContext.request.contextPath}/login.action">
       <label for="username" style="Microsoft YaHei; font-size:12px;">Username:</label>
@@ -69,7 +74,7 @@
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" class="txtfield" tabindex="2">
       <div class="center">
-        <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="LogIn" tabindex="3">
+        <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Login" tabindex="3">
       </div>
     </form>
   </div>
@@ -81,6 +86,7 @@
 	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
 	});
   </script> 
+  -->
   <!--导航-->
   <div class="row-fluid">
     <div class="span12">
