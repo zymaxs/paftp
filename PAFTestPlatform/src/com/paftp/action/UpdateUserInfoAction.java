@@ -42,8 +42,11 @@ public class UpdateUserInfoAction extends ActionSupport{
 		
 		user = getSessionUser();
 		
-		if (user == null || this.getDepartment() == null || this.getPosition() == null)
+		if (user == null)
 			return "login";
+		
+		if (this.getDepartment() == null || this.getPosition() == null)
+			return "error";
 		
 		UserInfo userInfo = new UserInfo();
 		setUserInfo(userInfo, user.getUserInfo().getId());
@@ -58,7 +61,7 @@ public class UpdateUserInfoAction extends ActionSupport{
 		
 		user = getSessionUser();
 		
-		if (user == null || this.getDepartment() == null || this.getPosition() == null)
+		if (user == null)
 			return "login";
 		
 		String orignpassword_md5 = util.md5Encryption(this.orignpassword);
