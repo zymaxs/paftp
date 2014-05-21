@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.util.*,com.paftp.entity.*"%>
-<%@ taglib uri="/struts-tags" prefix="s" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -52,7 +52,7 @@
           <% } else {
 		  User user = (User)session.getAttribute("user");
 		  String name = user.getAlias();%>
-          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name %> </a>| <a href="#loginmodal" id="logout">登出</a></div>
+          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name %> </a>| <a href="logout.jsp">登出</a> </div>
           <%}%>
         </div>
         <div class="row-fluid">
@@ -65,7 +65,7 @@
       </div>
     </div>
   </div>
-  <!--登录--> 
+  <!--登录-->
   <div id="loginmodal" style="display:none;">
     <div align="center">
       <p>用户登录</p>

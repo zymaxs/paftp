@@ -16,6 +16,7 @@
 <link href="css/style.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <style>
 .whitelink A:link {
@@ -60,36 +61,6 @@ $(document).ready(function(){
             },
 			"displayname":{
                 required: "请输入真实姓名"
-            },
-			"department":{
-                required: "请输入所属部门"
-            }
-        }
-    });
-	$("#updatepwdForm").validate({
-        rules: {
-            "password":{
-                required: true,
-            },
-			 "confirm_password":{
-                required: true,
-				equalTo: "#password"
-            },
-			"department":{
-                required: true,
-				rangelength: [4, 30]
-            },
-			"position":{
-                required: true
-            }
-        },
-        messages: {
-            "password":{
-                required: "请输入用户名"
-            },
-			"confirm_password":{
-                required: "请输入真实姓名",
-				equalTo: "两次输入密码不一致不一致"
             },
 			"department":{
                 required: "请输入所属部门"
@@ -193,6 +164,8 @@ $(document).ready(function(){
         </div>
       </fieldset>
     </form>
+  </div>
+  <div>
     <form id="updatepwdForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/updatepassword.action">
       <fieldset>
         <legend>用户密码修改</legend>

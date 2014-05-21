@@ -13,6 +13,7 @@
 <link href="css/style.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <style>
 .whitelink A:link {
@@ -37,7 +38,7 @@ $(document).ready(function(){
     $("#signupForm").validate({
         rules: {
             "alias":{
-                required: true,
+                required: true
             },
 			 "displayname":{
                 required: true,
@@ -64,7 +65,7 @@ $(document).ready(function(){
 			"department":{
                 required: "请输入所属部门"
             },
-            "email":{
+            "othermail":{
                 email:"请输入正确的email地址"
             }
         }
@@ -111,9 +112,6 @@ $(document).ready(function(){
   </div>
   <script type="text/javascript">
 	$(function(){
- 	 $('#loginform').submit(function(e){
-   	 return false;
- 	 });
 	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
 	});
   </script> 
