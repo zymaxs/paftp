@@ -7,14 +7,17 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.SessionMap;
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.User;
 import com.paftp.service.user.UserService;
 import com.paftp.util.Util;
 
 @Controller
-public class LoginAction extends BaseAction  {
+public class LoginAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +27,7 @@ public class LoginAction extends BaseAction  {
 	private String alias;
 	private String password;
 	private Util util = new Util();
-	private Map<String, Object> session;
+	private SessionMap<String, Object> session;
 
 	public String login() {
 
@@ -40,8 +43,7 @@ public class LoginAction extends BaseAction  {
 		if (user != null) {
 			
 			request.setAttribute("displayname", user.getDisplayName());
-			
-			session = new HashMap<String, Object>();
+	
 			session.put("user", user);
 			this.setSession(session);			
 			
@@ -50,6 +52,12 @@ public class LoginAction extends BaseAction  {
 			return "error";
 		}
 
+	}
+	
+	@Override
+	public void setSession(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		session = (SessionMap) map;
 	}
 
 	public String getAlias() {
@@ -67,5 +75,7 @@ public class LoginAction extends BaseAction  {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
 
 }
