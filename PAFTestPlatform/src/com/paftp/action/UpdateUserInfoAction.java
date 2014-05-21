@@ -24,8 +24,8 @@ public class UpdateUserInfoAction extends ActionSupport{
 
 	@Resource
 	private UserInfoService userInfoService;
+	@Resource
 	private UserService userService;
-	
 	private String password;
 	private String orignpassword;
 	private String department;
@@ -58,7 +58,7 @@ public class UpdateUserInfoAction extends ActionSupport{
 		
 		user = getSessionUser();
 		
-		if (user == null || this.getDepartment() == null || this.getPosition() == null)
+		if (user == null)
 			return "login";
 		
 		String orignpassword_md5 = util.md5Encryption(this.orignpassword);
@@ -163,5 +163,11 @@ public class UpdateUserInfoAction extends ActionSupport{
 		this.password = password;
 	}
 
-	
+	public String getOrignpassword() {
+		return orignpassword;
+	}
+
+	public void setOrignpassword(String orignpassword) {
+		this.orignpassword = orignpassword;
+	}
 }
