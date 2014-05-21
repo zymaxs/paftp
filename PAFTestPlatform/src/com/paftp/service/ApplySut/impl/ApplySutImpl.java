@@ -11,7 +11,7 @@ import com.paftp.entity.ApplySut;
 import com.paftp.entity.User;
 import com.paftp.service.ApplySut.ApplySutService;
 
-@Service("userService")
+@Service("applySutService")
 public class ApplySutImpl implements ApplySutService{
 
 	@Resource

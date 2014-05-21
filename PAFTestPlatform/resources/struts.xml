@@ -12,6 +12,7 @@
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
 			<result name="success" type="redirect">/index.jsp</result>
 			<result name="error" type="redirect">/error.jsp</result>
+			<result name="update" type="redirect">/update.jsp</result>
 		</action>
 		<action name="logout" method="logout" class="com.paftp.action.LoginAction">
 			<result name="success" type="redirect">/login.jsp</result>
