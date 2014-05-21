@@ -13,6 +13,9 @@
 			<result name="success" type="redirect">/index.jsp</result>
 			<result name="error" type="redirect">/error.jsp</result>
 		</action>
+		<action name="logout" method="logout" class="com.paftp.action.LoginAction">
+			<result name="success" type="redirect">/login.jsp</result>
+		</action>
 		<action name="register" method="register"
 			class="com.paftp.action.RegisterAction">
 			<result name="success" type="redirect">/reg_success.jsp</result>
@@ -23,6 +26,11 @@
 			<result name="success">/home.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
+		<action name="updateuserinfo" method="update" class="com.paftp.action.UpdateUserInfoAction">
+			<result name="success">/index.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+
 	</package>
 
 </struts> 
