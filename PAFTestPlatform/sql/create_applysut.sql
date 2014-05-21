@@ -7,7 +7,9 @@ CREATE TABLE `applysut` (
     `comment` varchar(200) DEFAULT NULL,
      `user_id` int(11) not NULL,
      `approver_id` int(11) DEFAULT NULL,
-     `sut_id` int(11) NOT NULL,
+     `code` varchar(20) NOT NULL,
+     `name` varchar(100) NOT NULL,
+     `description` varchar(200) DEFAULT NULL,
     INDEX user_ind (user_id),
     FOREIGN KEY (user_id)
         REFERENCES user (id)
@@ -15,10 +17,6 @@ CREATE TABLE `applysut` (
     INDEX approver_ind (approver_id),
     FOREIGN KEY (approver_id)
         REFERENCES user (id)
-        ON DELETE no action,
-    INDEX sut_ind (sut_id),
-    FOREIGN KEY (sut_id)
-        REFERENCES sut (id)
         ON DELETE no action,
     PRIMARY KEY (`id`)
 )  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
