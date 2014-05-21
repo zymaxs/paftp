@@ -40,33 +40,36 @@
   <div style="background:#428bca; color:#ffffff; margin:auto">
     <div class="row-fluid">
       <div class="span12">
-        <div class="row-fluid">
-          <div class="span2" style="text-align:left;font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</div>
-          <div class="span7"></div>
-          <div class="span3"></div>
+      	<div class="row-fluid">
+        <div class="span12"></div>	
         </div>
         <div class="row-fluid">
-          <div class="span2"></div>
-          <div class="span8" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
-          <div class="span2 whitelink"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a></div>
+          <div class="span2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</div>
+          <div class="span7"></div>
+          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a></div>
+        </div>
+        <div class="row-fluid">
+          <div class="span12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
         </div>
         <div class="row-fluid">
           <div class="span10"> </div>
-          <div class="span2" style="text-align:right;font-family:Microsoft YaHei;">Version : beta 0.3.0</div>
+          <div class="span2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</div>
         </div>
       </div>
     </div>
   </div>
   <!--登录-->
   <div id="loginmodal" style="display:none;">
-    <h1>User Login</h1>
+    <div class="text-center">
+    <p>用户登录</p>
+    </div>
     <form id="loginform" name="loginform" method="post" action="${pageContext.request.contextPath}/login.action">
-      <label for="username">Username:</label>
+      <label for="username" style="Microsoft YaHei; font-size:12px;">Username:</label>
       <input type="text" name="username" id="username" class="txtfield" tabindex="1">
-      <label for="password">Password:</label>
+      <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" class="txtfield" tabindex="2">
       <div class="center">
-        <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Log In" tabindex="3">
+        <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="LogIn" tabindex="3">
       </div>
     </form>
   </div>
@@ -76,8 +79,8 @@
    	 return false;
  	 });
 	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
-});
-</script> 
+	});
+  </script> 
   <!--导航-->
   <div class="row-fluid">
     <div class="span12">
@@ -86,7 +89,7 @@
           <div class="container-fluid">
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
-                <li class="active"> <a href="#">主页</a> </li>
+                <li class="active"><a href="index_1.jsp">主页</a></li>
               </ul>
             </div>
           </div>
@@ -94,7 +97,6 @@
       </div>
     </div>
   </div>
-  
   <!--主体-->
   <div align="center">
     <h1>HellWord！</h1>
