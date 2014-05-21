@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
-
+<link href="css/style.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
@@ -32,7 +32,6 @@
 	TEXT-DECORATION: none
 }
 </style>
-<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -49,7 +48,7 @@
         <div class="row-fluid">
           <div class="span2"></div>
           <div class="span8" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
-          <div class="span2 whitelink"><a href="register.jsp">注册</a> | 登录</div>
+          <div class="span2 whitelink"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a></div>
         </div>
         <div class="row-fluid">
           <div class="span10"> </div>
@@ -58,6 +57,27 @@
       </div>
     </div>
   </div>
+  <!--登录-->
+  <div id="loginmodal" style="display:none;">
+    <h1>User Login</h1>
+    <form id="loginform" name="loginform" method="post" action="${pageContext.request.contextPath}/login.action">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" class="txtfield" tabindex="1">
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" class="txtfield" tabindex="2">
+      <div class="center">
+        <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Log In" tabindex="3">
+      </div>
+    </form>
+  </div>
+  <script type="text/javascript">
+	$(function(){
+ 	 $('#loginform').submit(function(e){
+   	 return false;
+ 	 });
+	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+});
+</script> 
   <!--导航-->
   <div class="row-fluid">
     <div class="span12">
