@@ -66,6 +66,36 @@ $(document).ready(function(){
             }
         }
     });
+	$("#updatepwdForm").validate({
+        rules: {
+            "password":{
+                required: true,
+            },
+			 "confirm_password":{
+                required: true,
+				equalTo: "#password"
+            },
+			"department":{
+                required: true,
+				rangelength: [4, 30]
+            },
+			"position":{
+                required: true
+            }
+        },
+        messages: {
+            "password":{
+                required: "请输入用户名"
+            },
+			"confirm_password":{
+                required: "请输入真实姓名",
+				equalTo: "两次输入密码不一致不一致"
+            },
+			"department":{
+                required: "请输入所属部门"
+            }
+        }
+    });
 });
 </script>
 </head>
@@ -96,24 +126,6 @@ $(document).ready(function(){
       </div>
     </div>
   </div>
-  <!--登录-->
-  <div id="loginmodal" style="display:none;">
-    <h1>User Login</h1>
-    <form id="loginform" name="loginform" method="post" action="${pageContext.request.contextPath}/login.action">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" class="txtfield" tabindex="1">
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" class="txtfield" tabindex="2">
-      <div class="center">
-        <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Log In" tabindex="3">
-      </div>
-    </form>
-  </div>
-  <script type="text/javascript">
-	$(function(){
-	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
-	});
-  </script> 
   <!--导航-->
   <div class="row-fluid">
     <div class="span12">
@@ -132,81 +144,81 @@ $(document).ready(function(){
   </div>
   <!--主体-->
   <div>
-    <table>
-      <tr>
-        <form id="updateinfoForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/register.action">
-          <fieldset>
-            <legend>用户信息更新 <small>(带*号标志为必输项)</small></legend>
-            <div class="control-group">
-              <label class="control-label" for="displayname">* 真实姓名 :</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge" id="displayname" name="displayname">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="department">* 所属部门 :</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge" id="department" name="department">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="position">* 职位 :</label>
-              <div class="controls">
-                <select id="position" class="input-xlarge" name="position">
-                  <option>测试</option>
-                  <option>开发</option>
-                  <option>产品</option>
-                  <option>其他</option>
-                </select>
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="telephone">联系电话 :</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge" id="telephone" name="telephone">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="mobile">移动电话 :</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge" id="mobile" name="mobile">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="othermail">其他邮件 :</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge" id="othermail" name="othermail">
-              </div>
-            </div>
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </fieldset>
-        </form>
-      </tr>
-      <tr>
-        <form id="updatepwdForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/register.action">
-          <fieldset>
-            <legend>用户密码修改</legend>
-            <div class="control-group">
-              <label class="control-label" for="password">* 密码 :</label>
-              <div class="controls">
-                <input type="password" class="input-xlarge" id="password" name="password">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="confirm_password">* 密码确认 :</label>
-              <div class="controls">
-                <input type="password" class="input-xlarge" id="confirm_password" name="confirm_password">
-              </div>
-            </div>
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </fieldset>
-        </form>
-      </tr>
-    </table>
+    <form id="updateinfoForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/updateuserinfo.action">
+      <fieldset>
+        <legend>用户信息更新 <small>(带*号标志为必输项)</small></legend>
+        <div class="control-group">
+          <label class="control-label" for="displayname">* 真实姓名 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="displayname" name="displayname">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="department">* 所属部门 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="department" name="department">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="position">* 职位 :</label>
+          <div class="controls">
+            <select id="position" class="input-xlarge" name="position">
+              <option>测试</option>
+              <option>开发</option>
+              <option>产品</option>
+              <option>其他</option>
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="telephone">联系电话 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="telephone" name="telephone">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="mobile">移动电话 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="mobile" name="mobile">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="othermail">其他邮件 :</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="othermail" name="othermail">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </fieldset>
+    </form>
+    <form id="updatepwdForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/updatepassword.action">
+      <fieldset>
+        <legend>用户密码修改</legend>
+        <div class="control-group">
+          <label class="control-label" for="orignpassword">* 旧密码 :</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge" id="orignpassword" name="orignpassword">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="password">* 新密码 :</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge" id="password" name="password">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="confirm_password">* 密码确认 :</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge" id="confirm_password" name="confirm_password">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </fieldset>
+    </form>
   </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">

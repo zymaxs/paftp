@@ -10,7 +10,7 @@
 
 	<package name="s2sh" extends="struts-default">
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
-			<result name="success" type="redirect">/index.jsp</result>
+			<result name="success" type="redirect">/index_1.jsp</result>
 			<result name="error" type="redirect">/error.jsp</result>
 			<result name="update" type="redirect">/update.jsp</result>
 		</action>

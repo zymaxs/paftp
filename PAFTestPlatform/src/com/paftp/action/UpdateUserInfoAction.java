@@ -26,7 +26,6 @@ public class UpdateUserInfoAction extends ActionSupport{
 	private UserInfoService userInfoService;
 	@Resource
 	private UserService userService;
-	
 	private String password;
 	private String orignpassword;
 	private String department;
@@ -167,5 +166,11 @@ public class UpdateUserInfoAction extends ActionSupport{
 		this.password = password;
 	}
 
-	
+	public String getOrignpassword() {
+		return orignpassword;
+	}
+
+	public void setOrignpassword(String orignpassword) {
+		this.orignpassword = orignpassword;
+	}
 }
