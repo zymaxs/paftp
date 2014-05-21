@@ -24,6 +24,7 @@ public class UpdateUserInfoAction extends ActionSupport{
 
 	@Resource
 	private UserInfoService userInfoService;
+	@Resource
 	private UserService userService;
 	
 	private String password;
