@@ -52,7 +52,7 @@
           <% } else {
 		  User user = (User)session.getAttribute("user");
 		  String name = user.getAlias();%>
-          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name %> </a>| <a href="#loginmodal" id="logout">登出</a></div>
+          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <%=name %> | <a href="#logoutmodal" id="logout">登出</a></div>
           <%}%>
         </div>
         <div class="row-fluid">
@@ -82,9 +82,12 @@
   </div>
   <script type="text/javascript">
 	$(function(){
+ 	 //$('#loginform').submit(function(e){
+   	 //return false;
+ 	 //});
 	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
 	});
-  </script> 
+  </script>  
   <!--导航-->
   <div class="row-fluid">
     <div class="span12">
