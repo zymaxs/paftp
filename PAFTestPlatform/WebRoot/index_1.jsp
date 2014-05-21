@@ -10,8 +10,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
+
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -30,6 +32,7 @@
 	TEXT-DECORATION: none
 }
 </style>
+<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
