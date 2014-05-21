@@ -1,5 +1,5 @@
 
-CREATE TABLE `casestep` (
+CREATE TABLE `testcasestep` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `type` varchar(20) DEFAULT NULL,
  `content` varchar(100) DEFAULT NULL,

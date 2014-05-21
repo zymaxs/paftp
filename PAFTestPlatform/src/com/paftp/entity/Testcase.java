@@ -33,7 +33,7 @@ public class Testcase {
 
 	private Testsuite testsuite;
 
-	private List<CaseContent> caseContents;
+	private List<TestcaseStep> testcaseSteps;
 
 	private List<CaseChangeHistory> caseChangeHistorys;
 
@@ -126,12 +126,12 @@ public class Testcase {
 	}
 
 	@OneToMany(mappedBy = "testcase",cascade = CascadeType.ALL)
-	public List<CaseContent> getCaseContents() {
-		return caseContents;
+	public List<TestcaseStep> getTestcaseSteps() {
+		return testcaseSteps;
 	};
 
-	public void setCaseContents(List<CaseContent> caseContents) {
-		this.caseContents = caseContents;
+	public void setTestcaseSteps(List<TestcaseStep> testcaseSteps) {
+		this.testcaseSteps = testcaseSteps;
 	}
 
 	@OneToMany(mappedBy = "testcase")
@@ -143,7 +143,7 @@ public class Testcase {
 		this.caseChangeHistorys = caseChangeHistorys;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "testsuite_id")
 	public Testsuite getTestsuite() {
 		return testsuite;

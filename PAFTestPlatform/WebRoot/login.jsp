@@ -21,8 +21,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  <form action="${pageContext.request.contextPath}/home/login.action" method="post">
-  	 username：<input type="text" name="username"/> <br/>
+  <form action="${pageContext.request.contextPath}/login.action" method="post">
+  	 username：<input type="text" name="alias"/> <br/>
      password：<input type="password" name="password"/> <br/>
     <input type="submit" value="login"/><input type="reset" value="reset"/>
   </form>

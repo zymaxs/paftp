@@ -9,15 +9,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<% 
-if(request.getAttribute("T_flag")==null) 
-{ 
-request.getRequestDispatcher("home/index.action").forward(request,response);
-//response.sendRedirect("home/index.action"); 
- } 
 
- %> 
 <base href="<%=basePath%>">
+
+<%@ taglib uri="/struts-tags" prefix="s" %>  
 
 <title>My JSP 'index.jsp' starting page</title>
 <meta http-equiv="pragma" content="no-cache">
@@ -31,6 +26,10 @@ request.getRequestDispatcher("home/index.action").forward(request,response);
 </head>
 
 <body>
-
+  <%String s = session.getId(); //获取session ID号 %> <p>你的session对象ID是：</p> <%=s %> 
+  Welcome, <s:property value="#session.user.alias"/> 
+  <form action="${pageContext.request.contextPath}/profile.action" method="post">
+	<input type="submit" value="profile"/>
+  </form>
 </body>
 </html>
