@@ -43,11 +43,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			
 			sessionMap.put("user", user);
 			
-			if (user.getStatus().equals("initial")){
-				user.setStatus("old");
-				userService.updateUser(user);
+			if (user.getStatus().equals("initial"))
 				return "update";
-			}
 			
 			return "success";
 		} else {

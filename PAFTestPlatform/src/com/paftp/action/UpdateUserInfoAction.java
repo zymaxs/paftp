@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
+import com.paftp.service.user.UserService;
 import com.paftp.service.userinfo.UserInfoService;
+import com.paftp.util.Util;
 
 @Controller
 public class UpdateUserInfoAction extends ActionSupport{
@@ -22,7 +24,10 @@ public class UpdateUserInfoAction extends ActionSupport{
 
 	@Resource
 	private UserInfoService userInfoService;
+	private UserService userService;
 	
+	private String password;
+	private String orignpassword;
 	private String department;
 	private String position;
 	private String mobile;
@@ -30,22 +35,47 @@ public class UpdateUserInfoAction extends ActionSupport{
 	private String othermail;
 	private String otherinfo;
 	
-	private Integer userinfoId;
+	private User user;
+	private Util util = new Util();
 
-	public String update(){
+	public String updateUserInfo(){
 		
-		userinfoId = getUserInfoId();
+		user = getSessionUser();
 		
-		if (userinfoId == null || this.getDepartment() == null || this.getPosition() == null)
-			return "error";
+		if (user == null || this.getDepartment() == null || this.getPosition() == null)
+			return "login";
 		
 		UserInfo userInfo = new UserInfo();
-		setUserInfo(userInfo, userinfoId);
+		setUserInfo(userInfo, user.getUserInfo().getId());
 		
 		userInfoService.updateUserInfo(userInfo);
 		
 		return "success";
 		
+	}
+	
+	public String updatePassword(){
+		
+		user = getSessionUser();
+		
+		if (user == null || this.getDepartment() == null || this.getPosition() == null)
+			return "login";
+		
+		String orignpassword_md5 = util.md5Encryption(this.orignpassword);
+		User dbUser = userService.findUserByAliasAndPassword(user.getAlias(), orignpassword_md5);
+		
+		if(dbUser == null)
+			return "error";     //source password error
+			
+		if(user.getStatus().equals("initial"))
+			user.setStatus("old");
+		
+		String password_md5 = util.md5Encryption(this.password);
+		user.setPassword(password_md5);
+				
+		userService.updateUser(user);
+		return "success";
+	
 	}
 	
 	private void setUserInfo(UserInfo userInfo, Integer id){
@@ -60,18 +90,16 @@ public class UpdateUserInfoAction extends ActionSupport{
 		
 	}
 	
-	public Integer getUserInfoId(){
+	public User getSessionUser(){
 		
 		HttpSession session = ServletActionContext.getRequest().getSession(false);  
-		Integer id = null;
 		
         if(session==null || session.getAttribute("user")==null){  
-            return id;  
+            return null;  
         }  
         else{  
         	User user = (User) session.getAttribute("user");
-        	id = user.getUserInfo().getId();
-            return id;  
+            return user;  
         }  
 	}
 	
@@ -125,6 +153,14 @@ public class UpdateUserInfoAction extends ActionSupport{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	
