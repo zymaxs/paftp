@@ -1,11 +1,13 @@
 package com.paftp.action;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.SessionMap;
@@ -61,9 +63,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return "success";
 	}
 
-	public String getbakpwd() {
+	public String getbakpwd() throws IOException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
 
 		if (this.getAlias() == null) {
 			request.setAttribute("error", "Your account can't be empty!");
@@ -76,6 +79,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 		if (user == null) {
 			request.setAttribute("error", "The account is not exist!");
+			response.sendError(1001, "The account is not exist!");
 			return "error";
 		}
 
