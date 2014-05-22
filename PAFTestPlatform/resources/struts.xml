@@ -17,6 +17,10 @@
 		<action name="logout" method="logout" class="com.paftp.action.LoginAction">
 			<result name="success" type="redirect">/login.jsp</result>
 		</action>
+		<action name="getbakpwd" method="getbakpwd" class="com.paftp.action.LoginAction">
+			<result name="success" type="redirect">/login.jsp</result>
+			<result name="error" type="redirect">/error.jsp</result>
+		</action>
 		<action name="register" method="register"
 			class="com.paftp.action.RegisterAction">
 			<result name="success" type="redirect">/reg_success.jsp</result>
