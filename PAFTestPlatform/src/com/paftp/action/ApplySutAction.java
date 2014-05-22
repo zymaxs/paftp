@@ -13,10 +13,13 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.ApplySut;
+import com.paftp.entity.Permission;
 import com.paftp.entity.Role;
 import com.paftp.entity.Sut;
 import com.paftp.entity.User;
 import com.paftp.service.ApplySut.ApplySutService;
+import com.paftp.service.permission.PermissionService;
+import com.paftp.service.role.RoleService;
 import com.paftp.service.sut.SutService;
 
 @Controller
@@ -31,6 +34,10 @@ public class ApplySutAction extends ActionSupport {
 	private ApplySutService applySutService;
 	@Resource
 	private SutService sutService;
+	@Resource
+	private PermissionService permissionService;
+	@Resource
+	private RoleService roleService;
 	private String code;
 	private String name;
 	private String description;
@@ -51,16 +58,18 @@ public class ApplySutAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		if (this.getCode() == null || this.getName() == null)
+		if (this.getCode() == null || this.getName() == null){
+			request.setAttribute("error", "The SUT name or Code can't be empty!");
 			return "error";
+		}
 
 		ApplySut existSuts = applySutService.findApplySutByName(this.getName());
 		if (existSuts != null) {
 			if (existSuts.getUser().getAlias().equals(user.getAlias()))
-				request.setAttribute("exist", "self");
+				request.setAttribute("error", "The system has been applied by yourself!");
 			else
-				request.setAttribute("exist", "all");
-
+				request.setAttribute("error", "The system has been applied by others!");
+			
 			return "exist";
 		}
 
@@ -75,31 +84,26 @@ public class ApplySutAction extends ActionSupport {
 
 	public String approveSut() {
 
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
 		user = getSessionUser();
 
 		if (user == null)
 			return "login";
 
-		if (this.getAction() == null)
+		if (this.getAction() == null){
+			request.setAttribute("error", "Please choose the action for this request!");
 			return "error";
-
+		}
+			
 		ApplySut applySut = new ApplySut();
 		applySut.setUser(user);
 		setApplySut(applySut);
 
 		applySutService.saveApplySut(applySut);
 		
-		Sut sut = new Sut();
-		sut.setCode(this.getCode());
-		sut.setName(this.getName());
-		sut.setDescription(this.getDescription());
-		Role role = new Role();
-		role.setName(this.getName());
-		role.setDescription("The admin role for the system of" + this.getName());
-		List<Role> roles = new ArrayList<Role>();
-		roles.add(role);
-		sut.setRole_results(roles);
-		
+		initialRolePermissions();
+
 		return "success";
 	}
 
@@ -114,7 +118,7 @@ public class ApplySutAction extends ActionSupport {
 
 		request.setAttribute("applySutList",
 				applySutService.findApplySutByUser(user.getId()));
-		
+
 		return "success";
 
 	}
@@ -145,6 +149,72 @@ public class ApplySutAction extends ActionSupport {
 			User user = (User) session.getAttribute("user");
 			return user;
 		}
+	}
+
+	private void initialRolePermissions() {
+		
+		Sut sut = new Sut();
+		sut.setCode(this.getCode());
+		sut.setName(this.getName());
+		sut.setDescription(this.getDescription());
+
+		Role role = null;
+		List<Role> roles = new ArrayList<Role>();
+		Permission permission = null;
+		List<Permission> permissions = null;
+
+		role = new Role();
+		role.setName("manager");
+		role.setDescription("The role for the system of Manager!");
+		permissions = new ArrayList<Permission>();
+		permission = new Permission();
+		permission.setScope("work");
+		permission.setOperation("all");
+		permissions.add(permission);
+		permission = new Permission();
+		permission.setScope("manage");
+		permission.setOperation("all");
+		permissions.add(permission);
+		role.setPermissions(permissions);
+		roles.add(role);
+					
+		sut.setRole_results(roles);
+		sutService.saveSut(sut);		// Save the new system manager
+
+		sut = sutService.findSutByName(this.getName());
+		
+		Role role2 = null;
+		Permission permission2 = null;
+		List<Permission> permissions2 = null;
+		role2 = new Role();
+		role2.setName("worker");
+		role2.setDescription("The role for the system of Worker!");
+		role2.setSut(sut);
+		permissions2 = new ArrayList<Permission>();
+		permission2 = permissionService.findPermissionByScope("work");
+		permissions.add(permission2);
+		role2.setPermissions(permissions2);
+		roleService.saveRole(role2);   // Save the new system worker
+		
+//		Role adminRole = null;
+//		adminRole = new Role();
+//		adminRole.setName("administrator");
+//		adminRole.setDescription("The admin role for the new system!");
+//		adminRole.setSut(sut);
+//		List<Permission> adminPermissions = permissionService.findAllList();
+//		adminRole.setPermissions(adminPermissions);
+//		roleService.saveRole(adminRole);    // Save the new system administrator
+		
+		Role adminRole = null;
+		adminRole = roleService.findRoleByName("administartor");
+		if(adminRole == null){
+			adminRole = new Role();
+			adminRole.setName("administrator");
+			adminRole.setDescription("The admin role for the new system!");
+			roleService.saveRole(adminRole);
+		}
+
+		
 	}
 
 	public String getCode() {
