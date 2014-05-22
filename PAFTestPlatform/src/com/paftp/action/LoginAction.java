@@ -30,6 +30,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	private String alias;
 	private String password;
+	private String originpassword;
+
 	private Util util = new Util();
 	private SessionMap<String, Object> sessionMap;
 
@@ -51,9 +53,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		if (user != null) {
 
 			sessionMap.put("user", user);
-
-			if (user.getStatus().equals("initial"))
-				return "update";
 
 			return "logsuccess";
 		} else {
@@ -94,7 +93,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		//this.sendMail(user);
 		String password_md5 = util.md5Encryption(newpwd);
 		
-		user.setStatus("initial");
 		user.setPassword(password_md5);
 		
 		userService.saveUser(user);
@@ -102,6 +100,36 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return "success";
 	}
 
+	public String changepwd(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		if (this.getAlias() == null || this.getPassword() == null || this.getOriginpassword() == null) {
+			request.setAttribute("error", "Your account or password can't be empty!");
+			return "error";
+		}
+		
+		String orignpassword_md5 = util.md5Encryption(this.getOriginpassword());
+		User dbUser = userService.findUserByAliasAndPassword(this.getAlias(), orignpassword_md5);
+		
+		if(dbUser == null){
+			request.setAttribute("error", "Your orign password or account has not been verified!");
+			return "error";
+		}
+		
+		if(dbUser.getStatus().equals("initial"))
+			dbUser.setStatus("old");
+		
+		String password_md5 = util.md5Encryption(this.password);
+		dbUser.setPassword(password_md5);
+				
+		userService.updateUser(dbUser);
+		
+		sessionMap.put("user", dbUser);
+
+		return "logsuccess";
+	}
+	
 	@Override
 	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub
@@ -135,6 +163,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getOriginpassword() {
+		return originpassword;
+	}
+
+	public void setOriginpassword(String originpassword) {
+		this.originpassword = originpassword;
 	}
 
 	public static String RandomString(int length) {
