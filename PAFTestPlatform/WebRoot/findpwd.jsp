@@ -111,7 +111,7 @@ $().ready(function() {
         <div class="control-group">
           <label class="control-label" for="alias">* 用户名 :</label>
           <div class="controls">
-            <input type="password" class="input-xlarge" id="alias" name="alias">
+            <input type="text" class="input-xlarge" id="alias" name="alias">
           </div>
         </div>
         <div class="form-actions">
