@@ -77,7 +77,7 @@
       <input type="password" name="password" id="password" class="txtfield" tabindex="2">
       <div class="center">
         <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Login" tabindex="3" >
-        <input type="button" name="findpwdbtn" id="findpwdbtn" class="flatbtn-blu hidemodal" value="找回密码" onClick="window.location.href=findpwd.jsp" tabindex="4" >
+        <input type="button" name="findpwdbtn" id="findpwdbtn" class="flatbtn-blu hidemodal" value="找回密码" onClick="window.location.href='findpwd.jsp'" tabindex="4" >
       </div>
     </form>
   </div>
@@ -104,7 +104,7 @@
   </div>
   <!--主体-->
   <div align="center">
-    <h1 onClick="window.location.href=findpwd.jsp">HellWord！</h1>
+    <input type="button" name="findpwdbtn" id="findpwdbtn" class="flatbtn-blu hidemodal" value="找回密码" onClick="window.location.href='findpwd.jsp'" tabindex="4" >
   </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
