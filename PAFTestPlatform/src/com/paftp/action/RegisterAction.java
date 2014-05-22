@@ -1,14 +1,18 @@
 package com.paftp.action;
 
+import java.io.IOException;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
 import com.paftp.service.user.UserService;
+import com.paftp.util.SSHClient;
 import com.paftp.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -35,7 +39,7 @@ public class RegisterAction extends ActionSupport {
 
 	public String register() {
 
-		// HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletRequest request = ServletActionContext.getRequest();
 
 		User user = userService.findUserByAlias(alias);
 
@@ -51,7 +55,11 @@ public class RegisterAction extends ActionSupport {
 		setRegisterInfor(user);
 
 		userService.saveUser(user);
-
+		
+		//this.sendMail(user);
+		
+		request.setAttribute("username", user.getAlias());
+		
 		return "success";
 
 	}
@@ -78,6 +86,19 @@ public class RegisterAction extends ActionSupport {
 		userInfo.setOthermail(this.getOthermail());
 		user.setUserInfo(userInfo);
 
+	}
+	
+	@SuppressWarnings("unused")
+	private Boolean sendMail(User user) throws IOException{
+		SSHClient sshClient = new SSHClient();
+		Boolean success = sshClient.connect("127.0.0.1", "test", "test");
+		
+		if(success){
+			sshClient.execute("");
+			return true;
+		}
+		
+		return false;
 	}
 
 	public String getAlias() {
