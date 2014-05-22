@@ -33,6 +33,13 @@
 	TEXT-DECORATION: none
 }
 </style>
+<script type="text/javascript">
+function loginac() 
+{ 
+document.loginform.action="${pageContext.request.contextPath}/login.action";
+document.loginform.submit();
+} 
+</script>
 </head>
 
 <body>
@@ -70,13 +77,13 @@
     <div align="center">
       <p>用户登录</p>
     </div>
-    <form id="loginform" name="loginform" method="post" action="${pageContext.request.contextPath}/login.action">
+    <form id="loginform" name="loginform" method="post" action="">
       <label for="alias" style="Microsoft YaHei; font-size:12px;">Username:</label>
       <input type="text" name="alias" id="alias" class="txtfield" tabindex="1">
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" class="txtfield" tabindex="2">
       <div class="center">
-        <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Login" tabindex="3" >
+        <input type="button" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Login" tabindex="3" onClick="loginac()">
         <input type="button" name="findpwdbtn" id="findpwdbtn" class="flatbtn-blu hidemodal" value="找回密码" onClick="window.location.href='findpwd.jsp'" tabindex="4" >
       </div>
     </form>

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*,java.util.*,com.paftp.entity.*" errorPage="" %>
+<%%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -48,6 +49,18 @@ $().ready(function() {
     });
 
 });
+</script>
+<script type="text/javascript">
+function changeinipwdac() 
+{ 
+document.updatepwdForm.action="${pageContext.request.contextPath}/login.action";
+document.updatepwdForm.submit();
+} 
+function resendmailac() 
+{ 
+document.updatepwdForm.action="${pageContext.request.contextPath}/getbakpwd.action";
+document.updatepwdForm.submit();
+} 
 </script>
 </head>
 
@@ -108,8 +121,8 @@ $().ready(function() {
           </div>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <input type="button" id="changeinipwd" name="changeinipwd" onClick="changeinipwdac()" class="btn btn-primary" value="修改初始密码">
+          <input type="button" id="resendmai" name="resendmai" onClick="resendmailac()" class="btn btn-primary" value="重新获取邮件">
         </div>
       </fieldset>
     </form>
