@@ -56,10 +56,12 @@ $().ready(function() {
 });
 </script>
 <script type="text/javascript">
-function changeinipwdac() 
+function changepwdac() 
 { 
 document.updatepwdform.action="${pageContext.request.contextPath}/changepwd.action";
-document.updatepwdform.submit();
+ if($("#updatepwdform").valid()){
+     $("#updatepwdform").submit();
+ }
 } 
 function resendmailac() 
 { 
@@ -70,7 +72,6 @@ document.updatepwdform.submit();
 </head>
 
 <body>
-{alias}
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
@@ -110,21 +111,20 @@ document.updatepwdform.submit();
     </div>
   </div>
   <!--主体-->
-
   <div>
     <form id="updatepwdform" name="updatepwdform" class="form-horizontal" method="post" action="">
       <fieldset>
         <legend>用户初始密码修改</legend>
         <div class="control-group">
-          <label class="control-label" for="registername">用户名 :</label>
+          <label class="control-label" for="alias">用户名 :</label>
           <div class="controls">
-          <input type="text" disabled class="input-xlarge" id="registername" name="registername" value="<%=request.getAttribute("alias")%>">
+            <input type="text" readonly="true" class="input-xlarge" id="alias" name="alias" value="<%=request.getAttribute("alias")%>">
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="orignpassword">* 初始密码 :</label>
+          <label class="control-label" for="originpassword">* 初始密码 :</label>
           <div class="controls">
-            <input type="password" class="input-xlarge" id="orignpassword" name="orignpassword">
+            <input type="password" class="input-xlarge" id="originpassword" name="originpassword">
           </div>
         </div>
         <div class="control-group">
@@ -134,7 +134,7 @@ document.updatepwdform.submit();
           </div>
         </div>
         <div class="form-actions">
-          <input type="button" id="changeinipwd" name="changeinipwd" onClick="changeinipwdac()" class="btn btn-primary" value="修改初始密码">
+          <input type="button" id="changepwd" name="changepwd" onClick="changepwdac()" class="btn btn-primary" value="修改初始密码">
           <input type="button" id="resendmai" name="resendmai" onClick="resendmailac()" class="btn btn-primary" value="重新获取邮件">
         </div>
       </fieldset>

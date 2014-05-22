@@ -89,7 +89,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			return "error";
 		}
 
-		String newpwd = "test";
+		String newpwd = "test2";
 		//String newpwd = RandomString(12);
 		//request.setAttribute("newpassword", newpwd);
 		//this.sendMail(user);
@@ -98,6 +98,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		user.setPassword(password_md5);
 		
 		userService.saveUser(user);
+		
+		request.setAttribute("alias", this.getAlias());
 		
 		return "success";
 	}
@@ -129,7 +131,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		
 		sessionMap.put("user", dbUser);
 
-		return "logsuccess";
+		return "success";
 	}
 	
 	@Override
