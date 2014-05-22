@@ -1,4 +1,10 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.util.*,com.paftp.entity.*" errorPage="" %>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ "/";
+%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -30,7 +36,7 @@
 </style>
 <script type="text/javascript">
 $().ready(function() {
- $("#updatepwdForm").validate({
+ $("#updatepwdform").validate({
         rules: {
    orignpassword: "required",
    password: {
@@ -52,13 +58,13 @@ $().ready(function() {
 <script type="text/javascript">
 function changeinipwdac() 
 { 
-document.updatepwdForm.action="${pageContext.request.contextPath}/changepwd.action";
-document.updatepwdForm.submit();
+document.updatepwdform.action="${pageContext.request.contextPath}/changepwd.action";
+document.updatepwdform.submit();
 } 
 function resendmailac() 
 { 
-document.updatepwdForm.action="${pageContext.request.contextPath}/getbakpwd.action";
-document.updatepwdForm.submit();
+document.updatepwdform.action="${pageContext.request.contextPath}/getbakpwd.action";
+document.updatepwdform.submit();
 } 
 </script>
 </head>
@@ -106,7 +112,7 @@ document.updatepwdForm.submit();
   <!--主体-->
 
   <div>
-    <form id="updatepwdForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/updatepassword.action">
+    <form id="updatepwdform" name="updatepwdform" class="form-horizontal" method="post" action="">
       <fieldset>
         <legend>用户初始密码修改</legend>
         <div class="control-group">
