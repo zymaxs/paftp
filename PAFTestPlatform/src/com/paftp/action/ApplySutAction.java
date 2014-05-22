@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
@@ -12,8 +11,11 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.ApplySut;
+import com.paftp.entity.Role;
+import com.paftp.entity.Sut;
 import com.paftp.entity.User;
 import com.paftp.service.ApplySut.ApplySutService;
+import com.paftp.service.sut.SutService;
 
 @Controller
 public class ApplySutAction extends ActionSupport {
@@ -25,6 +27,8 @@ public class ApplySutAction extends ActionSupport {
 
 	@Resource
 	private ApplySutService applySutService;
+	@Resource
+	private SutService sutService;
 	private String code;
 	private String name;
 	private String description;
@@ -82,7 +86,16 @@ public class ApplySutAction extends ActionSupport {
 		setApplySut(applySut);
 
 		applySutService.saveApplySut(applySut);
-
+		
+		Sut sut = new Sut();
+		sut.setCode(this.getCode());
+		sut.setName(this.getName());
+		sut.setDescription(this.getDescription());
+		Role role = new Role();
+		role.setName(this.getName());
+		role.setDescription("The admin role for the system of" + this.getName());
+		
+		
 		return "success";
 	}
 
