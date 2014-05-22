@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*,java.util.*,com.paftp.entity.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -13,6 +13,7 @@
 <link href="css/style.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <style>
 .whitelink A:link {
@@ -73,9 +74,6 @@
   </div>
   <script type="text/javascript">
 	$(function(){
- 	 $('#loginform').submit(function(e){
-   	 return false;
- 	 });
 	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
 	});
   </script> 

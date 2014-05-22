@@ -45,11 +45,11 @@ $(document).ready(function(){
             },
 			 "displayname":{
                 required: true,
-				rangelength: [4, 30]
+				rangelength: [1, 30]
             },
 			"department":{
                 required: true,
-				rangelength: [4, 30]
+				rangelength: [1, 30]
             },
 			"position":{
                 required: true
@@ -60,10 +60,32 @@ $(document).ready(function(){
                 required: "请输入用户名"
             },
 			"displayname":{
-                required: "请输入真实姓名"
+                required: "请输入真实姓名",
+				rangelength: "真实姓名不得超过30个字符"
             },
 			"department":{
-                required: "请输入所属部门"
+                required: "请输入所属部门",
+				rangelength: "部门名称不得超过30个字符"
+            }
+        }
+    });
+	$("#updatepwdForm").validate({
+        rules: {
+            "orignpassword":{
+                required: true,
+            },
+			 "password":{
+                required: true,
+				rangelength: [6, 30]
+            }
+        },
+        messages: {
+            "orignpassword":{
+                required: "请输入旧密码"
+            },
+			"password":{
+                required: "请输入新密码",
+				rangelength: "密码长度6位至16位之间"
             }
         }
     });
@@ -179,12 +201,6 @@ $(document).ready(function(){
           <label class="control-label" for="password">* 新密码 :</label>
           <div class="controls">
             <input type="password" class="input-xlarge" id="password" name="password">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="confirm_password">* 密码确认 :</label>
-          <div class="controls">
-            <input type="password" class="input-xlarge" id="confirm_password" name="confirm_password">
           </div>
         </div>
         <div class="form-actions">
