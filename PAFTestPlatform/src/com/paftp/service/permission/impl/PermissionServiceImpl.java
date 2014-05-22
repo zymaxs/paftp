@@ -1,10 +1,14 @@
 package com.paftp.service.permission.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.entity.Permission;
+import com.paftp.entity.User;
 import com.paftp.service.permission.PermissionService;
 
 @Service("permissionService")
@@ -32,6 +36,18 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public void deletePermission(Permission permission) {
 		baseDAO.delete(permission);
+	}
+
+	@Override
+	public Permission findPermissionByScope(String scope) {
+		// TODO Auto-generated method stub
+		return baseDAO.get(" from permission p where p.scope = ?",
+				new Object[] { scope });
+	}
+	
+	@Override
+	public List<Permission> findAllList() {
+		return baseDAO.find(" from permission p order by p.createTime");
 	}
 
 }

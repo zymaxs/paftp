@@ -70,13 +70,13 @@ public class UpdateUserInfoAction extends ActionSupport{
 		if(dbUser == null)
 			return "error";     //source password error
 			
-		if(user.getStatus().equals("initial"))
-			user.setStatus("old");
+		if(dbUser.getStatus().equals("initial"))
+			dbUser.setStatus("old");
 		
 		String password_md5 = util.md5Encryption(this.password);
-		user.setPassword(password_md5);
+		dbUser.setPassword(password_md5);
 				
-		userService.updateUser(user);
+		userService.updateUser(dbUser);
 		return "success";
 	
 	}
