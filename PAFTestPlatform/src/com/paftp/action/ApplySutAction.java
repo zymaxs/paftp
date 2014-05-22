@@ -100,7 +100,7 @@ public class ApplySutAction extends ActionSupport {
 		applySut.setUser(user);
 		setApplySut(applySut);
 
-		applySutService.saveApplySut(applySut);
+		applySutService.updateApplySut(applySut);
 		
 		initialRolePermissions();
 

@@ -37,7 +37,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	public String login() {
 
-
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
 		User user = null;
@@ -82,7 +81,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 		User user = null;
 
-		user = userService.findUserByAlias(alias);
+		user = userService.findUserByAlias(this.getAlias());
 
 		if (user == null) {
 			request.setAttribute("error", "The account is not exist!");
@@ -97,7 +96,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		
 		user.setPassword(password_md5);
 		
-		userService.saveUser(user);
+		userService.updateUser(user);
 		
 		request.setAttribute("alias", this.getAlias());
 		
