@@ -97,6 +97,7 @@ public class ApplySutAction extends ActionSupport {
 
 		request.setAttribute("applySutList",
 				applySutService.findApplySutByUser(user.getId()));
+		
 		return "success";
 
 	}
