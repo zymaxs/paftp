@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.User;
 import com.paftp.service.user.UserService;
+import com.paftp.util.SSHClient;
 import com.paftp.util.Util;
 
 @Controller
@@ -34,11 +35,16 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	public String login() {
 
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
 		User user = null;
 
-		if (this.getAlias() == null || this.getPassword() == null)
+		if (this.getAlias() == null || this.getPassword() == null){
+			request.setAttribute("error", "Account or Password can't be empty!");
 			return "error";
-
+		}
+			
 		String password_md5 = util.md5Encryption(this.password);
 		user = userService.findUserByAliasAndPassword(alias, password_md5);
 
@@ -49,8 +55,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			if (user.getStatus().equals("initial"))
 				return "update";
 
-			return "success";
+			return "logsuccess";
 		} else {
+			request.setAttribute("error", "Account is not exist!");
 			return "error";
 		}
 
@@ -66,7 +73,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	public String getbakpwd() throws IOException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		HttpServletResponse response = ServletActionContext.getResponse();
 
 		if (this.getAlias() == null) {
 			request.setAttribute("error", "Your account can't be empty!");
@@ -79,19 +85,20 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 		if (user == null) {
 			request.setAttribute("error", "The account is not exist!");
-			response.sendError(1001, "The account is not exist!");
 			return "error";
 		}
 
-		String newpwd = RandomString(12);
-		request.setAttribute("newpassword", newpwd);
+		String newpwd = "test";
+		//String newpwd = RandomString(12);
+		//request.setAttribute("newpassword", newpwd);
+		//this.sendMail(user);
 		String password_md5 = util.md5Encryption(newpwd);
 		
 		user.setStatus("initial");
 		user.setPassword(password_md5);
 		
 		userService.saveUser(user);
-
+		
 		return "success";
 	}
 
@@ -101,6 +108,19 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		this.sessionMap = (SessionMap) session;
 	}
 
+	@SuppressWarnings("unused")
+	private Boolean sendMail(User user) throws IOException{
+		SSHClient sshClient = new SSHClient();
+		Boolean success = sshClient.connect("127.0.0.1", "test", "test");
+		
+		if(success){
+			sshClient.execute("");
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public String getAlias() {
 		return alias;
 	}
