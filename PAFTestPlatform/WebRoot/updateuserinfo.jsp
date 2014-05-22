@@ -16,6 +16,7 @@
 <link href="css/style.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <style>
 .whitelink A:link {
@@ -44,11 +45,11 @@ $(document).ready(function(){
             },
 			 "displayname":{
                 required: true,
-				rangelength: [4, 30]
+				rangelength: [1, 30]
             },
 			"department":{
                 required: true,
-				rangelength: [4, 30]
+				rangelength: [1, 30]
             },
 			"position":{
                 required: true
@@ -59,40 +60,32 @@ $(document).ready(function(){
                 required: "请输入用户名"
             },
 			"displayname":{
-                required: "请输入真实姓名"
+                required: "请输入真实姓名",
+				rangelength: "真实姓名不得超过30个字符"
             },
 			"department":{
-                required: "请输入所属部门"
+                required: "请输入所属部门",
+				rangelength: "部门名称不得超过30个字符"
             }
         }
     });
 	$("#updatepwdForm").validate({
         rules: {
-            "password":{
+            "orignpassword":{
                 required: true,
             },
-			 "confirm_password":{
+			 "password":{
                 required: true,
-				equalTo: "#password"
-            },
-			"department":{
-                required: true,
-				rangelength: [4, 30]
-            },
-			"position":{
-                required: true
+				rangelength: [6, 30]
             }
         },
         messages: {
-            "password":{
-                required: "请输入用户名"
+            "orignpassword":{
+                required: "请输入旧密码"
             },
-			"confirm_password":{
-                required: "请输入真实姓名",
-				equalTo: "两次输入密码不一致不一致"
-            },
-			"department":{
-                required: "请输入所属部门"
+			"password":{
+                required: "请输入新密码",
+				rangelength: "密码长度6位至16位之间"
             }
         }
     });
@@ -193,6 +186,8 @@ $(document).ready(function(){
         </div>
       </fieldset>
     </form>
+  </div>
+  <div>
     <form id="updatepwdForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/updatepassword.action">
       <fieldset>
         <legend>用户密码修改</legend>
@@ -206,12 +201,6 @@ $(document).ready(function(){
           <label class="control-label" for="password">* 新密码 :</label>
           <div class="controls">
             <input type="password" class="input-xlarge" id="password" name="password">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="confirm_password">* 密码确认 :</label>
-          <div class="controls">
-            <input type="password" class="input-xlarge" id="confirm_password" name="confirm_password">
           </div>
         </div>
         <div class="form-actions">
