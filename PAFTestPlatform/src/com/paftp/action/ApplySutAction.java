@@ -1,6 +1,8 @@
 package com.paftp.action;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -94,7 +96,9 @@ public class ApplySutAction extends ActionSupport {
 		Role role = new Role();
 		role.setName(this.getName());
 		role.setDescription("The admin role for the system of" + this.getName());
-		
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(role);
+		sut.setRole_results(roles);
 		
 		return "success";
 	}
