@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*,java.util.*,com.paftp.entity.*" errorPage="" %>
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.util.*,com.paftp.entity.*" errorPage="" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -49,9 +49,22 @@ $().ready(function() {
 
 });
 </script>
+<script type="text/javascript">
+function changeinipwdac() 
+{ 
+document.updatepwdForm.action="${pageContext.request.contextPath}/changepwd.action";
+document.updatepwdForm.submit();
+} 
+function resendmailac() 
+{ 
+document.updatepwdForm.action="${pageContext.request.contextPath}/getbakpwd.action";
+document.updatepwdForm.submit();
+} 
+</script>
 </head>
 
 <body>
+{alias}
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
@@ -91,10 +104,17 @@ $().ready(function() {
     </div>
   </div>
   <!--主体-->
+
   <div>
     <form id="updatepwdForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/updatepassword.action">
       <fieldset>
         <legend>用户初始密码修改</legend>
+        <div class="control-group">
+          <label class="control-label" for="registername">用户名 :</label>
+          <div class="controls">
+          <input type="text" disabled class="input-xlarge" id="registername" name="registername" value="<%=request.getAttribute("alias")%>">
+          </div>
+        </div>
         <div class="control-group">
           <label class="control-label" for="orignpassword">* 初始密码 :</label>
           <div class="controls">
@@ -108,8 +128,8 @@ $().ready(function() {
           </div>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <input type="button" id="changeinipwd" name="changeinipwd" onClick="changeinipwdac()" class="btn btn-primary" value="修改初始密码">
+          <input type="button" id="resendmai" name="resendmai" onClick="resendmailac()" class="btn btn-primary" value="重新获取邮件">
         </div>
       </fieldset>
     </form>

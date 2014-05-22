@@ -58,7 +58,7 @@ public class RegisterAction extends ActionSupport {
 		
 		//this.sendMail(user);
 		
-		request.setAttribute("username", user.getAlias());
+		request.setAttribute("alias", user.getAlias());
 		
 		return "success";
 
