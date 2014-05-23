@@ -24,7 +24,6 @@ public class Role {
 	private List<Permission> permissions;
 	private List<User> users;
 	private Sut sut;
-	private Integer sut_id;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -86,12 +85,4 @@ public class Role {
 		this.sut = sut;
 	}
 
-	@Column(name = "sut_id", length = 11)
-	public Integer getSut_id() {
-		return sut_id;
-	}
-
-	public void setSut_id(Integer sut_id) {
-		this.sut_id = sut_id;
-	}
 }
