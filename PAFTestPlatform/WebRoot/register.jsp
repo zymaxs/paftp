@@ -42,11 +42,11 @@ $(document).ready(function(){
             },
 			 "displayname":{
                 required: true,
-				rangelength: [4, 30]
+				maxlength: 10
             },
 			"department":{
                 required: true,
-				rangelength: [4, 30]
+				maxlength: 15
             },
 			"position":{
                 required: true
@@ -60,10 +60,12 @@ $(document).ready(function(){
                 required: "请输入用户名"
             },
 			"displayname":{
-                required: "请输入真实姓名"
+                required: "请输入真实姓名",
+				maxlength: $.validator.format("真实姓名最大输入不超过十个字符.")
             },
 			"department":{
-                required: "请输入所属部门"
+                required: "请输入所属部门",
+				maxlength: $.validator.format("所属部门最大输入最大输入不超过十五个字符.")
             },
             "othermail":{
                 email:"请输入正确的email地址"

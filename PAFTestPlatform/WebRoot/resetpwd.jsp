@@ -1,4 +1,10 @@
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*,java.util.*,com.paftp.entity.*" errorPage="" %>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ "/";
+%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -34,23 +40,42 @@
 <script type="text/javascript">
 $().ready(function() {
  $("#updatepwdForm").validate({
-        rules: {
-   orignpassword: "required",
-   password: {
-    required: true,
-    rangelength: [6, 30]
-   }
+   rules: {
+   	orignpassword: "required",
+   	npassword: {
+   		required: true,
+   		rangelength: [6, 16]
+   	},
+   	confirm_password: {
+    	required: true,
+    	rangelength: [6, 16],
+		equalTo: "#npassword"
+   	}
   },
-        messages: {
+  messages: {
    orignpassword: "请输入密码",
-   password: {
+   npassword: {
     required: "请输入密码",
-    rangelength: jQuery.format("密码长度6位至16位之间")
+    rangelength: "密码长度6位至16位之间"
+   },
+   confirm_password: {
+    required: "请输入密码",
+    rangelength: "密码长度6位至16位之间",
+	equalTo: "两次输入密码不一致"
    }
   }
-    });
+  });
 
 });
+</script>
+<script type="text/javascript">
+function resetpwdac() 
+{ 
+document.updatepwdForm.action="${pageContext.request.contextPath}/updatepassword.action";
+ if($("#updatepwdForm").valid()){
+     $("#updatepwdForm").submit();
+ }
+}
 </script>
 </head>
 
@@ -116,7 +141,7 @@ $().ready(function() {
   </div>
   <!--主体-->
   <div>
-    <form id="updatepwdForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/updatepassword.action">
+    <form id="updatepwdForm" name="updatepwdForm" class="form-horizontal" method="post" action="">
       <fieldset>
         <legend>用户初始密码修改</legend>
         <div class="control-group">
@@ -126,13 +151,19 @@ $().ready(function() {
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="password">* 新密码 :</label>
+          <label class="control-label" for="npassword">* 新密码 :</label>
           <div class="controls">
-            <input type="password" class="input-xlarge" id="password" name="password">
+            <input type="password" class="input-xlarge" id="npassword" name="password">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="confirm_password">* 确认密码 :</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge" id="confirm_password" name="confirm_password">
           </div>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <input type="button" name="resetpwd" id="resetpwd" class="flatbtn-blu hidemodal" value="修改初始密码" onClick="resetpwdac()">
         </div>
       </fieldset>
     </form>
