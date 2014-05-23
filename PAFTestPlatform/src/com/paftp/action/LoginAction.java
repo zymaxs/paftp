@@ -43,7 +43,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		User user = null;
 
 		if (this.getAlias() == null || this.getPassword() == null){
-			request.setAttribute("error", "Account or Password can't be empty!");
+			request.setAttribute("error", "用户名或密码错误!");
 			return "error";
 		}
 			
@@ -51,6 +51,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		user = userService.findUserByAliasAndPassword(alias, password_md5);
 
 		if (user != null) {
+			user.setUserInfo(user.getUserInfo());
 
 			user.setUserInfo(user.getUserInfo());
 			
@@ -60,7 +61,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 			return "logsuccess";
 		} else {
-			request.setAttribute("error", "Account is not exist!");
+			request.setAttribute("error", "用户名或密码错误!");
 			return "error";
 		}
 
@@ -119,7 +120,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		User dbUser = userService.findUserByAliasAndPassword(this.getAlias(), orignpassword_md5);
 		
 		if(dbUser == null){
-			request.setAttribute("error", "Your orign password or account has not been verified!");
+			request.setAttribute("error", "旧密码错误！");
 			return "error";
 		}
 		

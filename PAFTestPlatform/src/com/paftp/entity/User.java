@@ -101,7 +101,7 @@ public class User {
 		this.updateTime = updateTime;
 	}
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "userinfo_id")
 	public UserInfo getUserInfo() {
 		return userInfo;

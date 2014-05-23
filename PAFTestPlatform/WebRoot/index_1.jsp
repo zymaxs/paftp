@@ -119,6 +119,7 @@
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
                 <li class="active"><a href="index_1.jsp">主页</a></li>
+                <li><a href="sutlist.jsp">SUT申请</a></li>
               </ul>
             </div>
           </div>
@@ -128,9 +129,7 @@
   </div>
   <!--主体-->
   <div align="center">
-    <input type="button" name="findpwdbtn" id="findpwdbtn"
-				class="flatbtn-blu hidemodal" value="找回密码"
-				onClick="window.location.href='findpwd.jsp'" tabindex="4">
+    Hello World!
   </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">

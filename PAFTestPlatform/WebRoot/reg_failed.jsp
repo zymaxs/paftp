@@ -83,9 +83,6 @@ function countDown(secs,surl){
   </div>
   <script type="text/javascript">
 	$(function(){
- 	 $('#loginform').submit(function(e){
-   	 return false;
- 	 });
 	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
 	});
   </script> 
@@ -109,7 +106,8 @@ function countDown(secs,surl){
   <div align="center" style="height:600px">
     <div>
       <p>注册失败！</p>
-      <span id="jumpTo">5</span>秒后自动跳转到注册页面 
+      <p><%=request.getAttribute("error")%></p>
+      <span id="jumpTo">5</span>秒后自动跳转到注册页面! 
       <script type="text/javascript">countDown(5,'http://localhost:8080/PAFTestPlatform/register.jsp');</script> 
     </div>
   </div>
