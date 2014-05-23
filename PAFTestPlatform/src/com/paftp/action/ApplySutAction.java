@@ -78,7 +78,11 @@ public class ApplySutAction extends ActionSupport {
 					"The SUT name or Code can't be empty!");
 			return "error";
 		}
+		
+		applySutService.findAllList();
 
+		System.out.print("Test");
+		
 		ApplySut existSuts = applySutService.findApplySutByName(this.getName());
 		if (existSuts != null) {
 			if (existSuts.getUser().getAlias().equals(user.getAlias())) {

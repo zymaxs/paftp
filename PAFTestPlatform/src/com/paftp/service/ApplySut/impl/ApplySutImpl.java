@@ -16,22 +16,22 @@ import com.paftp.dao.BaseDAO;
 import com.paftp.entity.ApplySut;
 import com.paftp.service.ApplySut.ApplySutService;
 
-@Service("applySutService")
+@Service("ApplySutService")
 public class ApplySutImpl implements ApplySutService{
 
 	@Resource
 	private BaseDAO<ApplySut> baseDAO;
 	
 	@Override
-	public void saveApplySut(ApplySut applySut) {
+	public void saveApplySut(ApplySut ApplySut) {
 		// TODO Auto-generated method stub
-		baseDAO.save(applySut);
+		baseDAO.save(ApplySut);
 	}
 
 	@Override
-	public void updateApplySut(ApplySut applySut) {
+	public void updateApplySut(ApplySut ApplySut) {
 		// TODO Auto-generated method stub
-		baseDAO.update(applySut);
+		baseDAO.update(ApplySut);
 	}
 
 	@Override
@@ -41,35 +41,35 @@ public class ApplySutImpl implements ApplySutService{
 	}
 
 	@Override
-	public void deleteApplySut(ApplySut applySut) {
+	public void deleteApplySut(ApplySut ApplySut) {
 		// TODO Auto-generated method stub
-		baseDAO.delete(applySut);
+		baseDAO.delete(ApplySut);
 	}
 
 	@Override
 	public List<ApplySut> findAllList() {
 		// TODO Auto-generated method stub
-		return baseDAO.find(" from applysut u");
+		return baseDAO.find(" from ApplySut u");
 	}
 
 	@Override
 	public ApplySut findApplySutByName(String name) {
 		// TODO Auto-generated method stub
-		return baseDAO.get(" from applysut u where u.name = ?",
+		return baseDAO.get(" from ApplySut u where u.name = ?",
 				new Object[] { name });
 	}
 
 	@Override
 	public ApplySut findApplySutByUser(Integer userId) {
 		// TODO Auto-generated method stub
-		return baseDAO.get(" from applysut u where u.user_id = ? or u.approver_id = ?",
+		return baseDAO.get(" from ApplySut u where u.user_id = ? or u.approver_id = ?",
 				new Object[] { userId });
 	}
 
 	@Override
 	public List<ApplySut> findAllOrderByColumn(String column ,Integer page, Integer row) {
 		// TODO Auto-generated method stub
-		return baseDAO.find(" from applysut u order by ?", new Object[] {column}, page, row);
+		return baseDAO.find(" from ApplySut u order by ?", new Object[] {column}, page, row);
 	}
 
 	@Override
