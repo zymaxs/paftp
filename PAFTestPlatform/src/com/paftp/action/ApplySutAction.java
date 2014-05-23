@@ -51,13 +51,16 @@ public class ApplySutAction extends ActionSupport {
 	private String description;
 	private Date applytime;
 	private String applyer;
-	
+
 	private Date resolvetime;
 	private String action;
 	private String comment;
 
 	private String starttime;
 	private String endtime;
+
+	private Integer page;
+	private Integer row;
 	
 	private User user;
 
@@ -70,18 +73,21 @@ public class ApplySutAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		if (this.getCode() == null || this.getName() == null){
-			request.setAttribute("error", "The SUT name or Code can't be empty!");
+		if (this.getCode() == null || this.getName() == null) {
+			request.setAttribute("error",
+					"The SUT name or Code can't be empty!");
 			return "error";
 		}
 
 		ApplySut existSuts = applySutService.findApplySutByName(this.getName());
 		if (existSuts != null) {
 			if (existSuts.getUser().getAlias().equals(user.getAlias()))
-				request.setAttribute("error", "The system has been applied by yourself!");
+				request.setAttribute("error",
+						"The system has been applied by yourself!");
 			else
-				request.setAttribute("error", "The system has been applied by others!");
-			
+				request.setAttribute("error",
+						"The system has been applied by others!");
+
 			return "exist";
 		}
 
@@ -97,23 +103,24 @@ public class ApplySutAction extends ActionSupport {
 	public String approveSut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
+
 		user = getSessionUser();
 
 		if (user == null)
 			return "login";
 
-		if (this.getAction() == null){
-			request.setAttribute("error", "Please choose the action for this request!");
+		if (this.getAction() == null) {
+			request.setAttribute("error",
+					"Please choose the action for this request!");
 			return "error";
 		}
-			
+
 		ApplySut applySut = new ApplySut();
 		applySut.setUser(user);
 		setApplySut(applySut);
 
 		applySutService.updateApplySut(applySut);
-		
+
 		initialRolePermissions();
 
 		return "success";
@@ -128,50 +135,59 @@ public class ApplySutAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		List<ApplySut> applySuts = applySutService.findAllOrderByColumn("applytime");
-		
+		List<ApplySut> applySuts = applySutService
+				.findAllOrderByColumn("applytime", this.getPage(), this.getRow());
+
 		request.setAttribute("applySutList", applySuts);
 
 		return "success";
 
 	}
-	
-	public String querySut() throws ParseException{
-		
+
+	public String querySut() throws ParseException {
+
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
 
 		if (user == null)
 			return "login";
-		
+
+		if (this.getApplyer() == null && this.getName() == null
+				&& this.getStarttime() == null && this.getEndtime() == null) {
+			request.setAttribute("error",
+					"You must support one query condition!");
+			return "error";
+		}
+
 		User applyerUser = userService.findUserByAlias(this.getApplyer());
-		
+
 		Integer applyerid = null;
-		if(applyerUser != null){
+		if (applyerUser != null) {
 			applyerid = applyerUser.getId();
 		}
-		
+
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("name", this.getName());
 		conditions.put("user_id", applyerid);
 		conditions.put("starttime", getSQLDate(this.getStarttime()));
 		conditions.put("endtime", getSQLDate(this.getEndtime()));
-		
-		List<ApplySut> applySuts = applySutService.findAllOrderByMultiConditions(conditions);
-		
+
+		List<ApplySut> applySuts = applySutService
+				.findAllOrderByMultiConditions(conditions, this.getPage(), this.getRow());
+
 		request.setAttribute("applySutList", applySuts);
-		
+
 		return "success";
 	}
 
-	public java.sql.Date getSQLDate(String sourcedate) throws ParseException{
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");   
-		java.util.Date date = format.parse(sourcedate);  
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-        return sqlDate;
+	public java.sql.Date getSQLDate(String sourcedate) throws ParseException {
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date = format.parse(sourcedate);
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		return sqlDate;
 	}
-	
+
 	public void setApplySut(ApplySut applySut) {
 
 		this.applytime = new Date();
@@ -201,7 +217,7 @@ public class ApplySutAction extends ActionSupport {
 	}
 
 	private void initialRolePermissions() {
-		
+
 		Sut sut = new Sut();
 		sut.setCode(this.getCode());
 		sut.setName(this.getName());
@@ -226,12 +242,12 @@ public class ApplySutAction extends ActionSupport {
 		permissions.add(permission);
 		role.setPermissions(permissions);
 		roles.add(role);
-					
+
 		sut.setRole_results(roles);
-		sutService.saveSut(sut);		// Save the new system manager
+		sutService.saveSut(sut); // Save the new system manager
 
 		sut = sutService.findSutByName(this.getName());
-		
+
 		Role role2 = null;
 		Permission permission2 = null;
 		List<Permission> permissions2 = null;
@@ -243,27 +259,26 @@ public class ApplySutAction extends ActionSupport {
 		permission2 = permissionService.findPermissionByScope("work");
 		permissions.add(permission2);
 		role2.setPermissions(permissions2);
-		roleService.saveRole(role2);   // Save the new system worker
-		
-//		Role adminRole = null;
-//		adminRole = new Role();
-//		adminRole.setName("administrator");
-//		adminRole.setDescription("The admin role for the new system!");
-//		adminRole.setSut(sut);
-//		List<Permission> adminPermissions = permissionService.findAllList();
-//		adminRole.setPermissions(adminPermissions);
-//		roleService.saveRole(adminRole);    // Save the new system administrator
-		
+		roleService.saveRole(role2); // Save the new system worker
+
+		// Role adminRole = null;
+		// adminRole = new Role();
+		// adminRole.setName("administrator");
+		// adminRole.setDescription("The admin role for the new system!");
+		// adminRole.setSut(sut);
+		// List<Permission> adminPermissions = permissionService.findAllList();
+		// adminRole.setPermissions(adminPermissions);
+		// roleService.saveRole(adminRole); // Save the new system administrator
+
 		Role adminRole = null;
 		adminRole = roleService.findRoleByName("administartor");
-		if(adminRole == null){
+		if (adminRole == null) {
 			adminRole = new Role();
 			adminRole.setName("administrator");
 			adminRole.setDescription("The admin role for the new system!");
 			roleService.saveRole(adminRole);
 		}
 
-		
 	}
 
 	public String getCode() {
@@ -329,7 +344,7 @@ public class ApplySutAction extends ActionSupport {
 	public void setApplyer(String applyer) {
 		this.applyer = applyer;
 	}
-	
+
 	public String getStarttime() {
 		return starttime;
 	}
@@ -345,4 +360,21 @@ public class ApplySutAction extends ActionSupport {
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
 	}
+	
+	public Integer getPage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	public Integer getRow() {
+		return row;
+	}
+
+	public void setRow(Integer row) {
+		this.row = row;
+	}
+	
 }

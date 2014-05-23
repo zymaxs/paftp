@@ -181,7 +181,14 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		return q.executeUpdate();
 	}
 
-	public List<T> findbyconditions(HashMap<String, Object> param){
+	public List<T> findbyconditions(HashMap<String, Object> param, Integer page, Integer row){
+		
+		if (page == null || page < 1) {
+			page = 1;
+		}
+		if (row == null || row < 1) {
+			row = 10;
+		}
 		
 		DetachedCriteria dc = DetachedCriteria.forClass(ApplySut.class);
 		
@@ -208,6 +215,6 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		
 		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
 		
-		return c.list();
+		return c.setFirstResult((page - 1)* row).setMaxResults(row).list();
 	}
 }

@@ -172,6 +172,6 @@ public interface BaseDAO<T> {
 	 */
 	public Integer executeHql(String hql, List<Object> param);
 	
-	public List<T> findbyconditions(HashMap<String, Object> param);
+	public List<T> findbyconditions(HashMap<String, Object> param,  Integer page, Integer row);
 
 }
