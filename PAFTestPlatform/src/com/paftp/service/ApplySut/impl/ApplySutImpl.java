@@ -77,7 +77,7 @@ public class ApplySutImpl implements ApplySutService{
 			HashMap<String, Object> conditions, Integer page, Integer row) {
 		// TODO Auto-generated method stub
 		
-		return baseDAO.findbyconditions(conditions, Integer page, Integer row);
+		return baseDAO.findbyconditions(conditions, page, row);
 	}
 
 
