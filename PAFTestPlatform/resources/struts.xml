@@ -43,7 +43,7 @@
 		<action name="updatepassword" method="updatePassword" class="com.paftp.action.UpdateUserInfoAction">
 			<result name="success">/index_1.jsp</result>
 			<result name="login">/login.jsp</result>
-			<result name="error">/opr_failed.jsp</result>
+			<result name="error">/opr_error.jsp</result>
 		</action>
 		<action name="applySut" method="applySut" class="com.paftp.action.ApplySutAction">
 			<result name="success">/index.jsp</result>

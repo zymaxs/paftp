@@ -10,6 +10,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<%if (session.getAttribute("user")==null){%>
+<Meta http-equiv="refresh" content="0;url='index_1.jsp'; ">
+<%}%>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -40,7 +43,7 @@
 		document.loginform.submit();
 	}
 	function supplysutac() {
-		document.loginform.action = "${pageContext.request.contextPath}/login.action";
+		document.loginform.action = "${pageContext.request.contextPath}/applySut.action";
 		if($("#supplysutform").valid()){
     		 $("#supplysutform").submit();
  		}
@@ -168,7 +171,7 @@ $(document).ready(function(){
   </div>
   <!--主体-->
   <div >
-    <form id="supplysutform" name="supplysutform" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/register.action">
+    <form id="supplysutform" name="supplysutform" class="form-horizontal" method="post" action="">
       <fieldset>
         <legend>接入系统申请 <small>(带*号标志为必输项)</small></legend>
         <div class="control-group">

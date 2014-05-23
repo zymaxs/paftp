@@ -9,9 +9,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<%if (session.getAttribute("user")==null){%>
-<Meta http-equiv="refresh" content="0;url='index_1.jsp'; ">
-<%}%>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -72,9 +69,14 @@ $().ready(function() {
 function resetpwdac() 
 { 
 document.updatepwdForm.action="${pageContext.request.contextPath}/updatepassword.action";
- if($("#updatepwdForm").valid()){
+if (session.getAttribute("user")!=null){
+	if($("#updatepwdForm").valid()){
      $("#updatepwdForm").submit();
+ 	}
  }
+else{
+alert("请登录后再提交表单!");
+}
 }
 </script>
 </head>
