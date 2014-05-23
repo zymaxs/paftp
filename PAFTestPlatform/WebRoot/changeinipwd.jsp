@@ -42,13 +42,23 @@ $().ready(function() {
    password: {
     required: true,
     rangelength: [6, 30]
-   }
+   },
+   	confirm_password: {
+    	required: true,
+    	rangelength: [6, 16],
+		equalTo: "#password"
+   	}
   },
         messages: {
    orignpassword: "请输入密码",
    password: {
     required: "请输入密码",
     rangelength: jQuery.format("密码长度6位至16位之间")
+   },
+   confirm_password: {
+    required: "请输入密码",
+    rangelength: "密码长度6位至16位之间",
+	equalTo: "两次输入密码不一致"
    }
   }
     });
@@ -133,6 +143,12 @@ document.updatepwdform.submit();
             <input type="password" class="input-xlarge" id="password" name="password">
           </div>
         </div>
+        <div class="control-group">
+          <label class="control-label" for="confirm_password">* 确认密码 :</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge" id="confirm_password" name="confirm_password">
+          </div>
+         </div>
         <div class="form-actions">
           <input type="button" id="changepwd" name="changepwd" onClick="changepwdac()" class="btn btn-primary" value="修改初始密码">
           <input type="button" id="resendmai" name="resendmai" onClick="resendmailac()" class="btn btn-primary" value="重新获取邮件">

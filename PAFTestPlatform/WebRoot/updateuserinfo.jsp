@@ -40,32 +40,32 @@
 $(document).ready(function(){
     $("#updateinfoForm").validate({
         rules: {
-            "alias":{
-                required: true,
-            },
 			 "displayname":{
                 required: true,
-				rangelength: [1, 30]
+				maxlength: 10
             },
 			"department":{
                 required: true,
-				rangelength: [1, 30]
+				maxlength: 15
             },
 			"position":{
                 required: true
+            },
+            "othermail":{
+                email:true
             }
         },
         messages: {
-            "alias":{
-                required: "请输入用户名"
-            },
-			"displayname":{
+            "displayname":{
                 required: "请输入真实姓名",
-				rangelength: "真实姓名不得超过30个字符"
+				maxlength: $.validator.format("真实姓名最大输入不超过十个字符.")
             },
 			"department":{
                 required: "请输入所属部门",
-				rangelength: "部门名称不得超过30个字符"
+				maxlength: $.validator.format("所属部门最大输入最大输入不超过十五个字符.")
+            },
+            "othermail":{
+                email:"请输入正确的email地址"
             }
         }
     });
@@ -77,7 +77,12 @@ $(document).ready(function(){
 			 "password":{
                 required: true,
 				rangelength: [6, 30]
-            }
+            },
+   			"confirm_password": {
+    			required: true,
+    			rangelength: [6, 16],
+				equalTo: "#npassword"
+   			}
         },
         messages: {
             "orignpassword":{
@@ -86,7 +91,12 @@ $(document).ready(function(){
 			"password":{
                 required: "请输入新密码",
 				rangelength: "密码长度6位至16位之间"
-            }
+            },
+  			 "confirm_password": {
+   				required: "请输入密码",
+   				rangelength: "密码长度6位至16位之间",
+				equalTo: "两次输入密码不一致"
+   }
         }
     });
 });
@@ -203,6 +213,12 @@ $(document).ready(function(){
             <input type="password" class="input-xlarge" id="password" name="password">
           </div>
         </div>
+        <div class="control-group">
+          <label class="control-label" for="confirm_password">* 确认密码 :</label>
+          <div class="controls">
+            <input type="password" class="input-xlarge" id="confirm_password" name="confirm_password">
+          </div>
+         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
