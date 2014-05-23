@@ -67,17 +67,17 @@ public class ApplySutImpl implements ApplySutService{
 	}
 
 	@Override
-	public List<ApplySut> findAllOrderByColumn(String column) {
+	public List<ApplySut> findAllOrderByColumn(String column ,Integer page, Integer row) {
 		// TODO Auto-generated method stub
-		return baseDAO.find(" from applysut u order by ?", new Object[] {column});
+		return baseDAO.find(" from applysut u order by ?", new Object[] {column}, page, row);
 	}
 
 	@Override
 	public List<ApplySut> findAllOrderByMultiConditions(
-			HashMap<String, Object> conditions) {
+			HashMap<String, Object> conditions, Integer page, Integer row) {
 		// TODO Auto-generated method stub
 		
-		return baseDAO.findbyconditions(conditions);
+		return baseDAO.findbyconditions(conditions, page, row);
 	}
 
 
