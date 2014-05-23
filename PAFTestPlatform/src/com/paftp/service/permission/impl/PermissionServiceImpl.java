@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.entity.Permission;
-import com.paftp.entity.User;
 import com.paftp.service.permission.PermissionService;
 
 @Service("permissionService")
@@ -41,13 +40,13 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public Permission findPermissionByScope(String scope) {
 		// TODO Auto-generated method stub
-		return baseDAO.get(" from permission p where p.scope = ?",
+		return baseDAO.get(" from Permission p where p.scope = ?",
 				new Object[] { scope });
 	}
 	
 	@Override
 	public List<Permission> findAllList() {
-		return baseDAO.find(" from permission p order by p.createTime");
+		return baseDAO.find(" from Permission p order by p.createTime");
 	}
 
 
