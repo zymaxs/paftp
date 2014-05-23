@@ -69,14 +69,10 @@ $().ready(function() {
 function resetpwdac() 
 { 
 document.updatepwdForm.action="${pageContext.request.contextPath}/updatepassword.action";
-if (session.getAttribute("user")!=null){
-	if($("#updatepwdForm").valid()){
-     $("#updatepwdForm").submit();
- 	}
- }
-else{
-alert("请登录后再提交表单!");
+if($("#updatepwdForm").valid()){
+    $("#updatepwdForm").submit();
 }
+
 }
 </script>
 </head>

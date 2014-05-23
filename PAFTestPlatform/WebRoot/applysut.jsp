@@ -10,14 +10,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<%if (session.getAttribute("user")==null){%>
-<Meta http-equiv="refresh" content="0;url='index_1.jsp'; ">
-<%}%>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <style>
 .whitelink A:link {
@@ -38,20 +36,8 @@
 }
 </style>
 <script type="text/javascript">
-	function loginac() {
-		document.loginform.action = "${pageContext.request.contextPath}/login.action";
-		document.loginform.submit();
-	}
-	function supplysutac() {
-		document.loginform.action = "${pageContext.request.contextPath}/applySut.action";
-		if($("#supplysutform").valid()){
-    		 $("#supplysutform").submit();
- 		}
-	}
-</script>
-<script type="text/javascript">
 $(document).ready(function(){
-    $("#supplysutform").validate({
+    $("#applysutform").validate({
         rules: {
             "name":{
                 required: true,
@@ -82,6 +68,23 @@ $(document).ready(function(){
         }
     });
 });
+</script>
+<script type="text/javascript">
+	function loginac() {
+		document.loginform.action = "${pageContext.request.contextPath}/login.action";
+		document.loginform.submit();
+	}
+	function applysutac() {
+		//if (session.getAttribute("user")!=null){
+			document.applysutform.action = "${pageContext.request.contextPath}/applySut.action";
+			if($("#applysutform").valid()){
+    		 $("#applysutform").submit();
+ 			}
+		//}
+		//else{
+		//alert("请登录后再提交表单!");
+		//}
+	}
 </script>
 </head>
 
@@ -171,7 +174,7 @@ $(document).ready(function(){
   </div>
   <!--主体-->
   <div >
-    <form id="supplysutform" name="supplysutform" class="form-horizontal" method="post" action="">
+    <form id="applysutform" name="applysutform" class="form-horizontal" method="post" action="">
       <fieldset>
         <legend>接入系统申请 <small>(带*号标志为必输项)</small></legend>
         <div class="control-group">
@@ -193,7 +196,7 @@ $(document).ready(function(){
           </div>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary" name="submit" id="submit" onClick="supplysutac()">Submit</button>
+          <input type="button" class="btn btn-primary" name="apsut" id="apsut" onClick="applysutac()" value="提交申请">
         </div>
       </fieldset>
     </form>
