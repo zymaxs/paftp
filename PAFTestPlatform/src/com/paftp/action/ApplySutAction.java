@@ -61,7 +61,7 @@ public class ApplySutAction extends ActionSupport {
 
 	private Integer page;
 	private Integer row;
-	
+
 	private User user;
 
 	public String applySut() {
@@ -81,13 +81,13 @@ public class ApplySutAction extends ActionSupport {
 
 		ApplySut existSuts = applySutService.findApplySutByName(this.getName());
 		if (existSuts != null) {
-			if (existSuts.getUser().getAlias().equals(user.getAlias()))
+			if (existSuts.getUser().getAlias().equals(user.getAlias())) {
 				request.setAttribute("error",
 						"The system has been applied by yourself!");
-			else
+			} else {
 				request.setAttribute("error",
 						"The system has been applied by others!");
-
+			}
 			return "exist";
 		}
 
@@ -135,8 +135,8 @@ public class ApplySutAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		List<ApplySut> applySuts = applySutService
-				.findAllOrderByColumn("applytime", this.getPage(), this.getRow());
+		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
+				"applytime", this.getPage(), this.getRow());
 
 		request.setAttribute("applySutList", applySuts);
 
@@ -174,7 +174,8 @@ public class ApplySutAction extends ActionSupport {
 		conditions.put("endtime", getSQLDate(this.getEndtime()));
 
 		List<ApplySut> applySuts = applySutService
-				.findAllOrderByMultiConditions(conditions, this.getPage(), this.getRow());
+				.findAllOrderByMultiConditions(conditions, this.getPage(),
+						this.getRow());
 
 		request.setAttribute("applySutList", applySuts);
 
@@ -192,7 +193,7 @@ public class ApplySutAction extends ActionSupport {
 
 		this.applytime = new Date();
 		this.resolvetime = new Date();
-
+		
 		applySut.setResolvetime(resolvetime);
 		applySut.setAction(this.getAction());
 		applySut.setComment(this.getComment());
@@ -360,7 +361,7 @@ public class ApplySutAction extends ActionSupport {
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
 	}
-	
+
 	public Integer getPage() {
 		return page;
 	}
@@ -376,5 +377,5 @@ public class ApplySutAction extends ActionSupport {
 	public void setRow(Integer row) {
 		this.row = row;
 	}
-	
+
 }

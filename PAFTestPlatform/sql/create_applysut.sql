@@ -6,7 +6,7 @@ CREATE TABLE `applysut` (
     `action` varchar(20) DEFAULT NULL,
     `comment` varchar(200) DEFAULT NULL,
      `user_id` int(11) not NULL,
-     `code` varchar(20) NOT NULL,
+     `code` varchar(20) NOT NULL UNIQUE,
      `name` varchar(100) NOT NULL,
      `description` varchar(200) DEFAULT NULL,
     INDEX user_ind (user_id),

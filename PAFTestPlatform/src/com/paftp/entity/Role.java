@@ -24,6 +24,7 @@ public class Role {
 	private List<Permission> permissions;
 	private List<User> users;
 	private Sut sut;
+
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
 	@GeneratedValue(generator = "generator")
