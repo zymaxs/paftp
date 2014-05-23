@@ -1,7 +1,7 @@
 
 CREATE TABLE `user` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `alias` varchar(30) not NULL,
+    `alias` varchar(30) not NULL UNIQUE,
     `password` varchar(512) not NULL,
     `displayname` varchar(30) default NULL,
     `create_time` datetime not NULL,

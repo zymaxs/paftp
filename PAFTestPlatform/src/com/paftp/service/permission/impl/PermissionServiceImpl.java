@@ -50,4 +50,5 @@ public class PermissionServiceImpl implements PermissionService {
 		return baseDAO.find(" from permission p order by p.createTime");
 	}
 
+
 }

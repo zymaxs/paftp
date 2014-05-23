@@ -45,7 +45,7 @@ public class User {
 		this.id = id;
 	}
 
-	@Column(name = "alias", length = 30)
+	@Column(name = "alias", unique = true, length = 30)
 	public String getAlias() {
 		return alias;
 	}
@@ -111,7 +111,7 @@ public class User {
 		this.userInfo = userInfo;
 	}
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	public List<Role> getRoles() {
 		return roles;

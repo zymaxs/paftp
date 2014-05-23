@@ -49,4 +49,16 @@ public class RoleServiceImpl implements RoleService {
 		return baseDAO.find(" from Role r order by r.id");
 	}
 
+	@Override
+	public List<Role> findRoleBySutId(Integer id) {
+		// TODO Auto-generated method stub
+		return baseDAO.find(" from Role r where r.sut_id = ?", new Object[] {id});
+	}
+
+	@Override
+	public Role findRoleBySutIdAndName(Integer id, String name) {
+		// TODO Auto-generated method stub
+		return baseDAO.get(" from Role r where r.sut_id = ? and r.name = ?", new Object[] {id, name});
+	}
+
 }

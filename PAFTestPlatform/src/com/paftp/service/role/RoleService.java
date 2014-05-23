@@ -13,6 +13,10 @@ public interface RoleService {
 	public Role findRoleById(int id);
 	
 	public Role findRoleByName(String name);
+	
+	public List<Role> findRoleBySutId(Integer id);
+	
+	public Role findRoleBySutIdAndName(Integer id, String name);
 
 	public void deleteRole(Role sut);
 

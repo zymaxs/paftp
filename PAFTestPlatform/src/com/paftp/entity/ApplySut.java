@@ -86,16 +86,6 @@ public class ApplySut {
 		this.user = user;
 	}
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "approver_id")
-	public User getApprover() {
-		return user;
-	}
-	
-	public void setApprover(User user) {
-		this.user = user;
-	}
-	
 	@Column(name = "code", length = 20)
 	public String getCode() {
 		return code;
