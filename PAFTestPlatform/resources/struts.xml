@@ -12,7 +12,7 @@
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
 			<result name="success" type="redirect">/index_1.jsp</result>
 			<result name="logsuccess" >/index_1.jsp</result>
-			<result name="error" type="redirect">/error.jsp</result>
+			<result name="error">/opr_error.jsp</result>
 			<result name="update" type="redirect">/update.jsp</result>
 		</action>
 		<action name="logout" method="logout" class="com.paftp.action.LoginAction">
@@ -20,17 +20,17 @@
 		</action>
 		<action name="changepwd" method="changepwd" class="com.paftp.action.LoginAction">
 			<result name="success" type="redirect">/index_1.jsp</result>
-			<result name="error" type="redirect">/error.jsp</result>
+			<result name="error">/opr_error.jsp</result>
 		</action>
 			<action name="getbakpwd" method="getbakpwd" class="com.paftp.action.LoginAction">
 			<result name="success">/changeinipwd.jsp</result>
-			<result name="error" type="redirect">/error.jsp</result>
+			<result name="error" type="redirect">/opr_error.jsp</result>
 		</action>
 		<action name="register" method="register"
 			class="com.paftp.action.RegisterAction">
 			<result name="success">/changeinipwd.jsp</result>
-			<result name="error" type="redirect">/error.jsp</result>
-			<result name="exist" type="redirect">/reg_failed.jsp</result>
+			<result name="error">/register.jsp</result>
+			<result name="exist">/reg_failed.jsp</result>
 		</action>
 		<action name="index" method="index" class="com.paftp.action.IndexAction">
 			<result name="success">/home.jsp</result>

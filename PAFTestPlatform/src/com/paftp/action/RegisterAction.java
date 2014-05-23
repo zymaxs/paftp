@@ -43,8 +43,10 @@ public class RegisterAction extends ActionSupport {
 
 		User user = userService.findUserByAlias(alias);
 
-		if (user != null)
+		if (user != null) {
+			request.setAttribute("error", "此用户已存在!");
 			return "exist";
+		}
 
 		if (this.getAlias() == null || this.getDepartment() == null
 				|| this.getPosition() == null)
@@ -55,11 +57,11 @@ public class RegisterAction extends ActionSupport {
 		setRegisterInfor(user);
 
 		userService.saveUser(user);
-		
-		//this.sendMail(user);
-		
+
+		// this.sendMail(user);
+
 		request.setAttribute("alias", user.getAlias());
-		
+
 		return "success";
 
 	}
@@ -87,17 +89,17 @@ public class RegisterAction extends ActionSupport {
 		user.setUserInfo(userInfo);
 
 	}
-	
+
 	@SuppressWarnings("unused")
-	private Boolean sendMail(User user) throws IOException{
+	private Boolean sendMail(User user) throws IOException {
 		SSHClient sshClient = new SSHClient();
 		Boolean success = sshClient.connect("127.0.0.1", "test", "test");
-		
-		if(success){
+
+		if (success) {
 			sshClient.execute("");
 			return true;
 		}
-		
+
 		return false;
 	}
 
