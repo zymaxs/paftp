@@ -86,7 +86,7 @@ public class ApplySut {
 		this.user = user;
 	}
 	
-	@Column(name = "code", length = 20)
+	@Column(name = "code",  unique = true, length = 20)
 	public String getCode() {
 		return code;
 	}

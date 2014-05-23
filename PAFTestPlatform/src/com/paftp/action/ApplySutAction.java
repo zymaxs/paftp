@@ -193,7 +193,7 @@ public class ApplySutAction extends ActionSupport {
 
 		this.applytime = new Date();
 		this.resolvetime = new Date();
-
+		
 		applySut.setResolvetime(resolvetime);
 		applySut.setAction(this.getAction());
 		applySut.setComment(this.getComment());
