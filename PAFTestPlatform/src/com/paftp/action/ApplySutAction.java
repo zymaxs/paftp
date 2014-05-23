@@ -93,7 +93,7 @@ public class ApplySutAction extends ActionSupport {
 
 		ApplySut applySut = new ApplySut();
 		applySut.setUser(user);
-		setApplySut(applySut);
+		setApplySut(applySut, true);
 
 		applySutService.saveApplySut(applySut);
 
@@ -117,7 +117,7 @@ public class ApplySutAction extends ActionSupport {
 
 		ApplySut applySut = new ApplySut();
 		applySut.setUser(user);
-		setApplySut(applySut);
+		setApplySut(applySut, false);
 
 		applySutService.updateApplySut(applySut);
 
@@ -189,10 +189,13 @@ public class ApplySutAction extends ActionSupport {
 		return sqlDate;
 	}
 
-	public void setApplySut(ApplySut applySut) {
+	public void setApplySut(ApplySut applySut, Boolean apply) {
 
+		if(apply){
 		this.applytime = new Date();
+		}else{
 		this.resolvetime = new Date();
+		}
 		
 		applySut.setResolvetime(resolvetime);
 		applySut.setAction(this.getAction());
