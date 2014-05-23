@@ -1,15 +1,23 @@
 package com.paftp.dao.impl;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.paftp.dao.BaseDAO;
+import com.paftp.entity.ApplySut;
 
 @Repository("baseDAO")
 @SuppressWarnings("all")
@@ -173,4 +181,33 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		return q.executeUpdate();
 	}
 
+	public List<T> findbyconditions(HashMap<String, Object> param){
+		
+		DetachedCriteria dc = DetachedCriteria.forClass(ApplySut.class);
+		
+		Iterator<Entry<String, Object>> iter = param.entrySet().iterator();
+		
+		int timetag = 0;
+		
+		while(iter.hasNext()){
+			
+			Entry<String, Object> condition = iter.next();     
+			if (condition.getValue() != null) {
+				if(condition.getValue() instanceof Date){
+					if(timetag == 0){
+					dc.add(Restrictions.ge(condition.getKey(),condition.getValue()));
+					timetag = 1;
+					}else{
+						dc.add(Restrictions.le(condition.getKey(),condition.getValue()));
+					}
+				}else{
+		           dc.add(Restrictions.eq(condition.getKey(),condition.getValue()));
+				}
+				}
+		}
+		
+		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
+		
+		return c.list();
+	}
 }

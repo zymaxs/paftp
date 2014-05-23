@@ -1,14 +1,19 @@
 package com.paftp.service.ApplySut.impl;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.entity.ApplySut;
-import com.paftp.entity.User;
 import com.paftp.service.ApplySut.ApplySutService;
 
 @Service("applySutService")
@@ -44,7 +49,7 @@ public class ApplySutImpl implements ApplySutService{
 	@Override
 	public List<ApplySut> findAllList() {
 		// TODO Auto-generated method stub
-		return baseDAO.find(" from applysut u order by u.applytime");
+		return baseDAO.find(" from applysut u");
 	}
 
 	@Override
@@ -59,6 +64,20 @@ public class ApplySutImpl implements ApplySutService{
 		// TODO Auto-generated method stub
 		return baseDAO.get(" from applysut u where u.user_id = ? or u.approver_id = ?",
 				new Object[] { userId });
+	}
+
+	@Override
+	public List<ApplySut> findAllOrderByColumn(String column) {
+		// TODO Auto-generated method stub
+		return baseDAO.find(" from applysut u order by ?", new Object[] {column});
+	}
+
+	@Override
+	public List<ApplySut> findAllOrderByMultiConditions(
+			HashMap<String, Object> conditions) {
+		// TODO Auto-generated method stub
+		
+		return baseDAO.findbyconditions(conditions);
 	}
 
 

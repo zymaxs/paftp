@@ -1,7 +1,11 @@
 package com.paftp.action;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -21,6 +26,7 @@ import com.paftp.service.ApplySut.ApplySutService;
 import com.paftp.service.permission.PermissionService;
 import com.paftp.service.role.RoleService;
 import com.paftp.service.sut.SutService;
+import com.paftp.service.user.UserService;
 
 @Controller
 public class ApplySutAction extends ActionSupport {
@@ -38,15 +44,21 @@ public class ApplySutAction extends ActionSupport {
 	private PermissionService permissionService;
 	@Resource
 	private RoleService roleService;
+	@Resource
+	private UserService userService;
 	private String code;
 	private String name;
 	private String description;
 	private Date applytime;
-
+	private String applyer;
+	
 	private Date resolvetime;
 	private String action;
 	private String comment;
 
+	private String starttime;
+	private String endtime;
+	
 	private User user;
 
 	public String applySut() {
@@ -107,7 +119,7 @@ public class ApplySutAction extends ActionSupport {
 		return "success";
 	}
 
-	public String getSut() {
+	public String initialSut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -116,13 +128,50 @@ public class ApplySutAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		request.setAttribute("applySutList",
-				applySutService.findApplySutByUser(user.getId()));
+		List<ApplySut> applySuts = applySutService.findAllOrderByColumn("applytime");
+		
+		request.setAttribute("applySutList", applySuts);
 
 		return "success";
 
 	}
+	
+	public String querySut() throws ParseException{
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
 
+		user = getSessionUser();
+
+		if (user == null)
+			return "login";
+		
+		User applyerUser = userService.findUserByAlias(this.getApplyer());
+		
+		Integer applyerid = null;
+		if(applyerUser != null){
+			applyerid = applyerUser.getId();
+		}
+		
+		HashMap<String, Object> conditions = new HashMap<String, Object>();
+		conditions.put("name", this.getName());
+		conditions.put("user_id", applyerid);
+		conditions.put("starttime", getSQLDate(this.getStarttime()));
+		conditions.put("endtime", getSQLDate(this.getEndtime()));
+		
+		List<ApplySut> applySuts = applySutService.findAllOrderByMultiConditions(conditions);
+		
+		request.setAttribute("applySutList", applySuts);
+		
+		return "success";
+	}
+
+	public java.sql.Date getSQLDate(String sourcedate) throws ParseException{
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");   
+		java.util.Date date = format.parse(sourcedate);  
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        return sqlDate;
+	}
+	
 	public void setApplySut(ApplySut applySut) {
 
 		this.applytime = new Date();
@@ -271,5 +320,29 @@ public class ApplySutAction extends ActionSupport {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getApplyer() {
+		return applyer;
+	}
+
+	public void setApplyer(String applyer) {
+		this.applyer = applyer;
+	}
+	
+	public String getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+
+	public String getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
 	}
 }

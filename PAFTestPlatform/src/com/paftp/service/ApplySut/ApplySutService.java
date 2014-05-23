@@ -1,5 +1,6 @@
 package com.paftp.service.ApplySut;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.paftp.entity.ApplySut;
@@ -19,5 +20,9 @@ public interface ApplySutService {
 	public void deleteApplySut(ApplySut applySut);
 
 	public List<ApplySut> findAllList();
+	
+	public List<ApplySut> findAllOrderByColumn(String column);
+	
+	public List<ApplySut> findAllOrderByMultiConditions(HashMap<String, Object> conditions);
 
 }

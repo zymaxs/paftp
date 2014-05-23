@@ -1,6 +1,7 @@
 package com.paftp.dao;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -170,5 +171,7 @@ public interface BaseDAO<T> {
 	 * @return
 	 */
 	public Integer executeHql(String hql, List<Object> param);
+	
+	public List<T> findbyconditions(HashMap<String, Object> param);
 
 }
