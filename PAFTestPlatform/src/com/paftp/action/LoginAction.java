@@ -97,7 +97,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		
 		user.setPassword(password_md5);
 		
-		userService.saveUser(user);
+		userService.updateUser(user);
 		
 		request.setAttribute("alias", this.getAlias());
 		
