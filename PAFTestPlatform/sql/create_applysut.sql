@@ -13,9 +13,5 @@ CREATE TABLE `applysut` (
     FOREIGN KEY (user_id)
         REFERENCES user (id)
         ON DELETE no action,
-    INDEX approver_ind (approver_id),
-    FOREIGN KEY (approver_id)
-        REFERENCES user (id)
-        ON DELETE no action,
     PRIMARY KEY (`id`)
 )  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
