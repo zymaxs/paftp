@@ -14,9 +14,13 @@
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<link href="css/easyui/themes/default/easyui.css" rel="stylesheet">
+<link href="css/easyui/themes/icon.css" rel="stylesheet">
+<link href="css/easyui/demo.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -40,6 +44,9 @@
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+	function submitForm(){
+            $('#searchsut').form('submit');
+        }
 </script>
 </head>
 
@@ -128,7 +135,27 @@
     </div>
   </div>
   <!--主体-->
-  
+  <form id="searchsut" name="searchsut" action="">
+    <table width="900px">
+      <tr>
+        <td>系统名</td>
+        <td><input type="text" id="sysname" name="sysname"></td>
+        <td>申请人</td>
+        <td><input type="text" id="applicant" name="applicant"></td>
+      </tr>
+      <tr>
+        <td>Start Date:</td>
+        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'"></td>
+        <td>End Date:</td>
+        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'"></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a></td>
+      </tr>
+    </table>
+    <div id="timebox" class="easyui-calendar"></div>
+  </form>
+  <button type="button" class="btn btn-primary" onClick="window.location.href='applysut.jsp'">申请接入</button>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

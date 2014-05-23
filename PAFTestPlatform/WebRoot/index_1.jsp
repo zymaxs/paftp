@@ -129,9 +129,7 @@
   </div>
   <!--主体-->
   <div align="center">
-    <input type="button" name="findpwdbtn" id="findpwdbtn"
-				class="flatbtn-blu hidemodal" value="找回密码"
-				onClick="window.location.href='findpwd.jsp'" tabindex="4">
+    Hello World!
   </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
