@@ -86,6 +86,7 @@ public class Role {
 		this.sut = sut;
 	}
 
+	@Column(name = "sut_id", length = 11)
 	public Integer getSut_id() {
 		return sut_id;
 	}
