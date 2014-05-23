@@ -43,8 +43,10 @@ public class RegisterAction extends ActionSupport {
 
 		User user = userService.findUserByAlias(alias);
 
-		if (user != null)
+		if (user != null){
+			request.setAttribute("error", "The user is already exist!");
 			return "exist";
+		}
 
 		if (this.getAlias() == null || this.getDepartment() == null
 				|| this.getPosition() == null)

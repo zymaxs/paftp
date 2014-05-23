@@ -24,6 +24,7 @@ public class Role {
 	private List<Permission> permissions;
 	private List<User> users;
 	private Sut sut;
+	private Integer sut_id;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -37,7 +38,7 @@ public class Role {
 		this.id = id;
 	}
 
-	@Column(name = "name", length = 20)
+	@Column(name = "name", unique = true, length = 20)
 	public String getName() {
 		return name;
 	}
@@ -56,7 +57,7 @@ public class Role {
 		this.description = description;
 	}
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	@JoinTable(name = "role_permission", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "permission_id") })
 	public List<Permission> getPermissions() {
 		return permissions;
@@ -83,5 +84,13 @@ public class Role {
 
 	public void setSut(Sut sut) {
 		this.sut = sut;
+	}
+
+	public Integer getSut_id() {
+		return sut_id;
+	}
+
+	public void setSut_id(Integer sut_id) {
+		this.sut_id = sut_id;
 	}
 }

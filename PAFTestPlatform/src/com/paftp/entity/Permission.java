@@ -2,6 +2,7 @@ package com.paftp.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Permission {
 		this.id = id;
 	}
 
-	@Column(name = "scope", length = 20)
+	@Column(name = "scope", unique = true, length = 20)
 	public String getScope() {
 		return scope;
 	}
@@ -48,7 +49,7 @@ public class Permission {
 		this.operation = operation;
 	}
 	
-	@ManyToMany(mappedBy = "permissions")
+	@ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "permissions")
 	public List<Role> getRoles() {
 		return roles;
 	}

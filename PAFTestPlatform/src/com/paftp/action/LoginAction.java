@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.User;
+import com.paftp.entity.UserInfo;
 import com.paftp.service.user.UserService;
 import com.paftp.util.SSHClient;
 import com.paftp.util.Util;
@@ -51,6 +52,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 		if (user != null) {
 
+			user.setUserInfo(user.getUserInfo());
+			
 			sessionMap.put("user", user);
 			if(user.getStatus().equals("initial"))
 				return "update";
