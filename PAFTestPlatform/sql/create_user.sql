@@ -13,6 +13,6 @@ CREATE TABLE `user` (
         REFERENCES userinfo (id)
         ON DELETE no action,
     PRIMARY KEY (`id`)
-)  ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+)  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 

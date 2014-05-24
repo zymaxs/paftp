@@ -12,7 +12,7 @@ CREATE TABLE `user_role` (
         REFERENCES role (id)
         ON DELETE cascade,
     PRIMARY KEY (`id`)
-)  ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+)  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 

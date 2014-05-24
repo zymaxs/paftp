@@ -10,5 +10,8 @@ CREATE TABLE `stressresult` (
  `strategytype_id` int(11) DEFAULT NULL,
  INDEX strategytype_ind (strategytype_id), 
  FOREIGN KEY (strategytype_id) REFERENCES strategytype(id) ON DELETE set null,
+ `sut_id` int(11) DEFAULT NULL,
+ INDEX sut_ind (sut_id), 
+ FOREIGN KEY (sut_id) REFERENCES sut(id) ON DELETE set null,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

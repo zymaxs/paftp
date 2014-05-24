@@ -21,7 +21,6 @@ public class Sut {
 	private String code;
 	private String name;
 	private String description;
-	private Integer group_id;
 	private SutGroup sutgroup;
 	private List<Role> role_results;
 	private List<Testpass> testpass_results;
@@ -82,15 +81,6 @@ public class Sut {
 
 	public void setTestpass_results(List<Testpass> testpass_results) {
 		this.testpass_results = testpass_results;
-	}
-	
-	@Column(name = "group_id", length = 11)
-	public Integer getGroup_id() {
-		return group_id;
-	}
-
-	public void setGroup_id(Integer group_id) {
-		this.group_id = group_id;
 	}
 	
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
