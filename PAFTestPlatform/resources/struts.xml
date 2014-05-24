@@ -36,11 +36,11 @@
 			<result name="success">/home.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="updateuserinfo" method="updateUserInfo" class="com.paftp.action.UpdateUserInfoAction">
+		<action name="updateuserinfo" method="updateUserInfo" class="com.paftp.action.UserProfileAction">
 			<result name="success">/index_1.jsp</result>
 			<result name="login">/login.jsp</result>
 		</action>
-		<action name="updatepassword" method="updatePassword" class="com.paftp.action.UpdateUserInfoAction">
+		<action name="updatepassword" method="updatePassword" class="com.paftp.action.UserProfileAction">
 			<result name="success">/index_1.jsp</result>
 			<result name="login">/login.jsp</result>
 			<result name="error">/opr_error.jsp</result>

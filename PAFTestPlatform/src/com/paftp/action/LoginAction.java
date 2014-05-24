@@ -43,7 +43,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		User user = null;
 
 		if (this.getAlias() == null || this.getPassword() == null){
-			request.setAttribute("error", "ÓÃ»§Ãû»òÃÜÂë´íÎó!");
+			request.setAttribute("error", "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
 			return "error";
 		}
 			
@@ -52,8 +52,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 		if (user != null) {
 			user.setUserInfo(user.getUserInfo());
-
-			user.setUserInfo(user.getUserInfo());
 			
 			sessionMap.put("user", user);
 			if(user.getStatus().equals("initial"))
@@ -61,7 +59,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 			return "logsuccess";
 		} else {
-			request.setAttribute("error", "ÓÃ»§Ãû»òÃÜÂë´íÎó!");
+			request.setAttribute("error", "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
 			return "error";
 		}
 
@@ -120,7 +118,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		User dbUser = userService.findUserByAliasAndPassword(this.getAlias(), orignpassword_md5);
 		
 		if(dbUser == null){
-			request.setAttribute("error", "¾ÉÃÜÂë´íÎó£¡");
+			request.setAttribute("error", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			return "error";
 		}
 		
