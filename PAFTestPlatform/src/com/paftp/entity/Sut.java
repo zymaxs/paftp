@@ -25,7 +25,7 @@ public class Sut {
 	private SutGroup sutgroup;
 	private List<Role> role_results;
 	private List<Testpass> testpass_results;
-	private List<Version> version_results;
+	private List<StressResult> stress_results;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -84,15 +84,6 @@ public class Sut {
 		this.testpass_results = testpass_results;
 	}
 	
-	@OneToMany(mappedBy = "sut")
-	public List<Version> getVersion_results() {
-		return version_results;
-	}
-
-	public void setVersion_results(List<Version> version_results) {
-		this.version_results = version_results;
-	}
-
 	@Column(name = "group_id", length = 11)
 	public Integer getGroup_id() {
 		return group_id;
@@ -103,12 +94,21 @@ public class Sut {
 	}
 	
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	@JoinColumn(name = "sut_id")
+	@JoinColumn(name = "group_id")
 	public SutGroup getSutGroup() {
 		return sutgroup;
 	}
 
 	public void setSutGroup(SutGroup sutgroup) {
 		this.sutgroup = sutgroup;
+	}
+
+	@OneToMany(mappedBy = "sut")
+	public List<StressResult> getStress_results() {
+		return stress_results;
+	}
+
+	public void setStress_results(List<StressResult> stress_results) {
+		this.stress_results = stress_results;
 	}
 }

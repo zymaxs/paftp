@@ -1,15 +1,13 @@
 package com.paftp.entity;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,7 +22,7 @@ public class Version {
 	private String creatorId;
 	private Date updateTime;
 	private String updatorId;
-	private Sut sut;
+	private List<Testpass> testpass_results;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -84,14 +82,14 @@ public class Version {
 	public void setUpdatorId(String updatorId) {
 		this.updatorId = updatorId;
 	}
-	
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	@JoinColumn(name = "sut_id")
-	public Sut getSut() {
-		return sut;
+
+	@OneToMany(mappedBy = "version")
+	public List<Testpass> getTestpass_results() {
+		return testpass_results;
 	}
 
-	public void setSut(Sut sut) {
-		this.sut = sut;
+	public void setTestpass_results(List<Testpass> testpass_results) {
+		this.testpass_results = testpass_results;
 	}
+	
 }

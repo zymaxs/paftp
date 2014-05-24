@@ -31,6 +31,7 @@ public class Testpass {
 	private String failratio;
 	private Sut sut;
 	private List<TestsuiteResult> testsuite_results;
+	private Version version;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -135,6 +136,16 @@ public class Testpass {
 
 	public void setTestsuite_results(List<TestsuiteResult> testsuite_results) {
 		this.testsuite_results = testsuite_results;
+	}
+
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "version_id")
+	public Version getVersion() {
+		return version;
+	}
+
+	public void setVersion(Version version) {
+		this.version = version;
 	}
 
 
