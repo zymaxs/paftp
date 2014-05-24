@@ -4,7 +4,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.dispatcher.SessionMap;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -40,8 +39,7 @@ public class UserProfileAction extends ActionSupport{
 	private User updatedUser; 
 	private Util util = new Util();
 	
-
-	private SessionMap<String, Object> sessionMap;
+	private HttpSession session;
 
 	public String updateUserInfo(){
 		
@@ -58,8 +56,7 @@ public class UserProfileAction extends ActionSupport{
 		
 		userInfoService.updateUserInfo(userInfo);
 		
-		sessionMap.remove("user");
-		sessionMap.put("user", updatedUser);
+		setSession("user", updatedUser);
 		
 		return "success";
 		
@@ -85,6 +82,7 @@ public class UserProfileAction extends ActionSupport{
 		dbUser.setPassword(password_md5);
 				
 		userService.updateUser(dbUser);
+		
 		return "success";
 	
 	}
@@ -107,7 +105,7 @@ public class UserProfileAction extends ActionSupport{
 	
 	public User getSessionUser(){
 		
-		HttpSession session = ServletActionContext.getRequest().getSession(false);  
+		session = ServletActionContext.getRequest().getSession(false);  
 		
         if(session==null || session.getAttribute("user")==null){  
             return null;  
@@ -116,6 +114,15 @@ public class UserProfileAction extends ActionSupport{
         	User user = (User) session.getAttribute("user");
             return user;  
         }  
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void setSession(String key, Object content){
+		
+		session = ServletActionContext.getRequest().getSession(false);
+		
+		session.removeAttribute(key);
+		session.putValue(key, content);
 	}
 	
 	public String getDepartment() {
