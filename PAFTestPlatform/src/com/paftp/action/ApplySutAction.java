@@ -62,6 +62,8 @@ public class ApplySutAction extends ActionSupport {
 	private Integer page;
 	private Integer row;
 
+	private Boolean isAdmin;
+	
 	private User user;
 
 	public String applySut() {
@@ -109,14 +111,23 @@ public class ApplySutAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
+		this.isAdmin = this.isAdmin(user.getAlias());
+		
 		if (this.getAction() == null) {
 			request.setAttribute("error",
 					"Please choose the action for this request!");
 			return "error";
 		}
+		
+		if (!this.isAdmin){
+			request.setAttribute("error", "You are not the admin to do this!");
+			return "error";
+		}
 
+		User applyerUser = userService.findUserByAlias(this.getApplyer());
+		
 		ApplySut applySut = new ApplySut();
-		applySut.setUser(user);
+		applySut.setUser(applyerUser);
 		setApplySut(applySut, false);
 
 		applySutService.updateApplySut(applySut);
@@ -134,6 +145,13 @@ public class ApplySutAction extends ActionSupport {
 
 		if (user == null)
 			return "login";
+		
+		this.isAdmin = this.isAdmin(user.getAlias());
+		if (isAdmin){
+			request.setAttribute("isAdmin", "true");
+		}else{
+			request.setAttribute("isAdmin", "false");
+		}
 
 		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
 				"applytime", this.getPage(), this.getRow());
@@ -274,15 +292,17 @@ public class ApplySutAction extends ActionSupport {
 		// adminRole.setPermissions(adminPermissions);
 		// roleService.saveRole(adminRole); // Save the new system administrator
 
-		Role adminRole = null;
-		adminRole = roleService.findRoleByName("administartor");
-		if (adminRole == null) {
-			adminRole = new Role();
-			adminRole.setName("administrator");
-			adminRole.setDescription("The admin role for the new system!");
-			roleService.saveRole(adminRole);
+	}
+	
+	private Boolean isAdmin(String alias) {
+		user = userService.findUserByAlias(alias);
+		List<Role> roles = user.getRoles();
+		for (int i = 0; i < roles.size(); i++) {
+			if (roles.get(i).getName().equals("administrator")) {
+				return true;
+			}
 		}
-
+		return false;
 	}
 
 	public String getCode() {
