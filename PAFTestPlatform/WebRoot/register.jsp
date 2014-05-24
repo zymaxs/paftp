@@ -53,6 +53,12 @@ $(document).ready(function(){
             },
             "othermail":{
                 email:true
+            },
+            "telephone":{
+                digits:true
+            },
+            "mobile":{
+                digits:true
             }
         },
         messages: {
@@ -69,10 +75,22 @@ $(document).ready(function(){
             },
             "othermail":{
                 email:"请输入正确的email地址"
+            },
+            "telephone":{
+                digits: "请输入数字"
+            },
+            "telephone":{
+                email:"请输入数字"
             }
         }
     });
 });
+</script>
+<script type="text/javascript">
+	function loginac() {
+		document.loginform.action = "${pageContext.request.contextPath}/login.action";
+		document.loginform.submit();
+	}
 </script>
 </head>
 
@@ -108,7 +126,13 @@ $(document).ready(function(){
       <label for="password">Password:</label>
       <input type="password" name="password" id="password" class="txtfield" tabindex="2">
       <div class="center">
-        <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Log In" tabindex="3">
+        <input type="button" name="loginbtn" id="loginbtn"
+						class="flatbtn-blu hidemodal" value="Login" tabindex="3"
+						onClick="loginac()">
+        <input type="button"
+						name="findpwdbtn" id="findpwdbtn" class="flatbtn-blu hidemodal"
+						value="找回密码" onClick="window.location.href='findpwd.jsp'"
+						tabindex="4">
       </div>
     </form>
   </div>
@@ -141,8 +165,8 @@ $(document).ready(function(){
         <div class="control-group">
           <label class="control-label" for="alias">* 用户名 :</label>
           <div class="controls">
-            <input type="text" class="input-xlarge" id="alias" name="alias">
-            <p class="help-block">请使用各自Alias进行注册，注册完成后将发送密码至平安邮箱。并请各自首次登录完成密码修改。</p>
+            <input type="text" class="input-xlarge" id="alias" name="alias">@pingan.com.cn
+            <p class="help-block">请使用自己的域账号进行注册，初始密码将发送至你的平安邮箱。请在首次登录时完成密码修改。</p>
           </div>
         </div>
         <div class="control-group">
@@ -187,7 +211,7 @@ $(document).ready(function(){
           </div>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">保存</button>
         </div>
       </fieldset>
     </form>
