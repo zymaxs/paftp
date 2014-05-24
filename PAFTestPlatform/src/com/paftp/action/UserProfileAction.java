@@ -116,13 +116,13 @@ public class UserProfileAction extends ActionSupport{
         }  
 	}
 	
-	@SuppressWarnings("deprecation")
+	
 	private void setSession(String key, Object content){
 		
 		session = ServletActionContext.getRequest().getSession(false);
 		
 		session.removeAttribute(key);
-		session.putValue(key, content);
+		session.setAttribute(key, content);
 	}
 	
 	public String getDepartment() {
