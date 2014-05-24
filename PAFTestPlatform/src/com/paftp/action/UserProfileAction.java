@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.SessionMap;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -14,7 +15,7 @@ import com.paftp.service.userinfo.UserInfoService;
 import com.paftp.util.Util;
 
 @Controller
-public class UpdateUserInfoAction extends ActionSupport{
+public class UserProfileAction extends ActionSupport{
 
 	/**
 	 * Lei Lei 
@@ -36,7 +37,11 @@ public class UpdateUserInfoAction extends ActionSupport{
 	private String otherinfo;
 	
 	private User user;
+	private User updatedUser; 
 	private Util util = new Util();
+	
+
+	private SessionMap<String, Object> sessionMap;
 
 	public String updateUserInfo(){
 		
@@ -49,9 +54,12 @@ public class UpdateUserInfoAction extends ActionSupport{
 			return "error";
 		
 		UserInfo userInfo = new UserInfo();
-		setUserInfo(userInfo, user.getUserInfo().getId());
+		updatedUser = setUserInfo(user, userInfo, user.getUserInfo().getId());
 		
 		userInfoService.updateUserInfo(userInfo);
+		
+		sessionMap.remove("user");
+		sessionMap.put("user", updatedUser);
 		
 		return "success";
 		
@@ -81,7 +89,7 @@ public class UpdateUserInfoAction extends ActionSupport{
 	
 	}
 	
-	private void setUserInfo(UserInfo userInfo, Integer id){
+	private User setUserInfo(User user, UserInfo userInfo, Integer id){
 		
 		userInfo.setId(id);
 		userInfo.setDepartment(this.getDepartment());
@@ -90,6 +98,10 @@ public class UpdateUserInfoAction extends ActionSupport{
 		userInfo.setPosition(this.getPosition());
 		userInfo.setOthermail(this.getOtherinfo());
 		userInfo.setOtherinfo(this.getOtherinfo());
+		
+		user.setUserInfo(userInfo);
+
+		return user;
 		
 	}
 	
