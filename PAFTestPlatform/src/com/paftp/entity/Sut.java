@@ -2,10 +2,14 @@ package com.paftp.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -18,6 +22,7 @@ public class Sut {
 	private String name;
 	private String description;
 	private Integer group_id;
+	private SutGroup sutgroup;
 	private List<Role> role_results;
 	private List<Testpass> testpass_results;
 	private List<Version> version_results;
@@ -95,5 +100,15 @@ public class Sut {
 
 	public void setGroup_id(Integer group_id) {
 		this.group_id = group_id;
+	}
+	
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "sut_id")
+	public SutGroup getSutGroup() {
+		return sutgroup;
+	}
+
+	public void setSutGroup(SutGroup sutgroup) {
+		this.sutgroup = sutgroup;
 	}
 }

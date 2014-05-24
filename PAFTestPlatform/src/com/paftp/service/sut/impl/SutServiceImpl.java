@@ -16,13 +16,13 @@ public class SutServiceImpl implements SutService {
 	private BaseDAO<Sut> baseDAO;
 
 	@Override
-	public void saveSut(Sut testcase) {
-		baseDAO.save(testcase);
+	public void saveSut(Sut sut) {
+		baseDAO.save(sut);
 	}
 
 	@Override
-	public void updateSut(Sut testcase) {
-		baseDAO.update(testcase);
+	public void updateSut(Sut sut) {
+		baseDAO.update(sut);
 	}
 
 	@Override
