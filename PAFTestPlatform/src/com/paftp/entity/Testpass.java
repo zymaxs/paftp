@@ -29,7 +29,7 @@ public class Testpass {
 	private Integer total;
 	private String passratio;
 	private String failratio;
-	private Sut sut;
+	private Suts sut;
 	private List<TestsuiteResult> testsuite_results;
 	private Version version;
 
@@ -121,11 +121,11 @@ public class Testpass {
 
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "sut_id")
-	public Sut getSut() {
+	public Suts getSut() {
 		return sut;
 	}
 
-	public void setSut(Sut sut) {
+	public void setSut(Suts sut) {
 		this.sut = sut;
 	}
 

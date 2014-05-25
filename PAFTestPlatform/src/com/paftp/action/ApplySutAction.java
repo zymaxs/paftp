@@ -20,7 +20,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.ApplySut;
 import com.paftp.entity.Permission;
 import com.paftp.entity.Role;
-import com.paftp.entity.Sut;
+import com.paftp.entity.Suts;
 import com.paftp.entity.User;
 import com.paftp.service.ApplySut.ApplySutService;
 import com.paftp.service.permission.PermissionService;
@@ -240,7 +240,7 @@ public class ApplySutAction extends ActionSupport {
 
 	private void initialRolePermissions() {
 
-		Sut sut = new Sut();
+		Suts sut = new Suts();   //Rayleigh
 		sut.setCode(this.getCode());
 		sut.setName(this.getName());
 		sut.setDescription(this.getDescription());

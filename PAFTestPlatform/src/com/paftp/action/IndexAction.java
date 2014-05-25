@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
+import com.paftp.entity.Suts;
 import com.paftp.entity.TestcaseStep;
-import com.paftp.entity.Sut;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.Testsuite;
 import com.paftp.entity.User;
@@ -59,21 +59,21 @@ public class IndexAction extends ActionSupport {
 			user.setCreateTime(date);
 			user.setPassword("123");
 			UserInfo userInfo = new UserInfo();
-			userInfo.setPosition("²âÊÔ");
-			userInfo.setDepartment("¿Æ¼¼ÖÐÐÄ");
+			userInfo.setPosition("ï¿½ï¿½ï¿½ï¿½");
+			userInfo.setDepartment("ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ï¿½");
 			user.setUserInfo(userInfo);
 			user.setStatus("intial");
-			user.setDisplayName("¶Î¾Ó¶¦");
+			user.setDisplayName("ï¿½Î¾Ó¶ï¿½");
 			userService.saveUser(user);
 
 		}
 		// create sut: MTP
-		Sut sut = sutService.findSutByCode("MTP");
+		Suts sut = sutService.findSutByCode("MTP");  //Rayleigh
 		if (sut == null) {
-			sut = new Sut();
+			sut = new Suts();   //Rayleigh
 			sut.setCode("MTP");
-			sut.setName("ÒÆ¶¯½ÓÈëÆ½Ì¨");
-			sut.setDescription("ÊÖ»ú½ÓÈëÇ°ÖÃ£¬ÓÃÓÚ¸ôÀëÍâÍøÓëÄÚÍø");
+			sut.setName("ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½Æ½Ì¨");
+			sut.setDescription("ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Ã£ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			sutService.saveSut(sut);
 		}
 
@@ -105,7 +105,7 @@ public class IndexAction extends ActionSupport {
 				// create casecontent
 				TestcaseStep testcasestep = new TestcaseStep();
 
-				String content = "²Ù×÷" + j + ":xxxxx";
+				String content = "ï¿½ï¿½ï¿½ï¿½" + j + ":xxxxx";
 				testcasestep.setContent(content);
 				testcasestep.setType("step");
 				testcasestep.setTestcase(testcase);

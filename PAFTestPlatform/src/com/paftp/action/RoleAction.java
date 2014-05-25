@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.Permission;
 import com.paftp.entity.Role;
-import com.paftp.entity.Sut;
+import com.paftp.entity.Suts;
 import com.paftp.entity.User;
 import com.paftp.service.permission.PermissionService;
 import com.paftp.service.role.RoleService;
@@ -130,7 +130,7 @@ public class RoleAction extends ActionSupport {
 		List<Role> managerRoles = userService.findUserByAlias(alias).getRoles();
 		for (int i = 0; i < managerRoles.size(); i++) {
 			if (managerRoles.get(i).getName().equals("administator")) {
-				List<Sut> suts = sutService.findAllList();
+				List<Suts> suts = sutService.findAllList();  //Rayleigh
 				for (int j = 0; j < suts.size(); j++) {
 					sut_names.add(j, suts.get(j).getName());
 				}
