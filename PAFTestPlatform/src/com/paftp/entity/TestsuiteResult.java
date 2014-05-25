@@ -21,6 +21,7 @@ public class TestsuiteResult {
 	private String suitename;
 	private String description;
 	private Testpass testpass;
+	private Testsuite testsuite;
 	private List<TestcaseResult> testcase_results;
 	
 	@Id
@@ -61,6 +62,16 @@ public class TestsuiteResult {
 	
 	public void setTestpass(Testpass testpass) {
 		this.testpass = testpass;
+	}
+	
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "testsuite_id")
+	public Testsuite getTestsuite() {
+		return testsuite;
+	}
+	
+	public void setTestsuite(Testsuite testsuite) {
+		this.testsuite = testsuite;
 	}
 	
 	@OneToMany(mappedBy = "testsuite_result")

@@ -22,6 +22,7 @@ public class TestcaseResult {
 	private String description;
 	private String casetype;
 	private Boolean ispass;
+	private Testcase testcase;
 	private TestsuiteResult testsuite_result;
 	private List<TestcaseResultContent> testcaseresult_contents;
 	
@@ -81,6 +82,16 @@ public class TestcaseResult {
 	
 	public void setTestsuite_result(TestsuiteResult testsuite_result) {
 		this.testsuite_result = testsuite_result;
+	}
+	
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "testcase_id")
+	public Testcase getTestcase() {
+		return testcase;
+	}
+	
+	public void setTestcase(Testcase testcase) {
+		this.testcase = testcase;
 	}
 	
 	@OneToMany(mappedBy = "testcase_result")

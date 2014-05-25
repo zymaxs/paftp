@@ -36,6 +36,8 @@ public class Testcase {
 	private List<TestcaseStep> testcaseSteps;
 
 	private List<CaseChangeHistory> caseChangeHistorys;
+	
+	private List<TestcaseResult> testcase_results;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -151,6 +153,15 @@ public class Testcase {
 
 	public void setTestsuite(Testsuite testsuite) {
 		this.testsuite = testsuite;
+	}
+	
+	@OneToMany(mappedBy = "testcase")
+	public List<TestcaseResult> getTestcase_results() {
+		return testcase_results;
+	}
+	
+	public void setTestcase_results(List<TestcaseResult> testcase_results) {
+		this.testcase_results = testcase_results;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.paftp.entity;
 
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ public class Testsuite {
 	private String name;
 	private Sut sut;
 	private List<Testcase> testcases;
+	private List<TestsuiteResult> testsuite_results;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -59,6 +61,15 @@ public class Testsuite {
 
 	public void setSut(Sut sut2) {
 		this.sut = sut2;
+	}
+	
+	@OneToMany(mappedBy = "testsuite")
+	public List<TestsuiteResult> getTestsuite_results() {
+		return testsuite_results;
+	}
+
+	public void setTestsuite_results(List<TestsuiteResult> testsuite_results) {
+		this.testsuite_results = testsuite_results;
 	}
 
 }

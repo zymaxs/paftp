@@ -3,6 +3,9 @@ CREATE TABLE `testsuiteresult`(
 	`suitename` varchar(50) DEFAULT NULL,
 	`description` varchar(150) DEFAULT NULL,
 	`testpass_id` int(11) DEFAULT NULL,
+	`testsuite_id` int(11) DEFAULT NULL,
+	INDEX testsuite_ind (testsuite_id),
+	FOREIGN KEY (testsuite_id) REFERENCES testsuite(id) ON DELETE NO ACTION,
 	INDEX testpass_ind (testpass_id), 
 	FOREIGN KEY (testpass_id) REFERENCES testpass(id) ON DELETE cascade,
 	PRIMARY KEY (`id`)

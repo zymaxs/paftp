@@ -48,3 +48,30 @@ DROP COLUMN `passratio`,
 DROP COLUMN `total`,
 DROP COLUMN `failcount`,
 DROP COLUMN `passcount`;
+
+ALTER TABLE `paftp`.`testcaseresult` 
+ADD COLUMN `testcase_id` INT(11) NULL DEFAULT NULL AFTER `testsuite_id`;
+
+ALTER TABLE `paftp`.`testcaseresult` 
+ADD INDEX `testcaseid_idx` (`testcase_id` ASC);
+ALTER TABLE `paftp`.`testcaseresult` 
+ADD CONSTRAINT `testcaseid`
+  FOREIGN KEY (`testcase_id`)
+  REFERENCES `paftp`.`testcase` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+  
+ALTER TABLE `paftp`.`testsuiteresult` 
+ADD COLUMN `testsuite_id` INT(11) NULL DEFAULT NULL AFTER `testpass_id`;
+
+
+ALTER TABLE `paftp`.`testsuiteresult` 
+ADD INDEX `testsuiteid_idx` (`testsuite_id` ASC);
+ALTER TABLE `paftp`.`testsuiteresult` 
+ADD CONSTRAINT `testsuiteid`
+  FOREIGN KEY (`testsuite_id`)
+  REFERENCES `paftp`.`testsuite` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+  
