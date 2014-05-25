@@ -244,9 +244,11 @@ public class ApplySutAction extends ActionSupport {
 		sut.setCode(this.getCode());
 		sut.setName(this.getName());
 		sut.setDescription(this.getDescription());
-
+		sutService.saveSut(sut); 
+		
+		sut = sutService.findSutByName(this.getName());
+		
 		Role role = null;
-		List<Role> roles = new ArrayList<Role>();
 		Permission permission = null;
 		List<Permission> permissions = null;
 
@@ -263,12 +265,8 @@ public class ApplySutAction extends ActionSupport {
 		permission.setOperation("all");
 		permissions.add(permission);
 		role.setPermissions(permissions);
-		roles.add(role);
-
-		sut.setRole_results(roles);
-		sutService.saveSut(sut); // Save the new system manager
-
-		sut = sutService.findSutByName(this.getName());
+		role.setSut(sut);
+		roleService.saveRole(role);
 
 		Role role2 = null;
 		Permission permission2 = null;
@@ -281,6 +279,7 @@ public class ApplySutAction extends ActionSupport {
 		permission2 = permissionService.findPermissionByScope("work");
 		permissions.add(permission2);
 		role2.setPermissions(permissions2);
+		role2.setSut(sut);
 		roleService.saveRole(role2); // Save the new system worker
 
 		// Role adminRole = null;
