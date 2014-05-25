@@ -56,13 +56,20 @@
 			<result name="error">/error.jsp</result>
 			<result name="login">/login.jsp</result>
 		</action>
-		<action name="initialSut" method="initialSut" class="com.paftp.action.ApplySutAction">
+		<action name="initialSuts" method="initialSuts" class="com.paftp.action.ApplySutAction">
+			<result name="success">/index.jsp</result>
+			<result name="login">/login.jsp</result>
+		</action>
+			<action name="initialSut" method="initialSut" class="com.paftp.action.ApplySutAction">
 			<result name="success">/index.jsp</result>
 			<result name="login">/login.jsp</result>
 		</action>
 		<action name="querySut" method="querySut" class="com.paftp.action.ApplySutAction">
 			<result name="success">/index.jsp</result>
 			<result name="login">/login.jsp</result>
+		</action>
+		<action name="userinfo" method="userinfo" class="com.paftp.action.StaticAction">
+			<result name="success">/index.jsp</result>
 		</action>
 
 	</package>

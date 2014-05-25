@@ -10,5 +10,7 @@ public interface UserInfoService {
 	public void updateUserInfo(UserInfo userinfo);
 
 	public UserInfo findUserInfoById(int id);
+	
+	
 
 }

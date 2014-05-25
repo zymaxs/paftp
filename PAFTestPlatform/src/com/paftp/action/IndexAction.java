@@ -59,8 +59,8 @@ public class IndexAction extends ActionSupport {
 			user.setCreateTime(date);
 			user.setPassword("123");
 			UserInfo userInfo = new UserInfo();
-			userInfo.setPosition("����");
-			userInfo.setDepartment("�Ƽ�����");
+//			userInfo.setPositionId(1);
+//			userInfo.setDepartmentId(1);
 			user.setUserInfo(userInfo);
 			user.setStatus("intial");
 			user.setDisplayName("�ξӶ�");

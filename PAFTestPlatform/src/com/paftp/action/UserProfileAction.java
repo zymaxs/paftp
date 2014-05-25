@@ -9,6 +9,10 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
+import com.paftp.entity.UserinfoDepartment;
+import com.paftp.entity.UserinfoPosition;
+import com.paftp.service.StaticColumn.UserinfoDepartmentService;
+import com.paftp.service.StaticColumn.UserinfoPositionService;
 import com.paftp.service.user.UserService;
 import com.paftp.service.userinfo.UserInfoService;
 import com.paftp.util.Util;
@@ -26,10 +30,14 @@ public class UserProfileAction extends ActionSupport{
 	private UserInfoService userInfoService;
 	@Resource
 	private UserService userService;
+	@Resource
+	private UserinfoDepartmentService departmentService;
+	@Resource
+	private UserinfoPositionService positionService;
 	private String password;
 	private String orignpassword;
-	private String department;
-	private String position;
+	private Integer departmentId;
+	private Integer positionId;
 	private String mobile;
 	private String telephone;
 	private String othermail;
@@ -48,7 +56,7 @@ public class UserProfileAction extends ActionSupport{
 		if (user == null)
 			return "login";
 		
-		if (this.getDepartment() == null || this.getPosition() == null)
+		if (this.getDepartmentId() == null || this.getPositionId() == null)
 			return "error";
 		
 		UserInfo userInfo = new UserInfo();
@@ -90,10 +98,12 @@ public class UserProfileAction extends ActionSupport{
 	private User setUserInfo(User user, UserInfo userInfo, Integer id){
 		
 		userInfo.setId(id);
-		userInfo.setDepartment(this.getDepartment());
+		UserinfoDepartment userinfoDepartment = departmentService.findUserInfoDepartmentById(this.getDepartmentId());
+		userInfo.setStaticDepartment(userinfoDepartment);
+		UserinfoPosition userinfoPosition = positionService.findUserinfoPositionById(this.getPositionId());
+		userInfo.setStaticPosition(userinfoPosition);
 		userInfo.setMobile(this.getMobile());
-		userInfo.setTelephone(this.getPosition());
-		userInfo.setPosition(this.getPosition());
+		userInfo.setTelephone(this.getTelephone());
 		userInfo.setOthermail(this.getOtherinfo());
 		userInfo.setOtherinfo(this.getOtherinfo());
 		
@@ -125,21 +135,6 @@ public class UserProfileAction extends ActionSupport{
 		session.setAttribute(key, content);
 	}
 	
-	public String getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
 
 	public String getMobile() {
 		return mobile;
@@ -191,5 +186,21 @@ public class UserProfileAction extends ActionSupport{
 
 	public void setOrignpassword(String orignpassword) {
 		this.orignpassword = orignpassword;
+	}
+
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	public Integer getPositionId() {
+		return positionId;
+	}
+
+	public void setPositionId(Integer positionId) {
+		this.positionId = positionId;
 	}
 }
