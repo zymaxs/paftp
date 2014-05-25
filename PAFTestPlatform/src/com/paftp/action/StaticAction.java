@@ -10,10 +10,10 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.paftp.entity.UserinfoDepartment;
-import com.paftp.entity.UserinfoPosition;
-import com.paftp.service.StaticColumn.UserinfoDepartmentService;
-import com.paftp.service.StaticColumn.UserinfoPositionService;
+import com.paftp.entity.Department;
+import com.paftp.entity.Position;
+import com.paftp.service.StaticColumn.DepartmentService;
+import com.paftp.service.StaticColumn.PositionService;
 
 @Controller
 public class StaticAction extends ActionSupport{
@@ -24,16 +24,16 @@ public class StaticAction extends ActionSupport{
 	 */
 	private static final long serialVersionUID = 6816406522302992979L;
 	@Resource
-	private UserinfoDepartmentService departmentService;
+	private DepartmentService departmentService;
 	@Resource
-	private UserinfoPositionService positionService;
+	private PositionService positionService;
 	
 	public String userinfo(){
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
 		List<String> departments = new ArrayList<String>();
-		List<UserinfoDepartment> userinfoDepartments = departmentService.findAllList();
+		List<Department> userinfoDepartments = departmentService.findAllList();
 		for (int i=0; i<userinfoDepartments.size(); i++){
 			departments.add(userinfoDepartments.get(i).getName());
 	
@@ -41,7 +41,7 @@ public class StaticAction extends ActionSupport{
 		request.setAttribute("departments", departments);
 		
 		List<String> positions = new ArrayList<String>();
-		List<UserinfoPosition> userinfoPositions = positionService.findAllList();
+		List<Position> userinfoPositions = positionService.findAllList();
 		for (int i=0; i<userinfoPositions.size(); i++){
 			positions.add(userinfoPositions.get(i).getName());
 		}

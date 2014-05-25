@@ -20,8 +20,8 @@ public class UserInfo {
 	private String othermail;
 	private String otherinfo;
 	
-	private UserinfoDepartment staticDepartment;
-	private UserinfoPosition staticPosition;
+	private Department department;
+	private Position position;
 	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -73,22 +73,22 @@ public class UserInfo {
 
 	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "department_id")
-	public UserinfoDepartment getStaticDepartment() {
-		return staticDepartment;
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setStaticDepartment(UserinfoDepartment staticDepartment) {
-		this.staticDepartment = staticDepartment;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
 	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "position_id")
-	public UserinfoPosition getStaticPosition() {
-		return staticPosition;
+	public Position getPosition() {
+		return this.position;
 	}
 
-	public void setStaticPosition(UserinfoPosition staticPosition) {
-		this.staticPosition = staticPosition;
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 
 

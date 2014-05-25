@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class UserinfoPosition {
+public class Position {
 
 	private Integer id;
 	private String name;

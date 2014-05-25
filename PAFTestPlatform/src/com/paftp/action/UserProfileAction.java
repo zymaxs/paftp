@@ -9,10 +9,10 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
-import com.paftp.entity.UserinfoDepartment;
-import com.paftp.entity.UserinfoPosition;
-import com.paftp.service.StaticColumn.UserinfoDepartmentService;
-import com.paftp.service.StaticColumn.UserinfoPositionService;
+import com.paftp.entity.Department;
+import com.paftp.entity.Position;
+import com.paftp.service.StaticColumn.DepartmentService;
+import com.paftp.service.StaticColumn.PositionService;
 import com.paftp.service.user.UserService;
 import com.paftp.service.userinfo.UserInfoService;
 import com.paftp.util.Util;
@@ -31,9 +31,9 @@ public class UserProfileAction extends ActionSupport{
 	@Resource
 	private UserService userService;
 	@Resource
-	private UserinfoDepartmentService departmentService;
+	private DepartmentService departmentService;
 	@Resource
-	private UserinfoPositionService positionService;
+	private PositionService positionService;
 	private String password;
 	private String orignpassword;
 	private Integer departmentId;
@@ -98,10 +98,10 @@ public class UserProfileAction extends ActionSupport{
 	private User setUserInfo(User user, UserInfo userInfo, Integer id){
 		
 		userInfo.setId(id);
-		UserinfoDepartment userinfoDepartment = departmentService.findUserInfoDepartmentById(this.getDepartmentId());
-		userInfo.setStaticDepartment(userinfoDepartment);
-		UserinfoPosition userinfoPosition = positionService.findUserinfoPositionById(this.getPositionId());
-		userInfo.setStaticPosition(userinfoPosition);
+		Department department = departmentService.findDepartmentById(this.getDepartmentId());
+		userInfo.setDepartment(department);
+		Position position = positionService.findPositionById(this.getPositionId());
+		userInfo.setPosition(position);
 		userInfo.setMobile(this.getMobile());
 		userInfo.setTelephone(this.getTelephone());
 		userInfo.setOthermail(this.getOtherinfo());
