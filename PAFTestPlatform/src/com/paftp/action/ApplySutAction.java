@@ -137,7 +137,7 @@ public class ApplySutAction extends ActionSupport {
 		return "success";
 	}
 
-	public String initialSut() {
+	public String initialSuts() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -162,6 +162,31 @@ public class ApplySutAction extends ActionSupport {
 
 	}
 
+	public String initialSut() {
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		user = getSessionUser();
+
+		if (user == null)
+			return "login";
+		
+		this.isAdmin = this.isAdmin(user.getAlias());
+		if (isAdmin){
+			request.setAttribute("isAdmin", "true");
+		}else{
+			request.setAttribute("isAdmin", "false");
+		}
+
+		ApplySut applySut = applySutService.findApplySutByName(this.getName());
+
+		request.setAttribute("applySut", applySut);
+
+		return "success";
+
+	}
+
+	
 	public String querySut() throws ParseException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
