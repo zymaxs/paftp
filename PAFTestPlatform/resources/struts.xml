@@ -68,7 +68,10 @@
 			<result name="success">/index.jsp</result>
 			<result name="login">/login.jsp</result>
 		</action>
-		<action name="userinfo" method="userinfo" class="com.paftp.action.StaticAction">
+		<action name="reguserinfo" method="userinfo" class="com.paftp.action.StaticAction">
+			<result name="success">/register.jsp</result>
+		</action>
+		<action name="upuserinfo" method="userinfo" class="com.paftp.action.StaticAction">
 			<result name="success">/index.jsp</result>
 		</action>
 

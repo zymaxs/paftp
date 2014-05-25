@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" %>
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*,java.util.*,com.paftp.entity.*" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -8,10 +8,9 @@
 <html>
 <head>
 <% 
-if(request.getAttribute("loadResiterPage_flag")==null) 
-{ 
-request.getRequestDispatcher("${pageContext.request.contextPath}/login.action").forward(request,response);
-} 
+request.getRequestDispatcher("${pageContext.request.contextPath}/reguserinfo.action").forward(request,response);
+List<String> departments = (List<String>)request.getAttribute("departments");
+List<String> userinfoPositions = (List<String>)request.getAttribute("positions");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
@@ -21,6 +20,7 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/login.action").
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jQSelect.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -98,6 +98,11 @@ $(document).ready(function(){
 		document.loginform.submit();
 	}
 </script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#selectPosition").jQSelect({});
+});	
+</script>
 </head>
 
 <body>
@@ -171,7 +176,8 @@ $(document).ready(function(){
         <div class="control-group">
           <label class="control-label" for="alias">* 用户名 :</label>
           <div class="controls">
-            <input type="text" class="input-xlarge" id="alias" name="alias">@pingan.com.cn
+            <input type="text" class="input-xlarge" id="alias" name="alias">
+            @pingan.com.cn
             <p class="help-block">请使用自己的域账号进行注册，初始密码将发送至你的平安邮箱。请在首次登录时完成密码修改。</p>
           </div>
         </div>
@@ -190,12 +196,20 @@ $(document).ready(function(){
         <div class="control-group">
           <label class="control-label" for="position">* 职位 :</label>
           <div class="controls">
-            <select id="position" class="input-xlarge" name="position">
-              <option>测试</option>
-              <option>开发</option>
-              <option>产品</option>
-              <option>其他</option>
-            </select>
+            <div id="selectPosition" class="selectbox">
+              <div class="cartes">
+                <input type="text" value="<%=userinfoPositions.get(0)%>" class="listTxt" />
+                <div class="listBtn"><b></b></div>
+                <input type="hidden" value="" class="listVal" />
+              </div>
+              <div class="lists">
+                <ul class="list">
+                <% for (int i =0; i<userinfoPositions.size(); i++){%>
+                <li id=<%=i%>><%=userinfoPositions.get(i)%></li>
+                <%}%>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
         <div class="control-group">

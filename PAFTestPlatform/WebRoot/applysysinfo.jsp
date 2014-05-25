@@ -128,64 +128,7 @@
     </div>
   </div>
   <!--主体-->
-  <div>
-			<form id="updateinfoForm" class="form-horizontal" method="post"
-				action="${pageContext.request.contextPath}/updateuserinfo.action">
-				<fieldset>
-					<legend>系统申请详情</legend>
-					<div class="control-group">
-						<label class="control-label" for="displayname">* 真实姓名 :</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="displayname"
-								name="displayname" value="<%=displayname%>">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="department">* 所属部门 :</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="department"
-								name="department" value="<%=department%>">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="position">* 职位 :</label>
-						<div class="controls">
-							<select id="position" class="input-xlarge" name="position"
-								value="<%=position%>">
-								<option>测试</option>
-								<option>开发</option>
-								<option>产品</option>
-								<option>其他</option>
-							</select>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="telephone">联系电话 :</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="telephone"
-								name="telephone" value="<%=telephone%>">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="mobile">移动电话 :</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="mobile" name="mobile"
-								value="<%=mobile%>">
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="othermail">其他邮件 :</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="othermail"
-								name="othermail" value="<%=othermail%>">
-						</div>
-					</div>
-					<div class="form-actions">
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</div>
-				</fieldset>
-			</form>
-		</div>
+  
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
