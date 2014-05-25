@@ -8,7 +8,8 @@
 <html>
 <head>
 <% 
-request.getRequestDispatcher("${pageContext.request.contextPath}/reguserinfo.action").forward(request,response);
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/reguserinfo.action").forward(request,response);}
 List<String> departments = (List<String>)request.getAttribute("departments");
 List<String> userinfoPositions = (List<String>)request.getAttribute("positions");
 %>
