@@ -19,19 +19,15 @@ ADD INDEX `departmentid_idx` (`department_id` ASC);
 ALTER TABLE `paftp`.`userinfo` 
 ADD CONSTRAINT `departmentid`
   FOREIGN KEY (`department_id`)
-  REFERENCES `paftp`.`staticdepartment` (`id`)
+  REFERENCES `paftp`.`userinfodepartment` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
-  
+
   ALTER TABLE `paftp`.`userinfo` 
 ADD INDEX `positionid_idx` (`position_id` ASC);
 ALTER TABLE `paftp`.`userinfo` 
 ADD CONSTRAINT `positionid`
   FOREIGN KEY (`position_id`)
-  REFERENCES `paftp`.`staticposition` (`id`)
+  REFERENCES `paftp`.`userinfoposition` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
-  
-  
-
-
