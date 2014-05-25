@@ -39,7 +39,8 @@ DROP COLUMN `failratio`,
 DROP COLUMN `passratio`,
 DROP COLUMN `total`,
 DROP COLUMN `failcount`,
-DROP COLUMN `passcount`;
+DROP COLUMN `passcount`,
+DROP COLUMN `name`;
 
 ALTER TABLE `paftp`.`testsuiteresult` 
 DROP COLUMN `failratio`,

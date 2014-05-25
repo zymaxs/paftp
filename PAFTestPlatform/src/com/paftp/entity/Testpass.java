@@ -21,7 +21,6 @@ import org.hibernate.annotations.GenericGenerator;
 public class Testpass {
 
 	private Integer id;
-	private String name;
 	private String testset;
 	private Date createtime;
 	private Sut sut;
@@ -48,15 +47,6 @@ public class Testpass {
 
 	public void setTestset(String testset) {
 		this.testset = testset;
-	}
-
-	@Column(name = "name", length = 50)            
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
