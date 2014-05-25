@@ -22,9 +22,9 @@ public class Sut {
 	private String name;
 	private String description;
 	private SutGroup group;
-	private List<Role> role_results;
-	private List<Testpass> testpass_results;
-	private List<StressResult> stress_results;
+//	private List<Role> role_results;
+//	private List<Testpass> testpass_results;
+//	private List<StressResult> stress_results;
 	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -70,31 +70,31 @@ public class Sut {
 		this.group = group;
 	}
 	
-	@OneToMany(mappedBy = "sut")
-	public List<Role> getRole_results() {
-		return role_results;
-	}
-
-	public void setRole_results(List<Role> role_results) {
-		this.role_results = role_results;
-	}
+//	@OneToMany(mappedBy = "sut")
+//	public List<Role> getRole_results() {
+//		return role_results;
+//	}
+//
+//	public void setRole_results(List<Role> role_results) {
+//		this.role_results = role_results;
+//	}
 	
-	@OneToMany(mappedBy = "sut")
-	public List<Testpass> getTestpass_results() {
-		return testpass_results;
-	}
-
-	public void setTestpass_results(List<Testpass> testpass_results) {
-		this.testpass_results = testpass_results;
-	}
+//	@OneToMany(mappedBy = "sut")
+//	public List<Testpass> getTestpass_results() {
+//		return testpass_results;
+//	}
+//
+//	public void setTestpass_results(List<Testpass> testpass_results) {
+//		this.testpass_results = testpass_results;
+//	}
 	
-	@OneToMany(mappedBy = "sut")
-	public List<StressResult> getStress_results() {
-		return stress_results;
-	}
-
-	public void setStress_results(List<StressResult> stress_results) {
-		this.stress_results = stress_results;
-	}
+//	@OneToMany(mappedBy = "sut")
+//	public List<StressResult> getStress_results() {
+//		return stress_results;
+//	}
+//
+//	public void setStress_results(List<StressResult> stress_results) {
+//		this.stress_results = stress_results;
+//	}
 
 }
