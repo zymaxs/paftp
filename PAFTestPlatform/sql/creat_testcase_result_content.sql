@@ -2,6 +2,7 @@ CREATE TABLE `testcaseresultcontent`(
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`status` varchar(20) DEFAULT NULL,
 	`value` varchar(100) DEFAULT NULL,
+	`result` varchar(200) DEFAULT NULL,
 	`testcase_id` int(11) DEFAULT NULL,
 	INDEX testcase_ind (testcase_id), 
 	FOREIGN KEY (testcase_id) REFERENCES testcaseresult(id) ON DELETE cascade,

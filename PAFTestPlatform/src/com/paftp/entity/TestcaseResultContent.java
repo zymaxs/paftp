@@ -17,6 +17,7 @@ public class TestcaseResultContent {
 	private Integer id;
 	private String status;
 	private String value;
+	private String result;
 	private TestcaseResult testcase_result;
 	
 	@Id
@@ -57,6 +58,15 @@ public class TestcaseResultContent {
 
 	public void setTestcase_result(TestcaseResult testcase_result) {
 		this.testcase_result = testcase_result;
+	}
+
+	@Column(name = "description", length = 200) 
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 
 	

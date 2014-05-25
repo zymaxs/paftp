@@ -73,5 +73,9 @@ ADD CONSTRAINT `testsuiteid`
   REFERENCES `paftp`.`testsuite` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+  
+  ALTER TABLE `paftp`.`testcaseresultcontent` 
+ADD COLUMN `result` VARCHAR(200) NULL AFTER `testcase_id`;
+  
 
   
