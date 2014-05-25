@@ -16,16 +16,16 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Sut {
-
+	
 	private Integer id;
 	private String code;
 	private String name;
 	private String description;
-	private SutGroup sutgroup;
+	private SutGroup group;
 	private List<Role> role_results;
 	private List<Testpass> testpass_results;
 	private List<StressResult> stress_results;
-
+	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
 	@GeneratedValue(generator = "generator")
@@ -33,36 +33,41 @@ public class Sut {
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	@Column(name = "name", unique = true, length = 100)
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
 	@Column(name = "code", length = 20)
 	public String getCode() {
 		return code;
 	}
-
 	public void setCode(String code) {
 		this.code = code;
 	}
 	
-	@Column(name = "description", length = 20)
+	@Column(name = "name", unique = true, length = 100)
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	@Column(name = "description", length = 200)
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "group_id")
+	public SutGroup getGroup() {
+		return group;
+	}
+	public void setGroup(SutGroup group) {
+		this.group = group;
 	}
 	
 	@OneToMany(mappedBy = "sut")
@@ -83,16 +88,6 @@ public class Sut {
 		this.testpass_results = testpass_results;
 	}
 	
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	@JoinColumn(name = "group_id")
-	public SutGroup getSutGroup() {
-		return sutgroup;
-	}
-
-	public void setSutGroup(SutGroup sutgroup) {
-		this.sutgroup = sutgroup;
-	}
-
 	@OneToMany(mappedBy = "sut")
 	public List<StressResult> getStress_results() {
 		return stress_results;
@@ -101,4 +96,5 @@ public class Sut {
 	public void setStress_results(List<StressResult> stress_results) {
 		this.stress_results = stress_results;
 	}
+
 }

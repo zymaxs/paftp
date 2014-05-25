@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
-import com.paftp.entity.Suts;
+import com.paftp.entity.Sut;
 import com.paftp.entity.TestcaseStep;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.Testsuite;
@@ -68,9 +68,9 @@ public class IndexAction extends ActionSupport {
 
 		}
 		// create sut: MTP
-		Suts sut = sutService.findSutByCode("MTP");  //Rayleigh
+		Sut sut = sutService.findSutByCode("MTP");  //Rayleigh
 		if (sut == null) {
-			sut = new Suts();   //Rayleigh
+			sut = new Sut();   //Rayleigh
 			sut.setCode("MTP");
 			sut.setName("�ƶ�����ƽ̨");
 			sut.setDescription("�ֻ����ǰ�ã����ڸ�������������");

@@ -7,49 +7,49 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
-import com.paftp.entity.Suts;
+import com.paftp.entity.Sut;
 import com.paftp.service.sut.SutService;
 
 @Service("sutService")
 public class SutServiceImpl implements SutService {
 
 	@Resource
-	private BaseDAO<Suts> baseDAO;
+	private BaseDAO<Sut> baseDAO;
 
 	@Override
-	public void saveSut(Suts sut) {
+	public void saveSut(Sut sut) {
 		baseDAO.save(sut);
 	}
 
 	@Override
-	public void updateSut(Suts sut) {
+	public void updateSut(Sut sut) {
 		baseDAO.update(sut);
 	}
 
 	@Override
-	public Suts findSutById(int id) {
-		return baseDAO.get(Suts.class, id);
+	public Sut findSutById(int id) {
+		return baseDAO.get(Sut.class, id);
 	}
 
 	@Override
-	public Suts findSutByCode(String code) {
+	public Sut findSutByCode(String code) {
 		return baseDAO.get(" from Suts s where s.code = ?",
 				new Object[] { code });
 	}
 	
 	@Override
-	public Suts findSutByName(String name) {
+	public Sut findSutByName(String name) {
 		return baseDAO.get(" from Suts s where s.name = ?",
 				new Object[] { name });
 	}
 
 	@Override
-	public void deleteSut(Suts sut) {
+	public void deleteSut(Sut sut) {
 		baseDAO.delete(sut);
 	}
 
 	@Override
-	public List<Suts> findAllList() {
+	public List<Sut> findAllList() {
 		return baseDAO.find(" from Suts s order by s.id");
 	}
 

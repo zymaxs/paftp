@@ -17,7 +17,7 @@ public class SutGroup {
 	private Integer id;
 	private String name;
 	private String description;
-	private List<Suts> suts;
+	private List<Sut> suts;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -50,11 +50,11 @@ public class SutGroup {
 	}
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "group")
-	public List<Suts> getSuts() {
+	public List<Sut> getSuts() {
 		return suts;
 	}
 
-	public void setSuts(List<Suts> suts) {
+	public void setSuts(List<Sut> suts) {
 		this.suts = suts;
 	}
 }

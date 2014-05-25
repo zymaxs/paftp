@@ -18,7 +18,7 @@ public class Testsuite {
 
 	private Integer id;
 	private String name;
-	private Suts sut;
+	private Sut sut;
 	private List<Testcase> testcases;
 
 	@Id
@@ -53,11 +53,11 @@ public class Testsuite {
 	
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "sut_id")
-	public Suts getSut() {
+	public Sut getSut() {
 		return sut;
 	}
 
-	public void setSut(Suts sut2) {
+	public void setSut(Sut sut2) {
 		this.sut = sut2;
 	}
 

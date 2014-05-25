@@ -18,7 +18,7 @@ public class StressResult {
 	private Scene scene;
 	private Version version;
 	private StrategyType strategyType;
-	private Suts sut;
+	private Sut sut;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -64,11 +64,11 @@ public class StressResult {
 
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "sut_id")
-	public Suts getSut() {
+	public Sut getSut() {
 		return sut;
 	}
 
-	public void setSut(Suts sut) {
+	public void setSut(Sut sut) {
 		this.sut = sut;
 	}
 

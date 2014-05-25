@@ -2,23 +2,23 @@ package com.paftp.service.sut;
 
 import java.util.List;
 
-import com.paftp.entity.Suts;
+import com.paftp.entity.Sut;
 
 public interface SutService {
 
-	public void saveSut(Suts sut);
+	public void saveSut(Sut sut);
 
-	public void updateSut(Suts sut);
+	public void updateSut(Sut sut);
 
-	public Suts findSutById(int id);
+	public Sut findSutById(int id);
 	
-	public Suts findSutByCode(String code);
+	public Sut findSutByCode(String code);
 	
-	public Suts findSutByName(String name);
+	public Sut findSutByName(String name);
 
-	public void deleteSut(Suts sut);
+	public void deleteSut(Sut sut);
 
-	public List<Suts> findAllList();
+	public List<Sut> findAllList();
 
 
 }
