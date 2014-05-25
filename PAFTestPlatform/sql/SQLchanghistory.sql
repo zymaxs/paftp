@@ -31,3 +31,19 @@ ADD CONSTRAINT `positionid`
   REFERENCES `paftp`.`userinfoposition` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+  
+2014/5/25   21:37
+
+ALTER TABLE `paftp`.`testpass` 
+DROP COLUMN `failratio`,
+DROP COLUMN `passratio`,
+DROP COLUMN `total`,
+DROP COLUMN `failcount`,
+DROP COLUMN `passcount`;
+
+ALTER TABLE `paftp`.`testsuiteresult` 
+DROP COLUMN `failratio`,
+DROP COLUMN `passratio`,
+DROP COLUMN `total`,
+DROP COLUMN `failcount`,
+DROP COLUMN `passcount`;

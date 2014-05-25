@@ -24,11 +24,6 @@ public class Testpass {
 	private String name;
 	private String testset;
 	private Date createtime;
-	private Integer passcount;
-	private Integer failcount;
-	private Integer total;
-	private String passratio;
-	private String failratio;
 	private Sut sut;
 	private List<TestsuiteResult> testsuite_results;
 	private Version version;
@@ -72,51 +67,6 @@ public class Testpass {
 
 	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
-	}
-
-	@Column(name = "passcount", length = 11)
-	public Integer getPasscount() {
-		return passcount;
-	}
-
-	public void setPasscount(Integer passcount) {
-		this.passcount = passcount;
-	}
-
-	@Column(name = "failcount", length = 11)
-	public Integer getFailcount() {
-		return failcount;
-	}
-
-	public void setFailcount(Integer failcount) {
-		this.failcount = failcount;
-	}
-
-	@Column(name = "total", length = 11)
-	public Integer getTotal() {
-		return total;
-	}
-
-	public void setTotal(Integer total) {
-		this.total = total;
-	}
-
-	@Column(name = "passratio", length = 20) 
-	public String getPassratio() {
-		return passratio;
-	}
-
-	public void setPassratio(String passratio) {
-		this.passratio = passratio;
-	}
-
-	@Column(name = "failratio", length = 20) 
-	public String getFailratio() {
-		return failratio;
-	}
-
-	public void setFailratio(String failratio) {
-		this.failratio = failratio;
 	}
 
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
