@@ -9,4 +9,29 @@ ALTER TABLE `paftp`.`sut` ADD FOREIGN KEY (`group_id`) REFERENCES `sutgroup` (`i
 2014/5/25  00:34
 CREATE SCHEMA `paftp` DEFAULT CHARACTER SET utf8 ;
 
+2014/5/25  14:39
+ALTER TABLE `paftp`.`userinfo` 
+CHANGE COLUMN `department` `department_id` INT(11) NOT NULL ,
+CHANGE COLUMN `position` `position_id` INT(11) NOT NULL ;
+
+ALTER TABLE `paftp`.`userinfo` 
+ADD INDEX `departmentid_idx` (`department_id` ASC);
+ALTER TABLE `paftp`.`userinfo` 
+ADD CONSTRAINT `departmentid`
+  FOREIGN KEY (`department_id`)
+  REFERENCES `paftp`.`staticdepartment` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+  
+  ALTER TABLE `paftp`.`userinfo` 
+ADD INDEX `positionid_idx` (`position_id` ASC);
+ALTER TABLE `paftp`.`userinfo` 
+ADD CONSTRAINT `positionid`
+  FOREIGN KEY (`position_id`)
+  REFERENCES `paftp`.`staticposition` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+  
+  
+
 

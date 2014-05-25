@@ -11,6 +11,10 @@ import org.springframework.stereotype.Controller;
 
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
+import com.paftp.entity.UserinfoDepartment;
+import com.paftp.entity.UserinfoPosition;
+import com.paftp.service.StaticColumn.UserinfoDepartmentService;
+import com.paftp.service.StaticColumn.UserinfoPositionService;
 import com.paftp.service.user.UserService;
 import com.paftp.util.SSHClient;
 import com.paftp.util.Util;
@@ -23,14 +27,18 @@ public class RegisterAction extends ActionSupport {
 
 	@Resource
 	private UserService userService;
+	@Resource
+	private UserinfoDepartmentService departmentService;
+	@Resource
+	private UserinfoPositionService positionService;
 
 	private String alias;
 	private String password;
 	private String status;
 	private String displayname;
 	private Date createtime;
-	private String department;
-	private String position;
+	private Integer department_id;
+	private Integer position_id;
 	private String mobile;
 	private String telephone;
 	private String othermail;
@@ -44,12 +52,12 @@ public class RegisterAction extends ActionSupport {
 		User user = userService.findUserByAlias(alias);
 
 		if (user != null) {
-			request.setAttribute("error", "´ËÓÃ»§ÒÑ´æÔÚ!");
+			request.setAttribute("error", "ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½!");
 			return "exist";
 		}
 
-		if (this.getAlias() == null || this.getDepartment() == null
-				|| this.getPosition() == null)
+		if (this.getAlias() == null || this.getDepartmentId() == null
+				|| this.getPositionId() == null)
 			return "error";
 
 		user = new User();
@@ -80,9 +88,11 @@ public class RegisterAction extends ActionSupport {
 		user.setStatus("initial");
 
 		UserInfo userInfo = new UserInfo();
-		userInfo.setDepartment(this.getDepartment());
+		UserinfoDepartment userinfoDepartment = departmentService.findUserInfoDepartmentById(this.getDepartmentId());
+		userInfo.setStaticDepartment(userinfoDepartment);
 		userInfo.setMobile(this.getMobile());
-		userInfo.setPosition(this.getPosition());
+		UserinfoPosition userinfoPosition = positionService.findUserinfoPositionById(this.getPositionId());
+		userInfo.setStaticPosition(userinfoPosition);
 		userInfo.setTelephone(this.getTelephone());
 		userInfo.setOtherinfo(this.getOtherinfo());
 		userInfo.setOthermail(this.getOthermail());
@@ -143,20 +153,20 @@ public class RegisterAction extends ActionSupport {
 		this.displayname = displayname;
 	}
 
-	public String getDepartment() {
-		return department;
+	public Integer getDepartmentId() {
+		return department_id;
 	}
 
-	public void setDepartment(String department) {
-		this.department = department;
+	public void setDepartmentId(Integer department_id) {
+		this.department_id = department_id;
 	}
 
-	public String getPosition() {
-		return position;
+	public Integer getPositionId() {
+		return position_id;
 	}
 
-	public void setPosition(String position) {
-		this.position = position;
+	public void setPositionId(Integer position_id) {
+		this.position_id = position_id;
 	}
 
 	public String getMobile() {
