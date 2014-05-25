@@ -47,6 +47,8 @@ public class StaticAction extends ActionSupport{
 		}
 		request.setAttribute("positions", positions);
 		
+		request.setAttribute("flag", "true");
+		
 		return "success";
 	}
 	

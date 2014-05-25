@@ -9,11 +9,11 @@ CREATE TABLE `userinfo` (
     `otherinfo` varchar(50) default null,
     INDEX department_ind (department_id),
     FOREIGN KEY (department_id)
-        REFERENCES department (id)
+        REFERENCES userinfodepartment (id)
         ON DELETE no action,
     INDEX postion_ind (position_id),
     FOREIGN KEY (position_id)
-        REFERENCES position (id)
+        REFERENCES userinfoposition (id)
         ON DELETE no action,
     PRIMARY KEY (`id`)
 )  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
