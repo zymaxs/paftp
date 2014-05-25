@@ -7,6 +7,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<% 
+if(request.getAttribute("loadResiterPage_flag")==null) 
+{ 
+request.getRequestDispatcher("${pageContext.request.contextPath}/login.action").forward(request,response);
+} 
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
