@@ -21,8 +21,10 @@ import com.paftp.entity.ApplySut;
 import com.paftp.entity.Permission;
 import com.paftp.entity.Role;
 import com.paftp.entity.Sut;
+import com.paftp.entity.SutGroup;
 import com.paftp.entity.User;
 import com.paftp.service.ApplySut.ApplySutService;
+import com.paftp.service.StaticColumn.SutGroupService;
 import com.paftp.service.permission.PermissionService;
 import com.paftp.service.role.RoleService;
 import com.paftp.service.sut.SutService;
@@ -46,11 +48,14 @@ public class ApplySutAction extends ActionSupport {
 	private RoleService roleService;
 	@Resource
 	private UserService userService;
+	@Resource
+	private SutGroupService sutgroupService;
 	private String code;
 	private String name;
 	private String description;
 	private Date applytime;
 	private String applyer;
+	private String groupname;
 
 	private Date resolvetime;
 	private String action;
@@ -240,9 +245,12 @@ public class ApplySutAction extends ActionSupport {
 		this.resolvetime = new Date();
 		}
 		
+		SutGroup sutGroup = sutgroupService.findSutGroupByName(this.getGroupname());
+		
 		applySut.setResolvetime(resolvetime);
 		applySut.setAction(this.getAction());
 		applySut.setComment(this.getComment());
+		applySut.setGroup_id(sutGroup.getId());
 
 		applySut.setApplytime(applytime);
 		applySut.setCode(this.getCode());
@@ -423,6 +431,14 @@ public class ApplySutAction extends ActionSupport {
 
 	public void setRow(Integer row) {
 		this.row = row;
+	}
+
+	public String getGroupname() {
+		return groupname;
+	}
+
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
 	}
 
 }

@@ -15,4 +15,6 @@ public interface SutGroupService {
 	public void deleteSutGroup(SutGroup sutGroup);
 
 	public List<SutGroup> findAllList();
+
+	public SutGroup findSutGroupByName(String groupname);
 }

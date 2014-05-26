@@ -9,6 +9,7 @@ CREATE TABLE `applysut` (
      `code` varchar(20) NOT NULL UNIQUE,
      `name` varchar(100) NOT NULL,
      `description` varchar(200) DEFAULT NULL,
+     `group_id` int(11) DEFAULT NULL,
     INDEX user_ind (user_id),
     FOREIGN KEY (user_id)
         REFERENCES user (id)
