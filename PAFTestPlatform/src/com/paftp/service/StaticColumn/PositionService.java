@@ -13,4 +13,6 @@ public interface PositionService {
 	public Position findPositionById(int id);
 	
 	public List<Position> findAllList();
+	
+	public Position findPositionByName(String name);
 }

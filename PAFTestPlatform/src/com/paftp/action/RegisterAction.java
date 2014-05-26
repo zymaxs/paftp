@@ -37,8 +37,8 @@ public class RegisterAction extends ActionSupport {
 	private String status;
 	private String displayname;
 	private Date createtime;
-	private Integer department;
-	private Integer position;
+	private String department;
+	private String position;
 	private String mobile;
 	private String telephone;
 	private String othermail;
@@ -56,8 +56,8 @@ public class RegisterAction extends ActionSupport {
 			return "exist";
 		}
 
-		if (this.getAlias() == null || this.getdepartmentId() == null
-				|| this.getPositionId() == null)
+		if (this.getAlias() == null || this.getDepartment() == null
+				|| this.getPosition() == null)
 			return "error";
 
 		user = new User();
@@ -88,10 +88,10 @@ public class RegisterAction extends ActionSupport {
 		user.setStatus("initial");
 
 		UserInfo userInfo = new UserInfo();
-		Department department = departmentService.findDepartmentById(this.getdepartmentId());
+		Department department = departmentService.findDepartmentByName(this.getDepartment());
 		userInfo.setDepartment(department);
 		userInfo.setMobile(this.getMobile());
-		Position position = positionService.findPositionById(this.getPositionId());
+		Position position = positionService.findPositionByName(this.getPosition());
 		userInfo.setPosition(position);
 		userInfo.setTelephone(this.getTelephone());
 		userInfo.setOtherinfo(this.getOtherinfo());
@@ -153,19 +153,19 @@ public class RegisterAction extends ActionSupport {
 		this.displayname = displayname;
 	}
 
-	public Integer getdepartmentId() {
+	public String getDepartment() {
 		return department;
 	}
 
-	public void setdepartmentId(Integer department) {
+	public void setDepartment(String department) {
 		this.department = department;
 	}
 
-	public Integer getPositionId() {
+	public String getPosition() {
 		return position;
 	}
 
-	public void setPositionId(Integer position) {
+	public void setPosition(String position) {
 		this.position = position;
 	}
 

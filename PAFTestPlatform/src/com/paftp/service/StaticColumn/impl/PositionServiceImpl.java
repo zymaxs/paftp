@@ -39,4 +39,11 @@ public class PositionServiceImpl implements PositionService{
 		// TODO Auto-generated method stub
 		return baseDAO.find(" from Position up");
 	}
+
+	@Override
+	public Position findPositionByName(String name) {
+		// TODO Auto-generated method stub
+		return baseDAO.get(" from Position p where p.name = ?",
+				new Object[] { name });
+	}
 }
