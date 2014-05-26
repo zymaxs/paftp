@@ -9,7 +9,7 @@
 	<constant name="struts.serve.static.browserCache" value="false" />
 
     <package name="ajax" extends="json-default">
-    <action name="applySuts" class="com.paftp.action.ApplySutAction">
+    <action name="initialSutsAjax" method="initialSuts" class="com.paftp.action.ApplySutAction">
         <result type="json"></result>
      </action>
     </package>
