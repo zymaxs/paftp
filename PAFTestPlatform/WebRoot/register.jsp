@@ -54,7 +54,6 @@ $(document).ready(function(){
             },
 			"department":{
                 required: true,
-				maxlength: 15
             },
 			"position":{
                 required: true
@@ -77,18 +76,14 @@ $(document).ready(function(){
                 required: "请输入真实姓名",
 				maxlength: $.validator.format("真实姓名最大输入不超过十个字符.")
             },
-			"department":{
-                required: "请输入所属部门",
-				maxlength: $.validator.format("所属部门最大输入最大输入不超过十五个字符.")
-            },
             "othermail":{
                 email:"请输入正确的email地址"
             },
             "telephone":{
                 digits: "请输入数字"
             },
-            "telephone":{
-                email:"请输入数字"
+            "moible":{
+                digits: "请输入数字"
             }
         }
     });
@@ -175,28 +170,26 @@ $(document).ready(function(){
     </div>
   </div>
   <!--主体-->
-  <div>
-    <form id="signupForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/register.action">
-      <fieldset>
-        <legend>用户注册 <small>(带*号标志为必输项)</small></legend>
-        <div class="control-group">
-          <label class="control-label" for="alias">* 用户名 :</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" id="alias" name="alias">
-            @pingan.com.cn
-            <p class="help-block">请使用自己的域账号进行注册，初始密码将发送至你的平安邮箱。请在首次登录时完成密码修改。</p>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="displayname">* 真实姓名 :</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" id="displayname" name="displayname">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="department">* 所属部门 :</label>
-          <div class="controls">
-            <div id="selectDepartment" class="selectbox">
+  <form id="signupForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/register.action">
+  <fieldset>
+  <legend> 用户注册 <small>(带*号标志为必输项)</small></legend>
+  <table border="0">
+  	<tr>
+  		<td style="text-align:right"><label class="control-label" for="alias">* 用户名 :</label></td>
+        <td style="text-align:left"><input type="text" class="input-xlarge" id="alias" name="alias"></td>
+        <td colspan="2" style="text-align:left">@pingan.com.cn</td>
+  	</tr>
+    <tr>
+    	<td></td>
+    	<td colspan="3" style="text-align:left"><p class="help-block">请使用自己的域账号进行注册，初始密码将发送至你的平安邮箱。请在首次登录时完成密码修改。</p></td>
+    </tr>
+    <tr>
+    	<td style="text-align:right"><label for="displayname">* 真实姓名 :</label></td>
+        <td colspan="3" style="text-align:left"><input type="text" class="input-xlarge" id="displayname" name="displayname"></td>
+    </tr>
+    <tr>
+    	<td style="text-align:right"><label  for="department">* 所属部门 :</label></td>
+        <td style="text-align:center;"><div id="selectDepartment" class="selectbox">
               <div class="cartes">
                 <input type="text" value="<%=departments.get(0)%>" id="department" name="department" class="listTxt" />
                 <div class="listBtn"><b></b></div>
@@ -209,13 +202,9 @@ $(document).ready(function(){
                 <%}%>
                 </ul>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="position">* 职位 :</label>
-          <div class="controls">
-            <div id="selectPosition" class="selectbox">
+            </div></td>
+    	<td style="text-align:right"><label class="control-label" for="position">* 职位 :</label></td>
+        <td style="text-align:left"><div id="selectPosition" class="selectbox">
               <div class="cartes">
                 <input type="text" value="<%=positions.get(0)%>" id="position" name="position" class="listTxt" />
                 <div class="listBtn"><b></b></div>
@@ -228,33 +217,24 @@ $(document).ready(function(){
                 <%}%>
                 </ul>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="telephone">联系电话 :</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" id="telephone" name="telephone">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="mobile">移动电话 :</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" id="mobile" name="mobile">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="othermail">其他邮件 :</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" id="othermail" name="othermail">
-          </div>
-        </div>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">保存</button>
-        </div>
-      </fieldset>
-    </form>
-  </div>
+            </div></td>
+    </tr>
+    <tr>
+    	<td style="text-align:right"><label for="telephone">联系电话 :</label></td>
+        <td style="text-align:left"><input type="text" class="input-xlarge" id="telephone" name="telephone"></td>
+        <td style="text-align:right"><label for="mobile">移动电话 :</label></td>
+        <td style="text-align:left"><input type="text" class="input-xlarge" id="mobile" name="mobile"></td>
+    </tr>
+    <tr>
+    	<td style="text-align:right"><label for="othermail">其他邮件 :</label></td>
+        <td colspan="3" style="text-align:left"><input type="text" class="input-xlarge" id="othermail" name="othermail"></td>
+    </tr>
+    <tr>
+    	<td colspan="4" style="text-align:center"><button type="submit" class="btn btn-primary">保存</button></td>
+    </tr>
+  </table>
+  </fieldset>
+  </form>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p><small><b>自动化测试</b>：WebService | App | Web | Stress | Solution<br/>

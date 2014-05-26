@@ -222,8 +222,14 @@ $(document).ready(function(){
             </div></td>
     </tr>
     <tr>
-    	<td style="text-align:right"><label class="control-label" for="telephone">联系电话 :</label></td>
-        <td colspan="3" style="text-align:left"><input type="text" class="input-xlarge" id="telephone" name="telephone"></td>
+    	<td style="text-align:right"><label for="telephone">联系电话 :</label></td>
+        <td style="text-align:left"><input type="text" class="input-xlarge" id="telephone" name="telephone"></td>
+        <td style="text-align:right"><label for="mobile">移动电话 :</label></td>
+        <td style="text-align:left"><input type="text" class="input-xlarge" id="mobile" name="mobile"></td>
+    </tr>
+    <tr>
+    	<td style="text-align:right"><label for="othermail">其他邮件 :</label></td>
+        <td colspan="3" style="text-align:left"><input type="text" class="input-xlarge" id="othermail" name="othermail"></td>
     </tr>
     <tr>
     	<td colspan="4" style="text-align:center"><button type="submit" class="btn btn-primary">保存</button></td>
