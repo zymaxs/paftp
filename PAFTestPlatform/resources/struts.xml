@@ -7,10 +7,13 @@
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<constant name="struts.action.extension" value="action" />
 	<constant name="struts.serve.static.browserCache" value="false" />
+	<constant name="struts.devMode" value="true" />
 
     <package name="ajax" extends="json-default">
     <action name="initialSutsAjax" method="initialSuts" class="com.paftp.action.ApplySutAction">
-        <result type="json"></result>
+        <result type="json">
+        <param name="root">result</param>
+        </result>
      </action>
     </package>
 	<package name="s2sh" extends="struts-default">
