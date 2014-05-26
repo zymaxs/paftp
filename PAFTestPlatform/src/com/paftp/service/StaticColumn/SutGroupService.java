@@ -1,4 +1,4 @@
-package com.paftp.service.SutGroup;
+package com.paftp.service.StaticColumn;
 
 import java.util.List;
 

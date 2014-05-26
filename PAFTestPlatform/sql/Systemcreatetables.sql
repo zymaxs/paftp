@@ -34,3 +34,5 @@ source C:\GitHub\paftp\PAFTestPlatform\sql\create_testcase_result.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_testcase_result_content.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_analysecomment_history.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_analysecomment_content.sql
+source C:\GitHub\paftp\PAFTestPlatform\sql\insert.sql
+source C:\GitHub\paftp\PAFTestPlatform\sql\create_sutgroup_name.sql

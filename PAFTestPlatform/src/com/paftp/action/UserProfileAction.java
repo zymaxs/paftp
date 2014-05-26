@@ -36,8 +36,8 @@ public class UserProfileAction extends ActionSupport{
 	private PositionService positionService;
 	private String password;
 	private String orignpassword;
-	private Integer departmentId;
-	private Integer positionId;
+	private String department;
+	private String position;
 	private String mobile;
 	private String telephone;
 	private String othermail;
@@ -56,13 +56,10 @@ public class UserProfileAction extends ActionSupport{
 		if (user == null)
 			return "login";
 		
-		if (this.getDepartmentId() == null || this.getPositionId() == null)
+		if (this.getDepartment() == null || this.getPosition() == null)
 			return "error";
-		
-		UserInfo userInfo = new UserInfo();
-		updatedUser = setUserInfo(user, userInfo, user.getUserInfo().getId());
-		
-		userInfoService.updateUserInfo(userInfo);
+
+		updatedUser = setUserInfo(user);
 		
 		setSession("user", updatedUser);
 		
@@ -95,18 +92,20 @@ public class UserProfileAction extends ActionSupport{
 	
 	}
 	
-	private User setUserInfo(User user, UserInfo userInfo, Integer id){
+	private User setUserInfo(User user){
 		
-		userInfo.setId(id);
-		Department department = departmentService.findDepartmentById(this.getDepartmentId());
+		UserInfo userInfo = new UserInfo();
+		
+		userInfo.setId(user.getUserInfo().getId());
+		Department department = departmentService.findDepartmentByName(this.getDepartment());
 		userInfo.setDepartment(department);
-		Position position = positionService.findPositionById(this.getPositionId());
+		Position position = positionService.findPositionByName(this.getPosition());
 		userInfo.setPosition(position);
 		userInfo.setMobile(this.getMobile());
 		userInfo.setTelephone(this.getTelephone());
 		userInfo.setOthermail(this.getOtherinfo());
 		userInfo.setOtherinfo(this.getOtherinfo());
-		
+		userInfoService.updateUserInfo(userInfo);
 		user.setUserInfo(userInfo);
 
 		return user;
@@ -188,19 +187,19 @@ public class UserProfileAction extends ActionSupport{
 		this.orignpassword = orignpassword;
 	}
 
-	public Integer getDepartmentId() {
-		return departmentId;
+	public String getDepartment() {
+		return department;
 	}
 
-	public void setDepartmentId(Integer departmentId) {
-		this.departmentId = departmentId;
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
-	public Integer getPositionId() {
-		return positionId;
+	public String getPosition() {
+		return position;
 	}
 
-	public void setPositionId(Integer positionId) {
-		this.positionId = positionId;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 }

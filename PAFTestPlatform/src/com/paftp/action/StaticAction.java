@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.Department;
 import com.paftp.entity.Position;
+import com.paftp.entity.SutGroup;
 import com.paftp.service.StaticColumn.DepartmentService;
 import com.paftp.service.StaticColumn.PositionService;
+import com.paftp.service.StaticColumn.SutGroupService;
 
 @Controller
 public class StaticAction extends ActionSupport{
@@ -27,6 +29,8 @@ public class StaticAction extends ActionSupport{
 	private DepartmentService departmentService;
 	@Resource
 	private PositionService positionService;
+	@Resource
+	private SutGroupService sutgroupService;
 	
 	public String userinfo(){
 		
@@ -46,6 +50,22 @@ public class StaticAction extends ActionSupport{
 			positions.add(userinfoPositions.get(i).getName());
 		}
 		request.setAttribute("positions", positions);
+		
+		request.setAttribute("flag", "true");
+		
+		return "success";
+	}
+	
+	public String sutgroup(){
+	HttpServletRequest request = ServletActionContext.getRequest();
+		
+		List<String> sutgroupnames = new ArrayList<String>();
+		List<SutGroup> sutgroups = sutgroupService.findAllList();
+		for (int i=0; i<sutgroups.size(); i++){
+			sutgroupnames.add(sutgroups.get(i).getName());
+	
+		}
+		request.setAttribute("sutgroupnames", sutgroupnames);
 		
 		request.setAttribute("flag", "true");
 		
