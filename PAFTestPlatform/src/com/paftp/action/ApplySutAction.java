@@ -241,14 +241,15 @@ public class ApplySutAction extends ActionSupport {
 
 		if(apply){
 		this.applytime = new Date();
+		applySut.setAction("待审批");
 		}else{
 		this.resolvetime = new Date();
+		applySut.setAction(this.getAction());
 		}
 		
 		SutGroup sutGroup = sutgroupService.findSutGroupByName(this.getGroupname());
 		
 		applySut.setResolvetime(resolvetime);
-		applySut.setAction(this.getAction());
 		applySut.setComment(this.getComment());
 		applySut.setGroup_id(sutGroup.getId());
 
