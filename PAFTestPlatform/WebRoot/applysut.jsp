@@ -183,6 +183,17 @@ $(document).ready(function(){
             <input type="text" class="input-xlarge" id="name" name="name">
           </div>
         </div>
+         <div class="control-group">
+          <label class="control-label" for="sutgroup">* 系统所属平台 :</label>
+          <div class="controls">
+            <select id="position" class="input-xlarge" name="position">
+              <option>测试</option>
+              <option>开发</option>
+              <option>产品</option>
+              <option>其他</option>
+            </select>
+          </div>
+        </div>
         <div class="control-group">
           <label class="control-label" for="code">* 系统中文名 :</label>
           <div class="controls">
