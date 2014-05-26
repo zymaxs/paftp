@@ -40,4 +40,11 @@ public class DepartmentServiceImpl implements DepartmentService{
 		return baseDAO.find(" from Department d");
 	}
 
+	@Override
+	public Department findDepartmentByName(String name) {
+		// TODO Auto-generated method stub
+		return baseDAO.get(" from Department dp where dp.name = ?",
+				new Object[] { name });
+	}
+
 }

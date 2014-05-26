@@ -20,8 +20,6 @@ public class Version {
 	private Integer versionNum;
 	private Date createTime;
 	private String creatorId;
-	private Date updateTime;
-	private String updatorId;
 	private List<Testpass> testpass_results;
 
 	@Id
@@ -62,25 +60,6 @@ public class Version {
 
 	public void setCreatorId(String creatorId) {
 		this.creatorId = creatorId;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_time")
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	
-	@Column(name = "updator_id", length = 100)
-	public String getUpdatorId() {
-		return updatorId;
-	}
-
-	public void setUpdatorId(String updatorId) {
-		this.updatorId = updatorId;
 	}
 
 	@OneToMany(mappedBy = "version")

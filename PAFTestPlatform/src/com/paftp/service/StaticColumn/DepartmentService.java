@@ -13,4 +13,6 @@ public interface DepartmentService {
 	public Department findDepartmentById(int id);
 	
 	public List<Department> findAllList();
+	
+	public Department findDepartmentByName(String name);
 }

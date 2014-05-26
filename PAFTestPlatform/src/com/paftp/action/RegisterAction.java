@@ -37,8 +37,8 @@ public class RegisterAction extends ActionSupport {
 	private String status;
 	private String displayname;
 	private Date createtime;
-	private Integer department_id;
-	private Integer position_id;
+	private String department;
+	private String position;
 	private String mobile;
 	private String telephone;
 	private String othermail;
@@ -56,8 +56,8 @@ public class RegisterAction extends ActionSupport {
 			return "exist";
 		}
 
-		if (this.getAlias() == null || this.getDepartmentId() == null
-				|| this.getPositionId() == null)
+		if (this.getAlias() == null || this.getDepartment() == null
+				|| this.getPosition() == null)
 			return "error";
 
 		user = new User();
@@ -88,10 +88,10 @@ public class RegisterAction extends ActionSupport {
 		user.setStatus("initial");
 
 		UserInfo userInfo = new UserInfo();
-		Department department = departmentService.findDepartmentById(this.getDepartmentId());
+		Department department = departmentService.findDepartmentByName(this.getDepartment());
 		userInfo.setDepartment(department);
 		userInfo.setMobile(this.getMobile());
-		Position position = positionService.findPositionById(this.getPositionId());
+		Position position = positionService.findPositionByName(this.getPosition());
 		userInfo.setPosition(position);
 		userInfo.setTelephone(this.getTelephone());
 		userInfo.setOtherinfo(this.getOtherinfo());
@@ -153,20 +153,20 @@ public class RegisterAction extends ActionSupport {
 		this.displayname = displayname;
 	}
 
-	public Integer getDepartmentId() {
-		return department_id;
+	public String getDepartment() {
+		return department;
 	}
 
-	public void setDepartmentId(Integer department_id) {
-		this.department_id = department_id;
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
-	public Integer getPositionId() {
-		return position_id;
+	public String getPosition() {
+		return position;
 	}
 
-	public void setPositionId(Integer position_id) {
-		this.position_id = position_id;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 	public String getMobile() {
