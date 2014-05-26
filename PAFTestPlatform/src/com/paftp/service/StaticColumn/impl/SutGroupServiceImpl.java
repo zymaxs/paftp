@@ -46,4 +46,11 @@ public class SutGroupServiceImpl implements SutGroupService{
 		return baseDAO.find(" from SutGroup sg order by sg.id");
 	}
 
+	@Override
+	public SutGroup findSutGroupByName(String groupname) {
+		// TODO Auto-generated method stub
+		return baseDAO.get(" from SutGroup sg where sg.name = ?",
+				new Object[] { groupname });
+	}
+
 }
