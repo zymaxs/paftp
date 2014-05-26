@@ -1,31 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8" language="java"
+	import="java.util.*,com.paftp.entity.*"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <base href="<%=basePath%>">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>??</title>
-<script type="text/javascript" src="include/js/jquery-1.4.2.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>测试</title>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
    $(function() {
      $("#tj").click(function() {
-    //?????,name?inch??struts action????????
         var params = {
-           name : $("#xm").val(),
-           inch : $("#sg").val()
+           name : $("#name").val()
         };
         $.ajax({
     type: "POST",
-    url: "jsonAjax.action",
+    url: "${pageContext.request.contextPath}/querySut.action",
     data: params,
-    dataType:"text", //ajax??????text(json????????,??????,?????json)
+    dataType:"text",
     success: function(json){  
-    var obj = $.parseJSON(json);  //????????json
-                var state_value = obj.result;  //result??action????result???get?????
+    var obj = $.parseJSON(json); 
+                var state_value = obj.result;
     alert(state_value);
     },
     error: function(json){
@@ -38,12 +37,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
 </head>
 <body>
-<span>??:</span>
-<input id="xm" type="text">
+<span>姓名：</span>
+<input id="name" name="name" type="text">
 <br/>
-<span>??:</span>
-<input id="sg" type="text">
 <br/>
-<input type="button" value="??" id="tj">
+<input type="button" value="提交" id="tj">
 </body>
 </html>
