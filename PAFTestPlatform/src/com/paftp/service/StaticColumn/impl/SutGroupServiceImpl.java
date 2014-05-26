@@ -1,4 +1,4 @@
-package com.paftp.service.SutGroup.impl;
+package com.paftp.service.StaticColumn.impl;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.entity.SutGroup;
-import com.paftp.service.SutGroup.SutGroupService;
+import com.paftp.service.StaticColumn.SutGroupService;
 
-@Service("sutGroupService")
+@Service("sutgroupService")
 public class SutGroupServiceImpl implements SutGroupService{
 
 	@Resource

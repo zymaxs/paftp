@@ -74,6 +74,9 @@
 		<action name="upuserinfo" method="userinfo" class="com.paftp.action.StaticAction">
 			<result name="success">/updateuserinfo.jsp</result>
 		</action>
+			<action name="sutgroup" method="sutgroup" class="com.paftp.action.StaticAction">
+			<result name="success">/updateuserinfo.jsp</result>
+		</action>
 
 	</package>
 
