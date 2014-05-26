@@ -11,12 +11,13 @@
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/reguserinfo.action").forward(request,response);}
 List<String> departments = (List<String>)request.getAttribute("departments");
-List<String> userinfoPositions = (List<String>)request.getAttribute("positions");
+List<String> positions = (List<String>)request.getAttribute("positions");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<link href="css/shou.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
@@ -102,11 +103,15 @@ $(document).ready(function(){
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#selectPosition").jQSelect({});
+	$("#selectDepartment").jQSelect({});
 });	
 </script>
 </head>
 
 <body>
+<%=departments.get(0)%>
+<%=departments.get(1)%>
+<%=departments.size()%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
@@ -191,7 +196,20 @@ $(document).ready(function(){
         <div class="control-group">
           <label class="control-label" for="department">* 所属部门 :</label>
           <div class="controls">
-            <input type="text" class="input-xlarge" id="department" name="department">
+            <div id="selectDepartment" class="selectbox">
+              <div class="cartes">
+                <input type="text" value="<%=departments.get(0)%>" id="department" name="department" class="listTxt" />
+                <div class="listBtn"><b></b></div>
+                <input type="hidden" value="" class="listVal" />
+              </div>
+              <div class="lists">
+                <ul class="list">
+                <% for (int i =0; i<departments.size(); i++){%>
+                <li id=<%=i%>><%=departments.get(i)%></li>
+                <%}%>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
         <div class="control-group">
@@ -199,14 +217,14 @@ $(document).ready(function(){
           <div class="controls">
             <div id="selectPosition" class="selectbox">
               <div class="cartes">
-                <input type="text" value="<%=userinfoPositions.get(0)%>" class="listTxt" />
+                <input type="text" value="<%=positions.get(0)%>" id="position" name="position" class="listTxt" />
                 <div class="listBtn"><b></b></div>
                 <input type="hidden" value="" class="listVal" />
               </div>
               <div class="lists">
                 <ul class="list">
-                <% for (int i =0; i<userinfoPositions.size(); i++){%>
-                <li id=<%=i%>><%=userinfoPositions.get(i)%></li>
+                <% for (int i =0; i<positions.size(); i++){%>
+                <li id=<%=i%>><%=positions.get(i)%></li>
                 <%}%>
                 </ul>
               </div>
