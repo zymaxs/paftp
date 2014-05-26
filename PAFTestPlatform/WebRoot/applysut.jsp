@@ -184,7 +184,7 @@ $(document).ready(function(){
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="code">* 系统名 :</label>
+          <label class="control-label" for="code">* 系统中文名 :</label>
           <div class="controls">
             <input type="text" class="input-xlarge" id="code" name="code">
           </div>
