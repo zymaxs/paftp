@@ -54,6 +54,7 @@ $(document).ready(function(){
             },
 			"department":{
                 required: true,
+				maxlength: 15
             },
 			"position":{
                 required: true
@@ -76,14 +77,18 @@ $(document).ready(function(){
                 required: "请输入真实姓名",
 				maxlength: $.validator.format("真实姓名最大输入不超过十个字符.")
             },
+			"department":{
+                required: "请输入所属部门",
+				maxlength: $.validator.format("所属部门最大输入最大输入不超过十五个字符.")
+            },
             "othermail":{
                 email:"请输入正确的email地址"
             },
             "telephone":{
                 digits: "请输入数字"
             },
-            "moible":{
-                digits: "请输入数字"
+            "telephone":{
+                email:"请输入数字"
             }
         }
     });
@@ -104,9 +109,6 @@ $(document).ready(function(){
 </head>
 
 <body>
-<%=departments.get(0)%>
-<%=departments.get(1)%>
-<%=departments.size()%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
