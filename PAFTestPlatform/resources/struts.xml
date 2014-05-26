@@ -46,7 +46,7 @@
 			<result name="error">/opr_error.jsp</result>
 		</action>
 		<action name="applySut" method="applySut" class="com.paftp.action.ApplySutAction">
-			<result name="success">/index.jsp</result>
+			<result name="success">/sutlist.jsp</result>
 			<result name="error">/error.jsp</result>
 			<result name="login">/login.jsp</result>
 			<result name="exist">/exist.jsp</result>
