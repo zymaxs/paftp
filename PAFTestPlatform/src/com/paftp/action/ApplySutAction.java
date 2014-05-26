@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -241,14 +240,15 @@ public class ApplySutAction extends ActionSupport {
 
 		if(apply){
 		this.applytime = new Date();
+		applySut.setAction("待审批");
 		}else{
 		this.resolvetime = new Date();
+		applySut.setAction(this.getAction());
 		}
 		
 		SutGroup sutGroup = sutgroupService.findSutGroupByName(this.getGroupname());
 		
 		applySut.setResolvetime(resolvetime);
-		applySut.setAction(this.getAction());
 		applySut.setComment(this.getComment());
 		applySut.setGroup_id(sutGroup.getId());
 
