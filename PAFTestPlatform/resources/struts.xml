@@ -75,7 +75,7 @@
 			<result name="success">/updateuserinfo.jsp</result>
 		</action>
 			<action name="sutgroup" method="sutgroup" class="com.paftp.action.StaticAction">
-			<result name="success">/updateuserinfo.jsp</result>
+			<result name="success">/applysut.jsp</result>
 		</action>
 
 	</package>

@@ -10,13 +10,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<% 
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/sutgroup.action").forward(request,response);}
+List<String> sutgroup = (List<String>)request.getAttribute("sutgroupnames");
+%>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<link href="css/shou.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jQSelect.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -85,6 +92,11 @@ $(document).ready(function(){
 		//alert("请登录后再提交表单!");
 		//}
 	}
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#sutgroup").jQSelect({});
+});	
 </script>
 </head>
 
@@ -177,38 +189,40 @@ $(document).ready(function(){
     <form id="applysutform" name="applysutform" class="form-horizontal" method="post" action="">
       <fieldset>
         <legend>接入系统申请 <small>(带*号标志为必输项)</small></legend>
-        <div class="control-group">
-          <label class="control-label" for="name">* 系统名 :</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" id="name" name="name">
-          </div>
-        </div>
-         <div class="control-group">
-          <label class="control-label" for="sutgroup">* 系统所属平台 :</label>
-          <div class="controls">
-            <select id="position" class="input-xlarge" name="position">
-              <option>测试</option>
-              <option>开发</option>
-              <option>产品</option>
-              <option>其他</option>
-            </select>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="code">* 系统中文名 :</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" id="code" name="code">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="code">* 系统描述 :</label>
-          <div class="controls">
-          <textarea  rows="4" name="description" class="input-xlarge" id="description"></textarea>
-          </div>
-        </div>
-        <div class="form-actions">
-          <input type="button" class="btn btn-primary" name="apsut" id="apsut" onClick="applysutac()" value="提交申请">
-        </div>
+        <table>
+          <tr>
+            <td>* 系统名 :</td>
+            <td><input type="text" class="input-xlarge" id="name" name="name"></td>
+          </tr>
+          <tr>
+            <td>* 系统所属平台 :</td>
+            <td><div id="sutgroup" class="selectbox">
+                <div class="cartes">
+                  <input type="text" value="<%=sutgroup.get(0)%>" id="groupname" name="groupname" class="listTxt" />
+                  <div class="listBtn"><b></b></div>
+                  <input type="hidden" value="" class="listVal" />
+                </div>
+                <div class="lists">
+                  <ul class="list">
+                    <% for (int i =0; i<sutgroup.size(); i++){%>
+                    <li id=<%=i%>><%=sutgroup.get(i)%></li>
+                    <%}%>
+                  </ul>
+                </div>
+              </div></td>
+          </tr>
+          <tr>
+            <td>* 系统中文名 :</td>
+            <td><input type="text" class="input-xlarge" id="code" name="code"></td>
+          </tr>
+          <tr>
+            <td>* 系统描述 :</td>
+            <td><textarea  rows="4" name="description" class="input-xlarge" id="description"></textarea></td>
+          </tr>
+          <tr>
+            <td colspan="2"><input type="button" class="btn btn-primary" name="apsut" id="apsut" onClick="applysutac()" value="提交申请"></td>
+          </tr>
+        </table>
       </fieldset>
     </form>
   </div>
