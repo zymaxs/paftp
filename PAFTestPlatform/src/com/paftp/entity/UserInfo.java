@@ -71,7 +71,7 @@ public class UserInfo {
 		this.otherinfo = otherinfo;
 	}
 
-	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "department_id")
 	public Department getDepartment() {
 		return department;
@@ -81,7 +81,7 @@ public class UserInfo {
 		this.department = department;
 	}
 
-	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "position_id")
 	public Position getPosition() {
 		return this.position;
