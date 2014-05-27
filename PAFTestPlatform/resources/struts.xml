@@ -16,6 +16,12 @@
         <param name="json">result</param>
         </result>
      </action>
+     <action name="querySut" method="querySut" class="com.paftp.action.ApplySutAction">
+        <result type="json">
+               <param name="root">result</param>
+        <param name="json">result</param>
+        </result>
+     </action>
     </package>
 	<package name="s2sh" extends="struts-default">
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
@@ -70,10 +76,6 @@
 			<result name="login">/login.jsp</result>
 		</action>
 			<action name="initialSut" method="initialSut" class="com.paftp.action.ApplySutAction">
-			<result name="success">/index.jsp</result>
-			<result name="login">/login.jsp</result>
-		</action>
-		<action name="querySut" method="querySut" class="com.paftp.action.ApplySutAction">
 			<result name="success">/index.jsp</result>
 			<result name="login">/login.jsp</result>
 		</action>

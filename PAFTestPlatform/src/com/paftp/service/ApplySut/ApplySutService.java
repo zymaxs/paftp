@@ -23,6 +23,8 @@ public interface ApplySutService {
 	
 	public Long findPages();
 	
+	public Long findPagesByMultiConditions(HashMap<String, Object> conditions);
+	
 	public List<ApplySut> findAllOrderByColumn(String column, Integer page, Integer row);
 	
 	public List<ApplySut> findAllOrderByMultiConditions(HashMap<String, Object> conditions, Integer page, Integer row);
