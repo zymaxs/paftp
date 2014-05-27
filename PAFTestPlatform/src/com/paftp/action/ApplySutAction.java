@@ -158,18 +158,16 @@ public class ApplySutAction extends ActionSupport {
 		}
 
 		result = new HashMap<String, Object>();
-		if(page == null || row == null){
-			request.setAttribute("error", "Page and Row can't be null!");
-		}
-		pages = applySutService.findPages()/row;
+		
+		row = 10;
+		
+		pages = (long) Math.ceil(applySutService.findPages()/(double)row);
 		
 		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
 				"applytime", this.getPage(), this.getRow());
 
 		result.put("pages", pages);
 		result.put("suts", applySuts);
-//		JSONArray jsonres=JSONArray.fromObject(applySuts.get(0));
-//		result = jsonres.toString();
 
 		return "success";
 
@@ -199,13 +197,8 @@ public class ApplySutAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-//		user = getSessionUser();
-//
-//		if (user == null)
-//			return "login";
-
 		if (this.getApplyer() == null && this.getName() == null
-				&& this.getStarttime() == null && this.getEndtime() == null) {
+				&& this.getStarttime() == null && this.getEndtime() == null && this.getAction() == null) {
 			request.setAttribute("error",
 					"You must support one query condition!");
 			return "error";
@@ -217,18 +210,24 @@ public class ApplySutAction extends ActionSupport {
 		if (applyerUser != null) {
 			applyerid = applyerUser.getId();
 		}
-
+		
+		result = new HashMap<String, Object>();
+		
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("name", this.getName());
 		conditions.put("user_id", applyerid);
 		conditions.put("starttime", getSQLDate(this.getStarttime()));
 		conditions.put("endtime", getSQLDate(this.getEndtime()));
+		conditions.put("action", this.getAction());
 
+		pages = (long) Math.ceil(applySutService.findPagesByMultiConditions(conditions)/(double)row);
+		
 		List<ApplySut> applySuts = applySutService
 				.findAllOrderByMultiConditions(conditions, this.getPage(),
 						this.getRow());
 
-		request.setAttribute("applySutList", applySuts);
+		result.put("pages", pages);
+		result.put("suts", applySuts);
 
 		return "success";
 	}

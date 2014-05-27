@@ -217,4 +217,34 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		
 		return c.setFirstResult((page - 1)* row).setMaxResults(row).list();
 	}
+	
+	public Long count(HashMap<String, Object> param){
+		
+	DetachedCriteria dc = DetachedCriteria.forClass(ApplySut.class);
+	
+		Iterator<Entry<String, Object>> iter = param.entrySet().iterator();
+		
+		int timetag = 0;
+		
+		while(iter.hasNext()){
+			
+			Entry<String, Object> condition = iter.next();     
+			if (condition.getValue() != null) {
+				if(condition.getValue() instanceof Date){
+					if(timetag == 0){
+					dc.add(Restrictions.ge(condition.getKey(),condition.getValue()));
+					timetag = 1;
+					}else{
+						dc.add(Restrictions.le(condition.getKey(),condition.getValue()));
+					}
+				}else{
+		           dc.add(Restrictions.eq(condition.getKey(),condition.getValue()));
+				}
+				}
+		}
+		
+		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
+		
+		return (Long) c.uniqueResult();
+	}
 }
