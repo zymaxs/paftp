@@ -197,13 +197,6 @@ public class ApplySutAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		if (this.getApplyer() == null && this.getName() == null
-				&& this.getStarttime() == null && this.getEndtime() == null && this.getAction() == null) {
-			request.setAttribute("error",
-					"You must support one query condition!");
-			return "error";
-		}
-
 		User applyerUser = userService.findUserByAlias(this.getApplyer());
 
 		Integer applyerid = null;
