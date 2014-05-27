@@ -21,6 +21,8 @@ public interface ApplySutService {
 
 	public List<ApplySut> findAllList();
 	
+	public Long findPages();
+	
 	public List<ApplySut> findAllOrderByColumn(String column, Integer page, Integer row);
 	
 	public List<ApplySut> findAllOrderByMultiConditions(HashMap<String, Object> conditions, Integer page, Integer row);
