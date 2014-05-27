@@ -1,5 +1,7 @@
 package com.paftp.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +12,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
@@ -69,6 +74,16 @@ public class ApplySutAction extends ActionSupport {
 	private Boolean isAdmin;
 	
 	private User user;
+	
+	String result;
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
 
 	public String applySut() {
 
@@ -141,10 +156,10 @@ public class ApplySutAction extends ActionSupport {
 		return "success";
 	}
 
-	public String initialSuts() {
+	public String initialSuts() throws IOException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-
+		HttpServletResponse response = ServletActionContext.getResponse();
 		
 		this.isAdmin = this.isAdmin(user.getAlias());
 		if (isAdmin){
@@ -156,7 +171,19 @@ public class ApplySutAction extends ActionSupport {
 		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
 				"applytime", this.getPage(), this.getRow());
 
-		request.setAttribute("applySutList", applySuts);
+		User user = new User();
+		user.setAlias("test");
+		user.setCreateTime(null);
+		user.setDisplayName("lala");
+		user.setId(1);
+		user.setPassword("test");
+		user.setStatus("DAOTA");
+		JSONArray jsonres=JSONArray.fromObject(user);
+		result = jsonres.toString();
+//		PrintWriter pw = response.getWriter();
+//		pw.print(jsonres.toString());
+		
+//		request.setAttribute("applySutList", applySuts);
 
 		return "success";
 
