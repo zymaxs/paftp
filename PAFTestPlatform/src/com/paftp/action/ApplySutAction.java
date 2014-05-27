@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
+
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
@@ -70,7 +72,15 @@ public class ApplySutAction extends ActionSupport {
 	private Boolean isAdmin;
 	
 	private User user;
-	private HashMap<String, Object> result = new HashMap<String, Object>();
+	private String result;
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
 
 	public String applySut() {
 
@@ -146,16 +156,16 @@ public class ApplySutAction extends ActionSupport {
 	public String initialSuts() throws IOException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
-		this.isAdmin = this.isAdmin(user.getAlias());
-		if (isAdmin){
-			request.setAttribute("isAdmin", "true");
-		}else{
-			request.setAttribute("isAdmin", "false");
-		}
-
-		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
-				"applytime", this.getPage(), this.getRow());
+//		
+//		this.isAdmin = this.isAdmin(user.getAlias());
+//		if (isAdmin){
+//			request.setAttribute("isAdmin", "true");
+//		}else{
+//			request.setAttribute("isAdmin", "false");
+//		}
+//
+//		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
+//				"applytime", this.getPage(), this.getRow());
 
 		User user = new User();
 		user.setAlias("test");
@@ -164,11 +174,11 @@ public class ApplySutAction extends ActionSupport {
 		user.setId(1);
 		user.setPassword("test");
 		user.setStatus("DAOTA");
-		result.put("user", user);
-		result.put("success", true);
-//		JSONArray jsonres=JSONArray.fromObject(user);
+//		result.put("user", user);
+//		result.put("success", true);
+		JSONArray jsonres=JSONArray.fromObject(user);
 //		JSONArray jsonres=JSONArray.fromObject(applySuts.get(0));
-//		result = jsonres.toString();
+		result = jsonres.toString();
 //		PrintWriter pw = response.getWriter();
 //		pw.print(jsonres.toString());
 //		request.setAttribute("applySutList", applySuts);
