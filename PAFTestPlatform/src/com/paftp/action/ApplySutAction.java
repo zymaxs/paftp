@@ -178,11 +178,6 @@ public class ApplySutAction extends ActionSupport {
 	public String initialSut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-
-		user = getSessionUser();
-
-		if (user == null)
-			return "login";
 		
 		this.isAdmin = this.isAdmin(user.getAlias());
 		if (isAdmin){
@@ -204,10 +199,10 @@ public class ApplySutAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		user = getSessionUser();
-
-		if (user == null)
-			return "login";
+//		user = getSessionUser();
+//
+//		if (user == null)
+//			return "login";
 
 		if (this.getApplyer() == null && this.getName() == null
 				&& this.getStarttime() == null && this.getEndtime() == null) {
