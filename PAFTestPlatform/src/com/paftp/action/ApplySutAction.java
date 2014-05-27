@@ -451,11 +451,11 @@ public class ApplySutAction extends ActionSupport {
 		this.groupname = groupname;
 	}
 
-	public String getResult() {
+	public HashMap<String, Object> getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(HashMap<String, Object> result) {
 		this.result = result;
 	}
 

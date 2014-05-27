@@ -10,9 +10,13 @@
 	<constant name="struts.devMode" value="true" />
 
     <package name="ajax" extends="json-default">
-    <action name="initialSutsAjax" method="initialSuts" class="com.paftp.action.ApplySutAction" >
+    <action name="initialSutsAjax" method="initialSuts" class="com.paftp.action.ApplySutAction">
         <result type="json">
+<<<<<<< HEAD
                <param name="root">result</param>
+=======
+        <param name="json">result</param>
+>>>>>>> 9a3673c17f5109a8de15feb17a788c87924b2388
         </result>
      </action>
     </package>
