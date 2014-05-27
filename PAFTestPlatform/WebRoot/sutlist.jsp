@@ -17,10 +17,14 @@
 <link href="css/easyui/themes/default/easyui.css" rel="stylesheet">
 <link href="css/easyui/themes/icon.css" rel="stylesheet">
 <link href="css/easyui/demo.css" rel="stylesheet">
+<link href="css/page.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="js/jquery.myPagination.js"></script>
+<script type="text/javascript" src="js/msgbox/msgbox.js"></script>
+
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -49,12 +53,12 @@
         }
 </script>
 <!--分页-->
-<script>
+<script type="text/javascript">
 
 var myPagination;
 
 $(function() {
-	
+	alert("${pageContext.request.contextPath}/initialSutsAjax.action");
 	init();
 	initEvent();
 	
@@ -63,13 +67,14 @@ $(function() {
 	function init(){
 		
 		var formData = $("#queryForm").serialize(); //序列化表单
+		alert(test);
         formData = decodeURIComponent(formData, true);	//解码
 		myPagination = $("#demo1").myPagination({
 					currPage: 1,
 					pageNumber: 5,
 					ajax: {
 					  on: true,
-					  url: "${pageContext.request.contextPath}/initialSutsAjax.action",
+					  url: "initialSutsAjax.action",
 					  dataType: 'json',
 					  param:formData,
 					  ajaxStart:function(){
@@ -79,15 +84,15 @@ $(function() {
 					  },
 					  callback:function(data){
 						ZENG.msgbox.hide(); //隐藏加载提示
-						var result = data.result;  
+						var result = data.result;
 						$.fn.debug(data.result);
 						var insetViewData = "";
 						 $.each(result, function(i) {
 							insetViewData += createTR(result[i]);
 						 });
 						 
-						 $("#mytab > tbody").html(insetViewData);
-						 $('#mytab > tbody > tr:even').addClass('a1'); //奇偶变色，添加样式 
+						 $("#sutlist > tbody").html(insetViewData);
+						 $('#sutlist > tbody > tr:even').addClass('a1'); //奇偶变色，添加样式 
 					  }
 					}
 				  }); 
@@ -207,15 +212,15 @@ function createTR(obj){
     <table width="900px">
       <tr>
         <td>系统名</td>
-        <td><input type="text" id="sysname" name="sysname"></td>
+        <td><input type="text" id="name" name="name"></td>
         <td>申请人</td>
-        <td><input type="text" id="applicant" name="applicant"></td>
+        <td><input type="text" id="applyer" name="applyer"></td>
       </tr>
       <tr>
         <td>Start Date:</td>
-        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'"></td>
+        <td><input id="starttime" name="starttime" class="easyui-datebox" data-options="sharedCalendar:'#timebox'"></td>
         <td>End Date:</td>
-        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'"></td>
+        <td><input id="endtime" name="endtime" class="easyui-datebox" data-options="sharedCalendar:'#timebox'"></td>
       </tr>
       <tr>
         <td colspan="2" align="center"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">搜索</a></td>
@@ -224,7 +229,7 @@ function createTR(obj){
     <div id="timebox" class="easyui-calendar"></div>
   </form>
   <button type="button" class="btn btn-primary" onClick="window.location.href='applysut.jsp'">申请接入</button>
-  <table id="sutlist" class="t1">
+  <table id="sutlist" border="1">
     <thead>
     <th>申请序号</th>
       <th>系列名</th>
