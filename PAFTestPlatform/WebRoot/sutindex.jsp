@@ -12,7 +12,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <% 
 if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/reguserinfo.action").forward(request,response);}
+request.getRequestDispatcher("${pageContext.request.contextPath}/initialSutsAjax.action").forward(request,response);}
 
 %>
 <title>无标题文档</title>
