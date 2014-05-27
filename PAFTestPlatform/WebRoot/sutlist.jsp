@@ -54,44 +54,11 @@
 var myPagination;
 
 $(function() {
-	
-	init();
+
 	initEvent();
 	
   });
 
-	function init(){
-		
-		var formData = $("#queryForm").serialize(); //序列化表单
-        formData = decodeURIComponent(formData, true);	//解码
-		myPagination = $("#demo1").myPagination({
-					currPage: 1,
-					pageNumber: 5,
-					ajax: {
-					  on: true,
-					  url: "${pageContext.request.contextPath}/initialSutsAjax.action",
-					  dataType: 'json',
-					  param:formData,
-					  ajaxStart:function(){
-						  ZENG.msgbox.show(" 正在加载中，请稍后...", 6, 10000);
-					  },onClick:function(page){
-						  $.fn.debug(page);
-					  },
-					  callback:function(data){
-						ZENG.msgbox.hide(); //隐藏加载提示
-						var result = data.result;  
-						$.fn.debug(data.result);
-						var insetViewData = "";
-						 $.each(result, function(i) {
-							insetViewData += createTR(result[i]);
-						 });
-						 
-						 $("#mytab > tbody").html(insetViewData);
-						 $('#mytab > tbody > tr:even').addClass('a1'); //奇偶变色，添加样式 
-					  }
-					}
-				  }); 
-	}
 	
 	function initEvent(){
 		$("#sysname").focus();
