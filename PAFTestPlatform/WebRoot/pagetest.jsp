@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         };
         $.ajax({
     type: "POST",
-    url: "${pageContext.request.contextPath}/querySut.action",
+    url: "${pageContext.request.contextPath}/initialSutsAjax.action",
     data: params,
     dataType:"text",
     success: function(json){  

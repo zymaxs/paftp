@@ -45,8 +45,76 @@
 		document.loginform.submit();
 	}
 	function submitForm(){
-            $('#searchsut').form('submit');
+            $('#queryForm').form('submit');
         }
+</script>
+<!--分页-->
+<script>
+
+var myPagination;
+
+$(function() {
+	
+	init();
+	initEvent();
+	
+  });
+
+	function init(){
+		
+		var formData = $("#queryForm").serialize(); //序列化表单
+        formData = decodeURIComponent(formData, true);	//解码
+		myPagination = $("#demo1").myPagination({
+					currPage: 1,
+					pageNumber: 5,
+					ajax: {
+					  on: true,
+					  url: "data.jsp",
+					  dataType: 'json',
+					  param:formData,
+					  ajaxStart:function(){
+						  ZENG.msgbox.show(" 正在加载中，请稍后...", 6, 10000);
+					  },onClick:function(page){
+						  $.fn.debug(page);
+					  },
+					  callback:function(data){
+						ZENG.msgbox.hide(); //隐藏加载提示
+						var result = data.result;  
+						$.fn.debug(data.result);
+						var insetViewData = "";
+						 $.each(result, function(i) {
+							insetViewData += createTR(result[i]);
+						 });
+						 
+						 $("#mytab > tbody").html(insetViewData);
+						 $('#mytab > tbody > tr:even').addClass('a1'); //奇偶变色，添加样式 
+					  }
+					}
+				  }); 
+	}
+	
+	function initEvent(){
+		$("#keywords").focus();
+		$("#query").click(function(){
+			var formData = $("#queryForm").serialize(); //序列化表单
+            formData = decodeURIComponent(formData, true);	//解码
+			$.fn.debug("开始指定加载");
+			myPagination.onLoad({param:formData});
+			$.fn.debug("结束指定加载");
+		});
+	}
+	
+function createTR(obj){
+	var tr = "<tr>";
+	tr += "<td>"+obj.name+"</td>";
+	tr += "<td><a href='"+obj.blogs+"'>"+obj.blogs+"</a></td>";
+	tr += "<td>"+obj.email+"</td>";
+	tr += "<td><a href='"+obj.download+"'>"+obj.download+"</a></td>";
+	tr += "<td>"+obj.qq+"</td>";
+	tr += "</tr>";
+	return tr;
+}
+
 </script>
 </head>
 
@@ -135,7 +203,7 @@
     </div>
   </div>
   <!--主体-->
-  <form id="searchsut" name="searchsut" action="">
+  <form id="queryForm" name="queryForm" action="">
     <table width="900px">
       <tr>
         <td>系统名</td>
@@ -150,12 +218,25 @@
         <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'"></td>
       </tr>
       <tr>
-        <td colspan="2" align="center"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a></td>
+        <td colspan="2" align="center"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">搜索</a></td>
       </tr>
     </table>
     <div id="timebox" class="easyui-calendar"></div>
   </form>
   <button type="button" class="btn btn-primary" onClick="window.location.href='applysut.jsp'">申请接入</button>
+  <table id="sutlist" class="t1">
+    <thead>
+    <th>申请序号</th>
+      <th>系列名</th>
+      <th>申请人</th>
+      <th>申请日期</th>
+      <th>状态</th>
+        </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <div id="demo1"></div>
+  
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

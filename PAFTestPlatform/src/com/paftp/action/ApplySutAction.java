@@ -145,10 +145,6 @@ public class ApplySutAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		user = getSessionUser();
-
-		if (user == null)
-			return "login";
 		
 		this.isAdmin = this.isAdmin(user.getAlias());
 		if (isAdmin){
