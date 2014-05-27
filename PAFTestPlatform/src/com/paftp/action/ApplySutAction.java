@@ -171,7 +171,6 @@ public class ApplySutAction extends ActionSupport {
 //		JSONArray jsonres=JSONArray.fromObject(applySuts.get(0));
 //		result = jsonres.toString();
 
-
 		return "success";
 
 	}
