@@ -69,7 +69,7 @@ $(function() {
 					pageNumber: 5,
 					ajax: {
 					  on: true,
-					  url: "data.jsp",
+					  url: "${pageContext.request.contextPath}/initialSutsAjax.action",
 					  dataType: 'json',
 					  param:formData,
 					  ajaxStart:function(){
