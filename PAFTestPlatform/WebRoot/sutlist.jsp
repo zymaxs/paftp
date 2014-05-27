@@ -204,6 +204,17 @@ function createTR(obj){
   </table>
   <div id="demo1"></div>
   
+  
+  
+  
+  <div class="pagination">
+		<a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
+			class="previous" data-action="previous">&lsaquo;</a> <input
+			type="text" readonly="readonly" data-max-page="40" /> <a href="#"
+			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
+			data-action="last">&raquo;</a>
+	</div>
+  
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
