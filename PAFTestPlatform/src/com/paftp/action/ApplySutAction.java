@@ -158,10 +158,10 @@ public class ApplySutAction extends ActionSupport {
 		}
 
 		result = new HashMap<String, Object>();
-		if(page == null || row == null){
-			request.setAttribute("error", "Page and Row can't be null!");
-		}
-		pages = applySutService.findPages()/row;
+		
+		row = 10;
+		
+		pages = (long) Math.ceil(applySutService.findPages()/(double)row);
 		
 		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
 				"applytime", this.getPage(), this.getRow());
