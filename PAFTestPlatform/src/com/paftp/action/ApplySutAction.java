@@ -68,20 +68,13 @@ public class ApplySutAction extends ActionSupport {
 
 	private Integer page;
 	private Integer row;
+	private Long pages;
 
 	private Boolean isAdmin;
 	
 	private User user;
-	private String result;
-
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
-	}
-
+	private HashMap<String, Object> result;
+	
 	public String applySut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -156,32 +149,27 @@ public class ApplySutAction extends ActionSupport {
 	public String initialSuts() throws IOException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-//		
-//		this.isAdmin = this.isAdmin(user.getAlias());
-//		if (isAdmin){
-//			request.setAttribute("isAdmin", "true");
-//		}else{
-//			request.setAttribute("isAdmin", "false");
-//		}
-//
-//		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
-//				"applytime", this.getPage(), this.getRow());
+		
+		this.isAdmin = this.isAdmin(user.getAlias());
+		if (isAdmin){
+			request.setAttribute("isAdmin", "true");
+		}else{
+			request.setAttribute("isAdmin", "false");
+		}
 
-		User user = new User();
-		user.setAlias("test");
-		user.setCreateTime(null);
-		user.setDisplayName("lala");
-		user.setId(1);
-		user.setPassword("test");
-		user.setStatus("DAOTA");
-//		result.put("user", user);
-//		result.put("success", true);
-		JSONArray jsonres=JSONArray.fromObject(user);
+		result = new HashMap<String, Object>();
+		if(page == null || row == null){
+			request.setAttribute("error", "Page and Row can't be null!");
+		}
+		pages = applySutService.findPages()/row;
+		
+		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
+				"applytime", this.getPage(), this.getRow());
+
+		result.put("pages", pages);
+		result.put("suts", applySuts);
 //		JSONArray jsonres=JSONArray.fromObject(applySuts.get(0));
-		result = jsonres.toString();
-//		PrintWriter pw = response.getWriter();
-//		pw.print(jsonres.toString());
-//		request.setAttribute("applySutList", applySuts);
+//		result = jsonres.toString();
 
 		return "success";
 
@@ -190,11 +178,6 @@ public class ApplySutAction extends ActionSupport {
 	public String initialSut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-
-		user = getSessionUser();
-
-		if (user == null)
-			return "login";
 		
 		this.isAdmin = this.isAdmin(user.getAlias());
 		if (isAdmin){
@@ -216,10 +199,10 @@ public class ApplySutAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		user = getSessionUser();
-
-		if (user == null)
-			return "login";
+//		user = getSessionUser();
+//
+//		if (user == null)
+//			return "login";
 
 		if (this.getApplyer() == null && this.getName() == null
 				&& this.getStarttime() == null && this.getEndtime() == null) {
@@ -462,4 +445,19 @@ public class ApplySutAction extends ActionSupport {
 		this.groupname = groupname;
 	}
 
+	public HashMap<String, Object> getResult() {
+		return result;
+	}
+
+	public void setResult(HashMap<String, Object> result) {
+		this.result = result;
+	}
+
+	public Long getPages() {
+		return pages;
+	}
+
+	public void setPages(Long pages) {
+		this.pages = pages;
+	}
 }

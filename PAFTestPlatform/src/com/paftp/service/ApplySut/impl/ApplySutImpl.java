@@ -80,5 +80,11 @@ public class ApplySutImpl implements ApplySutService{
 		return baseDAO.findbyconditions(conditions, page, row);
 	}
 
+	@Override
+	public Long findPages() {
+		// TODO Auto-generated method stub
+		return baseDAO.count(" from ApplySut u");
+	}
+
 
 }
