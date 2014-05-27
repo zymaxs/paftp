@@ -94,7 +94,7 @@ $(function() {
 	}
 	
 	function initEvent(){
-		$("#keywords").focus();
+		$("#sysname").focus();
 		$("#query").click(function(){
 			var formData = $("#queryForm").serialize(); //序列化表单
             formData = decodeURIComponent(formData, true);	//解码
