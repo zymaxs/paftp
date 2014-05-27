@@ -40,9 +40,9 @@
 
 						dataType : "text",
 
-						success : function(json) {
+						success : function(root) {
 
-							var obj = $.parseJSON(json);
+							var obj = $.parseJSON(root);
 
 							var state_value = obj.result;
 
@@ -50,9 +50,9 @@
 
 						},
 
-						error : function(json) {
+						error : function(root) {
 
-							alert("json=" + json);
+							alert("json=" + root);
 
 							return false;
 

@@ -1,5 +1,6 @@
 package com.paftp.service.ApplySut.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
+import com.paftp.dto.ApplySutDto;
 import com.paftp.entity.ApplySut;
 import com.paftp.service.ApplySut.ApplySutService;
 
@@ -83,13 +85,35 @@ public class ApplySutImpl implements ApplySutService{
 	@Override
 	public Long findPages() {
 		// TODO Auto-generated method stub
-		return baseDAO.count(" from ApplySut u");
+		return baseDAO.count("select count(*) from ApplySut");
 	}
 
 	@Override
 	public Long findPagesByMultiConditions(HashMap<String, Object> conditions) {
 		// TODO Auto-generated method stub
 		return baseDAO.count(conditions);
+	}
+	
+public List<ApplySutDto> getApplySutDto(List<ApplySut> applySuts){
+		
+		List<ApplySutDto> applySutDtos = new ArrayList<ApplySutDto>();
+		
+		for(int i=0; i<applySuts.size(); i++){
+			ApplySutDto applySutDto = new ApplySutDto();
+			applySutDto.setAction(applySuts.get(i).getAction());
+			applySutDto.setApplyer(applySuts.get(i).getName());
+			applySutDto.setApplytime(applySuts.get(i).getApplytime());
+			applySutDto.setCode(applySuts.get(i).getCode());
+			applySutDto.setComment(applySuts.get(i).getComment());
+			applySutDto.setDescription(applySuts.get(i).getDescription());
+			applySutDto.setGroupname(applySuts.get(i).getGroup().getName());
+			applySutDto.setResolvetime(applySuts.get(i).getResolvetime());
+			applySutDto.setApplyer(applySuts.get(i).getUser().getAlias());
+			applySutDtos.add(applySutDto);
+		}
+		
+		return applySutDtos;
+		
 	}
 
 

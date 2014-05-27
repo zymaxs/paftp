@@ -3,6 +3,7 @@ package com.paftp.service.ApplySut;
 import java.util.HashMap;
 import java.util.List;
 
+import com.paftp.dto.ApplySutDto;
 import com.paftp.entity.ApplySut;
 
 public interface ApplySutService {
@@ -29,4 +30,5 @@ public interface ApplySutService {
 	
 	public List<ApplySut> findAllOrderByMultiConditions(HashMap<String, Object> conditions, Integer page, Integer row);
 
+	public List<ApplySutDto> getApplySutDto(List<ApplySut> applySuts);
 }

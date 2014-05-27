@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,16 +28,7 @@ public class ApplySut {
 	private String code;
 	private String name;
 	private String description;
-	private Integer group_id;
-	
-	@Column(name = "group_id", length = 11)
-	public Integer getGroup_id() {
-		return group_id;
-	}
-
-	public void setGroup_id(Integer group_id) {
-		this.group_id = group_id;
-	}
+	private SutGroup group;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -123,5 +115,15 @@ public class ApplySut {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "group_id")
+	public SutGroup getGroup() {
+		return group;
+	}
+	public void setGroup(SutGroup group) {
+		this.group = group;
+	}
+	
 
 }
