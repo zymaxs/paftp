@@ -11,9 +11,9 @@ public class ApplySutDto {
 	private Date applytime;
 	private String applyer;
 	private String groupname;
+	private ApplySutStatusDto applysutstatusdto;
 
 	private Date resolvetime;
-	private String action;
 	private String comment;
 	
 	public String getCode() {
@@ -58,17 +58,19 @@ public class ApplySutDto {
 	public void setResolvetime(Date resolvetime) {
 		this.resolvetime = resolvetime;
 	}
-	public String getAction() {
-		return action;
-	}
-	public void setAction(String action) {
-		this.action = action;
-	}
+
 	public String getComment() {
 		return comment;
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public ApplySutStatusDto getApplysutstatusdto() {
+		return applysutstatusdto;
+	}
+	public void setApplysutstatusdto(ApplySutStatusDto applysutstatusdto) {
+		this.applysutstatusdto = applysutstatusdto;
 	}
 
 }

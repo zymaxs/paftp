@@ -15,10 +15,11 @@ import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.dto.ApplySutDto;
+import com.paftp.dto.ApplySutStatusDto;
 import com.paftp.entity.ApplySut;
 import com.paftp.service.ApplySut.ApplySutService;
 
-@Service("ApplySutService")
+@Service("applySutService")
 public class ApplySutImpl implements ApplySutService{
 
 	@Resource
@@ -99,8 +100,14 @@ public List<ApplySutDto> getApplySutDto(List<ApplySut> applySuts){
 		List<ApplySutDto> applySutDtos = new ArrayList<ApplySutDto>();
 		
 		for(int i=0; i<applySuts.size(); i++){
+			
 			ApplySutDto applySutDto = new ApplySutDto();
-			applySutDto.setAction(applySuts.get(i).getAction());
+			
+			ApplySutStatusDto applySutStatusDto = new ApplySutStatusDto();
+			applySutStatusDto.setName(applySutDto.getApplysutstatusdto().getName());
+			applySutStatusDto.setDescription(applySutDto.getDescription());
+			
+			applySutDto.setApplysutstatusdto(applySutStatusDto);
 			applySutDto.setApplyer(applySuts.get(i).getName());
 			applySutDto.setApplytime(applySuts.get(i).getApplytime());
 			applySutDto.setCode(applySuts.get(i).getCode());

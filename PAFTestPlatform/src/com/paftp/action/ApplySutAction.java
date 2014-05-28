@@ -14,10 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
-import net.sf.json.util.CycleDetectionStrategy;
-import net.sf.json.util.PropertyFilter;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
@@ -31,6 +27,7 @@ import com.paftp.entity.Sut;
 import com.paftp.entity.SutGroup;
 import com.paftp.entity.User;
 import com.paftp.service.ApplySut.ApplySutService;
+import com.paftp.service.StaticColumn.ApplySutStatusService;
 import com.paftp.service.StaticColumn.SutGroupService;
 import com.paftp.service.permission.PermissionService;
 import com.paftp.service.role.RoleService;
@@ -47,6 +44,8 @@ public class ApplySutAction extends ActionSupport {
 
 	@Resource
 	private ApplySutService applySutService;
+	@Resource
+	private ApplySutStatusService applySutStatusService;
 	@Resource
 	private SutService sutService;
 	@Resource
@@ -65,7 +64,7 @@ public class ApplySutAction extends ActionSupport {
 	private String groupname;
 
 	private Date resolvetime;
-	private String action;
+	private Integer status;
 	private String comment;
 
 	private String starttime;
@@ -127,7 +126,7 @@ public class ApplySutAction extends ActionSupport {
 
 		this.isAdmin = this.isAdmin(user.getAlias());
 
-		if (this.getAction() == null) {
+		if (this.getStatus() == null) {
 			request.setAttribute("error",
 					"Please choose the action for this request!");
 			return "error";
@@ -164,7 +163,7 @@ public class ApplySutAction extends ActionSupport {
 		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
 				"applytime", this.getPage(), this.getRow());
 
-		request.setAttribute("pagenum", pages);
+		request.setAttribute("pages", pages);
 		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
 
@@ -209,7 +208,7 @@ public class ApplySutAction extends ActionSupport {
 		conditions.put("user_id", applyerid);
 		conditions.put("starttime", getSQLDate(this.getStarttime()));
 		conditions.put("endtime", getSQLDate(this.getEndtime()));
-		conditions.put("action", this.getAction());
+		conditions.put("action", this.getStatus());
 
 		pages = (long) Math.ceil(applySutService
 				.findPagesByMultiConditions(conditions) / (double) row);
@@ -217,7 +216,7 @@ public class ApplySutAction extends ActionSupport {
 		List<ApplySut> applySuts = applySutService
 				.findAllOrderByMultiConditions(conditions, this.getPage(),
 						this.getRow());
-
+		
 		List<ApplySutDto> applySutDtos = applySutService.getApplySutDto(applySuts);
 		String json = JSONArray.fromObject(applySutDtos).toString();
 		
@@ -233,15 +232,15 @@ public class ApplySutAction extends ActionSupport {
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		return sqlDate;
 	}
-
+	
 	public void setApplySut(ApplySut applySut, Boolean apply) {
 
 		if (apply) {
 			this.applytime = new Date();
-			applySut.setAction("待审批");
+			applySut.setStatus(1);
 		} else {
 			this.resolvetime = new Date();
-			applySut.setAction(this.getAction());
+			applySut.setStatus(this.getStatus());
 		}
 
 		SutGroup sutGroup = sutgroupService.findSutGroupByName(this
@@ -376,14 +375,6 @@ public class ApplySutAction extends ActionSupport {
 		this.resolvetime = resolvetime;
 	}
 
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
-	}
-
 	public String getComment() {
 		return comment;
 	}
@@ -454,5 +445,13 @@ public class ApplySutAction extends ActionSupport {
 
 	public void setPages(Long pages) {
 		this.pages = pages;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }

@@ -1,6 +1,7 @@
 DROP DATABASE `paftp`;
 create SCHEMA `paftp` DEFAULT CHARACTER SET utf8;
 USE `paftp`;
+source C:\GitHub\paftp\PAFTestPlatform\sql\create_applysutstatus.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_version.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_userinfo_position.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_userinfo_department.sql

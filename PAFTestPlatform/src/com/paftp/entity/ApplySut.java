@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,13 +21,14 @@ public class ApplySut {
 	private Integer id;
 	private Date applytime;
 	private Date resolvetime;
-	private String action;
+	private Integer status;
 	private String comment;
 	private User user;
 	private String code;
 	private String name;
 	private String description;
 	private SutGroup group;
+	private ApplySutStatus applysutstatus;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -61,13 +61,13 @@ public class ApplySut {
 		this.resolvetime = resolvetime;
 	}
 	
-	@Column(name = "action", length = 20)
-	public String getAction() {
-		return action;
+	@Column(name = "status", length = 11)
+	public Integer getStatus() {
+		return status;
 	}
 	
-	public void setAction(String action) {
-		this.action = action;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	
 	@Column(name = "comment", length = 200)
@@ -124,6 +124,17 @@ public class ApplySut {
 	public void setGroup(SutGroup group) {
 		this.group = group;
 	}
+
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "status_id")
+	public ApplySutStatus getApplysutstatus() {
+		return applysutstatus;
+	}
+
+	public void setApplysutstatus(ApplySutStatus applysutstatus) {
+		this.applysutstatus = applysutstatus;
+	}
+	
 	
 
 }
