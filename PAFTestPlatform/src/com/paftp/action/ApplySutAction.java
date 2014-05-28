@@ -233,7 +233,7 @@ public class ApplySutAction extends ActionSupport {
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		return sqlDate;
 	}
-
+	
 	public void setApplySut(ApplySut applySut, Boolean apply) {
 
 		if (apply) {
