@@ -124,7 +124,8 @@ public class ApplySut {
 	public void setApplysutstatus(ApplySutStatus applysutstatus) {
 		this.applysutstatus = applysutstatus;
 	}
-	
+
+
 	
 
 }
