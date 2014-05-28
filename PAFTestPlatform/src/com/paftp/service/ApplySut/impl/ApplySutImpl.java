@@ -70,9 +70,13 @@ public class ApplySutImpl implements ApplySutService{
 	}
 
 	@Override
-	public List<ApplySut> findAllOrderByColumn(String column ,Integer page, Integer row) {
+	public List<ApplySut> findAllOrderByColumn(String column){
+		return baseDAO.find(" from ApplySut u order by ? desc, u.status_id asc", new Object[] {column});
+	}
+	@Override
+	public List<ApplySut> findAllOrderByColumnPagination(String column ,Integer page, Integer row) {
 		// TODO Auto-generated method stub
-		return baseDAO.find(" from ApplySut u order by ?", new Object[] {column}, page, row);
+		return baseDAO.find(" from ApplySut u order by ? desc, u.status_id asc", new Object[] {column}, page, row);
 	}
 
 	@Override
