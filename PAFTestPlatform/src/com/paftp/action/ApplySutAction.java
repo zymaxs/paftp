@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.dto.ApplySutDto;
 import com.paftp.entity.ApplySut;
+import com.paftp.entity.ApplySutStatus;
 import com.paftp.entity.Permission;
 import com.paftp.entity.Role;
 import com.paftp.entity.Sut;
@@ -64,7 +65,7 @@ public class ApplySutAction extends ActionSupport {
 	private String groupname;
 
 	private Date resolvetime;
-	private Integer status;
+	private String status;
 	private String comment;
 
 	private String starttime;
@@ -235,12 +236,14 @@ public class ApplySutAction extends ActionSupport {
 	
 	public void setApplySut(ApplySut applySut, Boolean apply) {
 
+		ApplySutStatus applySutStatus = applySutStatusService.findApplySutStatusByName(this.getStatus());
+		
 		if (apply) {
 			this.applytime = new Date();
-			applySut.setStatus(1);
+			applySut.setApplysutstatus(applySutStatus);
 		} else {
 			this.resolvetime = new Date();
-			applySut.setStatus(this.getStatus());
+			applySut.setApplysutstatus(applySutStatus);
 		}
 
 		SutGroup sutGroup = sutgroupService.findSutGroupByName(this
@@ -447,11 +450,11 @@ public class ApplySutAction extends ActionSupport {
 		this.pages = pages;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 }
