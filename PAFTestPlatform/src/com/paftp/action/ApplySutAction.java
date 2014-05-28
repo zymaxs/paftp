@@ -160,13 +160,9 @@ public class ApplySutAction extends ActionSupport {
 		row = 10;
 
 		pages = (long) Math.ceil(applySutService.findPages() / (double) row);
-		
-		List<ApplySut> applySuts = applySutService
-				.findAllOrderByColumnPagination("applytime",
-						1, this.getRow());
 
-		List<ApplySut> applySuts = applySutService.findAllOrderByColumnPagination(
-				"applytime", 1, this.getRow());
+		List<ApplySut> applySuts = applySutService
+				.findAllOrderByColumnPagination("applytime", 1, this.getRow());
 
 		request.setAttribute("pages", pages);
 		request.setAttribute("suts", applySuts);
@@ -216,20 +212,21 @@ public class ApplySutAction extends ActionSupport {
 		conditions.put("endtime", getSQLDate(this.getEndtime()));
 		conditions.put("action", this.getStatus());
 
-		//pages = (long) Math.ceil(applySutService
-		//		.findPagesByMultiConditions(conditions) / (double) row);
+		// pages = (long) Math.ceil(applySutService
+		// .findPagesByMultiConditions(conditions) / (double) row);
 
-		List<ApplySut> applySuts = applySutService
-				.findAllOrderByMultiConditions(conditions,
-						Integer.parseInt(this.getPagenum()), this.getRow());
+//		List<ApplySut> applySuts = applySutService
+//				.findAllOrderByMultiConditions(conditions,
+//						Integer.parseInt(this.getPagenum()), this.getRow());
+//
+//		List<ApplySutDto> applySutDtos = applySutService
+//				.getApplySutDto(applySuts);
+//		String json = JSONArray.fromObject(applySutDtos).toString();
 
-		List<ApplySutDto> applySutDtos = applySutService
-				.getApplySutDto(applySuts);
-		String json = JSONArray.fromObject(applySutDtos).toString();
-
-		result.put("pages", pages);
-		result.put("suts", json);
-
+		// result.put("pages", pages);
+		// result.put("suts", json);
+		this.setPagenum(pagenum);
+	
 		return "success";
 	}
 
