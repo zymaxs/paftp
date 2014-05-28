@@ -21,7 +21,6 @@ public class ApplySut {
 	private Integer id;
 	private Date applytime;
 	private Date resolvetime;
-	private Integer status;
 	private String comment;
 	private User user;
 	private String code;
@@ -59,15 +58,6 @@ public class ApplySut {
 	
 	public void setResolvetime(Date resolvetime) {
 		this.resolvetime = resolvetime;
-	}
-	
-	@Column(name = "status", length = 11)
-	public Integer getStatus() {
-		return status;
-	}
-	
-	public void setStatus(Integer status) {
-		this.status = status;
 	}
 	
 	@Column(name = "comment", length = 200)
