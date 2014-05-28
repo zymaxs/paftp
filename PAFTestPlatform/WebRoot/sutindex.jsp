@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.util.*,com.paftp.entity.*"%>
+	import="java.util.*,com.paftp.entity.*,com.paftp.dto.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -10,11 +10,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<% 
-if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/initialSutsAjax.action").forward(request,response);}
-
-%>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -48,6 +43,8 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/initialSutsAjax
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+
+	
 </script>
 </head>
 
