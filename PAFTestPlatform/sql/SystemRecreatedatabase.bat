@@ -7,4 +7,6 @@ cd C:\Program Files\MySQL\MySQL Server 5.6\bin
 @set sqlpath=C:\GitHub\paftp\PAFTestPlatform\sql\Systemcreatetables.sql
 mysql -f -u %userName% --password=%password% %db% < %sqlpath% --default-character-set=utf8
 @echo "Finish to re-create the database and tables!"
+cd C:\GitHub\paftp\PAFTestPlatform\sql
+SystemInsertbusinessdata.bat
 pause

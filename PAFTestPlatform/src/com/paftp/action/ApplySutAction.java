@@ -76,10 +76,10 @@ public class ApplySutAction extends ActionSupport {
 	private Long pages;
 
 	private Boolean isAdmin;
-	
+
 	private User user;
 	private HashMap<String, Object> result;
-	
+
 	public String applySut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -94,7 +94,7 @@ public class ApplySutAction extends ActionSupport {
 					"The SUT name or Code can't be empty!");
 			return "error";
 		}
-		
+
 		ApplySut existSuts = applySutService.findApplySutByName(this.getName());
 		if (existSuts != null) {
 			if (existSuts.getUser().getAlias().equals(user.getAlias())) {
@@ -126,20 +126,20 @@ public class ApplySutAction extends ActionSupport {
 			return "login";
 
 		this.isAdmin = this.isAdmin(user.getAlias());
-		
+
 		if (this.getAction() == null) {
 			request.setAttribute("error",
 					"Please choose the action for this request!");
 			return "error";
 		}
-		
-		if (!this.isAdmin){
+
+		if (!this.isAdmin) {
 			request.setAttribute("error", "You are not the admin to do this!");
 			return "error";
 		}
 
 		User applyerUser = userService.findUserByAlias(this.getApplyer());
-		
+
 		ApplySut applySut = new ApplySut();
 		applySut.setUser(applyerUser);
 		setApplySut(applySut, false);
@@ -156,48 +156,16 @@ public class ApplySutAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		result = new HashMap<String, Object>();
-		
+
 		row = 10;
-		
-		pages = (long) Math.ceil(applySutService.findPages()/(double)row);
-		
+
+		pages = (long) Math.ceil(applySutService.findPages() / (double) row);
+
 		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
 				"applytime", this.getPage(), this.getRow());
+
 		
-		List<ApplySutDto> applySutDtos = applySutService.getApplySutDto(applySuts);
-		String json = JSONArray.fromObject(applySutDtos).toString();
-		
-//        JsonConfig jsonConfig = new JsonConfig(); 
-//        jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
-//        jsonConfig.setIgnoreDefaultExcludes(true);
-        //jsonConfig.setIgnoreDefaultExcludes(false);  
-        //jsonConfig.setExcludes(new String[]{"user"}); 
-//        jsonConfig.setJsonPropertyFilter(new PropertyFilter() {  
-//            public boolean apply(Object obj, String name, Object value) {  
-//            if(name.equals("group_id")||name.equals("suts")){  
-//                return true;  
-//            }else{  
-//                return false;  
-//            }  
-//           }  
-//        });  
-        
-        
-//        JSONArray JsonArr=JSONArray.fromObject(applySuts, jsonConfig);  
-        
-//		JSONObject jsonresult = new JSONObject();
-//		JSONArray jsonarray = new JSONArray();
-//		for (int i=0; i< applySuts.size(); i++){
-//			JSONObject jsonobject = new JSONObject();
-//			jsonobject.put("applysut", applySuts.get(i));
-//			jsonarray.add(jsonobject);		
-//			}
-//		jsonresult.put("suts", jsonarray);
-	
-		result.put("pages", pages);
-		result.put("suts", json);
-		
-		//JsonObject jsonobj = new JsonObject();
+		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
 
 		return "success";
@@ -207,11 +175,11 @@ public class ApplySutAction extends ActionSupport {
 	public String initialSut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
+
 		this.isAdmin = this.isAdmin(user.getAlias());
-		if (isAdmin){
+		if (isAdmin) {
 			request.setAttribute("isAdmin", "true");
-		}else{
+		} else {
 			request.setAttribute("isAdmin", "false");
 		}
 
@@ -223,7 +191,6 @@ public class ApplySutAction extends ActionSupport {
 
 	}
 
-	
 	public String querySut() throws ParseException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -234,9 +201,9 @@ public class ApplySutAction extends ActionSupport {
 		if (applyerUser != null) {
 			applyerid = applyerUser.getId();
 		}
-		
+
 		result = new HashMap<String, Object>();
-		
+
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("name", this.getName());
 		conditions.put("user_id", applyerid);
@@ -244,14 +211,18 @@ public class ApplySutAction extends ActionSupport {
 		conditions.put("endtime", getSQLDate(this.getEndtime()));
 		conditions.put("action", this.getAction());
 
-		pages = (long) Math.ceil(applySutService.findPagesByMultiConditions(conditions)/(double)row);
-		
+		pages = (long) Math.ceil(applySutService
+				.findPagesByMultiConditions(conditions) / (double) row);
+
 		List<ApplySut> applySuts = applySutService
 				.findAllOrderByMultiConditions(conditions, this.getPage(),
 						this.getRow());
 
+		List<ApplySutDto> applySutDtos = applySutService.getApplySutDto(applySuts);
+		String json = JSONArray.fromObject(applySutDtos).toString();
+		
 		result.put("pages", pages);
-		result.put("suts", applySuts);
+		result.put("suts", json);
 
 		return "success";
 	}
@@ -265,16 +236,17 @@ public class ApplySutAction extends ActionSupport {
 
 	public void setApplySut(ApplySut applySut, Boolean apply) {
 
-		if(apply){
-		this.applytime = new Date();
-		applySut.setAction("待审批");
-		}else{
-		this.resolvetime = new Date();
-		applySut.setAction(this.getAction());
+		if (apply) {
+			this.applytime = new Date();
+			applySut.setAction("待审批");
+		} else {
+			this.resolvetime = new Date();
+			applySut.setAction(this.getAction());
 		}
-		
-		SutGroup sutGroup = sutgroupService.findSutGroupByName(this.getGroupname());
-		
+
+		SutGroup sutGroup = sutgroupService.findSutGroupByName(this
+				.getGroupname());
+
 		applySut.setResolvetime(resolvetime);
 		applySut.setComment(this.getComment());
 		applySut.setGroup(sutGroup);
@@ -300,14 +272,14 @@ public class ApplySutAction extends ActionSupport {
 
 	private void initialRolePermissions() {
 
-		Sut sut = new Sut();   //Rayleigh
+		Sut sut = new Sut(); // Rayleigh
 		sut.setCode(this.getCode());
 		sut.setName(this.getName());
 		sut.setDescription(this.getDescription());
-		sutService.saveSut(sut); 
-		
+		sutService.saveSut(sut);
+
 		sut = sutService.findSutByName(this.getName());
-		
+
 		Role role = null;
 		Permission permission = null;
 		List<Permission> permissions = null;
@@ -352,7 +324,7 @@ public class ApplySutAction extends ActionSupport {
 		// roleService.saveRole(adminRole); // Save the new system administrator
 
 	}
-	
+
 	private Boolean isAdmin(String alias) {
 		user = userService.findUserByAlias(alias);
 		List<Role> roles = user.getRoles();
