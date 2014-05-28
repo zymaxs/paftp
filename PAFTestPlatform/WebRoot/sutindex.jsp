@@ -13,7 +13,7 @@
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialSuts.action").forward(request,response);}
 List<ApplySut> inisutdata = (List<ApplySut>)request.getAttribute("suts");
-String pagenum = (String)request.getAttribute("pagenum");
+String pagenum = request.getAttribute("pages").toString();
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
@@ -62,7 +62,7 @@ function inidata(){
 		iniinsertdata +="<td>"+inisutdata.get(i).getName()+"</td>";
 		iniinsertdata +="<td>"+inisutdata.get(i).getUser().getAlias()+"</td>";
 		iniinsertdata +="<td>"+inisutdata.get(i).getApplytime()+"</td>";
-		iniinsertdata +="<td>"+inisutdata.get(i).getAction()+"</td>";
+		iniinsertdata +="<td>"+inisutdata.get(i).getApplysutstatus().getName()+"</td>";
 		iniinsertdata +="</tr>";
 	}
 	%>
@@ -77,6 +77,41 @@ function inidata(){
 
 	
 </script>
+<script type="text/javascript">
+		$(document).ready(function() {
+			$('.pagination').jqPagination({
+				link_string : '/?page={page_number}',
+				max_page : <%=pagenum%>,
+				paged : function(page) {
+					$.ajax({
+						type : "POST",
+						url : "querySutsAjax.action",
+						data : "page="+page,
+						dataType : "text",
+						success : function(root) {
+
+							var obj = $.parseJSON(root);
+
+							var state_value = obj.result;
+
+							alert(state_value);
+
+						},
+
+						error : function(root) {
+
+							alert("json=" + root);
+
+							return false;
+
+						}
+
+					});
+				}
+			});
+
+		});
+	</script>
 </head>
 
 <body>
@@ -174,7 +209,7 @@ function inidata(){
       </tr>
       <tr>
         <td>Start Date:</td>
-        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'"></td>
+        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'" ></td>
         <td>End Date:</td>
         <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'"></td>
       </tr>
@@ -187,7 +222,7 @@ function inidata(){
   <button type="button" class="btn btn-primary" onClick="window.location.href='applysut.jsp'">申请接入</button>
   
   <!--TABLE展示-->
-  <table id="sutForm" border="1">
+  <table id="sutForm" border="1" width="100%">
     <thead>
     	<tr>
         	<td>系统序列号</td>
