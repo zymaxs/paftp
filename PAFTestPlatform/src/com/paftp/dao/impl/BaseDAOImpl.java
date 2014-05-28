@@ -226,7 +226,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		}
 		
 		dc.addOrder(Order.desc("applytime"));
-//		dc.addOrder(Order.asc("status_id"));
+		dc.addOrder(Order.asc("applysutstatus.id"));
 		
 		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
 		
