@@ -79,6 +79,8 @@ public interface BaseDAO<T> {
 	 * @return
 	 */
 	public List<T> find(String hql, Object[] param, Integer page, Integer rows);
+	
+	public List<T> find(String hql, Integer page, Integer rows);
 
 	/**
 	 * 查询集合(带分页)
