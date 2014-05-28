@@ -86,7 +86,7 @@ function inidata(){
 					$.ajax({
 						type : "POST",
 						url : "querySutsAjax.action",
-						data : "page="+page,
+						data : {pagenum:page},
 						dataType : "text",
 						success : function(root) {
 
