@@ -48,7 +48,7 @@ public class UserProfileAction extends ActionSupport{
 	private Util util = new Util();
 	
 	private HttpSession session;
-
+	
 	public String updateUserInfo(){
 		
 		user = getSessionUser();

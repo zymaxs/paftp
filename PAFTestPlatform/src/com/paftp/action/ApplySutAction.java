@@ -161,7 +161,7 @@ public class ApplySutAction extends ActionSupport {
 
 		pages = (long) Math.ceil(applySutService.findPages() / (double) row);
 
-		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
+		List<ApplySut> applySuts = applySutService.findAllOrderByColumnPagination(
 				"applytime", this.getPage(), this.getRow());
 
 		request.setAttribute("pages", pages);
@@ -228,6 +228,8 @@ public class ApplySutAction extends ActionSupport {
 	}
 
 	public java.sql.Date getSQLDate(String sourcedate) throws ParseException {
+		if (sourcedate == null)
+			return null;
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date date = format.parse(sourcedate);
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
