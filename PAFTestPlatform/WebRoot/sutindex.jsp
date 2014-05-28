@@ -87,9 +87,10 @@ function inidata(){
 						type : "POST",
 						url : "querySutsAjax.action",
 						data : {pagenum:page},
-						dataType : "text",
+						dataType : "json",
 						success : function(root) {
 
+							alert("fuck!");
 							var obj = $.parseJSON(root);
 
 							var state_value = obj.result;
