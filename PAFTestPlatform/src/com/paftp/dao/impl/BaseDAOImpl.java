@@ -12,6 +12,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -196,24 +197,24 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		
 		Iterator<Entry<String, Object>> iter = param.entrySet().iterator();
 		
-		int timetag = 0;
-		
 		while(iter.hasNext()){
 			
 			Entry<String, Object> condition = iter.next();     
 			if (condition.getValue() != null) {
 				if(condition.getValue() instanceof Date){
-					if(timetag == 0){
-					dc.add(Restrictions.ge(condition.getKey(),condition.getValue()));
-					timetag = 1;
+					if(condition.getKey().equals("starttime")){
+					dc.add(Restrictions.ge("applytime",condition.getValue()));
 					}else{
-						dc.add(Restrictions.le(condition.getKey(),condition.getValue()));
+						dc.add(Restrictions.le("applytime",condition.getValue()));
 					}
 				}else{
 		           dc.add(Restrictions.eq(condition.getKey(),condition.getValue()));
 				}
 				}
 		}
+		
+		dc.addOrder(Order.desc("id"));
+		dc.addOrder(Order.asc("status_id"));
 		
 		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
 		
