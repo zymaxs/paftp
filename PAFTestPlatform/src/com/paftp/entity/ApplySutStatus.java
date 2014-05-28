@@ -4,8 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import javax.persistence.Entity;
 import org.hibernate.annotations.GenericGenerator;
 
+@Entity
 public class ApplySutStatus {
 
 	private Integer id;
