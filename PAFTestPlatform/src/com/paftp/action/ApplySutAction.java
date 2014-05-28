@@ -71,7 +71,7 @@ public class ApplySutAction extends ActionSupport {
 	private String starttime;
 	private String endtime;
 
-	private Integer page;
+	private String pagenum;
 	private Integer row;
 	private Long pages;
 
@@ -160,9 +160,10 @@ public class ApplySutAction extends ActionSupport {
 		row = 10;
 
 		pages = (long) Math.ceil(applySutService.findPages() / (double) row);
-
-		List<ApplySut> applySuts = applySutService.findAllOrderByColumnPagination(
-				"applytime", this.getPage(), this.getRow());
+		
+		List<ApplySut> applySuts = applySutService
+				.findAllOrderByColumnPagination("applytime",
+						1, this.getRow());
 
 		request.setAttribute("pages", pages);
 		request.setAttribute("suts", applySuts);
@@ -202,6 +203,7 @@ public class ApplySutAction extends ActionSupport {
 			applyerid = applyerUser.getId();
 		}
 
+		String s = this.getPagenum();
 		result = new HashMap<String, Object>();
 
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
@@ -211,16 +213,17 @@ public class ApplySutAction extends ActionSupport {
 		conditions.put("endtime", getSQLDate(this.getEndtime()));
 		conditions.put("action", this.getStatus());
 
-		pages = (long) Math.ceil(applySutService
-				.findPagesByMultiConditions(conditions) / (double) row);
+		//pages = (long) Math.ceil(applySutService
+		//		.findPagesByMultiConditions(conditions) / (double) row);
 
 		List<ApplySut> applySuts = applySutService
-				.findAllOrderByMultiConditions(conditions, this.getPage(),
-						this.getRow());
-		
-		List<ApplySutDto> applySutDtos = applySutService.getApplySutDto(applySuts);
+				.findAllOrderByMultiConditions(conditions,
+						Integer.parseInt(this.getPagenum()), this.getRow());
+
+		List<ApplySutDto> applySutDtos = applySutService
+				.getApplySutDto(applySuts);
 		String json = JSONArray.fromObject(applySutDtos).toString();
-		
+
 		result.put("pages", pages);
 		result.put("suts", json);
 
@@ -235,11 +238,12 @@ public class ApplySutAction extends ActionSupport {
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		return sqlDate;
 	}
-	
+
 	public void setApplySut(ApplySut applySut, Boolean apply) {
 
-		ApplySutStatus applySutStatus = applySutStatusService.findApplySutStatusByName(this.getStatus());
-		
+		ApplySutStatus applySutStatus = applySutStatusService
+				.findApplySutStatusByName(this.getStatus());
+
 		if (apply) {
 			this.applytime = new Date();
 			applySut.setApplysutstatus(applySutStatus);
@@ -412,12 +416,12 @@ public class ApplySutAction extends ActionSupport {
 		this.endtime = endtime;
 	}
 
-	public Integer getPage() {
-		return page;
+	public String getPagenum() {
+		return pagenum;
 	}
 
-	public void setPage(Integer page) {
-		this.page = page;
+	public void setPagenum(String pagenum) {
+		this.pagenum = pagenum;
 	}
 
 	public Integer getRow() {
