@@ -94,6 +94,18 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		}
 		return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();
 	}
+	
+	public List<T> find(String hql, Integer page, Integer rows) {
+		if (page == null || page < 1) {
+			page = 1;
+		}
+		if (rows == null || rows < 1) {
+			rows = 10;
+		}
+		Query q = this.getCurrentSession().createQuery(hql);
+
+		return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();
+	}
 
 	public List<T> find(String hql, List<Object> param, Integer page,
 			Integer rows) {

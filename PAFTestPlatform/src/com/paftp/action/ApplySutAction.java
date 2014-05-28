@@ -161,15 +161,11 @@ public class ApplySutAction extends ActionSupport {
 
 		pages = (long) Math.ceil(applySutService.findPages() / (double) row);
 		
-		List<ApplySut> applySuts = applySutService
-				.findAllOrderByColumnPagination("applytime",
-						1, this.getRow());
-
-		List<ApplySut> applySuts = applySutService.findAllOrderByColumnPagination(
-				"applytime", 1, this.getRow());
+		List<ApplySut> applysuts = applySutService
+				.findAllOrderByColumnPagination(1, this.getRow());
 
 		request.setAttribute("pages", pages);
-		request.setAttribute("suts", applySuts);
+		request.setAttribute("suts", applysuts);
 		request.setAttribute("flag", "true");
 
 		return "success";
