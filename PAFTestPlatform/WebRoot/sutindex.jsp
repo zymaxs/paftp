@@ -91,11 +91,11 @@ function inidata(){
 						success : function(root) {
 
 							alert("fuck!");
-							var obj = $.parseJSON(root);
+							
 
-							var state_value = obj.result;
+							
 
-							alert(state_value);
+							alert(root.pagenum);
 
 						},
 
@@ -200,7 +200,7 @@ function inidata(){
     </div>
   </div>
   <!--主体-->
-  <form id="queryForm" name="queryForm" action="">
+  <form id="queryForm" name="queryForm" action="" style="width:100%">
     <table width="900px">
       <tr>
         <td>系统名</td>
