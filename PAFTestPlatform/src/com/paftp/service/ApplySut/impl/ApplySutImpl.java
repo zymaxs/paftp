@@ -83,7 +83,7 @@ public class ApplySutImpl implements ApplySutService{
 	@Override
 	public Long findPages() {
 		// TODO Auto-generated method stub
-		return baseDAO.count(" from ApplySut u");
+		return baseDAO.count("select count(*) from ApplySut");
 	}
 
 	@Override

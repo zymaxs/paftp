@@ -13,13 +13,6 @@
     <action name="initialSutsAjax" method="initialSuts" class="com.paftp.action.ApplySutAction">
         <result type="json">
                <param name="root">result</param>
-        <param name="json">result</param>
-        </result>
-     </action>
-     <action name="querySut" method="querySut" class="com.paftp.action.ApplySutAction">
-        <result type="json">
-               <param name="root">result</param>
-        <param name="json">result</param>
         </result>
      </action>
     </package>
