@@ -10,4 +10,8 @@ insert into sutgroup values("1", "会员平台", "会员平台");
 insert into sutgroup values("2", "风控平台", "风控平台");
 insert into sutgroup values("3", "测试平台", "测试平台");
 
+insert into applysutstatus values("1", "待审批", "待审批");
+insert into applysutstatus values("2", "通过", "通过");
+insert into applysutstatus values("3", "拒绝", "拒绝");
+
 
