@@ -14,12 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
+import net.sf.json.util.PropertyFilter;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.paftp.dto.ApplySutDto;
 import com.paftp.entity.ApplySut;
 import com.paftp.entity.Permission;
 import com.paftp.entity.Role;
@@ -160,12 +164,41 @@ public class ApplySutAction extends ActionSupport {
 		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
 				"applytime", this.getPage(), this.getRow());
 
-		JsonConfig config = new JsonConfig();
-		config.setExcludes(new String[] { "user" });
-		String json = JSONArray.fromObject(applySuts, config).toString();
-
+		List<ApplySutDto> applySutDtos = applySutService.getApplySutDto(applySuts);
+		String json = JSONArray.fromObject(applySutDtos).toString();
+		
+//        JsonConfig jsonConfig = new JsonConfig(); 
+//        jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+//        jsonConfig.setIgnoreDefaultExcludes(true);
+        //jsonConfig.setIgnoreDefaultExcludes(false);  
+        //jsonConfig.setExcludes(new String[]{"user"}); 
+//        jsonConfig.setJsonPropertyFilter(new PropertyFilter() {  
+//            public boolean apply(Object obj, String name, Object value) {  
+//            if(name.equals("group_id")||name.equals("suts")){  
+//                return true;  
+//            }else{  
+//                return false;  
+//            }  
+//           }  
+//        });  
+        
+        
+//        JSONArray JsonArr=JSONArray.fromObject(applySuts, jsonConfig);  
+        
+//		JSONObject jsonresult = new JSONObject();
+//		JSONArray jsonarray = new JSONArray();
+//		for (int i=0; i< applySuts.size(); i++){
+//			JSONObject jsonobject = new JSONObject();
+//			jsonobject.put("applysut", applySuts.get(i));
+//			jsonarray.add(jsonobject);		
+//			}
+//		jsonresult.put("suts", jsonarray);
+	
 		result.put("pages", pages);
 		result.put("suts", json);
+
+		//JsonObject jsonobj = new JsonObject();
+		request.setAttribute("flag", "true");
 
 		return "success";
 
@@ -245,7 +278,7 @@ public class ApplySutAction extends ActionSupport {
 
 		applySut.setResolvetime(resolvetime);
 		applySut.setComment(this.getComment());
-		applySut.setGroup_id(sutGroup.getId());
+		applySut.setGroup(sutGroup);
 
 		applySut.setApplytime(applytime);
 		applySut.setCode(this.getCode());

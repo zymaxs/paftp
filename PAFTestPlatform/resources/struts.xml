@@ -12,9 +12,9 @@
     <package name="ajax" extends="json-default">
     <action name="initialSutsAjax" method="initialSuts" class="com.paftp.action.ApplySutAction">
         <result type="json">
-               <param name="root">result</param>
         </result>
      </action>
+
     </package>
 	<package name="s2sh" extends="struts-default">
 		<action name="login" method="login" class="com.paftp.action.LoginAction">

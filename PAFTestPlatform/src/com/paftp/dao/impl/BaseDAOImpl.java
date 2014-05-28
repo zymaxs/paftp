@@ -134,7 +134,9 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 	}
 
 	public Long count(String hql) {
-		return (Long) this.getCurrentSession().createQuery(hql).uniqueResult();
+		Query q = this.getCurrentSession().createQuery(hql);
+		Long quantity =(Long) q.uniqueResult();
+		return quantity;
 	}
 
 	public Long count(String hql, Object[] param) {

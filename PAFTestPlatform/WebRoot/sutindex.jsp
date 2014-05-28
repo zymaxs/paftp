@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
 	import="java.util.*,com.paftp.entity.*"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -11,6 +10,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<% 
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/initialSutsAjax.action").forward(request,response);}
+
+%>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -44,44 +48,6 @@
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
-	function submitForm(){
-            $('#queryForm').form('submit');
-        }
-</script>
-<!--分页-->
-<script>
-
-var myPagination;
-
-$(function() {
-
-	initEvent();
-	
-  });
-
-	
-	function initEvent(){
-		$("#sysname").focus();
-		$("#query").click(function(){
-			var formData = $("#queryForm").serialize(); //序列化表单
-            formData = decodeURIComponent(formData, true);	//解码
-			$.fn.debug("开始指定加载");
-			myPagination.onLoad({param:formData});
-			$.fn.debug("结束指定加载");
-		});
-	}
-	
-function createTR(obj){
-	var tr = "<tr>";
-	tr += "<td>"+obj.name+"</td>";
-	tr += "<td><a href='"+obj.blogs+"'>"+obj.blogs+"</a></td>";
-	tr += "<td>"+obj.email+"</td>";
-	tr += "<td><a href='"+obj.download+"'>"+obj.download+"</a></td>";
-	tr += "<td>"+obj.qq+"</td>";
-	tr += "</tr>";
-	return tr;
-}
-
 </script>
 </head>
 
@@ -191,30 +157,19 @@ function createTR(obj){
     <div id="timebox" class="easyui-calendar"></div>
   </form>
   <button type="button" class="btn btn-primary" onClick="window.location.href='applysut.jsp'">申请接入</button>
-  <table id="sutlist" class="t1">
+  
+  <!--TABLE展示-->
+  <table id="sutForm" border="1">
     <thead>
-    <th>申请序号</th>
-      <th>系列名</th>
-      <th>申请人</th>
-      <th>申请日期</th>
-      <th>状态</th>
-        </thead>
-    <tbody>
-    </tbody>
+    	<tr>
+        	<td>系统序列号</td>
+            <td>系统名</td>
+            <td>申请人</td>
+            <td>申请日期</td>
+            <td>状态</td>
+        </tr>
+    </thead>
   </table>
-  <div id="demo1"></div>
-  
-  
-  
-  
-  <div class="pagination">
-		<a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
-			class="previous" data-action="previous">&lsaquo;</a> <input
-			type="text" readonly="readonly" data-max-page="40" /> <a href="#"
-			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
-			data-action="last">&raquo;</a>
-	</div>
-  
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
