@@ -155,7 +155,7 @@ public interface BaseDAO<T> {
 	 * @return 响应数目
 	 */
 	
-	public Long count(HashMap<String, Object> param);
+	public int count(HashMap<String, Object> param);
 	
 	public Integer executeHql(String hql);
 

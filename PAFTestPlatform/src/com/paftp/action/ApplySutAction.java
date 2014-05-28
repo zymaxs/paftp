@@ -73,12 +73,13 @@ public class ApplySutAction extends ActionSupport {
 
 	private String pagenum;
 	private Integer row;
-	private Long pages;
+	private int pages;
 
 	private Boolean isAdmin;
 
 	private User user;
 	private HashMap<String, Object> result;
+	private List<ApplySutDto> applySutDtos;
 
 	public String applySut() {
 
@@ -159,7 +160,7 @@ public class ApplySutAction extends ActionSupport {
 
 		row = 10;
 
-		pages = (long) Math.ceil(applySutService.findPages() / (double) row);
+		pages = (int) Math.ceil(applySutService.findPages() / (double) row);
 
 		List<ApplySut> applySuts = applySutService
 				.findAllOrderByColumnPagination(1, this.getRow());
@@ -201,8 +202,7 @@ public class ApplySutAction extends ActionSupport {
 		if (applyerUser != null) {
 			applyerid = applyerUser.getId();
 		}
-
-		String s = this.getPagenum();
+		
 		result = new HashMap<String, Object>();
 
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
@@ -212,20 +212,22 @@ public class ApplySutAction extends ActionSupport {
 		conditions.put("endtime", getSQLDate(this.getEndtime()));
 		conditions.put("action", this.getStatus());
 
-		// pages = (long) Math.ceil(applySutService
-		// .findPagesByMultiConditions(conditions) / (double) row);
+		int pagecount = applySutService.findPagesByMultiConditions(conditions);
+		
+		if (pagecount%10 == 0)
+			pages = pagecount/10;
+		else
+			pages = pagecount/10 + 1;
 
-//		List<ApplySut> applySuts = applySutService
-//				.findAllOrderByMultiConditions(conditions,
-//						Integer.parseInt(this.getPagenum()), this.getRow());
-//
-//		List<ApplySutDto> applySutDtos = applySutService
-//				.getApplySutDto(applySuts);
-//		String json = JSONArray.fromObject(applySutDtos).toString();
+		List<ApplySut> applySuts = applySutService
+				.findAllOrderByMultiConditions(conditions,
+						Integer.parseInt(this.getPagenum()), this.getRow());
 
-		// result.put("pages", pages);
-		// result.put("suts", json);
-		this.setPagenum(pagenum);
+		List<ApplySutDto> applySutDtos = applySutService
+				.getApplySutDto(applySuts);
+		
+		this.setApplySutDtos(applySutDtos);
+		this.setPages(pages);
 	
 		return "success";
 	}
@@ -448,11 +450,11 @@ public class ApplySutAction extends ActionSupport {
 		this.result = result;
 	}
 
-	public Long getPages() {
+	public long getPages() {
 		return pages;
 	}
 
-	public void setPages(Long pages) {
+	public void setPages(int pages) {
 		this.pages = pages;
 	}
 
@@ -462,5 +464,13 @@ public class ApplySutAction extends ActionSupport {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public List<ApplySutDto> getApplySutDtos() {
+		return applySutDtos;
+	}
+
+	public void setApplySutDtos(List<ApplySutDto> applySutDtos) {
+		this.applySutDtos = applySutDtos;
 	}
 }

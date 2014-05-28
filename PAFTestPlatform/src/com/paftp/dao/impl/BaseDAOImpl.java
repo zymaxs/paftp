@@ -225,32 +225,31 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 				}
 		}
 		
-		dc.addOrder(Order.desc("id"));
-		dc.addOrder(Order.asc("status_id"));
+		dc.addOrder(Order.desc("applytime"));
+//		dc.addOrder(Order.asc("status_id"));
 		
 		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
+		
+		List<ApplySut> applySuts = c.list();
 		
 		return c.setFirstResult((page - 1)* row).setMaxResults(row).list();
 	}
 	
-	public Long count(HashMap<String, Object> param){
+	public int count(HashMap<String, Object> param){
 		
 	DetachedCriteria dc = DetachedCriteria.forClass(ApplySut.class);
 	
 		Iterator<Entry<String, Object>> iter = param.entrySet().iterator();
-		
-		int timetag = 0;
 		
 		while(iter.hasNext()){
 			
 			Entry<String, Object> condition = iter.next();     
 			if (condition.getValue() != null) {
 				if(condition.getValue() instanceof Date){
-					if(timetag == 0){
-					dc.add(Restrictions.ge(condition.getKey(),condition.getValue()));
-					timetag = 1;
+					if(condition.getKey().equals("starttime")){
+					dc.add(Restrictions.ge("applytime",condition.getValue()));
 					}else{
-						dc.add(Restrictions.le(condition.getKey(),condition.getValue()));
+						dc.add(Restrictions.le("applytime",condition.getValue()));
 					}
 				}else{
 		           dc.add(Restrictions.eq(condition.getKey(),condition.getValue()));
@@ -260,6 +259,10 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		
 		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
 		
-		return (Long) c.uniqueResult();
+		List<ApplySut> applySuts = c.list();
+		
+		int num = applySuts.size();
+		
+		return num;
 	}
 }

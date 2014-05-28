@@ -84,8 +84,8 @@ public class ApplySutImpl implements ApplySutService{
 	public List<ApplySut> findAllOrderByMultiConditions(
 			HashMap<String, Object> conditions, Integer page, Integer row) {
 		// TODO Auto-generated method stub
-		
-		return baseDAO.findbyconditions(conditions, page, row);
+		List<ApplySut> applySuts = baseDAO.findbyconditions(conditions, page, row);
+		return applySuts;
 	}
 
 	@Override
@@ -95,9 +95,11 @@ public class ApplySutImpl implements ApplySutService{
 	}
 
 	@Override
-	public Long findPagesByMultiConditions(HashMap<String, Object> conditions) {
+	public int findPagesByMultiConditions(HashMap<String, Object> conditions) {
 		// TODO Auto-generated method stub
-		return baseDAO.count(conditions);
+		int i = baseDAO.count(conditions);
+		return i;
+
 	}
 	
 public List<ApplySutDto> getApplySutDto(List<ApplySut> applySuts){
@@ -109,8 +111,8 @@ public List<ApplySutDto> getApplySutDto(List<ApplySut> applySuts){
 			ApplySutDto applySutDto = new ApplySutDto();
 			
 			ApplySutStatusDto applySutStatusDto = new ApplySutStatusDto();
-			applySutStatusDto.setName(applySutDto.getApplysutstatusdto().getName());
-			applySutStatusDto.setDescription(applySutDto.getDescription());
+			applySutStatusDto.setName(applySuts.get(i).getApplysutstatus().getName());
+			applySutStatusDto.setDescription(applySuts.get(i).getApplysutstatus().getDescrition());
 			
 			applySutDto.setApplysutstatusdto(applySutStatusDto);
 			applySutDto.setApplyer(applySuts.get(i).getName());
