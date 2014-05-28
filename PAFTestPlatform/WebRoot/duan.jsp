@@ -26,14 +26,6 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/initialSutsAjax
 				link_string : '/?page={page_number}',
 				max_page : 40,
 				paged : function(page) {
-					$("#zhousicong").append(tablemain);
-				       var params = {
-
-				    	          code : $("#xm").val(),
-
-				    	          name : $("#sg").val()
-
-				    	       };
 					$.ajax({
 
 						type : "POST",

@@ -9,6 +9,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<% 
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/initialSuts.action").forward(request,response);}
+List<ApplySut> inisutdata = (List<ApplySut>)request.getAttribute("suts");
+String pagenum = (String)request.getAttribute("pagenum");
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -16,10 +22,12 @@
 <link href="css/easyui/themes/default/easyui.css" rel="stylesheet">
 <link href="css/easyui/themes/icon.css" rel="stylesheet">
 <link href="css/easyui/demo.css" rel="stylesheet">
+<link href="css/jqpagination.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="js/jquery.jqpagination.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -38,6 +46,29 @@
 	TEXT-DECORATION: none
 }
 </style>
+<script type="text/javascript">
+$(function() {
+	$("#sutForm").append(inidata());
+  });
+</script>
+<script type="text/javascript">
+function inidata(){
+	<%
+	String iniinsertdata="";
+	
+	for(int i=0; i< inisutdata.size() ;i++ ){
+		iniinsertdata +="<tr>";
+		iniinsertdata +="<td>"+inisutdata.get(i).getId()+"</td>";
+		iniinsertdata +="<td>"+inisutdata.get(i).getName()+"</td>";
+		iniinsertdata +="<td>"+inisutdata.get(i).getUser().getAlias()+"</td>";
+		iniinsertdata +="<td>"+inisutdata.get(i).getApplytime()+"</td>";
+		iniinsertdata +="<td>"+inisutdata.get(i).getAction()+"</td>";
+		iniinsertdata +="</tr>";
+	}
+	%>
+	return "<%=iniinsertdata%>";
+}
+</script>
 <script type="text/javascript">
 	function loginac() {
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
@@ -167,6 +198,13 @@
         </tr>
     </thead>
   </table>
+  <div class="pagination">
+		<a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
+			class="previous" data-action="previous">&lsaquo;</a> <input
+			type="text" readonly="readonly" data-max-page="<%=pagenum%>" /> <a href="#"
+			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
+			data-action="last">&raquo;</a>
+	</div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

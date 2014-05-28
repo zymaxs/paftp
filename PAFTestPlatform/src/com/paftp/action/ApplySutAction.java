@@ -164,7 +164,7 @@ public class ApplySutAction extends ActionSupport {
 		List<ApplySut> applySuts = applySutService.findAllOrderByColumn(
 				"applytime", this.getPage(), this.getRow());
 
-		
+		request.setAttribute("pagenum", pages);
 		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
 
