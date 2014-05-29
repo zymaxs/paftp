@@ -89,13 +89,16 @@ function inidata(){
 						data : {pagenum:page},
 						dataType : "json",
 						success : function(root) {
-
+							$("#sutForm").html("");
+							$(root.applySutDtos).each(function(i,value){
+								
+								$("#sutForm").append("<tr>"+"<td>"+value.applyer+"</td>"+"<td>"+"</td>"+"<td>"+"</td>"+"<td>"+"</td>"+"<td>"+"</td>"+"</tr>");
+							})
+							
+							
 							alert("fuck!");
-							
-
-							
-
 							alert(root.pagenum);
+							alert(root.pages);
 
 						},
 
@@ -233,6 +236,8 @@ function inidata(){
             <td>状态</td>
         </tr>
     </thead>
+    <tbody>
+    </tbody>
   </table>
   <div class="pagination">
 		<a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
