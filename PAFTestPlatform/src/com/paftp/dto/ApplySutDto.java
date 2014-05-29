@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class ApplySutDto {
 	
+	private Integer id;
 	private String code;
 
 	private String name;
@@ -71,6 +72,12 @@ public class ApplySutDto {
 	}
 	public void setApplysutstatusdto(ApplySutStatusDto applysutstatusdto) {
 		this.applysutstatusdto = applysutstatusdto;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }
