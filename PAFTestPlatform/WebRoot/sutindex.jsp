@@ -80,22 +80,19 @@ function inidata(){
 <script type="text/javascript">
 		$(document).ready( function(){ajaxtable()});
 		function ajaxtable() {
-			var totalpage = <%=pagenum%>;
 			$('.pagination').jqPagination({
 				link_string : '/?page={page_number}',
-				max_page : totalpage,
+				max_page : <%=pagenum%>,
 				paged : function(page) {
-					var params = {pagenum:page,name:$("#name").val(),applyer:$("#applyer").val(),applyer:$("#starttime").val(),applyer:$("#endtime").val()};
 					$.ajax({
 						type : "POST",
 						url : "querySutsAjax.action",
-						data : params,
+						data : {pagenum:page},
 						dataType : "json",
 						success : function(root) {
 							$("#sutFormTab").html("");
 							$(root.applySutDtos).each(function(i,value){
 								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
-							totalpage = value.pages;
 							})
 						},
 
