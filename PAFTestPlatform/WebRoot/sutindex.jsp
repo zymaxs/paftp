@@ -89,17 +89,11 @@ function inidata(){
 						data : {pagenum:page},
 						dataType : "json",
 						success : function(root) {
-							$("#sutForm").html("");
+							$("#sutFormTab").html("");
 							$(root.applySutDtos).each(function(i,value){
 								
-								$("#sutForm").append("<tr>"+"<td>"+value.applyer+"</td>"+"<td>"+"</td>"+"<td>"+"</td>"+"<td>"+"</td>"+"<td>"+"</td>"+"</tr>");
+								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
 							})
-							
-							
-							alert("fuck!");
-							alert(root.pagenum);
-							alert(root.pages);
-
 						},
 
 						error : function(root) {
@@ -236,7 +230,7 @@ function inidata(){
             <td>状态</td>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="sutFormTab">
     </tbody>
   </table>
   <div class="pagination">
