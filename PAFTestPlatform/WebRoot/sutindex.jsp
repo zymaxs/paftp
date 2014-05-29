@@ -92,7 +92,7 @@ function inidata(){
 							$("#sutFormTab").html("");
 							$(root.applySutDtos).each(function(i,value){
 								
-								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
+								$("#sutFormTab").append("<tr>"+"<td>"+value.applysutstatusdto.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
 							})
 						},
 
