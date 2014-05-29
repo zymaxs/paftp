@@ -80,19 +80,22 @@ function inidata(){
 <script type="text/javascript">
 		$(document).ready( function(){ajaxtable()});
 		function ajaxtable() {
+			var totalpage = <%=pagenum%>;
 			$('.pagination').jqPagination({
 				link_string : '/?page={page_number}',
-				max_page : <%=pagenum%>,
+				max_page : totalpage,
 				paged : function(page) {
+					var params = {pagenum:page,name:$("#name").val(),applyer:$("#applyer").val(),applyer:$("#starttime").val(),applyer:$("#endtime").val()};
 					$.ajax({
 						type : "POST",
 						url : "querySutsAjax.action",
-						data : {pagenum:page},
+						data : params,
 						dataType : "json",
 						success : function(root) {
 							$("#sutFormTab").html("");
 							$(root.applySutDtos).each(function(i,value){
 								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
+							totalpage = value.pages;
 							})
 						},
 
@@ -212,7 +215,7 @@ function inidata(){
         <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'" id="endtime" name="endtime"></td>
       </tr>
       <tr>
-        <td colspan="2" align="center"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">搜索</a></td>
+        <td colspan="2" align="center"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="ajaxtable()">搜索</a></td>
       </tr>
     </table>
     <div id="timebox" class="easyui-calendar"></div>
