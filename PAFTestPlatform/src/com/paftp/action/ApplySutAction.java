@@ -32,6 +32,7 @@ import com.paftp.service.permission.PermissionService;
 import com.paftp.service.role.RoleService;
 import com.paftp.service.sut.SutService;
 import com.paftp.service.user.UserService;
+import com.paftp.util.Util;
 
 @Controller
 public class ApplySutAction extends ActionSupport {
@@ -56,7 +57,7 @@ public class ApplySutAction extends ActionSupport {
 	@Resource
 	private SutGroupService sutgroupService;
 	private String code;
-	private String name;
+	private String sutname;
 	private String description;
 	private Date applytime;
 	private String applyer;
@@ -78,6 +79,8 @@ public class ApplySutAction extends ActionSupport {
 	private User user;
 	private HashMap<String, Object> result;
 	private List<ApplySutDto> applySutDtos;
+	
+	private Util util = new Util();
 
 	public String applySut() {
 
@@ -88,13 +91,14 @@ public class ApplySutAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		if (this.getCode() == null || this.getName() == null) {
+		if (this.getCode() == null || this.getSutname() == null) {
 			request.setAttribute("error",
 					"The SUT name or Code can't be empty!");
 			return "error";
 		}
 
-		ApplySut existSuts = applySutService.findApplySutByName(this.getName());
+		ApplySut existSuts = applySutService.findApplySutByName(this
+				.getSutname());
 		if (existSuts != null) {
 			if (existSuts.getUser().getAlias().equals(user.getAlias())) {
 				request.setAttribute("error",
@@ -182,7 +186,8 @@ public class ApplySutAction extends ActionSupport {
 			request.setAttribute("isAdmin", "false");
 		}
 
-		ApplySut applySut = applySutService.findApplySutByName(this.getName());
+		ApplySut applySut = applySutService.findApplySutByName(this
+				.getSutname());
 
 		request.setAttribute("applySut", applySut);
 
@@ -193,28 +198,35 @@ public class ApplySutAction extends ActionSupport {
 	public String querySut() throws ParseException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-
+		
 		User applyerUser = userService.findUserByAlias(this.getApplyer());
-
+		ApplySutStatus applySutStatus = applySutStatusService.findApplySutStatusByName(this.getStatus());
+		
 		Integer applyerid = null;
+		Integer status_id = null;
 		if (applyerUser != null) {
 			applyerid = applyerUser.getId();
 		}
-		
-		result = new HashMap<String, Object>();
+		if(applySutStatus != null){
+			status_id = applySutStatus.getId();
+		}
 
+		result = new HashMap<String, Object>();
+		
+		String testTime = this.getStarttime().replace("/", "-");
+		
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
-		conditions.put("name", this.getName());
-		conditions.put("user_id", applyerid);
-		conditions.put("starttime", getSQLDate(this.getStarttime()));
-		conditions.put("endtime", getSQLDate(this.getEndtime()));
-		conditions.put("action", this.getStatus());
+		conditions.put("name", this.getSutname());
+		conditions.put("user.id", applyerid);
+		conditions.put("starttime", util.stringToSqlDate(testTime));
+		conditions.put("endtime", util.stringToSqlDate(this.getEndtime()));
+		conditions.put("status_id", status_id);
 
 		Long pagecount = applySutService.findPagesByMultiConditions(conditions);
-		
-		if(this.getRow() == null)
+
+		if (this.getRow() == null)
 			this.setRow(10);
-		
+
 		pages = (long) Math.ceil(pagecount / (double) this.getRow());
 
 		List<ApplySut> applySuts = applySutService
@@ -223,29 +235,25 @@ public class ApplySutAction extends ActionSupport {
 
 		List<ApplySutDto> applySutDtos = applySutService
 				.getApplySutDto(applySuts);
-		
+
 		this.setApplySutDtos(applySutDtos);
 		this.setPages(pages);
-	
+
 		return "success";
 	}
 
-	public java.sql.Date getSQLDate(String sourcedate) throws ParseException {
-		if (sourcedate == null)
-			return null;
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		java.util.Date date = format.parse(sourcedate);
-		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-		return sqlDate;
-	}
 
-	public void setApplySut(ApplySut applySut, Boolean apply) {
+	public void setApplySut(ApplySut applySut, Boolean apply){
 
 		ApplySutStatus applySutStatus = applySutStatusService
-				.findApplySutStatusByName(this.getStatus());
+				.findApplySutStatusById(1);
 
+//		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//		Date now = new Date();
+		
 		if (apply) {
-			this.applytime = new Date();
+				this.applytime = new Date();
+	
 			applySut.setApplysutstatus(applySutStatus);
 		} else {
 			this.resolvetime = new Date();
@@ -261,7 +269,7 @@ public class ApplySutAction extends ActionSupport {
 
 		applySut.setApplytime(applytime);
 		applySut.setCode(this.getCode());
-		applySut.setName(this.getName());
+		applySut.setName(this.getSutname());
 		applySut.setDescription(this.getDescription());
 	}
 
@@ -282,11 +290,11 @@ public class ApplySutAction extends ActionSupport {
 
 		Sut sut = new Sut(); // Rayleigh
 		sut.setCode(this.getCode());
-		sut.setName(this.getName());
+		sut.setName(this.getSutname());
 		sut.setDescription(this.getDescription());
 		sutService.saveSut(sut);
 
-		sut = sutService.findSutByName(this.getName());
+		sut = sutService.findSutByName(this.getSutname());
 
 		Role role = null;
 		Permission permission = null;
@@ -352,13 +360,6 @@ public class ApplySutAction extends ActionSupport {
 		this.code = code;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getDescription() {
 		return description;
@@ -470,5 +471,13 @@ public class ApplySutAction extends ActionSupport {
 
 	public void setApplySutDtos(List<ApplySutDto> applySutDtos) {
 		this.applySutDtos = applySutDtos;
+	}
+
+	public String getSutname() {
+		return sutname;
+	}
+
+	public void setSutname(String sutname) {
+		this.sutname = sutname;
 	}
 }

@@ -1,8 +1,8 @@
 
 CREATE TABLE `applysut` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `applytime` Date not NULL,
-    `resolvetime` Date DEFAULT NULL,
+    `applytime` datetime not NULL,
+    `resolvetime` datetime DEFAULT NULL,
     `status_id` int(11) DEFAULT NULL,
     `comment` varchar(200) DEFAULT NULL,
      `user_id` int(11) not NULL,

@@ -1,6 +1,10 @@
 package com.paftp.util;
 
 import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import sun.misc.BASE64Encoder;
 
 /**
@@ -41,5 +45,18 @@ public class Util {
 		} else {
 			return true;
 		}
+	}
+	
+	public java.sql.Date stringToSqlDate(String time) throws ParseException{
+		
+		DateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+		if (time == null || time.equals(""))
+			return null;
+		java.util.Date date = format.parse(time);
+		if (date == null)
+			return null;
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		
+		return sqlDate;
 	}
 }

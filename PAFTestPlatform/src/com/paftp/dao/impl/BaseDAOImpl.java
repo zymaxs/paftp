@@ -212,7 +212,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		while(iter.hasNext()){
 			
 			Entry<String, Object> condition = iter.next();     
-			if (condition.getValue() != null) {
+			if (condition.getValue() != null  && !condition.getValue().equals("")) {
 				if(condition.getValue() instanceof Date){
 					if(condition.getKey().equals("starttime")){
 					dc.add(Restrictions.ge("applytime",condition.getValue()));
@@ -245,7 +245,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		while(iter.hasNext()){
 			
 			Entry<String, Object> condition = iter.next();     
-			if (condition.getValue() != null) {
+			if (condition.getValue() != null && !condition.getValue().equals("")) {
 				if(condition.getValue() instanceof Date){
 					if(condition.getKey().equals("starttime")){
 					dc.add(Restrictions.ge("applytime",condition.getValue()));
