@@ -13,8 +13,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONArray;
-
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
