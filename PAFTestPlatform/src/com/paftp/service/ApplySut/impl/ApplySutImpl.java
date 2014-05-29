@@ -95,9 +95,9 @@ public class ApplySutImpl implements ApplySutService{
 	}
 
 	@Override
-	public int findPagesByMultiConditions(HashMap<String, Object> conditions) {
+	public Long findPagesByMultiConditions(HashMap<String, Object> conditions) {
 		// TODO Auto-generated method stub
-		int i = baseDAO.count(conditions);
+		long i = baseDAO.count(conditions);
 		return i;
 
 	}

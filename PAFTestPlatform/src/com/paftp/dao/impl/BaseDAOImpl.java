@@ -235,7 +235,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		return c.setFirstResult((page - 1)* row).setMaxResults(row).list();
 	}
 	
-	public int count(HashMap<String, Object> param){
+	public Long count(HashMap<String, Object> param){
 		
 	DetachedCriteria dc = DetachedCriteria.forClass(ApplySut.class);
 	
@@ -261,7 +261,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		
 		List<ApplySut> applySuts = c.list();
 		
-		int num = applySuts.size();
+		long num = applySuts.size();
 		
 		return num;
 	}
