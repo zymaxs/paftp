@@ -78,7 +78,8 @@ function inidata(){
 	
 </script>
 <script type="text/javascript">
-		$(document).ready(function() {
+		$(document).ready( function(){ajaxtable()});
+		function ajaxtable() {
 			$('.pagination').jqPagination({
 				link_string : '/?page={page_number}',
 				max_page : <%=pagenum%>,
@@ -91,8 +92,7 @@ function inidata(){
 						success : function(root) {
 							$("#sutFormTab").html("");
 							$(root.applySutDtos).each(function(i,value){
-								
-								$("#sutFormTab").append("<tr>"+"<td>"+value.applysutstatusdto.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
+								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
 							})
 						},
 
@@ -108,7 +108,7 @@ function inidata(){
 				}
 			});
 
-		});
+		}
 	</script>
 </head>
 
@@ -201,15 +201,15 @@ function inidata(){
     <table width="900px">
       <tr>
         <td>系统名</td>
-        <td><input type="text" id="sysname" name="sysname"></td>
+        <td><input type="text" id="name" name="name"></td>
         <td>申请人</td>
-        <td><input type="text" id="applicant" name="applicant"></td>
+        <td><input type="text" id="applyer" name="applyer"></td>
       </tr>
       <tr>
         <td>Start Date:</td>
-        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'" ></td>
+        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'" id="starttime" name="starttime" ></td>
         <td>End Date:</td>
-        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'"></td>
+        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'" id="endtime" name="endtime"></td>
       </tr>
       <tr>
         <td colspan="2" align="center"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">搜索</a></td>

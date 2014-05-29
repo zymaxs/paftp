@@ -119,6 +119,7 @@ public List<ApplySutDto> getApplySutDto(List<ApplySut> applySuts){
 			applySutDto.setApplyer(applySuts.get(i).getName());
 			applySutDto.setApplytime(applySuts.get(i).getApplytime());
 			applySutDto.setCode(applySuts.get(i).getCode());
+			applySutDto.setName(applySuts.get(i).getName());
 			applySutDto.setComment(applySuts.get(i).getComment());
 			applySutDto.setDescription(applySuts.get(i).getDescription());
 			applySutDto.setGroupname(applySuts.get(i).getGroup().getName());

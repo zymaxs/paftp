@@ -11,8 +11,7 @@
 
     <package name="ajax" extends="json-default">
     <action name="querySutsAjax" method="querySut" class="com.paftp.action.ApplySutAction">
-        <result type="json">
-        </result>
+        <result type="json"></result>
      </action>
 
     </package>
