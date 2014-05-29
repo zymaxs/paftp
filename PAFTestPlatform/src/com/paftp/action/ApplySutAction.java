@@ -73,7 +73,7 @@ public class ApplySutAction extends ActionSupport {
 
 	private String pagenum;
 	private Integer row;
-	private int pages;
+	private Long pages;
 
 	private Boolean isAdmin;
 
@@ -160,7 +160,7 @@ public class ApplySutAction extends ActionSupport {
 
 		row = 10;
 
-		pages = (int) Math.ceil(applySutService.findPages() / (double) row);
+		pages = (long) Math.ceil(applySutService.findPages() / (double) row);
 
 		List<ApplySut> applySuts = applySutService
 				.findAllOrderByColumnPagination(1, this.getRow());
@@ -212,12 +212,12 @@ public class ApplySutAction extends ActionSupport {
 		conditions.put("endtime", getSQLDate(this.getEndtime()));
 		conditions.put("action", this.getStatus());
 
-		int pagecount = applySutService.findPagesByMultiConditions(conditions);
+		Long pagecount = applySutService.findPagesByMultiConditions(conditions);
 		
-		if (pagecount%10 == 0)
-			pages = pagecount/10;
-		else
-			pages = pagecount/10 + 1;
+		if(this.getRow() == null)
+			this.setRow(10);
+		
+		pages = (long) Math.ceil(pagecount / (double) this.getRow());
 
 		List<ApplySut> applySuts = applySutService
 				.findAllOrderByMultiConditions(conditions,
@@ -454,7 +454,7 @@ public class ApplySutAction extends ActionSupport {
 		return pages;
 	}
 
-	public void setPages(int pages) {
+	public void setPages(Long pages) {
 		this.pages = pages;
 	}
 
