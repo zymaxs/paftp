@@ -62,13 +62,10 @@ $(document).ready( function(){
 						data : params,
 						dataType : "json",
 						success : function(test) {
-							alert($("#starttime").datetimebox("getValue"));
-							alert($("#endtime").datetimebox("getValue"));
 							$("#sutFormTab").html("");
 							$(test.applySutDtos).each(function(i,value){
 								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
 							});
-							alert(test.pages);
 							
 							$('.pagination').jqPagination('option', 'max_page', test.pages);
 							
