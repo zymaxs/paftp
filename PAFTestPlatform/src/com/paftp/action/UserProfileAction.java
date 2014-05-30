@@ -1,6 +1,7 @@
 package com.paftp.action;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
@@ -43,11 +44,29 @@ public class UserProfileAction extends ActionSupport{
 	private String othermail;
 	private String otherinfo;
 	
+	private String alias;
+
 	private User user;
 	private User updatedUser; 
 	private Util util = new Util();
 	
 	private HttpSession session;
+	
+	public String getUserInfo(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		User user = userService.findUserByAlias(this.getAlias());
+		
+		if (user == null){
+			request.setAttribute("error", "The user account is not exist!");
+		}
+		
+		request.setAttribute("user", user);
+		
+		return "success";
+		
+	}
 	
 	public String updateUserInfo(){
 		
@@ -201,5 +220,14 @@ public class UserProfileAction extends ActionSupport{
 
 	public void setPosition(String position) {
 		this.position = position;
+	}
+	
+	
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 }
