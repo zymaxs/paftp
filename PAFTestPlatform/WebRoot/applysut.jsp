@@ -192,7 +192,7 @@ $(document).ready(function(){
         <table>
           <tr>
             <td>* 系统名 :</td>
-            <td><input type="text" class="input-xlarge" id="name" name="name"></td>
+            <td><input type="text" class="input-xlarge" id="sutname" name="sutname"></td>
           </tr>
           <tr>
             <td>* 系统所属平台 :</td>

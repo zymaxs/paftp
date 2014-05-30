@@ -47,8 +47,73 @@ String pagenum = request.getAttribute("pages").toString();
 }
 </style>
 <script type="text/javascript">
-$(function() {
+var pagentotal = <%=pagenum%>;
+var params;
+$(document).ready( function(){
+
 	$("#sutForm").append(inidata());
+	
+	$("#querysut").click(function(){
+		params = {pagenum:1,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").val(),endtime:$("#endtime").val()};
+		
+		$.ajax({
+						type : "POST",
+						url : "querySutsAjax.action",
+						data : params,
+						dataType : "json",
+						success : function(test) {
+							alert($("#starttime").val());
+							$("#sutFormTab").html("");
+							$(test.applySutDtos).each(function(i,value){
+								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
+							});
+							alert(test.pages);
+							
+							$('.pagination').jqPagination('option', 'max_page', test.pages);
+							
+						},
+						error : function(root) {
+
+							alert("json=" + root);
+
+							return false;
+
+						}
+				});
+		
+	
+				
+		});
+	
+	
+	$('.pagination').jqPagination({
+				link_string : '/?page={page_number}',
+				max_page : pagentotal, 
+				paged : function(page) {
+					params = {pagenum:page,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").val(),endtime:$("#endtime").val()};
+				$.ajax({
+						type : "POST",
+						url : "querySutsAjax.action",
+						data : params,
+						dataType : "json",
+						success : function(root) {
+	
+							$("#sutFormTab").html("");
+							$(root.applySutDtos).each(function(i,value){
+								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
+							})
+						},
+
+						error : function(root) {
+
+							alert("json=" + root);
+
+							return false;
+
+						}
+					})
+				}
+				});
   });
 </script>
 <script type="text/javascript">
@@ -77,39 +142,7 @@ function inidata(){
 
 	
 </script>
-<script type="text/javascript">
-		$(document).ready( function(){ajaxtable()});
-		function ajaxtable() {
-			$('.pagination').jqPagination({
-				link_string : '/?page={page_number}',
-				max_page : <%=pagenum%>,
-				paged : function(page) {
-					$.ajax({
-						type : "POST",
-						url : "querySutsAjax.action",
-						data : {pagenum:page},
-						dataType : "json",
-						success : function(root) {
-							$("#sutFormTab").html("");
-							$(root.applySutDtos).each(function(i,value){
-								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
-							})
-						},
 
-						error : function(root) {
-
-							alert("json=" + root);
-
-							return false;
-
-						}
-
-					});
-				}
-			});
-
-		}
-	</script>
 </head>
 
 <body>
@@ -201,21 +234,20 @@ function inidata(){
     <table width="900px">
       <tr>
         <td>系统名</td>
-        <td><input type="text" id="name" name="name"></td>
+        <td><input type="text" id="sutname" name="sutname"></td>
         <td>申请人</td>
         <td><input type="text" id="applyer" name="applyer"></td>
       </tr>
       <tr>
         <td>Start Date:</td>
-        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'" id="starttime" name="starttime" ></td>
+        <td><input class="easyui-datetimebox" value="05/24/2014 2:3:56"  id="starttime" name="starttime" ></td>
         <td>End Date:</td>
-        <td><input class="easyui-datebox" data-options="sharedCalendar:'#timebox'" id="endtime" name="endtime"></td>
+        <td><input class="easyui-datetimebox"  id="endtime" name="endtime"></td>
       </tr>
       <tr>
-        <td colspan="2" align="center"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">搜索</a></td>
+        <td colspan="2" align="center"><input type="button" id="querysut" name="querysut" value="搜索"></td>
       </tr>
     </table>
-    <div id="timebox" class="easyui-calendar"></div>
   </form>
   <button type="button" class="btn btn-primary" onClick="window.location.href='applysut.jsp'">申请接入</button>
   
@@ -236,7 +268,7 @@ function inidata(){
   <div class="pagination">
 		<a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
 			class="previous" data-action="previous">&lsaquo;</a> <input
-			type="text" readonly="readonly" data-max-page="<%=pagenum%>" /> <a href="#"
+			type="text" readonly="readonly"/> <a href="#"
 			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
 			data-action="last">&raquo;</a>
 	</div>
