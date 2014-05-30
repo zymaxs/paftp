@@ -54,7 +54,7 @@ $(document).ready( function(){
 	$("#sutForm").append(inidata());
 	
 	$("#querysut").click(function(){
-		params = {pagenum:1,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").val(),endtime:$("#endtime").val()};
+		params = {pagenum:1,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue")};
 		
 		$.ajax({
 						type : "POST",
@@ -62,7 +62,8 @@ $(document).ready( function(){
 						data : params,
 						dataType : "json",
 						success : function(test) {
-							alert($("#starttime").val());
+							alert($("#starttime").datetimebox("getValue"));
+							alert($("#endtime").datetimebox("getValue"));
 							$("#sutFormTab").html("");
 							$(test.applySutDtos).each(function(i,value){
 								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td>"+value.applysutstatusdto.name+"</td>"+"</tr>");
@@ -90,7 +91,7 @@ $(document).ready( function(){
 				link_string : '/?page={page_number}',
 				max_page : pagentotal, 
 				paged : function(page) {
-					params = {pagenum:page,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").val(),endtime:$("#endtime").val()};
+					params = {pagenum:page,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue")};
 				$.ajax({
 						type : "POST",
 						url : "querySutsAjax.action",
@@ -240,7 +241,7 @@ function inidata(){
       </tr>
       <tr>
         <td>Start Date:</td>
-        <td><input class="easyui-datetimebox" value="05/24/2014 2:3:56"  id="starttime" name="starttime" ></td>
+        <td><input class="easyui-datetimebox"  id="starttime" name="starttime" ></td>
         <td>End Date:</td>
         <td><input class="easyui-datetimebox"  id="endtime" name="endtime"></td>
       </tr>

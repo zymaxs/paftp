@@ -213,13 +213,14 @@ public class ApplySutAction extends ActionSupport {
 
 		result = new HashMap<String, Object>();
 		
-		String testTime = this.getStarttime().replace("/", "-");
+		String newStartTime = this.getStarttime().replace("/", "-");
+		String newEndTime = this.getEndtime().replace("/", "-");
 		
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("name", this.getSutname());
 		conditions.put("user.id", applyerid);
-		conditions.put("starttime", util.stringToSqlDate(testTime));
-		conditions.put("endtime", util.stringToSqlDate(this.getEndtime()));
+		conditions.put("starttime", util.stringToSqlDate(newStartTime));
+		conditions.put("endtime", util.stringToSqlDate(newEndTime));
 		conditions.put("status_id", status_id);
 
 		Long pagecount = applySutService.findPagesByMultiConditions(conditions);
