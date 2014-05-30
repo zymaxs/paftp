@@ -179,11 +179,14 @@ public class ApplySutAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
+		user = getSessionUser();
+		if (user != null){
 		this.isAdmin = this.isAdmin(user.getAlias());
 		if (isAdmin) {
 			request.setAttribute("isAdmin", "true");
 		} else {
 			request.setAttribute("isAdmin", "false");
+		}
 		}
 
 		ApplySut applySut = applySutService.findApplySutByName(this
