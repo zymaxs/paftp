@@ -5,18 +5,35 @@
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ "/";
+	String isLogin = "test";
+	String isAdmin = "test";
+	if ((String)session.getAttribute("user") != null){
+		 isLogin = "y";
+	} else { isLogin = "n";};
+	if ((String)session.getAttribute("isAdmin") != null){
+		isAdmin = "y";
+		}else { isAdmin = "n";};
+		
+	ApplySut applySut = (ApplySut)request.getAttribute("applySut");
 %>
 <!DOCTYPE HTML>
 <html>
 <head>
+<% 
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/showsutgroup.action").forward(request,response);}
+List<String> sutgroup = (List<String>)request.getAttribute("sutgroupnames");
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<link href="css/shou.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jQSelect.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -36,10 +53,32 @@
 }
 </style>
 <script type="text/javascript">
+function inipermisssion(){
+	    var approvebtn=document.getElementById('approvebtn');
+		var rejectbtn=document.getElementById('rejectbtn');
+		var updatebtn=document.getElementById('updatebtn');
+	if(<%=request.getAttribute("user")%> == null){
+		approvebtn.style="display:none";
+		rejectbtn.style="display:none";
+		updatebtn.style="display:none"
+		}
+		elseif (
+		alert("fuck");
+		}
+	}
+</script>
+<script type="text/javascript">
 	function loginac() {
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#sutgroup").jQSelect({});
+	alert("test");
+	inipermisssion();
+});	
 </script>
 </head>
 
@@ -128,7 +167,51 @@
     </div>
   </div>
   <!--主体-->
-  
+  <form id="sutinfoform" name="sutinfoform" class="form-horizontal" method="post" action="">
+    <fieldset>
+      <legend>接入系统申请详情页 <small>(带*号标志为必输项)</small></legend>
+      <table>
+        <tr>
+          <td>* 系统名 :</td>
+          <td><input type="text" class="input-xlarge" id="sutname" name="sutname" value="<%=applySut.getUser().getDisplayName()%>"></td>
+        </tr>
+        <tr>
+          <td>* 系统所属平台 :</td>
+          <td><div id="sutgroup" class="selectbox">
+              <div class="cartes">
+                <input type="text" value="<%=applySut.getGroup().getName()%>" id="groupname" name="groupname" class="listTxt" readonly />
+                <div class="listBtn"><b></b></div>
+                <input type="hidden" value="<%=sutgroup.get(0)%>" class="listVal" />
+              </div>
+              <div class="lists">
+                <ul class="list">
+                  <% for (int i =0; i<sutgroup.size(); i++){%>
+                  <li id=<%=i%>><%=sutgroup.get(i)%></li>
+                  <%}%>
+                </ul>
+              </div>
+            </div></td>
+        </tr>
+        <tr>
+          <td>* 系统中文名 :</td>
+          <td><input type="text" class="input-xlarge" id="code" name="code" value="<%=applySut.getCode()%>"></td>
+        </tr>
+        <tr>
+          <td>* 系统描述 :</td>
+          <td><textarea  rows="4" name="description" class="input-xlarge" id="description"><%=applySut.getDescription()%></textarea></td>
+        </tr>
+        <tr>
+          <table>
+            <tr>
+              <td><input type="button" id="approvebtn" name="approvebtn" value="通过" onClick="approveac()"></td>
+              <td><input type="button" id="rejectbtn" name="rejectbtn" value="拒绝" onClick="rejectac()"></td>
+              <td><input type="button" id="updatebtn" name="uptadebtn" value="修改" onClick="updateac()"></td>
+            </tr>
+          </table>
+        </tr>
+      </table>
+    </fieldset>
+  </form>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
