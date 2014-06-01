@@ -142,11 +142,11 @@ public class ApplySutAction extends ActionSupport {
 		// request.setAttribute("error", "You are not the admin to do this!");
 		// return "error";
 		// }
-		User applyerUser = userService.findUserByAlias(this.getApplyer());
+		//User applyerUser = userService.findUserByAlias(this.getApplyer());
 
 		ApplySut applySut = applySutService.findApplySutByName(this
 				.getSutname());
-		applySut.setUser(applyerUser);
+		//applySut.setUser(applyerUser);
 
 		applySut = setApplySut(applySut, this.getStatus());
 		applySutService.updateApplySut(applySut);
@@ -378,7 +378,7 @@ public class ApplySutAction extends ActionSupport {
 		List<Permission> permissions2 = null;
 		role2 = new Role();
 		role2.setName(sut.getName() + "worker");
-		role2.setDescription("The role for the system of Worker and system is:" + sut.getName());
+		role2.setDescription("role:" + sut.getName());
 		role2.setSut(sut);
 		permissions2 = new ArrayList<Permission>();
 		permission2 = permissionService.findPermissionByScope("work");
