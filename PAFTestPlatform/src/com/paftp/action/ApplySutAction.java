@@ -202,9 +202,7 @@ public class ApplySutAction extends ActionSupport {
 			this.isAdmin = this.isAdmin(user.getAlias());
 			if (isAdmin) {
 				request.setAttribute("isAdmin", "true");
-			} else {
-				request.setAttribute("isAdmin", "false");
-			}
+			} 
 		}
 
 		ApplySut applySut = applySutService.findApplySutByName(this
