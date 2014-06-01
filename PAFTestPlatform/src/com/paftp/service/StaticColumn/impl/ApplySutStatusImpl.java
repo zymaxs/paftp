@@ -44,7 +44,7 @@ public class ApplySutStatusImpl implements ApplySutStatusService {
 	@Override
 	public ApplySutStatus findApplySutStatusByName(String name) {
 		// TODO Auto-generated method stub
-		return baseDAO.get(" from ApplySut u where u.name = ?",
+		return baseDAO.get(" from ApplySut u where u.status = ?",
 				new Object[] { name });
 	}
 	
