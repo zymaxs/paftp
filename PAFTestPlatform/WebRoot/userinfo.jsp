@@ -10,10 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<%  
 
-
-%>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -42,6 +39,8 @@
 }
 </style>
 <%  
+List<Role> roles = (List<Role>)request.getAttribute("roles");
+String pagenum = request.getAttribute("pages").toString();
 User user = (User)request.getAttribute("user");
 UserInfo userinfo = (UserInfo) user.getUserInfo();
 Integer id = 0;
@@ -85,7 +84,60 @@ if (userinfo.getOthermail() != null) {
 	othermail = userinfo.getOthermail();
 }
 %>
+<script type="text/javascript">
+var pagentotal = <%=pagenum%>;
+var params;
+$(document).ready( function(){
 
+	$("#roleForm").append(inidata());
+		
+	$('.pagination').jqPagination({
+				link_string : '/?page={page_number}',
+				max_page : pagentotal, 
+				paged : function(page) {
+					params = {pagenum:page,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue")};
+				$.ajax({
+						type : "POST",
+						url : "querySutsAjax.action",
+						data : params,
+						dataType : "json",
+						success : function(root) {
+	
+							$("#sutFormTab").html("");
+							$(root.applySutDtos).each(function(i,value){
+								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td><a href='initialSut.action?sutname="+value.name+"'>"+value.applysutstatusdto.name+"</a></td>"+"</tr>");
+							})
+						},
+
+						error : function(root) {
+
+							alert("json=" + root);
+
+							return false;
+
+						}
+					})
+				}
+				});
+  });
+</script>
+<script type="text/javascript">
+function inidata(){
+	<%
+	String iniinsertdata="";
+	
+	for(int i=0; i< roles.size() ;i++ ){
+		iniinsertdata +="<tr>";
+		
+		iniinsertdata +="<td>"+roles.get(i).getName()+"</td>";
+		iniinsertdata +="<td>"+roles.get(i).getSut().getName()+"</td>";
+		iniinsertdata +="<td>"+roles.get(i).getDescription()+"</td>";
+		iniinsertdata +="</tr>";
+	}
+	%>
+	return "<%=iniinsertdata%>";
+}
+</script>
 </head>
 
 <body>
@@ -161,6 +213,25 @@ if (userinfo.getOthermail() != null) {
         </table>
         </fieldset>
   </div>
+  
+  <table id="roleForm" border="1" width="100%">
+    <thead>
+    	<tr>
+        	<td>角色</td>
+            <td>系统</td>
+            <td>描述</td>
+        </tr>
+    </thead>
+    <tbody id="roleFormTab">
+    </tbody>
+  </table>
+  <div class="pagination">
+		<a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
+			class="previous" data-action="previous">&lsaquo;</a> <input
+			type="text" readonly="readonly"/> <a href="#"
+			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
+			data-action="last">&raquo;</a>
+	</div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

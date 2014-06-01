@@ -1,5 +1,8 @@
 package com.paftp.action;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -8,12 +11,15 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.paftp.entity.ApplySut;
+import com.paftp.entity.Role;
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
 import com.paftp.entity.Department;
 import com.paftp.entity.Position;
 import com.paftp.service.StaticColumn.DepartmentService;
 import com.paftp.service.StaticColumn.PositionService;
+import com.paftp.service.role.RoleService;
 import com.paftp.service.user.UserService;
 import com.paftp.service.userinfo.UserInfoService;
 import com.paftp.util.Util;
@@ -35,6 +41,8 @@ public class UserProfileAction extends ActionSupport{
 	private DepartmentService departmentService;
 	@Resource
 	private PositionService positionService;
+	@Resource
+	private RoleService roleService;
 	private String password;
 	private String orignpassword;
 	private String department;
@@ -47,6 +55,10 @@ public class UserProfileAction extends ActionSupport{
 	
 	private String alias;
 
+	private Integer row;
+	private Integer pagenum;
+	private Long pages;
+	
 	private User user;
 	private User updatedUser; 
 	private Util util = new Util();
@@ -62,6 +74,23 @@ public class UserProfileAction extends ActionSupport{
 		if (user == null){
 			request.setAttribute("error", "The user account is not exist!");
 		}
+		
+		row = 10;
+
+		List<Role> roles = user.getRoles();
+		
+		pages = (long) Math.ceil(roles.size() / (double) row);
+
+		List<Role> currentPageRoles = new ArrayList<Role>();
+		
+		for (int i = (pagenum-1)*10; i<((pagenum-1)*10 + row); i++){
+			Role role = new Role();
+			role = roles.get(i);
+			currentPageRoles.add(role);
+		}
+
+		request.setAttribute("pages", pages);
+		request.setAttribute("roles", currentPageRoles);
 		
 		request.setAttribute("user", user);
 		
@@ -132,7 +161,7 @@ public class UserProfileAction extends ActionSupport{
 		
 	}
 	
-	public User getSessionUser(){
+	private User getSessionUser(){
 		
 		session = ServletActionContext.getRequest().getSession(false);  
 		
@@ -240,4 +269,21 @@ public class UserProfileAction extends ActionSupport{
 		this.userid = userid;
 	}
 
+	public Integer getRow() {
+		return row;
+	}
+
+	public void setRow(Integer row) {
+		this.row = row;
+	}
+
+	public Integer getPagenum() {
+		return pagenum;
+	}
+
+	public void setPagenum(Integer pagenum) {
+		this.pagenum = pagenum;
+	}
+
+	
 }

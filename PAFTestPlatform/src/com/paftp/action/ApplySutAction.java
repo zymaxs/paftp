@@ -144,7 +144,8 @@ public class ApplySutAction extends ActionSupport {
 		// }
 		User applyerUser = userService.findUserByAlias(this.getApplyer());
 
-		ApplySut applySut = new ApplySut();
+		ApplySut applySut = applySutService.findApplySutByName(this
+				.getSutname());
 		applySut.setUser(applyerUser);
 
 		applySut = setApplySut(applySut, this.getStatus());
@@ -246,28 +247,30 @@ public class ApplySutAction extends ActionSupport {
 
 		return "success";
 	}
-	
-	public String updateSut(){
-		
-		ApplySut applySut = applySutService.findApplySutByName(this.getSutname());
-		
+
+	public String updateSut() {
+
+		ApplySut applySut = applySutService.findApplySutByName(this
+				.getSutname());
+
 		User user = userService.findUserByAlias(this.getApplyer());
 		applySut.setUser(user);
-		SutGroup sutgroup = sutgroupService.findSutGroupByName(this.getGroupname());
+		SutGroup sutgroup = sutgroupService.findSutGroupByName(this
+				.getGroupname());
 		applySut.setGroup(sutgroup);
 		ApplySutStatus applySutStatus = applySutStatusService
 				.findApplySutStatusByName(status);
 		applySut.setApplysutstatus(applySutStatus);
-		
+
 		applySut.setCode(this.getCode());
 		applySut.setName(this.getSutname());
 		applySut.setComment(this.getComment());
 		applySut.setApplytime(this.getApplytime());
 		applySut.setDescription(this.getDescription());
 		applySut.setResolvetime(this.getResolvetime());
-		
+
 		applySutService.saveApplySut(applySut);
-		
+
 		return "success";
 	}
 
@@ -280,14 +283,14 @@ public class ApplySutAction extends ActionSupport {
 		// SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		// Date now = new Date();
 
-		if (applySutStatus.getId() == 1) {
+		if (applySutStatus.getId() == 1) { // status: 待审核
 			this.applytime = new Date();
 			applySut.setApplysutstatus(applySutStatus);
 			applySut.setApplytime(applytime);
 			applySut.setCode(this.getCode());
 			applySut.setName(this.getSutname());
 			applySut.setDescription(this.getDescription());
-		} else {
+		} else { // status: 通过或者拒绝
 			this.resolvetime = new Date();
 			applySut.setApplysutstatus(applySutStatus);
 			SutGroup sutGroup = sutgroupService.findSutGroupByName(this
@@ -296,13 +299,14 @@ public class ApplySutAction extends ActionSupport {
 			applySut.setResolvetime(resolvetime);
 			applySut.setComment(this.getComment());
 			applySut.setGroup(sutGroup);
-			
-			if (applySutStatus.getId() == 2){
-				
+
+			if (applySutStatus.getId() == 2) { // if pass then create the
+												// corresponding permissions
+
 				initialRolePermissions();
 			}
 		}
-		
+
 		return applySut;
 
 	}
@@ -322,57 +326,85 @@ public class ApplySutAction extends ActionSupport {
 
 	private void initialRolePermissions() {
 
-		Sut sut = new Sut(); // Rayleigh
-		sut.setCode(this.getCode());
-		sut.setName(this.getSutname());
-		sut.setDescription(this.getDescription());
-		sutService.saveSut(sut);
+		Sut sut = new Sut();
+		if (sutService.findSutByName(this.getSutname()) == null) {
+			sut.setCode(this.getCode());
+			sut.setName(this.getSutname());
+			sut.setDescription(this.getDescription());
+			sutService.saveSut(sut);
+		}
 
 		sut = sutService.findSutByName(this.getSutname());
 
 		Role role = null;
-		Permission permission = null;
+		Permission firstpermission = null;
+		Permission secondpermission = null;
 		List<Permission> permissions = null;
 
 		role = new Role();
-		role.setName("Tmanager");
-		role.setDescription("Manager");
+		role.setName(sut.getName() + "manager");
+		role.setDescription(sut.getName() + "Manager");
 		permissions = new ArrayList<Permission>();
-		permission = new Permission();
-		permission.setScope("work");
-		permission.setOperation("all");
-		permissions.add(permission);
-		permission = new Permission();
-		permission.setScope("manage");
-		permission.setOperation("all");
-		permissions.add(permission);
+		if (permissionService.findPermissionByScope("work") == null) {
+			firstpermission = new Permission();
+			firstpermission.setScope("work");
+			firstpermission.setOperation("all");
+			permissionService.savePermission(firstpermission);
+		} else {
+			firstpermission = permissionService.findPermissionByScope("work");
+		}
+
+		if (permissionService.findPermissionByScope("manage") == null) {
+			secondpermission = new Permission();
+			secondpermission.setScope("manage");
+			secondpermission.setOperation("all");
+			permissionService.savePermission(secondpermission);
+		} else {
+			secondpermission = permissionService
+					.findPermissionByScope("manage");
+		}
+
+		permissions.add(firstpermission);
+		permissions.add(secondpermission);
 		role.setPermissions(permissions);
 		role.setSut(sut);
-		roleService.saveRole(role);
 
 		Role role2 = null;
 		Permission permission2 = null;
 		List<Permission> permissions2 = null;
 		role2 = new Role();
-		role2.setName("worker");
-		role2.setDescription("The role for the system of Worker!");
+		role2.setName(sut.getName() + "worker");
+		role2.setDescription("The role for the system of Worker and system is:" + sut.getName());
 		role2.setSut(sut);
 		permissions2 = new ArrayList<Permission>();
 		permission2 = permissionService.findPermissionByScope("work");
-		permissions.add(permission2);
+		permissions2.add(permission2);
 		role2.setPermissions(permissions2);
 		role2.setSut(sut);
+
+		if (roleService.findRoleByName(sut.getName() + "manager") == null){
+		roleService.saveRole(role);
+		}
+		if (roleService.findRoleByName(sut.getName() + "worker") == null){
 		roleService.saveRole(role2); // Save the new system worker
-
-		// Role adminRole = null;
-		// adminRole = new Role();
-		// adminRole.setName("administrator");
-		// adminRole.setDescription("The admin role for the new system!");
-		// adminRole.setSut(sut);
-		// List<Permission> adminPermissions = permissionService.findAllList();
-		// adminRole.setPermissions(adminPermissions);
-		// roleService.saveRole(adminRole); // Save the new system administrator
-
+		}
+		
+		if (roleService.findRoleByName("administrator") == null) {
+			User user = userService.findUserByAlias("admin");
+			List<Role> roles = new ArrayList<Role>();
+			Role adminRole = null;
+			adminRole = new Role();
+			adminRole.setName("administrator");
+			adminRole.setDescription("The admin role for the new system!");
+			adminRole.setSut(sut);
+			List<Permission> adminPermissions = permissionService.findAllList();
+			adminRole.setPermissions(adminPermissions);
+			roleService.saveRole(adminRole); // Save the new system
+												// administrator
+			roles.add(adminRole);
+			user.setRoles(roles);
+			userService.updateUser(user);
+		}
 	}
 
 	private Boolean isAdmin(String alias) {
@@ -521,5 +553,5 @@ public class ApplySutAction extends ActionSupport {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 }

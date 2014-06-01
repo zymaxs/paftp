@@ -10,7 +10,6 @@ source C:\GitHub\paftp\PAFTestPlatform\sql\create_user.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_sut_group.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_sut.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_role.sql
-source C:\GitHub\paftp\PAFTestPlatform\sql\create_user_role.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_scene.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_strategetype.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_stressresult.sql
@@ -19,6 +18,7 @@ source C:\GitHub\paftp\PAFTestPlatform\sql\create_testsuite.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_testcase.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_permission.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_role_permission.sql
+source C:\GitHub\paftp\PAFTestPlatform\sql\create_userrole.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_responsetimeresult.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_networkresult.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_memoryresult.sql
