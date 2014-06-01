@@ -58,10 +58,11 @@ public class UserProfileAction extends ActionSupport{
 	private Integer row;
 	private Integer pagenum;
 	private Long pages;
-	
+
 	private User user;
 	private User updatedUser; 
 	private Util util = new Util();
+	private List<Role> currentPageRoles = new ArrayList<Role>();
 	
 	private HttpSession session;
 	
@@ -69,19 +70,25 @@ public class UserProfileAction extends ActionSupport{
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
-		User user = userService.findUserById(this.getUserid());
+		user = userService.findUserById(this.getUserid());
 		
 		if (user == null){
 			request.setAttribute("error", "The user account is not exist!");
 		}
 		
+		request.setAttribute("user", user);
+		
+		return "success";
+		
+	}
+	
+	public String queryRoles(){
+
 		row = 10;
 
 		List<Role> roles = user.getRoles();
 		
 		pages = (long) Math.ceil(roles.size() / (double) row);
-
-		List<Role> currentPageRoles = new ArrayList<Role>();
 		
 		for (int i = (pagenum-1)*10; i<((pagenum-1)*10 + row); i++){
 			Role role = new Role();
@@ -89,13 +96,10 @@ public class UserProfileAction extends ActionSupport{
 			currentPageRoles.add(role);
 		}
 
-		request.setAttribute("pages", pages);
-		request.setAttribute("roles", currentPageRoles);
-		
-		request.setAttribute("user", user);
+		this.setPages(pages);
+		this.setCurrentPageRoles(currentPageRoles);
 		
 		return "success";
-		
 	}
 	
 	public String updateUserInfo(){
@@ -285,5 +289,20 @@ public class UserProfileAction extends ActionSupport{
 		this.pagenum = pagenum;
 	}
 
+	public Long getPages() {
+		return pages;
+	}
+
+	public void setPages(Long pages) {
+		this.pages = pages;
+	}
 	
+	public List<Role> getCurrentPageRoles() {
+		return currentPageRoles;
+	}
+
+	public void setCurrentPageRoles(List<Role> currentPageRoles) {
+		this.currentPageRoles = currentPageRoles;
+	}
+
 }
