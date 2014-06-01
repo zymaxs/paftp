@@ -117,8 +117,6 @@ public class ApplySutAction extends ActionSupport {
 		applySut = setApplySut(applySut, this.getStatus());
 
 		applySutService.saveApplySut(applySut);
-		
-		generateAdmin();
 
 		return "success";
 	}
@@ -188,6 +186,8 @@ public class ApplySutAction extends ActionSupport {
 		request.setAttribute("pages", pages);
 		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
+		
+		generateAdmin();
 
 		return "success";
 
