@@ -87,6 +87,7 @@
 		<action name="showsutgroup" method="sutgroup" class="com.paftp.action.StaticAction">
 			<result name="success">/applysutinfo.jsp</result>
 		</action>
+		
 
 	</package>
 
