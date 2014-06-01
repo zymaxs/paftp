@@ -46,7 +46,7 @@ public class PermissionServiceImpl implements PermissionService {
 	
 	@Override
 	public List<Permission> findAllList() {
-		return baseDAO.find(" from Permission p order by p.createTime");
+		return baseDAO.find(" from Permission p");
 	}
 
 

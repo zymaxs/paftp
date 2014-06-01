@@ -142,11 +142,8 @@ public class ApplySutAction extends ActionSupport {
 		// request.setAttribute("error", "You are not the admin to do this!");
 		// return "error";
 		// }
-		User applyerUser = userService.findUserByAlias(this.getApplyer());
-
 		ApplySut applySut = applySutService.findApplySutByName(this
 				.getSutname());
-		applySut.setUser(applyerUser);
 
 		applySut = setApplySut(applySut, this.getStatus());
 		applySutService.updateApplySut(applySut);
@@ -294,12 +291,13 @@ public class ApplySutAction extends ActionSupport {
 			applySut.setCode(this.getCode());
 			applySut.setName(this.getSutname());
 			applySut.setDescription(this.getDescription());
+			SutGroup group = sutgroupService.findSutGroupByName(this.getGroupname());
+			applySut.setGroup(group);
 		} else { // status: ͨ����߾ܾ�
 			this.resolvetime = new Date();
 			applySut.setApplysutstatus(applySutStatus);
 			SutGroup sutGroup = sutgroupService.findSutGroupByName(this
 					.getGroupname());
-
 			applySut.setResolvetime(resolvetime);
 			applySut.setComment(this.getComment());
 			applySut.setGroup(sutGroup);
@@ -335,6 +333,8 @@ public class ApplySutAction extends ActionSupport {
 			sut.setCode(this.getCode());
 			sut.setName(this.getSutname());
 			sut.setDescription(this.getDescription());
+			SutGroup group = sutgroupService.findSutGroupByName(this.getGroupname());
+			sut.setGroup(group);
 			sutService.saveSut(sut);
 		}
 
@@ -378,7 +378,7 @@ public class ApplySutAction extends ActionSupport {
 		List<Permission> permissions2 = null;
 		role2 = new Role();
 		role2.setName(sut.getName() + "worker");
-		role2.setDescription("The role for the system of Worker and system is:" + sut.getName());
+		role2.setDescription("The role is:" + sut.getName());
 		role2.setSut(sut);
 		permissions2 = new ArrayList<Permission>();
 		permission2 = permissionService.findPermissionByScope("work");
@@ -399,7 +399,7 @@ public class ApplySutAction extends ActionSupport {
 			Role adminRole = null;
 			adminRole = new Role();
 			adminRole.setName("administrator");
-			adminRole.setDescription("The admin role for the new system!");
+			adminRole.setDescription("The admin role!");
 			adminRole.setSut(sut);
 			List<Permission> adminPermissions = permissionService.findAllList();
 			adminRole.setPermissions(adminPermissions);
