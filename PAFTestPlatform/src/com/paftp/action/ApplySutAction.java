@@ -276,6 +276,10 @@ public class ApplySutAction extends ActionSupport {
 
 	private ApplySut setApplySut(ApplySut applySut, String status) {
 
+		if(status == null){
+			status = "Pending";
+		}
+		
 		ApplySutStatus applySutStatus = applySutStatusService
 				.findApplySutStatusByName(status);
 
@@ -283,14 +287,14 @@ public class ApplySutAction extends ActionSupport {
 		// SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		// Date now = new Date();
 
-		if (applySutStatus.getId() == 1) { // status: 待审核
+		if (applySutStatus.getId() == 1) { // status: �����
 			this.applytime = new Date();
 			applySut.setApplysutstatus(applySutStatus);
 			applySut.setApplytime(applytime);
 			applySut.setCode(this.getCode());
 			applySut.setName(this.getSutname());
 			applySut.setDescription(this.getDescription());
-		} else { // status: 通过或者拒绝
+		} else { // status: ͨ����߾ܾ�
 			this.resolvetime = new Date();
 			applySut.setApplysutstatus(applySutStatus);
 			SutGroup sutGroup = sutgroupService.findSutGroupByName(this
