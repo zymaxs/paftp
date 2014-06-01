@@ -2,19 +2,7 @@
 	import="java.util.*,com.paftp.entity.*"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ "/";
-	String isLogin = "test";
-	String isAdmin = "test";
-	if ((String)session.getAttribute("user") != null){
-		 isLogin = "y";
-	} else { isLogin = "n";};
-	if ((String)session.getAttribute("isAdmin") != null){
-		isAdmin = "y";
-		}else { isAdmin = "n";};
-		
-	ApplySut applySut = (ApplySut)request.getAttribute("applySut");
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/";
 %>
 <!DOCTYPE HTML>
 <html>
@@ -23,6 +11,19 @@
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/showsutgroup.action").forward(request,response);}
 List<String> sutgroup = (List<String>)request.getAttribute("sutgroupnames");
+String isLogin = "test";
+String isAdmin = "test";
+String alias = "";
+if (session.getAttribute("user") != null){
+	 isLogin = "y";
+	 User userinfo = (User) session.getAttribute("user");
+	 alias = userinfo.getAlias();
+} else { isLogin = "n";};
+if ((String)session.getAttribute("isAdmin") == "true"){
+	isAdmin = "y";
+	}else { isAdmin = "n";};
+ApplySut applySut = (ApplySut)request.getAttribute("applySut");
+String applyer = applySut.getUser().getAlias();
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
@@ -53,18 +54,37 @@ List<String> sutgroup = (List<String>)request.getAttribute("sutgroupnames");
 }
 </style>
 <script type="text/javascript">
-function inipermisssion(){
-	    var approvebtn=document.getElementById('approvebtn');
-		var rejectbtn=document.getElementById('rejectbtn');
-		var updatebtn=document.getElementById('updatebtn');
-	if(<%=request.getAttribute("user")%> == null){
-		approvebtn.style="display:none";
-		rejectbtn.style="display:none";
-		updatebtn.style="display:none"
+//todo
+var alias = '<%=alias%>';
+var isLogin = '<%=isLogin%>';
+var isAdmin = '<%=isAdmin%>';
+var applyer = '<%=applyer%>';
+function inipermission(){
+	if (alias == null){
+		alert ("inside if");
+		document.getElementById('approvebtn').style.display="none";
+		document.getElementById('rejectbtn').style.display="none";
+		document.getElementById('updatebtn').style.display="none";
 		}
-		elseif (
-		alert("fuck");
-		}
+		else {
+			if (isAdmin == "y"){
+				document.getElementById('approvebtn').style.display="block";
+				document.getElementById('rejectbtn').style.display="block";
+				document.getElementById('updatebtn').style.display="block";	
+			}
+			else { if (alias == applyer){
+						document.getElementById('approvebtn').style.display="none";
+						document.getElementById('rejectbtn').style.display="none";
+						document.getElementById('updatebtn').style.display="block";
+					}
+					else if (alias != applyer){
+						document.getElementById('approvebtn').style.display="none";
+						document.getElementById('rejectbtn').style.display="none";
+						document.getElementById('updatebtn').style.display="none";
+					}
+				
+			}
+			}
 	}
 </script>
 <script type="text/javascript">
@@ -72,17 +92,41 @@ function inipermisssion(){
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+	function approveac(){
+		document.sutinfoform.action="${pageContext.request.contextPath}/approvesut.action";
+		request.setAttribute("status", "true");
+		document.sutinfoform.submit();
+	}
+	function rejectac(){
+		document.sutinfoform.action="${pageContext.request.contextPath}/approvesut.action";
+		request.setAttribute("status", "false");
+		document.sutinfoform.submit();
+	}
+	function updateac(){
+		document.getElementById('sutname').readOnly=false;
+		document.getElementById('groupname').readOnly=false;
+		document.getElementById('code').readOnly=false;
+		document.getElementById('description').readOnly=false;
+		document.getElementById('updatebtn').style.display="none";
+		document.getElementById('savebtn').style.display="block";
+		
+	}
+	function saveac(){
+		document.sutinfoform.action="${pageContext.request.contextPath}/approvesut.action";
+		document.sutinfoform.submit();
+	}
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#sutgroup").jQSelect({});
-	alert("test");
-	inipermisssion();
+	inipermission();
 });	
 </script>
 </head>
 
 <body>
+<%=alias%>
+<%=applyer%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
@@ -98,7 +142,7 @@ $(document).ready(function(){
           <%if (session.getAttribute("user") == null) {%>
           <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
           <%} else { User user = (User) session.getAttribute("user");
-					String name = user.getAlias(); %>
+ 		 			 String name = user.getAlias();%>
           <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
           <%}%>
         </div>
@@ -173,7 +217,11 @@ $(document).ready(function(){
       <table>
         <tr>
           <td>* 系统名 :</td>
-          <td><input type="text" class="input-xlarge" id="sutname" name="sutname" value="<%=applySut.getUser().getDisplayName()%>"></td>
+          <td><input type="text" class="input-xlarge" id="sutname" name="sutname" value="<%=applySut.getUser().getDisplayName()%>" readonly></td>
+        </tr>
+        <tr>
+        	<td>申请状态</td>
+        	<td><input type="text" class="input-xlarge" id="sutstatus" name="sutstatus" value="<%=applySut.getApplysutstatus().getName()%>" disabled></td>
         </tr>
         <tr>
           <td>* 系统所属平台 :</td>
@@ -194,18 +242,19 @@ $(document).ready(function(){
         </tr>
         <tr>
           <td>* 系统中文名 :</td>
-          <td><input type="text" class="input-xlarge" id="code" name="code" value="<%=applySut.getCode()%>"></td>
+          <td><input type="text" class="input-xlarge" id="code" name="code" value="<%=applySut.getCode()%>" readonly></td>
         </tr>
         <tr>
           <td>* 系统描述 :</td>
-          <td><textarea  rows="4" name="description" class="input-xlarge" id="description"><%=applySut.getDescription()%></textarea></td>
+          <td><textarea  rows="4" class="input-xlarge" id="description" name="description" readonly><%=applySut.getDescription()%></textarea></td>
         </tr>
         <tr>
           <table>
             <tr>
               <td><input type="button" id="approvebtn" name="approvebtn" value="通过" onClick="approveac()"></td>
               <td><input type="button" id="rejectbtn" name="rejectbtn" value="拒绝" onClick="rejectac()"></td>
-              <td><input type="button" id="updatebtn" name="uptadebtn" value="修改" onClick="updateac()"></td>
+              <td><input type="button" id="updatebtn" name="uptadebtn" value="修改" onClick="updateac()" style="display:block"></td>
+              <td><input type="button" id="savebtn" name="savebtn" value="更新" onClick="saveac()" style="display:none"></td>
             </tr>
           </table>
         </tr>
