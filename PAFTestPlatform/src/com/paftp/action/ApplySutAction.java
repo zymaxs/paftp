@@ -130,7 +130,7 @@ public class ApplySutAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		// this.isAdmin = this.isAdmin(user.getAlias());
+		 this.isAdmin = this.isAdmin(user.getAlias());
 
 		if (this.getStatus() == null) {
 			request.setAttribute("error",
@@ -138,10 +138,10 @@ public class ApplySutAction extends ActionSupport {
 			return "error";
 		}
 
-		// if (!this.isAdmin) {
-		// request.setAttribute("error", "You are not the admin to do this!");
-		// return "error";
-		// }
+		 if (!this.isAdmin) {
+		 request.setAttribute("error", "You are not the admin to do this!");
+		 return "error";
+		 }
 		ApplySut applySut = applySutService.findApplySutByName(this
 				.getSutname());
 
