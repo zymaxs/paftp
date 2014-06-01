@@ -1,13 +1,13 @@
 
 
 insert into `paftp`.`userinfo` values("1", "1", "1", "7758521", "7758521", null, null);
-insert into `paftp`.`user` values("1","admin","9pYoKqTNT2FKqZUZDPRC/g==", "Admin", "2014-05-28 11:36:02", null, "old", "1");
+insert into `paftp`.`user` values("1","admin","CY9rzUYh03PK3k6DJie09g==", "Admin", "2014-05-28 11:36:02", null, "old", "1");
 insert into `paftp`.`userinfo` values("2", "1", "1", "12421412", "1242141", null, null);
-insert into `paftp`.`user` values("2","test1","9pYoKqTNT2FKqZUZDPRC/g==", "test1", "2014-05-28 11:36:02", null, "old", "2");
+insert into `paftp`.`user` values("2","test1","CY9rzUYh03PK3k6DJie09g==", "test1", "2014-05-28 11:36:02", null, "old", "2");
 insert into `paftp`.`userinfo` values("3", "1", "1", "12421412", "1242141", null, null);
-insert into `paftp`.`user` values("3","test2","9pYoKqTNT2FKqZUZDPRC/g==", "test2", "2014-05-28 11:36:02", null, "old", "3");
+insert into `paftp`.`user` values("3","test2","CY9rzUYh03PK3k6DJie09g==", "test2", "2014-05-28 11:36:02", null, "old", "3");
 insert into `paftp`.`userinfo` values("4", "1", "1", "12421412", "1242141", null, null);
-insert into `paftp`.`user` values("4","test3","9pYoKqTNT2FKqZUZDPRC/g==", "test3", "2014-05-28 11:36:02", null, "old", "4");
+insert into `paftp`.`user` values("4","test3","CY9rzUYh03PK3k6DJie09g==", "test3", "2014-05-28 11:36:02", null, "old", "4");
 
 
 insert into `paftp`.`applysut` values("1","20140528", NULL, "2", "", "1", "1", "1", "DAOTA","1");
