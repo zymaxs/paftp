@@ -251,11 +251,11 @@ $(document).ready(function(){
           </tr>
           <tr>
             <td style="text-align:right">联系电话 :</td>
-            <td style="text-align:right"><input type="text" class="input-xlarge" id="mobile" name="mobile"
-								value="<%=mobile%>"></td>
+            <td style="text-align:right"><input type="text" class="input-xlarge" id="telephone" name="telephone"
+								value="<%=telephone%>"></td>
             <td style="text-align:right">移动电话 :</td>
-            <td style="text-align:right"><input type="text" class="input-xlarge" id="othermail"
-								name="othermail" value="<%=othermail%>"></td>
+            <td style="text-align:right"><input type="text" class="input-xlarge" id="mobile"
+								name="mobile" value="<%=mobile%>"></td>
           </tr>
           <tr>
           	<td>其他邮件 :</td>

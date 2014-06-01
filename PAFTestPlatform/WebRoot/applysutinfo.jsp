@@ -12,7 +12,7 @@
 request.getRequestDispatcher("${pageContext.request.contextPath}/showsutgroup.action").forward(request,response);}
 List<String> sutgroup = (List<String>)request.getAttribute("sutgroupnames");
 String isLogin = "test";
-String isAdmin = "";
+String isAdmin = "test";
 String alias = "";
 if (session.getAttribute("user") != null){
 	 isLogin = "y";
@@ -65,8 +65,7 @@ String applyer = applySut.getUser().getAlias();
 var alias = '<%=alias%>';
 var isLogin = '<%=isLogin%>';
 var isAdmin = '<%=isAdmin%>';
-var applyer = '<%=applyer%>
-	';
+var applyer = '<%=applyer%>';
 	function inipermission() {
 		if (alias == null) {
 			alert("inside if");
@@ -131,7 +130,6 @@ var applyer = '<%=applyer%>
 <body>
 	<%=alias%>
 	<%=applyer%>
-	<%=request.getAttribute("isAdmin")%>
 	<%=isAdmin%>
 	<div class="container-fluid">
 		<!--网页头部-->
