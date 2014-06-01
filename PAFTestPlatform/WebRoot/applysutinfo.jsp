@@ -80,8 +80,8 @@ var applyer = '<%=applyer%>
 				document.getElementById('updatebtn').style.display = "block";
 			} else {
 				if (alias == applyer) {
-					document.getElementById('approvebtn').style.display = "block";
-					document.getElementById('rejectbtn').style.display = "block";
+					document.getElementById('approvebtn').style.display = "none";
+					document.getElementById('rejectbtn').style.display = "none";
 					document.getElementById('updatebtn').style.display = "block";
 				} else if (alias != applyer) {
 					document.getElementById('approvebtn').style.display = "none";
