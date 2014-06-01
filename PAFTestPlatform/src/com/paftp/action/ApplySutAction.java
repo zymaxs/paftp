@@ -341,10 +341,12 @@ public class ApplySutAction extends ActionSupport {
 		permission = new Permission();
 		permission.setScope("work");
 		permission.setOperation("all");
+		permissionService.savePermission(permission);
 		permissions.add(permission);
 		permission = new Permission();
 		permission.setScope("manage");
 		permission.setOperation("all");
+		permissionService.savePermission(permission);
 		permissions.add(permission);
 		role.setPermissions(permissions);
 		role.setSut(sut);
@@ -355,7 +357,7 @@ public class ApplySutAction extends ActionSupport {
 		List<Permission> permissions2 = null;
 		role2 = new Role();
 		role2.setName("worker");
-		role2.setDescription("The role for the system of Worker!");
+		role2.setDescription("Worker");
 		role2.setSut(sut);
 		permissions2 = new ArrayList<Permission>();
 		permission2 = permissionService.findPermissionByScope("work");
