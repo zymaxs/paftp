@@ -73,8 +73,8 @@ function inipermission(){
 				document.getElementById('updatebtn').style.display="block";	
 			}
 			else { if (alias == applyer){
-						document.getElementById('approvebtn').style.display="none";
-						document.getElementById('rejectbtn').style.display="none";
+						document.getElementById('approvebtn').style.display="block";
+						document.getElementById('rejectbtn').style.display="block";
 						document.getElementById('updatebtn').style.display="block";
 					}
 					else if (alias != applyer){
@@ -93,12 +93,11 @@ function inipermission(){
 		document.loginform.submit();
 	}
 	function approveac(){
-		document.sutinfoform.action="${pageContext.request.contextPath}/approvesut.action";
-		request.setAttribute("status", "true");
+		document.sutinfoform.action="${pageContext.request.contextPath}/approveSut.action?status=Pass";
 		document.sutinfoform.submit();
 	}
 	function rejectac(){
-		document.sutinfoform.action="${pageContext.request.contextPath}/approvesut.action";
+		document.sutinfoform.action="${pageContext.request.contextPath}/approveSut.action";
 		request.setAttribute("status", "false");
 		document.sutinfoform.submit();
 	}
