@@ -56,6 +56,8 @@ public class ApplySutAction extends ActionSupport {
 	private UserService userService;
 	@Resource
 	private SutGroupService sutgroupService;
+	private Integer id;
+
 	private String code;
 	private String sutname;
 	private String description;
@@ -244,8 +246,32 @@ public class ApplySutAction extends ActionSupport {
 
 		return "success";
 	}
+	
+	public String updateSut(){
+		
+		ApplySut applySut = applySutService.findApplySutById(id);
+		
+		User user = userService.findUserByAlias(this.getApplyer());
+		applySut.setUser(user);
+		SutGroup sutgroup = sutgroupService.findSutGroupByName(this.getGroupname());
+		applySut.setGroup(sutgroup);
+		ApplySutStatus applySutStatus = applySutStatusService
+				.findApplySutStatusByName(status);
+		applySut.setApplysutstatus(applySutStatus);
+		
+		applySut.setCode(this.getCode());
+		applySut.setName(this.getSutname());
+		applySut.setComment(this.getComment());
+		applySut.setApplytime(this.getApplytime());
+		applySut.setDescription(this.getDescription());
+		applySut.setResolvetime(this.getResolvetime());
+		
+		applySutService.saveApplySut(applySut);
+		
+		return "success";
+	}
 
-	public ApplySut setApplySut(ApplySut applySut, String status) {
+	private ApplySut setApplySut(ApplySut applySut, String status) {
 
 		ApplySutStatus applySutStatus = applySutStatusService
 				.findApplySutStatusByName(status);
@@ -281,7 +307,7 @@ public class ApplySutAction extends ActionSupport {
 
 	}
 
-	public User getSessionUser() {
+	private User getSessionUser() {
 
 		HttpSession session = ServletActionContext.getRequest().getSession(
 				false);
@@ -488,4 +514,12 @@ public class ApplySutAction extends ActionSupport {
 		this.sutname = sutname;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 }
