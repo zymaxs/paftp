@@ -97,8 +97,7 @@ function inipermission(){
 		document.sutinfoform.submit();
 	}
 	function rejectac(){
-		document.sutinfoform.action="${pageContext.request.contextPath}/approveSut.action";
-		request.setAttribute("status", "false");
+		document.sutinfoform.action="${pageContext.request.contextPath}/approveSut.action?status=Reject";
 		document.sutinfoform.submit();
 	}
 	function updateac(){

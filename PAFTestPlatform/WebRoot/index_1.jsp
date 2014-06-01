@@ -118,7 +118,7 @@
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
                 <li class="active"><a href="index_1.jsp">主页</a></li>
-                <li><a href="sutlist.jsp">SUT申请</a></li>
+                <li><a href="sutindex.jsp">SUT申请</a></li>
               </ul>
             </div>
           </div>

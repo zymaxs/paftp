@@ -63,7 +63,7 @@
 			<result name="exist">/exist.jsp</result>
 		</action>
 		<action name="approveSut" method="approveSut" class="com.paftp.action.ApplySutAction">
-			<result name="success">/index.jsp</result>
+			<result name="success">/sutindex.jsp</result>
 			<result name="error">/error.jsp</result>
 			<result name="login">/login.jsp</result>
 		</action>
