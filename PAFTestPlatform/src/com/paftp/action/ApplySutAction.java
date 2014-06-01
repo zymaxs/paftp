@@ -79,7 +79,7 @@ public class ApplySutAction extends ActionSupport {
 	private User user;
 	private HashMap<String, Object> result;
 	private List<ApplySutDto> applySutDtos;
-	
+
 	private Util util = new Util();
 
 	public String applySut() {
@@ -179,11 +179,14 @@ public class ApplySutAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		this.isAdmin = this.isAdmin(user.getAlias());
-		if (isAdmin) {
-			request.setAttribute("isAdmin", "true");
-		} else {
-			request.setAttribute("isAdmin", "false");
+		user = getSessionUser();
+		if (user != null) {
+			this.isAdmin = this.isAdmin(user.getAlias());
+			if (isAdmin) {
+				request.setAttribute("isAdmin", "true");
+			} else {
+				request.setAttribute("isAdmin", "false");
+			}
 		}
 
 		ApplySut applySut = applySutService.findApplySutByName(this
@@ -198,28 +201,30 @@ public class ApplySutAction extends ActionSupport {
 	public String querySut() throws ParseException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
+
 		User applyerUser = userService.findUserByAlias(this.getApplyer());
-		ApplySutStatus applySutStatus = applySutStatusService.findApplySutStatusByName(this.getStatus());
-		
+		ApplySutStatus applySutStatus = applySutStatusService
+				.findApplySutStatusByName(this.getStatus());
+
 		Integer applyerid = null;
 		Integer status_id = null;
 		if (applyerUser != null) {
 			applyerid = applyerUser.getId();
 		}
-		if(applySutStatus != null){
+		if (applySutStatus != null) {
 			status_id = applySutStatus.getId();
 		}
 
 		result = new HashMap<String, Object>();
-		
-		String testTime = this.getStarttime().replace("/", "-");
-		
+
+		String newStartTime = this.getStarttime().replace("/", "-");
+		String newEndTime = this.getEndtime().replace("/", "-");
+
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("name", this.getSutname());
 		conditions.put("user.id", applyerid);
-		conditions.put("starttime", util.stringToSqlDate(testTime));
-		conditions.put("endtime", util.stringToSqlDate(this.getEndtime()));
+		conditions.put("starttime", util.stringToSqlDate(newStartTime));
+		conditions.put("endtime", util.stringToSqlDate(newEndTime));
 		conditions.put("status_id", status_id);
 
 		Long pagecount = applySutService.findPagesByMultiConditions(conditions);
@@ -242,18 +247,18 @@ public class ApplySutAction extends ActionSupport {
 		return "success";
 	}
 
-
-	public void setApplySut(ApplySut applySut, Boolean apply){
+	public void setApplySut(ApplySut applySut, Boolean apply) {
 
 		ApplySutStatus applySutStatus = applySutStatusService
 				.findApplySutStatusById(1);
 
-//		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//		Date now = new Date();
-		
+		// SimpleDateFormat format = new
+		// SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		// Date now = new Date();
+
 		if (apply) {
-				this.applytime = new Date();
-	
+			this.applytime = new Date();
+
 			applySut.setApplysutstatus(applySutStatus);
 		} else {
 			this.resolvetime = new Date();
@@ -359,7 +364,6 @@ public class ApplySutAction extends ActionSupport {
 	public void setCode(String code) {
 		this.code = code;
 	}
-
 
 	public String getDescription() {
 		return description;

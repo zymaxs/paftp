@@ -12,7 +12,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <% 
 if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/sutgroup.action").forward(request,response);}
+request.getRequestDispatcher("${pageContext.request.contextPath}/applysutgroup.action").forward(request,response);}
 List<String> sutgroup = (List<String>)request.getAttribute("sutgroupnames");
 %>
 <title>无标题文档</title>
@@ -82,15 +82,15 @@ $(document).ready(function(){
 		document.loginform.submit();
 	}
 	function applysutac() {
-		//if (session.getAttribute("user")!=null){
+		if (<%=session.getAttribute("user")%>!=null){
 			document.applysutform.action = "${pageContext.request.contextPath}/applySut.action";
 			if($("#applysutform").valid()){
     		 $("#applysutform").submit();
  			}
-		//}
-		//else{
-		//alert("请登录后再提交表单!");
-		//}
+		}
+		else{
+		alert("请登录后再提交表单!");
+		}
 	}
 </script>
 <script type="text/javascript">
@@ -198,7 +198,7 @@ $(document).ready(function(){
             <td>* 系统所属平台 :</td>
             <td><div id="sutgroup" class="selectbox">
                 <div class="cartes">
-                  <input type="text" value="<%=sutgroup.get(0)%>" id="groupname" name="groupname" class="listTxt" />
+                  <input type="text" value="<%=sutgroup.get(0)%>" id="groupname" name="groupname" class="listTxt" readonly />
                   <div class="listBtn"><b></b></div>
                   <input type="hidden" value="" class="listVal" />
                 </div>

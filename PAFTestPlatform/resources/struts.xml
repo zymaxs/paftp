@@ -72,7 +72,7 @@
 			<result name="login">/login.jsp</result>
 		</action>
 		<action name="initialSut" method="initialSut" class="com.paftp.action.ApplySutAction">
-			<result name="success">/index.jsp</result>
+			<result name="success">/applysutinfo.jsp</result>
 			<result name="login">/login.jsp</result>
 		</action>
 		<action name="reguserinfo" method="userinfo" class="com.paftp.action.StaticAction">
@@ -81,8 +81,11 @@
 		<action name="upuserinfo" method="userinfo" class="com.paftp.action.StaticAction">
 			<result name="success">/updateuserinfo.jsp</result>
 		</action>
-			<action name="sutgroup" method="sutgroup" class="com.paftp.action.StaticAction">
+			<action name="applysutgroup" method="sutgroup" class="com.paftp.action.StaticAction">
 			<result name="success">/applysut.jsp</result>
+		</action>
+		<action name="showsutgroup" method="sutgroup" class="com.paftp.action.StaticAction">
+			<result name="success">/applysutinfo.jsp</result>
 		</action>
 
 	</package>
