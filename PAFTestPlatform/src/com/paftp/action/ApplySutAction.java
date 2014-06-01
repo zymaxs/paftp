@@ -112,7 +112,7 @@ public class ApplySutAction extends ActionSupport {
 
 		ApplySut applySut = new ApplySut();
 		applySut.setUser(user);
-		setApplySut(applySut, true);
+		applySut = setApplySut(applySut, this.getStatus());
 
 		applySutService.saveApplySut(applySut);
 
@@ -128,7 +128,7 @@ public class ApplySutAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		this.isAdmin = this.isAdmin(user.getAlias());
+		// this.isAdmin = this.isAdmin(user.getAlias());
 
 		if (this.getStatus() == null) {
 			request.setAttribute("error",
@@ -136,22 +136,20 @@ public class ApplySutAction extends ActionSupport {
 			return "error";
 		}
 
-		if (!this.isAdmin) {
-			request.setAttribute("error", "You are not the admin to do this!");
-			return "error";
-		}
-
+		// if (!this.isAdmin) {
+		// request.setAttribute("error", "You are not the admin to do this!");
+		// return "error";
+		// }
 		User applyerUser = userService.findUserByAlias(this.getApplyer());
 
 		ApplySut applySut = new ApplySut();
 		applySut.setUser(applyerUser);
-		setApplySut(applySut, false);
 
+		applySut = setApplySut(applySut, this.getStatus());
 		applySutService.updateApplySut(applySut);
 
-		initialRolePermissions();
-
 		return "success";
+
 	}
 
 	public String initialSuts() throws IOException {
@@ -247,35 +245,40 @@ public class ApplySutAction extends ActionSupport {
 		return "success";
 	}
 
-	public void setApplySut(ApplySut applySut, Boolean apply) {
+	public ApplySut setApplySut(ApplySut applySut, String status) {
 
 		ApplySutStatus applySutStatus = applySutStatusService
-				.findApplySutStatusById(1);
+				.findApplySutStatusByName(status);
 
 		// SimpleDateFormat format = new
 		// SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		// Date now = new Date();
 
-		if (apply) {
+		if (applySutStatus.getId() == 1) {
 			this.applytime = new Date();
-
 			applySut.setApplysutstatus(applySutStatus);
+			applySut.setApplytime(applytime);
+			applySut.setCode(this.getCode());
+			applySut.setName(this.getSutname());
+			applySut.setDescription(this.getDescription());
 		} else {
 			this.resolvetime = new Date();
 			applySut.setApplysutstatus(applySutStatus);
+			SutGroup sutGroup = sutgroupService.findSutGroupByName(this
+					.getGroupname());
+
+			applySut.setResolvetime(resolvetime);
+			applySut.setComment(this.getComment());
+			applySut.setGroup(sutGroup);
+			
+			if (applySutStatus.getId() == 2){
+				
+				initialRolePermissions();
+			}
 		}
+		
+		return applySut;
 
-		SutGroup sutGroup = sutgroupService.findSutGroupByName(this
-				.getGroupname());
-
-		applySut.setResolvetime(resolvetime);
-		applySut.setComment(this.getComment());
-		applySut.setGroup(sutGroup);
-
-		applySut.setApplytime(applytime);
-		applySut.setCode(this.getCode());
-		applySut.setName(this.getSutname());
-		applySut.setDescription(this.getDescription());
 	}
 
 	public User getSessionUser() {
@@ -484,4 +487,5 @@ public class ApplySutAction extends ActionSupport {
 	public void setSutname(String sutname) {
 		this.sutname = sutname;
 	}
+
 }

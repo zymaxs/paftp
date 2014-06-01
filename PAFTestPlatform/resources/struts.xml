@@ -52,6 +52,10 @@
 			<result name="login">/login.jsp</result>
 			<result name="error">/opr_error.jsp</result>
 		</action>
+		<action name="getuserinfo" method="getUserInfo" class="com.paftp.action.UserProfileAction">
+			<result name="success">/userinfo.jsp</result>
+			<result name="login">/sutindex.jsp</result>
+		</action>
 		<action name="applySut" method="applySut" class="com.paftp.action.ApplySutAction">
 			<result name="success">/sutlist.jsp</result>
 			<result name="error">/error.jsp</result>
@@ -83,6 +87,7 @@
 		<action name="showsutgroup" method="sutgroup" class="com.paftp.action.StaticAction">
 			<result name="success">/applysutinfo.jsp</result>
 		</action>
+		
 
 	</package>
 

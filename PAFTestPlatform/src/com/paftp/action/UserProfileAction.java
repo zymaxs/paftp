@@ -43,6 +43,7 @@ public class UserProfileAction extends ActionSupport{
 	private String telephone;
 	private String othermail;
 	private String otherinfo;
+	private Integer userid;
 	
 	private String alias;
 
@@ -56,7 +57,7 @@ public class UserProfileAction extends ActionSupport{
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
-		User user = userService.findUserByAlias(this.getAlias());
+		User user = userService.findUserById(this.getUserid());
 		
 		if (user == null){
 			request.setAttribute("error", "The user account is not exist!");
@@ -230,4 +231,13 @@ public class UserProfileAction extends ActionSupport{
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
+
+	public Integer getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Integer userid) {
+		this.userid = userid;
+	}
+
 }
