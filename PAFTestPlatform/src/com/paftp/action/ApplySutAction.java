@@ -117,8 +117,28 @@ public class ApplySutAction extends ActionSupport {
 		applySut = setApplySut(applySut, this.getStatus());
 
 		applySutService.saveApplySut(applySut);
+		
+		generateAdmin();
 
 		return "success";
+	}
+	
+	private void generateAdmin(){
+		if (roleService.findRoleByName("administrator") == null) {
+			User user = userService.findUserByAlias("admin");
+			List<Role> roles = new ArrayList<Role>();
+			Role adminRole = null;
+			adminRole = new Role();
+			adminRole.setName("administrator");
+			adminRole.setDescription("The admin role!");
+			List<Permission> adminPermissions = permissionService.findAllList();
+			adminRole.setPermissions(adminPermissions);
+			roleService.saveRole(adminRole); // Save the new system
+												// administrator
+			roles.add(adminRole);
+			user.setRoles(roles);
+			userService.updateUser(user);
+		}
 	}
 
 	public String approveSut() {
@@ -393,22 +413,7 @@ public class ApplySutAction extends ActionSupport {
 		roleService.saveRole(role2); // Save the new system worker
 		}
 		
-		if (roleService.findRoleByName("administrator") == null) {
-			User user = userService.findUserByAlias("admin");
-			List<Role> roles = new ArrayList<Role>();
-			Role adminRole = null;
-			adminRole = new Role();
-			adminRole.setName("administrator");
-			adminRole.setDescription("The admin role!");
-			adminRole.setSut(sut);
-			List<Permission> adminPermissions = permissionService.findAllList();
-			adminRole.setPermissions(adminPermissions);
-			roleService.saveRole(adminRole); // Save the new system
-												// administrator
-			roles.add(adminRole);
-			user.setRoles(roles);
-			userService.updateUser(user);
-		}
+
 	}
 
 	private Boolean isAdmin(String alias) {
