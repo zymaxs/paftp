@@ -82,7 +82,7 @@ $(document).ready(function(){
 		document.loginform.submit();
 	}
 	function applysutac() {
-		if (<%=session.getAttribute("user")%>!=null){
+		if ('<%=session.getAttribute("user")%>' !=null){
 			document.applysutform.action = "${pageContext.request.contextPath}/applySut.action";
 			if($("#applysutform").valid()){
     		 $("#applysutform").submit();
