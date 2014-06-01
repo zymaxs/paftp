@@ -216,7 +216,7 @@ $(document).ready(function(){
       <table>
         <tr>
           <td>* 系统名 :</td>
-          <td><input type="text" class="input-xlarge" id="sutname" name="sutname" value="<%=applySut.getUser().getDisplayName()%>" readonly></td>
+          <td><input type="text" class="input-xlarge" id="sutname" name="sutname" value="<%=applySut.getName()%>" readonly></td>
         </tr>
         <tr>
         	<td>申请状态</td>

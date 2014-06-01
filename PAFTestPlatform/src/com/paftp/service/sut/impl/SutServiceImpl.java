@@ -33,13 +33,13 @@ public class SutServiceImpl implements SutService {
 
 	@Override
 	public Sut findSutByCode(String code) {
-		return baseDAO.get(" from Suts s where s.code = ?",
+		return baseDAO.get(" from Sut s where s.code = ?",
 				new Object[] { code });
 	}
 	
 	@Override
 	public Sut findSutByName(String name) {
-		return baseDAO.get(" from Suts s where s.name = ?",
+		return baseDAO.get(" from Sut s where s.name = ?",
 				new Object[] { name });
 	}
 
@@ -50,7 +50,7 @@ public class SutServiceImpl implements SutService {
 
 	@Override
 	public List<Sut> findAllList() {
-		return baseDAO.find(" from Suts s order by s.id");
+		return baseDAO.find(" from Sut s order by s.id");
 	}
 
 

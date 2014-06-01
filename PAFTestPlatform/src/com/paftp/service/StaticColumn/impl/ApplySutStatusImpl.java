@@ -38,13 +38,13 @@ public class ApplySutStatusImpl implements ApplySutStatusService {
 	@Override
 	public List<ApplySutStatus> findAllList() {
 		// TODO Auto-generated method stub
-		return baseDAO.find(" from ApplySutStatus u");
+		return baseDAO.find(" from ApplySutStatus");
 	}
 
 	@Override
 	public ApplySutStatus findApplySutStatusByName(String name) {
 		// TODO Auto-generated method stub
-		return baseDAO.get(" from ApplySut u where u.status = ?",
+		return baseDAO.get(" from ApplySutStatus u where u.name = ?",
 				new Object[] { name });
 	}
 	

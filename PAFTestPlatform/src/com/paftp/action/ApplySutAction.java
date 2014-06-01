@@ -336,7 +336,7 @@ public class ApplySutAction extends ActionSupport {
 
 		role = new Role();
 		role.setName("Tmanager");
-		role.setDescription("The role for the system of Manager!");
+		role.setDescription("Manager");
 		permissions = new ArrayList<Permission>();
 		permission = new Permission();
 		permission.setScope("work");
