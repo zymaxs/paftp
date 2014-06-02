@@ -76,27 +76,18 @@
     </div>
   </div>
   <!--登录-->
-  <div id="loginmodal" style="display:none;">
-    <div align="center">
+  <div id="loginmodal" style="display:none;" align="center">
+    <div>
       <p>用户登录</p>
     </div>
     <form id="loginform" name="loginform" method="post" action="">
       <label for="alias" style="Microsoft YaHei; font-size:12px;">Username:</label>
-      <input type="text" name="alias" id="alias" class="txtfield"
-					tabindex="1">
-      <label for="password"
-					style="Microsoft YaHei; font-size:12px;">Password:</label>
-      <input
-					type="password" name="password" id="password" class="txtfield"
-					tabindex="2">
-      <div class="center">
-        <input type="button" name="loginbtn" id="loginbtn"
-						class="flatbtn-blu hidemodal" value="Login" tabindex="3"
-						onClick="loginac()">
-        <input type="button"
-						name="findpwdbtn" id="findpwdbtn" class="flatbtn-blu hidemodal"
-						value="找回密码" onClick="window.location.href='findpwd.jsp'"
-						tabindex="4">
+      <input type="text" name="alias" id="alias" tabindex="1">
+      <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
+      <input type="password" name="password" id="password" tabindex="2">
+      <div>
+        <button type="button" class="btn btn-primary" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -127,9 +118,7 @@
     </div>
   </div>
   <!--主体-->
-  <div align="center">
-    Hello World!
-  </div>
+  <div align="center"> Hello World! </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

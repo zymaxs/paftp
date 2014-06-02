@@ -75,6 +75,9 @@
 			<result name="success">/applysutinfo.jsp</result>
 			<result name="login">/login.jsp</result>
 		</action>
+		<action name="updateSut" method="updateSut" class="com.paftp.action.ApplySutAction">
+			<result name="success">/sutindex.jsp</result>
+		</action>
 		<action name="reguserinfo" method="userinfo" class="com.paftp.action.StaticAction">
 			<result name="success">/register.jsp</result>
 		</action>

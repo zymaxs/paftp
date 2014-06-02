@@ -152,7 +152,7 @@ public class UserProfileAction extends ActionSupport{
 		userInfo.setPosition(position);
 		userInfo.setMobile(this.getMobile());
 		userInfo.setTelephone(this.getTelephone());
-		userInfo.setOthermail(this.getOtherinfo());
+		userInfo.setOthermail(this.getOthermail());
 		userInfo.setOtherinfo(this.getOtherinfo());
 		userInfoService.updateUserInfo(userInfo);
 		user.setUserInfo(userInfo);
