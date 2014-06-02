@@ -95,17 +95,17 @@ $(document).ready( function(){
 				link_string : '/?page={page_number}',
 				max_page : pagentotal, 
 				paged : function(page) {
-					params = {pagenum:page,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue")};
+					params = {pagenum:page,userid:$("#userid").val()};
 				$.ajax({
 						type : "POST",
-						url : "querySutsAjax.action",
+						url : "queryRolesAjax.action",
 						data : params,
 						dataType : "json",
 						success : function(root) {
 	
 							$("#sutFormTab").html("");
-							$(root.applySutDtos).each(function(i,value){
-								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td><a href='initialSut.action?sutname="+value.name+"'>"+value.applysutstatusdto.name+"</a></td>"+"</tr>");
+							$(root.currentPageRoles).each(function(i,value){
+								$("#sutFormTab").append("<tr>"+"<td>"+value.name+"</td>"+"<td>"+value.sut.name+"</td>"+"<td>"+value.description+"</td>"+"</tr>");
 							})
 						},
 
