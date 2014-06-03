@@ -280,8 +280,9 @@ public class ApplySutAction extends ActionSupport {
 		applySut.setCode(this.getCode());
 		applySut.setName(this.getSutname());
 		applySut.setComment(this.getComment());
-		applySut.setApplytime(this.getApplytime());
 		applySut.setDescription(this.getDescription());
+		
+		this.resolvetime = new Date();
 		applySut.setResolvetime(this.getResolvetime());
 
 		applySutService.saveApplySut(applySut);

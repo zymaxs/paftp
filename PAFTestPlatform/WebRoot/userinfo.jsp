@@ -9,6 +9,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<% 
+List<Role> roles = (List<Role>)request.getAttribute("currentPageRoles");
+String pagenum = request.getAttribute("pages").toString();
+User user = (User)request.getAttribute("user");
+UserInfo userinfo = (UserInfo) user.getUserInfo();
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <title>无标题文档</title>
@@ -39,10 +45,7 @@
 }
 </style>
 <%  
-List<Role> roles = (List<Role>)request.getAttribute("roles");
-String pagenum = request.getAttribute("pages").toString();
-User user = (User)request.getAttribute("user");
-UserInfo userinfo = (UserInfo) user.getUserInfo();
+
 Integer id = 0;
 String name = "";
 String displayname = "";
@@ -98,7 +101,7 @@ $(document).ready( function(){
 					params = {pagenum:page,userid:$("#userid").val()};
 				$.ajax({
 						type : "POST",
-						url : "queryRolesAjax.action",
+						url : "getUserInfoAjax.action",
 						data : params,
 						dataType : "json",
 						success : function(root) {

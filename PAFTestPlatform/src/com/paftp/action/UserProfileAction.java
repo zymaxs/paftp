@@ -60,6 +60,7 @@ public class UserProfileAction extends ActionSupport{
 	private Long pages;
 
 	private User user;
+
 	private User updatedUser; 
 	private Util util = new Util();
 	private List<Role> currentPageRoles = new ArrayList<Role>();
@@ -76,30 +77,32 @@ public class UserProfileAction extends ActionSupport{
 			request.setAttribute("error", "The user account is not exist!");
 		}
 		
-		request.setAttribute("user", user);
-		
-		return "success";
-		
-	}
-	
-	public String queryRoles(){
-
 		row = 10;
 
 		List<Role> roles = user.getRoles();
 		
 		pages = (long) Math.ceil(roles.size() / (double) row);
 		
+		if (pagenum == null || pagenum == 0){
+			pagenum = 1;
+		}
+		
 		for (int i = (pagenum-1)*10; i<((pagenum-1)*10 + row); i++){
+			if (i < roles.size()){
 			Role role = new Role();
 			role = roles.get(i);
 			currentPageRoles.add(role);
+			}else{
+				break;
+			}
 		}
 
 		this.setPages(pages);
 		this.setCurrentPageRoles(currentPageRoles);
+		this.setUser(user);
 		
 		return "success";
+		
 	}
 	
 	public String updateUserInfo(){
@@ -304,5 +307,14 @@ public class UserProfileAction extends ActionSupport{
 	public void setCurrentPageRoles(List<Role> currentPageRoles) {
 		this.currentPageRoles = currentPageRoles;
 	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 
 }
