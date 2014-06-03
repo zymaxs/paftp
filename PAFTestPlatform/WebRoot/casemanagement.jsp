@@ -41,7 +41,7 @@ List<SutGroup> sutGroup = (List<SutGroup>)request.getAttribute("sutgroups");
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
-		alert("test");
+		alert(inisutgroup());
 		$("#sutgrouptab").append(inisutgroup());
 		}
 		);
@@ -53,17 +53,18 @@ $(document).ready(function(){
 	};
 
 	function inisutgroup() {
-<%String inisutgroup = "";
+		<%
+		String inisutgroup = "";
 		for (int i=0; i < sutGroup.size(); i++){
 			String inisutgroupinfo = "";
 			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
 				inisutgroupinfo += sutGroup.get(i).getSuts().get(j).getName() + " ";
 			}
-			inisutgroup += "<tr><td>";
+			inisutgroup += "<div class='row-fluid'><div class='span12'><blockquote></p>";
 			inisutgroup += sutGroup.get(i).getName();
-			inisutgroup += "</td></tr><tr><td>";
+			inisutgroup += "</p><small>";
 			inisutgroup += inisutgroupinfo;
-			inisutgroup += "</td></tr>";
+			inisutgroup += "</small></blockquote></div></div>";
 		}%>
 		return "<%=inisutgroup%>";
 	};
@@ -71,6 +72,7 @@ $(document).ready(function(){
 </head>
 
 <body>
+<%=sutGroup.get(1).getSuts().size()%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
@@ -158,24 +160,7 @@ $(document).ready(function(){
     </div>
   </div>
   <!--主体-->
-  <div id="sutgroup">
-  	<table id="sutgrouptab" border="1">
-    
-    </table>
-  </div>
-  <div class="row-fluid">
-    <div class="span12">
-      <blockquote>
-        <p>github是一个全球化的开源社区.</p>
-        <small>关键词 <cite>开源</cite></small> </blockquote>
-    </div>
-  </div>
-  <div class="row-fluid">
-    <div class="span12">
-      <blockquote>
-        <p>github是一个全球化的开源社区.</p>
-        <small>关键词 <cite>开源</cite></small> </blockquote>
-    </div>
+  <div id="sutgrouptab">
   </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
