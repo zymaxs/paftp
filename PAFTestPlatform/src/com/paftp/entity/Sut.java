@@ -62,7 +62,7 @@ public class Sut {
 		this.description = description;
 	}
 	
-	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "group_id")
 	public SutGroup getGroup() {
 		return group;

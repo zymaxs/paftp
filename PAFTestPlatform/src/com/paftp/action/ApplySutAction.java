@@ -216,8 +216,6 @@ public class ApplySutAction extends ActionSupport {
 
 	public String querySut() throws ParseException {
 
-		HttpServletRequest request = ServletActionContext.getRequest();
-
 		User applyerUser = userService.findUserByAlias(this.getApplyer());
 		ApplySutStatus applySutStatus = applySutStatusService
 				.findApplySutStatusByName(this.getStatus());
@@ -287,6 +285,17 @@ public class ApplySutAction extends ActionSupport {
 
 		applySutService.saveApplySut(applySut);
 
+		return "success";
+	}
+	
+	public String queryGroups(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		List<SutGroup> sutgroups = sutgroupService.findAllList();
+		
+		request.setAttribute("sutgroups", sutgroups);
+		
 		return "success";
 	}
 

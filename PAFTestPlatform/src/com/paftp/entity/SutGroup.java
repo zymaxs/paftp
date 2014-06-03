@@ -17,6 +17,7 @@ public class SutGroup {
 	private Integer id;
 	private String name;
 	private String description;
+	private List<Sut> suts;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -46,6 +47,15 @@ public class SutGroup {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@OneToMany(mappedBy = "group")
+	public List<Sut> getSuts() {
+		return suts;
+	}
+
+	public void setSuts(List<Sut> suts) {
+		this.suts = suts;
 	}
 
 }
