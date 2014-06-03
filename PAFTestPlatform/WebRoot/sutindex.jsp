@@ -235,6 +235,7 @@ function inidata(){
         <td><input type="text" id="sutname" name="sutname"></td>
         <td>申请人</td>
         <td><input type="text" id="applyer" name="applyer"></td>
+        <td rowspan="2"><button type="button" class="btn btn-primary" onClick="window.location.href='applysut.jsp'">申请接入</button></td>
       </tr>
       <tr>
         <td>Start Date:</td>
@@ -243,11 +244,10 @@ function inidata(){
         <td><input class="easyui-datetimebox"  id="endtime" name="endtime"></td>
       </tr>
       <tr>
-        <td colspan="2" align="center"><input type="button" id="querysut" name="querysut" value="搜索"></td>
+        <td colspan="2" align="center" align="center"><input type="button" id="querysut" name="querysut" value="搜索"></td>
       </tr>
     </table>
   </form>
-  <button type="button" class="btn btn-primary" onClick="window.location.href='applysut.jsp'">申请接入</button>
   
   <!--TABLE展示-->
   <table id="sutForm" border="1" width="100%">
