@@ -13,10 +13,9 @@
     <action name="querySutsAjax" method="querySut" class="com.paftp.action.ApplySutAction">
         <result type="json"></result>
      </action>
-       <action name="queryRolesAjax" method="queryRoles" class="com.paftp.action.UserProfileAction">
+       <action name="getUserInfoAjax" method="getUserInfo" class="com.paftp.action.UserProfileAction">
         <result type="json"></result>
      </action>
-
     </package>
 	<package name="s2sh" extends="struts-default">
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
@@ -55,10 +54,9 @@
 			<result name="login">/login.jsp</result>
 			<result name="error">/opr_error.jsp</result>
 		</action>
-		<action name="getuserinfo" method="getUserInfo" class="com.paftp.action.UserProfileAction">
-			<result name="success">/userinfo.jsp</result>
-			<result name="login">/sutindex.jsp</result>
-		</action>
+		  <action name="getuserinfo" method="getUserInfo" class="com.paftp.action.UserProfileAction">
+        <result name="success">/userinfo.jsp</result>
+    	 </action>
 		<action name="applySut" method="applySut" class="com.paftp.action.ApplySutAction">
 			<result name="success">/sutindex.jsp</result>
 			<result name="error">/error.jsp</result>
