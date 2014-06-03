@@ -46,6 +46,11 @@ public class RoleAction extends ActionSupport {
 	private Boolean isAdmin;
 	private User queryUser = null;
 	private Boolean isManager;
+	
+	private Integer row;
+	private Integer pagenum;
+	private Long pages;
+	private List<Role> currentPageRoles = new ArrayList<Role>();
 
 	public String getWorkers() {
 
@@ -97,7 +102,8 @@ public class RoleAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		if (this.getAlias() == null || this.getSut_name() == null || this.getRole() == null) {
+		if (this.getAlias() == null || this.getSut_name() == null
+				|| this.getRole() == null) {
 			request.setAttribute("error",
 					"The account or system or role can't be empty!");
 			return "error";
@@ -123,6 +129,56 @@ public class RoleAction extends ActionSupport {
 		return "success";
 	}
 
+	public String initialRoles() {
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		Sut sut = sutService.findSutByName(this.getSut_name());
+
+		List<Role> roles = sut.getRole_results();
+
+		row = 10;
+		pages = (long) Math.ceil(roles.size() / (double) row);
+		Role role = null;
+		for (int i = 0; i< row; i++){
+			if (i < roles.size()){
+			role = roleService.findRoleById(roles.get(i).getId());
+			currentPageRoles.add(role);
+			}else{
+				break;
+			}
+		}
+
+		request.setAttribute("pages", pages);
+		request.setAttribute("currentPageRoles", roles);
+
+		return "success";
+	}
+
+	public String queryRoles() {
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		List<Role> roles = sut.getRole_results();
+		
+		User user = userService.findUserByAlias(this.getAlias());
+		
+		Role role = null;
+		for(int i=0; i<roles.size(); i++){
+			role = roleService.findRoleById(roles.get(i).getId());
+			List<User> users = role.getUsers();
+			for (int j=0; j<users.size(); j++){
+				if(users.get(j).getAlias().equals(user.getAlias())){
+					request.setAttribute("user", user);
+					return "success";
+				}
+			}
+		}
+
+		return "success";
+	}
+
 	public List<String> getManagedSut(String alias) {
 
 		String sutName;
@@ -130,7 +186,7 @@ public class RoleAction extends ActionSupport {
 		List<Role> managerRoles = userService.findUserByAlias(alias).getRoles();
 		for (int i = 0; i < managerRoles.size(); i++) {
 			if (managerRoles.get(i).getName().equals("administator")) {
-				List<Sut> suts = sutService.findAllList();  //Rayleigh
+				List<Sut> suts = sutService.findAllList(); // Rayleigh
 				for (int j = 0; j < suts.size(); j++) {
 					sut_names.add(j, suts.get(j).getName());
 				}
@@ -144,16 +200,17 @@ public class RoleAction extends ActionSupport {
 
 		return sut_names;
 	}
-	
+
 	public List<String> getRoles(String roleName) {
-	List<Role> roles = roleService.findAllList();
-	List<String> names = new ArrayList<String>();
-	for (int i = 0; i < roles.size(); i++){
-		if(!roles.get(i).getName().equals("administrator") && !roles.get(i).getName().equals(roleName))
-		names.add(i, roles.get(i).getName());
+		List<Role> roles = roleService.findAllList();
+		List<String> names = new ArrayList<String>();
+		for (int i = 0; i < roles.size(); i++) {
+			if (!roles.get(i).getName().equals("administrator")
+					&& !roles.get(i).getName().equals(roleName))
+				names.add(i, roles.get(i).getName());
+		}
+		return names;
 	}
-	return names;
-}
 
 	public User getSessionUser() {
 
@@ -301,5 +358,29 @@ public class RoleAction extends ActionSupport {
 
 	public void setSut_name(String sut_name) {
 		this.sut_name = sut_name;
+	}
+
+	public Integer getRow() {
+		return row;
+	}
+
+	public void setRow(Integer row) {
+		this.row = row;
+	}
+
+	public Integer getPagenum() {
+		return pagenum;
+	}
+
+	public void setPagenum(Integer pagenum) {
+		this.pagenum = pagenum;
+	}
+
+	public Long getPages() {
+		return pages;
+	}
+
+	public void setPages(Long pages) {
+		this.pages = pages;
 	}
 }
