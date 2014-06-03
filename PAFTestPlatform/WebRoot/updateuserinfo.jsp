@@ -262,8 +262,8 @@ $(document).ready(function(){
             <td><input type="text" class="input-xlarge" id="othermail"
 								name="othermail" value="<%=othermail%>"></td>
           </tr>
-          <tr>
-          	<td><button type="submit" class="btn btn-primary">Submit</button></td>
+          <tr align="center">
+          	<td colspan="2"><button type="submit" class="btn btn-primary">Submit</button></td>
           </tr>
         </table>
       </fieldset>

@@ -21,7 +21,7 @@ if (session.getAttribute("user") != null){
 } else { isLogin = "n";};
 
 
-if (session.getAttribute("isAdmin") != null){
+if ((String)request.getAttribute("isAdmin") != null){
 	isAdmin = "y";
 	}else { isAdmin = "n";};
 	
@@ -111,11 +111,12 @@ var applyer = '<%=applyer%>';
 		document.getElementById('code').readOnly = false;
 		document.getElementById('description').readOnly = false;
 		document.getElementById('updatebtn').style.display = "none";
+		document.getElementById('grouplist').style.display = "block";
 		document.getElementById('savebtn').style.display = "block";
 
 	}
 	function saveac() {
-		document.sutinfoform.action = "${pageContext.request.contextPath}/approvesut.action";
+		document.sutinfoform.action = "${pageContext.request.contextPath}/updateSut.action";
 		document.sutinfoform.submit();
 	}
 </script>
@@ -128,9 +129,6 @@ var applyer = '<%=applyer%>';
 </head>
 
 <body>
-	<%=alias%>
-	<%=applyer%>
-	<%=isAdmin%>
 	<div class="container-fluid">
 		<!--网页头部-->
 		<div style="background:#428bca; color:#ffffff; margin:auto">
@@ -255,7 +253,7 @@ var applyer = '<%=applyer%>';
 										class="listVal" />
 								</div>
 								<div class="lists">
-									<ul class="list">
+									<ul class="list" id="grouplist" style="display:none">
 										<%
 											for (int i = 0; i < sutgroup.size(); i++) {
 										%>

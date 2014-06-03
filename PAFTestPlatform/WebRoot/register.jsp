@@ -104,9 +104,6 @@ $(document).ready(function(){
 </head>
 
 <body>
-<%=departments.get(0)%>
-<%=departments.get(1)%>
-<%=departments.size()%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
@@ -130,21 +127,18 @@ $(document).ready(function(){
     </div>
   </div>
   <!--登录-->
-  <div id="loginmodal" style="display:none;">
-    <h1>User Login</h1>
-    <form id="loginform" name="loginform" method="post" action="${pageContext.request.contextPath}/login.action">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" class="txtfield" tabindex="1">
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" class="txtfield" tabindex="2">
-      <div class="center">
-        <input type="button" name="loginbtn" id="loginbtn"
-						class="flatbtn-blu hidemodal" value="Login" tabindex="3"
-						onClick="loginac()">
-        <input type="button"
-						name="findpwdbtn" id="findpwdbtn" class="flatbtn-blu hidemodal"
-						value="找回密码" onClick="window.location.href='findpwd.jsp'"
-						tabindex="4">
+  <div id="loginmodal" style="display:none;" align="center">
+    <div>
+      <p>用户登录</p>
+    </div>
+    <form id="loginform" name="loginform" method="post" action="">
+      <label for="alias" style="Microsoft YaHei; font-size:12px;">Username:</label>
+      <input type="text" name="alias" id="alias" tabindex="1">
+      <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
+      <input type="password" name="password" id="password" tabindex="2">
+      <div>
+        <button type="button" class="btn btn-primary" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -171,25 +165,26 @@ $(document).ready(function(){
   </div>
   <!--主体-->
   <form id="signupForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/register.action">
-  <fieldset>
-  <legend> 用户注册 <small>(带*号标志为必输项)</small></legend>
-  <table border="0">
-  	<tr>
-  		<td style="text-align:right"><label class="control-label" for="alias">* 用户名 :</label></td>
-        <td style="text-align:left"><input type="text" class="input-xlarge" id="alias" name="alias"></td>
-        <td colspan="2" style="text-align:left">@pingan.com.cn</td>
-  	</tr>
-    <tr>
-    	<td></td>
-    	<td colspan="3" style="text-align:left"><p class="help-block">请使用自己的域账号进行注册，初始密码将发送至你的平安邮箱。请在首次登录时完成密码修改。</p></td>
-    </tr>
-    <tr>
-    	<td style="text-align:right"><label for="displayname">* 真实姓名 :</label></td>
-        <td colspan="3" style="text-align:left"><input type="text" class="input-xlarge" id="displayname" name="displayname"></td>
-    </tr>
-    <tr>
-    	<td style="text-align:right"><label  for="department">* 所属部门 :</label></td>
-        <td style="text-align:center;"><div id="selectDepartment" class="selectbox">
+    <fieldset>
+      <legend> 用户注册 <small>(带*号标志为必输项)</small></legend>
+      <table border="0">
+        <tr>
+          <td style="text-align:right"><label class="control-label" for="alias">* 用户名 :</label></td>
+          <td style="text-align:left"><input type="text" class="input-xlarge" id="alias" name="alias"></td>
+          <td colspan="2" style="text-align:left">@pingan.com.cn</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="3" style="text-align:left"><p class="help-block">请使用自己的域账号进行注册，初始密码将发送至你的平安邮箱。请在首次登录时完成密码修改。</p></td>
+        </tr>
+        <tr>
+          <td style="text-align:right"><label for="displayname">* 真实姓名 :</label></td>
+          <td colspan="3" style="text-align:left"><input type="text" class="input-xlarge" id="displayname" name="displayname"></td>
+        </tr>
+        <tr>
+          <td style="text-align:right"><label  for="department">* 所属部门 :</label></td>
+          <td style="text-align:left;">
+          <div id="selectDepartment" class="selectbox">
               <div class="cartes">
                 <input type="text" value="<%=departments.get(0)%>" id="department" name="department" class="listTxt" />
                 <div class="listBtn"><b></b></div>
@@ -197,14 +192,16 @@ $(document).ready(function(){
               </div>
               <div class="lists">
                 <ul class="list">
-                <% for (int i =0; i<departments.size(); i++){%>
-                <li id=<%=i%>><%=departments.get(i)%></li>
-                <%}%>
+                  <% for (int i =0; i<departments.size(); i++){%>
+                  <li id=<%=i%>><%=departments.get(i)%></li>
+                  <%}%>
                 </ul>
               </div>
-            </div></td>
-    	<td style="text-align:right"><label class="control-label" for="position">* 职位 :</label></td>
-        <td style="text-align:left"><div id="selectPosition" class="selectbox">
+            </div>
+            </td>
+          <td style="text-align:right"><label class="control-label" for="position">* 职位 :</label></td>
+          <td style="text-align:left">
+          <div id="selectPosition" class="selectbox">
               <div class="cartes">
                 <input type="text" value="<%=positions.get(0)%>" id="position" name="position" class="listTxt" />
                 <div class="listBtn"><b></b></div>
@@ -212,28 +209,29 @@ $(document).ready(function(){
               </div>
               <div class="lists">
                 <ul class="list">
-                <% for (int i =0; i<positions.size(); i++){%>
-                <li id=<%=i%>><%=positions.get(i)%></li>
-                <%}%>
+                  <% for (int i =0; i<positions.size(); i++){%>
+                  <li id=<%=i%>><%=positions.get(i)%></li>
+                  <%}%>
                 </ul>
               </div>
-            </div></td>
-    </tr>
-    <tr>
-    	<td style="text-align:right"><label for="telephone">联系电话 :</label></td>
-        <td style="text-align:left"><input type="text" class="input-xlarge" id="telephone" name="telephone"></td>
-        <td style="text-align:right"><label for="mobile">移动电话 :</label></td>
-        <td style="text-align:left"><input type="text" class="input-xlarge" id="mobile" name="mobile"></td>
-    </tr>
-    <tr>
-    	<td style="text-align:right"><label for="othermail">其他邮件 :</label></td>
-        <td colspan="3" style="text-align:left"><input type="text" class="input-xlarge" id="othermail" name="othermail"></td>
-    </tr>
-    <tr>
-    	<td colspan="4" style="text-align:center"><button type="submit" class="btn btn-primary">保存</button></td>
-    </tr>
-  </table>
-  </fieldset>
+            </div>
+            </td>
+        </tr>
+        <tr>
+          <td style="text-align:right"><label for="telephone">联系电话 :</label></td>
+          <td style="text-align:left"><input type="text" class="input-xlarge" id="telephone" name="telephone"></td>
+          <td style="text-align:right"><label for="mobile">移动电话 :</label></td>
+          <td style="text-align:left"><input type="text" class="input-xlarge" id="mobile" name="mobile"></td>
+        </tr>
+        <tr>
+          <td style="text-align:right"><label for="othermail">其他邮件 :</label></td>
+          <td colspan="3" style="text-align:left"><input type="text" class="input-xlarge" id="othermail" name="othermail"></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align:center"><button type="submit" class="btn btn-primary">保存</button></td>
+        </tr>
+      </table>
+    </fieldset>
   </form>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
