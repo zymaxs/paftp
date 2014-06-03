@@ -126,6 +126,7 @@ public List<ApplySutDto> getApplySutDto(List<ApplySut> applySuts){
 			applySutDto.setResolvetime(applySuts.get(i).getResolvetime());
 			applySutDto.setApplyer(applySuts.get(i).getUser().getAlias());
 			applySutDto.setId(applySuts.get(i).getId());
+			applySutDto.setUser_id(applySuts.get(i).getUser().getId());
 			applySutDtos.add(applySutDto);
 		}
 		

@@ -274,7 +274,7 @@ public class ApplySutAction extends ActionSupport {
 				.getGroupname());
 		applySut.setGroup(sutgroup);
 		ApplySutStatus applySutStatus = applySutStatusService
-				.findApplySutStatusByName(status);
+				.findApplySutStatusByName(applySut.getApplysutstatus().getName());
 		applySut.setApplysutstatus(applySutStatus);
 
 		applySut.setCode(this.getCode());

@@ -5,6 +5,7 @@ import java.util.Date;
 public class ApplySutDto {
 	
 	private Integer id;
+	private Integer user_id;
 	private String code;
 
 	private String name;
@@ -78,6 +79,12 @@ public class ApplySutDto {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public Integer getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
 
 }
