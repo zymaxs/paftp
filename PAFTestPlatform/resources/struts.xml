@@ -91,6 +91,9 @@
 		<action name="showsutgroup" method="sutgroup" class="com.paftp.action.StaticAction">
 			<result name="success">/applysutinfo.jsp</result>
 		</action>
+		<action name="queryGroups" method="queryGroups" class="com.paftp.action.ApplySutAction">
+			<result name="success">/casemanagement.jsp</result>
+		</action>
 		
 
 	</package>
