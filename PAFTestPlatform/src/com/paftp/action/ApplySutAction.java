@@ -187,7 +187,7 @@ public class ApplySutAction extends ActionSupport {
 		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
 		
-		generateAdmin();
+		//generateAdmin();
 
 		return "success";
 
@@ -268,7 +268,7 @@ public class ApplySutAction extends ActionSupport {
 		ApplySut applySut = applySutService.findApplySutByName(this
 				.getSutname());
 
-		User user = userService.findUserByAlias(this.getApplyer());
+		User user = userService.findUserByAlias(applySut.getUser().getAlias());
 		applySut.setUser(user);
 		SutGroup sutgroup = sutgroupService.findSutGroupByName(this
 				.getGroupname());

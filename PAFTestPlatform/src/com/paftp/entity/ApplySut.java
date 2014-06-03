@@ -69,7 +69,7 @@ public class ApplySut {
 		this.comment = comment;
 	}
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	public User getUser() {
 		return user;
