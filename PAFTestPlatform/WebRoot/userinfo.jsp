@@ -197,7 +197,7 @@ function inidata(){
   <div>
      <fieldset>
         <legend> 用户信息 </legend>
-        <table>
+        <table width="900px">
           <tr>
             <td>* 真实姓名：</td>
             <td><%=displayname%></td>
@@ -209,10 +209,10 @@ function inidata(){
             <td><%=position%></td>
           </tr>
           <tr>
-            <td style="text-align:right">移动电话 :</td>
-            <td style="text-align:right"><%=mobile%></td>
-            <td style="text-align:right">座式电话 :</td>
-            <td style="text-align:right"><%=telephone%></td>
+            <td>* 移动电话 :</td>
+            <td><%=mobile%></td>
+            <td>* 座式电话 :</td>
+            <td><%=telephone%></td>
           </tr>
           <tr>
           	<td>其他邮件 :</td>
@@ -222,6 +222,9 @@ function inidata(){
         </fieldset>
   </div>
   
+    <div>
+     <fieldset>
+   <legend> 用户权限</legend>
   <table id="roleForm" border="1" width="100%">
     <thead>
     	<tr>
@@ -233,6 +236,8 @@ function inidata(){
     <tbody id="roleFormTab">
     </tbody>
   </table>
+         </fieldset>
+  </div>
   <div class="pagination">
 		<a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
 			class="previous" data-action="previous">&lsaquo;</a> <input
@@ -240,6 +245,7 @@ function inidata(){
 			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
 			data-action="last">&raquo;</a>
 	</div>
+	
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
