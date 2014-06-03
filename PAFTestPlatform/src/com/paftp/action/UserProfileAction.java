@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.ApplySut;
 import com.paftp.entity.Role;
+import com.paftp.entity.Sut;
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
 import com.paftp.entity.Department;
@@ -83,6 +84,34 @@ public class UserProfileAction extends ActionSupport{
 		
 		pages = (long) Math.ceil(roles.size() / (double) row);
 		
+		Role role = null;
+		Sut sut = null;
+		for (int i = 0; i< row; i++){
+			if (i < roles.size()){
+			role = roleService.findRoleById(roles.get(i).getId());
+			sut = role.getSut();
+			currentPageRoles.add(role);
+			}else{
+				break;
+			}
+		}
+
+		request.setAttribute("pages", pages);
+		request.setAttribute("currentpageroles", currentPageRoles);
+		
+		request.setAttribute("user", user);
+		
+		return "success";
+		
+	}
+	
+	public String getRoles(){
+		row = 10;
+
+		List<Role> roles = user.getRoles();
+		
+		pages = (long) Math.ceil(roles.size() / (double) row);
+		
 		if (pagenum == null || pagenum == 0){
 			pagenum = 1;
 		}
@@ -99,10 +128,8 @@ public class UserProfileAction extends ActionSupport{
 
 		this.setPages(pages);
 		this.setCurrentPageRoles(currentPageRoles);
-		this.setUser(user);
 		
 		return "success";
-		
 	}
 	
 	public String updateUserInfo(){

@@ -45,7 +45,6 @@ UserInfo userinfo = (UserInfo) user.getUserInfo();
 }
 </style>
 <%  
-
 Integer id = 0;
 String name = "";
 String displayname = "";
@@ -91,55 +90,61 @@ if (userinfo.getOthermail() != null) {
 var pagentotal = <%=pagenum%>;
 var params;
 $(document).ready( function(){
-
 	$("#roleForm").append(inidata());
 		
 	$('.pagination').jqPagination({
-				link_string : '/?page={page_number}',
-				max_page : pagentotal, 
-				paged : function(page) {
-					params = {pagenum:page,userid:$("#userid").val()};
-				$.ajax({
-						type : "POST",
-						url : "getUserInfoAjax.action",
-						data : params,
-						dataType : "json",
-						success : function(root) {
-	
-							$("#sutFormTab").html("");
-							$(root.currentPageRoles).each(function(i,value){
-								$("#sutFormTab").append("<tr>"+"<td>"+value.name+"</td>"+"<td>"+value.sut.name+"</td>"+"<td>"+value.description+"</td>"+"</tr>");
-							})
-						},
+		link_string : '/?page={page_number}',
+		max_page : pagentotal, 
+		paged : function(page) {
+			params = {pagenum:page,userid:$("#id").val()};
+		$.ajax({
+				type : "POST",
+				url : "getUserInfoAjax.action",
+				data : params,
+				dataType : "json",
+				success : function(root) {
 
-						error : function(root) {
-
-							alert("json=" + root);
-
-							return false;
-
-						}
+					$("#sutFormTab").html("");
+					$(root.currentPageRoles).each(function(i,value){
+						if (value.sut == null)
+							$("#sutFormTab").append("<tr>"+"<td>"+value.name+"</td>"+"<td>"+value.description+"</td>"+"</tr>");
+						else
+							$("#sutFormTab").append("<tr>"+"<td>"+value.name+"</td>"+"<td>"+value.sut.name+"</td>"+"<td>"+value.description+"</td>"+"</tr>");
 					})
+				},
+
+				error : function(root) {
+
+					alert("json=" + root);
+
+					return false;
+
 				}
-				});
+			})
+		}
+		});
+	
   });
 </script>
 <script type="text/javascript">
+
 function inidata(){
 	<%
 	String iniinsertdata="";
 	
 	for(int i=0; i< roles.size() ;i++ ){
 		iniinsertdata +="<tr>";
-		
 		iniinsertdata +="<td>"+roles.get(i).getName()+"</td>";
-		iniinsertdata +="<td>"+roles.get(i).getSut().getName()+"</td>";
+		if (roles.get(i).getSut() != null){
+			iniinsertdata +="<td>"+roles.get(i).getSut().getName()+"</td>";
+		}
 		iniinsertdata +="<td>"+roles.get(i).getDescription()+"</td>";
 		iniinsertdata +="</tr>";
 	}
 	%>
 	return "<%=iniinsertdata%>";
 }
+
 </script>
 </head>
 

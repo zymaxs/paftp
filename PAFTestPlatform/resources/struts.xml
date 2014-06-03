@@ -13,7 +13,7 @@
     <action name="querySutsAjax" method="querySut" class="com.paftp.action.ApplySutAction">
         <result type="json"></result>
      </action>
-       <action name="getUserInfoAjax" method="getUserInfo" class="com.paftp.action.UserProfileAction">
+       <action name="getRoles" method="getUserInfo" class="com.paftp.action.UserProfileAction">
         <result type="json"></result>
      </action>
     </package>

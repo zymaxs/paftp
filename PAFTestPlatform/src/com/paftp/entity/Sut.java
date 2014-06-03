@@ -23,7 +23,7 @@ public class Sut {
 	private String name;
 	private String description;
 	private SutGroup group;
-//	private List<Role> role_results;
+	private List<Role> role_results;
 //	private List<Testpass> testpass_results;
 //	private List<StressResult> stress_results;
 	
@@ -71,14 +71,14 @@ public class Sut {
 		this.group = group;
 	}
 	
-//	@OneToMany(mappedBy = "sut")
-//	public List<Role> getRole_results() {
-//		return role_results;
-//	}
-//
-//	public void setRole_results(List<Role> role_results) {
-//		this.role_results = role_results;
-//	}
+	@OneToMany(mappedBy = "sut")
+	public List<Role> getRole_results() {
+		return role_results;
+	}
+
+	public void setRole_results(List<Role> role_results) {
+		this.role_results = role_results;
+	}
 	
 //	@OneToMany(mappedBy = "sut")
 //	public List<Testpass> getTestpass_results() {

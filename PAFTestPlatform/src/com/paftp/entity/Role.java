@@ -75,7 +75,7 @@ public class Role {
 		this.users = users;
 	}
 	
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "sut_id")
 	public Sut getSut() {
 		return sut;
