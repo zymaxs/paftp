@@ -13,7 +13,6 @@
     <action name="querySutsAjax" method="querySut" class="com.paftp.action.ApplySutAction">
         <result type="json"></result>
      </action>
-       <action name="getRoles" method="getRoles" class="com.paftp.action.UserProfileAction">
         <result type="json"></result>
      </action>
       <action name="queryRoles" method="queryRoles" class="com.paftp.action.RoleAction">
@@ -93,6 +92,9 @@
 		</action>
 		<action name="showsutgroup" method="sutgroup" class="com.paftp.action.StaticAction">
 			<result name="success">/applysutinfo.jsp</result>
+		</action>
+		<action name="queryGroups" method="queryGroups" class="com.paftp.action.ApplySutAction">
+			<result name="success">/casemanagement.jsp</result>
 		</action>
 		 <action name="initialroles" method="initialRoles" class="com.paftp.action.RoleAction">
         <result name="success">/roleindex.jsp</result>

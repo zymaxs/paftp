@@ -3,13 +3,18 @@
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ "/";
+	+ request.getServerName() + ":" + request.getServerPort()
+	+ "/";
 %>
 <!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<%
+	if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/queryGroups.action").forward(request,response);}
+List<SutGroup> sutGroup = (List<SutGroup>)request.getAttribute("sutgroups");
+%>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -35,14 +40,39 @@
 }
 </style>
 <script type="text/javascript">
+$(document).ready(function(){
+		alert(inisutgroup());
+		$("#sutgrouptab").append(inisutgroup());
+		}
+		);
+</script>
+<script type="text/javascript">
 	function loginac() {
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
-	}
+	};
+
+	function inisutgroup() {
+		<%
+		String inisutgroup = "";
+		for (int i=0; i < sutGroup.size(); i++){
+			String inisutgroupinfo = "";
+			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
+				inisutgroupinfo += sutGroup.get(i).getSuts().get(j).getName() + " ";
+			}
+			inisutgroup += "<div class='row-fluid'><div class='span12'><blockquote></p>";
+			inisutgroup += sutGroup.get(i).getName();
+			inisutgroup += "</p><small>";
+			inisutgroup += inisutgroupinfo;
+			inisutgroup += "</small></blockquote></div></div>";
+		}%>
+		return "<%=inisutgroup%>";
+	};
 </script>
 </head>
 
 <body>
+<%=sutGroup.get(1).getSuts().size()%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
@@ -55,12 +85,20 @@
           <div class="span2"
 							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</div>
           <div class="span7"></div>
-          <%if (session.getAttribute("user") == null) {%>
-          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
-          <%} else { User user = (User) session.getAttribute("user");
-					String name = user.getAlias(); %>
-          <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
-          <%}%>
+          <%
+							if (session.getAttribute("user") == null) {
+						%>
+          <div class="span3 whitelink"
+							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
+          <%
+							} else { User user = (User) session.getAttribute("user");
+									String name = user.getAlias();
+						%>
+          <div class="span3 whitelink"
+							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
+          <%
+							}
+						%>
         </div>
         <div class="row-fluid">
           <div class="span12"
@@ -83,11 +121,15 @@
     <form id="loginform" name="loginform" method="post" action="">
       <label for="alias" style="Microsoft YaHei; font-size:12px;">Username:</label>
       <input type="text" name="alias" id="alias" tabindex="1">
-      <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
+      <label
+					for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
       <div>
-        <button type="button" class="btn btn-primary" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
-        <button type="button" class="btn btn-primary" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
+        <button type="button" class="btn btn-primary" onClick="loginac()"
+						id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary"
+						onClick="window.location.href='findpwd.jsp'" id="findpwdbtn"
+						name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -118,50 +160,8 @@
     </div>
   </div>
   <!--主体-->
-<div class="panel-group" id="accordion">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          Collapsible Group Item #1
-        </a>
-      </h4>
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse in">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  <div id="sutgrouptab">
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-          Collapsible Group Item #2
-        </a>
-      </h4>
-    </div>
-    <div id="collapseTwo" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-          Collapsible Group Item #3
-        </a>
-      </h4>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-</div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

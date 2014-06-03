@@ -295,6 +295,7 @@ public class ApplySutAction extends ActionSupport {
 		List<SutGroup> sutgroups = sutgroupService.findAllList();
 		
 		request.setAttribute("sutgroups", sutgroups);
+		request.setAttribute("flag", "true");
 		
 		return "success";
 	}
