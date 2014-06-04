@@ -52,6 +52,10 @@ public class RoleAction extends ActionSupport {
 	private Long pages;
 	private List<Role> currentPageRoles = new ArrayList<Role>();
 	private List<User> resultusers = new ArrayList<User>();
+	
+	List<User> managers = new ArrayList<User>();
+	List<User> workers = new ArrayList<User>();
+	List<User> freeusers = new ArrayList<User>();
 
 	// public String getWorkers() {
 	//
@@ -116,9 +120,7 @@ public class RoleAction extends ActionSupport {
 		}
 
 		List<User> users = userService.findAllList();
-		List<User> managers = new ArrayList<User>();
-		List<User> workers = new ArrayList<User>();
-		List<User> freeusers = new ArrayList<User>();
+
 
 		for (int i = 0; i < users.size(); i++) {
 			List<Role> roles = users.get(i).getRoles();
@@ -182,18 +184,44 @@ public class RoleAction extends ActionSupport {
 			return "error";
 		} else if (isAdmin) {
 			this.setRole_name(this.getSut_name() + "Manager");
+			Role role = roleService.findRoleByName(this.getRole_name());
+			
+			List<User> managedusers = role.getUsers();
+			List<User> updatedusers = new ArrayList<User>();
+			for(int i=0; i < this.getManagers().size(); i++){
+				for(int j=0; j< managedusers.size(); j++){
+					if (this.getManagers().get(i).getAlias().equals(managedusers.get(j).getAlias())){
+						break;
+					}
+					updatedusers.add(this.getManagers().get(i));
+				}
+			}
+			
+			if (updatedusers.size() > 0){
+				role.setUsers(updatedusers);
+				roleService.updateRole(role);   //update ?= insert
+			}
 		} else if (isManager) {
 			this.setRole_name(this.getSut_name() + "Worker");
+			Role role = roleService.findRoleByName(this.getRole_name());
+			
+			List<User> managedusers = role.getUsers();
+			List<User> updatedusers = new ArrayList<User>();
+			
+			for(int i=0; i < this.getWorkers().size(); i++){
+				for(int j=0; j< managedusers.size(); j++){
+					if (this.getWorkers().get(i).getAlias().equals(managedusers.get(j).getAlias())){
+						break;
+					}
+					updatedusers.add(this.getWorkers().get(i));
+				}
+			}
+			
+			if (updatedusers.size() > 0){
+				role.setUsers(updatedusers);
+				roleService.updateRole(role);   //update ?= insert
+			}
 		} // Verify whether this needs to be initialed!
-
-		Role role = null;
-		User applyUser = userService.findUserByAlias(this.getAlias());
-		Integer sut_id = sutService.findSutByCode(this.getSut_name()).getId();
-		role = roleService.findRoleBySutIdAndName(sut_id, this.getRole_name());
-		List<Role> roles = new ArrayList<Role>();
-		roles.add(role);
-		applyUser.setRoles(roles);
-		userService.updateUser(applyUser);
 
 		return "success";
 	}
@@ -231,8 +259,6 @@ public class RoleAction extends ActionSupport {
 	}
 
 	public String queryRoles() {
-
-		HttpServletRequest request = ServletActionContext.getRequest();
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		List<Role> roles = sut.getRole_results();
@@ -483,4 +509,29 @@ public class RoleAction extends ActionSupport {
 	public void setResultusers(List<User> resultusers) {
 		this.resultusers = resultusers;
 	}
+	
+	public List<User> getManagers() {
+		return managers;
+	}
+
+	public void setManagers(List<User> managers) {
+		this.managers = managers;
+	}
+
+	public List<User> getWorkers() {
+		return workers;
+	}
+
+	public void setWorkers(List<User> workers) {
+		this.workers = workers;
+	}
+
+	public List<User> getFreeusers() {
+		return freeusers;
+	}
+
+	public void setFreeusers(List<User> freeusers) {
+		this.freeusers = freeusers;
+	}
+
 }
