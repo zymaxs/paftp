@@ -28,6 +28,12 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	public void saveorupdateRole(Role role) {
+		// TODO Auto-generated method stub
+		baseDAO.saveOrUpdate(role);
+	}
+	
+	@Override
 	public Role findRoleById(int id) {
 		return baseDAO.get(Role.class, id);
 	}
@@ -60,5 +66,7 @@ public class RoleServiceImpl implements RoleService {
 		// TODO Auto-generated method stub
 		return baseDAO.get(" from Role r where r.sut_id = ? and r.name = ?", new Object[] {id, name});
 	}
+
+
 
 }
