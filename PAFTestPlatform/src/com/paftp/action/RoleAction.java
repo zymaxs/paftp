@@ -204,6 +204,10 @@ public class RoleAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
+		user = this.getSessionUser();
+		if (user == null)
+			return "login";
+		
 		Sut sut = sutService.findSutByName(this.getSut_name());
 
 		List<Role> roles = sut.getRole_results();
