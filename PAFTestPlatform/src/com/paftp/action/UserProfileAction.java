@@ -85,11 +85,9 @@ public class UserProfileAction extends ActionSupport{
 		pages = (long) Math.ceil(roles.size() / (double) row);
 		
 		Role role = null;
-		Sut sut = null;
 		for (int i = 0; i< row; i++){
 			if (i < roles.size()){
 			role = roleService.findRoleById(roles.get(i).getId());
-			sut = role.getSut();
 			currentPageRoles.add(role);
 			}else{
 				break;

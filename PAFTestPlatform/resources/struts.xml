@@ -12,10 +12,13 @@
     <package name="ajax" extends="json-default">
     <action name="querySutsAjax" method="querySut" class="com.paftp.action.ApplySutAction">
         <result type="json"></result>
-     </action>
-       <action name="getRoles" method="getUserInfo" class="com.paftp.action.UserProfileAction">
-        <result type="json"></result>
-     </action>
+    </action>
+    <action name="queryRolesAjax" method="queryRoles" class="com.paftp.action.RoleAction">
+         <result type="json"></result>
+    </action>
+    <action name="getUserInfoAjax" method="getRoles" class="com.paftp.action.UserProfileAction">
+         <result type="json"></result>
+    </action>
     </package>
 	<package name="s2sh" extends="struts-default">
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
@@ -94,7 +97,9 @@
 		<action name="queryGroups" method="queryGroups" class="com.paftp.action.ApplySutAction">
 			<result name="success">/casemanagement.jsp</result>
 		</action>
-		
+		 <action name="initialroles" method="initialRoles" class="com.paftp.action.RoleAction">
+        <result name="success">/roleindex.jsp</result>
+    	 </action>
 
 	</package>
 
