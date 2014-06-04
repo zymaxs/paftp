@@ -103,6 +103,9 @@
     	 <action name="initialAddRelationship" method="initialAddRelationship" class="com.paftp.action.RoleAction">
         <result name="success">/sutroleuser.jsp</result>
     	 </action>
+    	 <action name="addRelationship" method="addRelationship" class="com.paftp.action.RoleAction">
+        <result name="success" type="redirect">/sutroleuser.jsp</result>
+    	 </action>
 
 	</package>
 

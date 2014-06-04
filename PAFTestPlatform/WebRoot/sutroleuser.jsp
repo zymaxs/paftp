@@ -56,6 +56,11 @@ List<User> freeusers = (List<User>)request.getAttribute("freeusers");
 		document.loginform.submit();
 	};
 	
+	function updateroleac(){
+		document.userroleForm.action = "${pageContext.request.contextPath}/addRelationship.action";
+		document.userroleForm.submit();
+	};
+	
 	function ini(){
 		if ('<%=isAdmin%>' == "true" && '<%=isManager%>' != "true"){
 			document.getElementById('manageselect').style.display = "block";
@@ -97,7 +102,6 @@ List<User> freeusers = (List<User>)request.getAttribute("freeusers");
 		%>
 		return '<%=managerdata%>';
 		};
-	function submit()
 	
 $(function(){
 	ini();
@@ -145,7 +149,6 @@ $(function(){
 		}
     });
 });
-</script>
 </script>
 </head>
 
@@ -252,7 +255,7 @@ $(function(){
             </select></td>
         </tr>
         <tr style="text-align:center">
-        	<td colspan="3"><input type="button" onClick="updateuserrole()" value="更新"></td>
+        	<td colspan="3"><input type="button" onClick="updateroleac()" value="更新"></td>
         </tr>
       </table>
     </fieldset>
