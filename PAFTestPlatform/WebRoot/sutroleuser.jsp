@@ -9,6 +9,17 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<%
+	if (session.getAttribute("user") == null) {
+%>
+<Meta http-equiv="refresh" content="0;url='index_1.jsp'; ">
+<%
+	}
+%>
+<%
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/initialAddRelationship.action").forward(request,response);}
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -177,6 +188,7 @@ $(function(){
                 <td><input class="btn input-mini" id="remove_all" value="<<"></td>
               </tr>
             </table></td>
+            <if >
           <td><select multiple="multiple" id="select2" style="height:300px;">
               <option value="8">选项8</option>
             </select></td>
