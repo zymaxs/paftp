@@ -88,7 +88,7 @@ $(document).ready( function(){
 				link_string : '/?page={page_number}',
 				max_page : pagentotal, 
 				paged : function(page) {
-					params = {pagenum:page,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue")};
+				params = {pagenum:page,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue")};
 				$.ajax({
 						type : "POST",
 						url : "querySutsAjax.action",

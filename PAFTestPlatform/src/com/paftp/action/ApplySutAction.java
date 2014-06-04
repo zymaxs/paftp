@@ -406,7 +406,7 @@ public class ApplySutAction extends ActionSupport {
 		Permission permission2 = null;
 		List<Permission> permissions2 = null;
 		role2 = new Role();
-		role2.setName(sut.getName() + "worker");
+		role2.setName(sut.getName() + "Worker");
 		role2.setDescription("The role is:" + sut.getName());
 		role2.setSut(sut);
 		permissions2 = new ArrayList<Permission>();

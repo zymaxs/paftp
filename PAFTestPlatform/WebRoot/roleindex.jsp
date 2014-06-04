@@ -12,6 +12,7 @@
 <% 
 List<Role> currentPageRoles = (List<Role>)request.getAttribute("currentPageRoles");
 String pagenum = request.getAttribute("pages").toString();
+String sut_name = request.getAttribute("sut_name").toString();
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -46,43 +47,81 @@ String pagenum = request.getAttribute("pages").toString();
 
 %>
 <script type="text/javascript">
-var pagentotal = <%=pagenum%>;
+var pagentotal = '<%=pagenum%>';
+var sut_name1 = '<%=sut_name%>';
 var params;
 $(document).ready( function(){
-	$("#roleForm").append(inidata());
+	    $("#roleForm").append(inidata());
 		
-	$('.pagination').jqPagination({
-		link_string : '/?page={page_number}',
-		max_page : pagentotal, 
-		paged : function(page) {
-			params = {pagenum:page};
+		$("#queryrole").click(function(){
+		params = {pagenum:1,sut_name:sut_name1,alias:$("#alias").val(),role_name:$("#role_name").val};
+		
 		$.ajax({
-				type : "POST",
-				url : "queryRoles.action",
-				data : params,
-				dataType : "json",
-				success : function(root) {
+						type : "POST",
+						url : "queryRolesAjax.action",
+						data : params,
+						dataType : "json",
+						success : function(test) {
+							$("#roleFormTab").html("");
+							$(test.resultusers).each(function(i,value){
+							$(value.roles).each(function(j,role){
+								$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
+							});
+							});
+							alert("before pa");
+							$('.pagination').jqPagination('option', 'max_page', test.pages);
 
-					$("#sutFormTab").html("");
-					$(root.currentPageRoles).each(function(i,value){
-						$(value.users).each(function(j,user){
-							$("#sutFormTab").append("<tr>"+"<td>"+value.name+"</td>"+"<td>"+user.name+"</td>"+"<td>"+value.description+"</td>"+"</tr>");
-					})
-					})
-				},
+							alert("after pa");
+							
+						},
+						error : function(root) {
 
-				error : function(root) {
+							alert("json=" + root);
 
-					alert("json=" + root);
+							return false;
 
-					return false;
-
-				}
-			})
-		}
+						}
+				});
+		
+	
+				
 		});
 	
-  });
+	
+	$('.pagination').jqPagination({
+
+				link_string : '/?page={page_number}',
+				max_page : pagentotal, 
+				paged : function(page) {
+
+						params = {pagenum:page,sut_name:sut_name1,alias:$("#alias").val(),role_name:$("#role_name").val()};
+
+						$.ajax({
+						type : "POST",
+						url : "queryRolesAjax.action",
+						data : params,
+						dataType : "json",
+						success : function(root) {
+	
+							$("#roleFormTab").html("");
+							$(root.users).each(function(i,value){
+								$(value.roles).each(function(j,role){
+									$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
+								});
+							});
+						},
+
+						error : function(root) {
+
+							alert("json=" + root);
+
+							return false;
+
+						}
+					});
+				}
+	});
+ });
 </script>
 <script type="text/javascript">
 
@@ -109,6 +148,8 @@ function inidata(){
 </head>
 
 <body>
+<%=pagenum %>
+<%=sut_name %>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
@@ -151,6 +192,7 @@ function inidata(){
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
                 <li class="active"><a href="index_1.jsp">主页</a></li>
+                  <li><a href="rolelist.jsp">Role申请</a></li>
               </ul>
             </div>
           </div>
@@ -159,6 +201,19 @@ function inidata(){
     </div>
   </div>
   <!--主体-->  
+   <form id="queryForm" name="queryForm" action="" style="width:100%">
+    <table width="900px">
+      <tr>
+        <td>用户</td>
+        <td><input type="text" id="alias" name="alias"></td>
+        <td>角色</td>
+        <td><input type="text" id="role_name" name="role_name"></td>
+        </tr>
+      <tr>
+        <td colspan="2" align="center" align="center"><input type="button" id="queryrole" name="queryrole" value="搜索"></td>
+      </tr>
+    </table>
+  </form>
     <div>
      <fieldset>
    <legend> 用户权限</legend>
