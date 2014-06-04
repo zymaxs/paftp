@@ -19,6 +19,7 @@ import com.paftp.service.permission.PermissionService;
 import com.paftp.service.role.RoleService;
 import com.paftp.service.sut.SutService;
 import com.paftp.service.user.UserService;
+import com.paftp.util.Util;
 
 @Controller
 public class RoleAction extends ActionSupport {
@@ -56,6 +57,11 @@ public class RoleAction extends ActionSupport {
 	List<User> managers = new ArrayList<User>();
 	List<User> workers = new ArrayList<User>();
 	List<User> freeusers = new ArrayList<User>();
+	
+	private String managerstring;
+	private String workerstring;
+	
+	private Util util = new Util();
 
 	// public String getWorkers() {
 	//
@@ -186,41 +192,41 @@ public class RoleAction extends ActionSupport {
 			Role role = roleService.findRoleByName(this.getRole_name());
 
 			List<User> managedusers = role.getUsers();
-			List<User> updatedusers = new ArrayList<User>();
-			for (int i = 0; i < this.getManagers().size(); i++) {
+			String[] updatemanagers = util.splitString(this.getManagerstring()); 
+			int changenum = 0;
+			for (int i = 0; i < updatemanagers.length; i++) {
 				for (int j = 0; j < managedusers.size(); j++) {
-					if (this.getManagers().get(i).getAlias()
-							.equals(managedusers.get(j).getAlias())) {
+					if (updatemanagers[i].equals(managedusers.get(j).getAlias())) {
 						break;
 					}
-//					updatedusers.add(this.getManagers().get(i));
-					role.getUsers().add(this.getManagers().get(i));
+					User user = userService.findUserByAlias(updatemanagers[i]); 
+					role.getUsers().add(user);
+					changenum ++;
 				}
 			}
 
-			if (updatedusers.size() > 0) {
-//				role.setUsers(updatedusers);
+			if (changenum > 0) {
 				roleService.saveorupdateRole(role); // update ?= insert
 			}
 		} else if (isManager) {
 			this.setRole_name(this.getSut_name() + "Worker");
 			Role role = roleService.findRoleByName(this.getRole_name());
+			
 			List<User> managedusers = role.getUsers();
-			List<User> updatedusers = new ArrayList<User>();
-
-			for (int i = 0; i < this.getWorkers().size(); i++) {
+			String[] updateworkers = util.splitString(this.getWorkerstring()); 
+			int changenum = 0;
+			for (int i = 0; i < updateworkers.length; i++) {
 				for (int j = 0; j < managedusers.size(); j++) {
-					if (this.getWorkers().get(i).getAlias()
-							.equals(managedusers.get(j).getAlias())) {
+					if (updateworkers[i].equals(managedusers.get(j).getAlias())) {
 						break;
 					}
-//					updatedusers.add(this.getWorkers().get(i));
-					role.getUsers().add(this.getManagers().get(i));
+					User user = userService.findUserByAlias(updateworkers[i]); 
+					role.getUsers().add(user);
+					changenum++;
 				}
 			}
 
-			if (updatedusers.size() > 0) {
-//				role.setUsers(updatedusers);
+			if (changenum > 0) {
 				roleService.saveorupdateRole(role); // update ?= insert
 			}
 		} else {
@@ -543,5 +549,21 @@ public class RoleAction extends ActionSupport {
 
 	public void setFreeusers(List<User> freeusers) {
 		this.freeusers = freeusers;
+	}
+
+	public String getManagerstring() {
+		return managerstring;
+	}
+
+	public void setManagerstring(String managerstring) {
+		this.managerstring = managerstring;
+	}
+
+	public String getWorkerstring() {
+		return workerstring;
+	}
+
+	public void setWorkerstring(String workerstring) {
+		this.workerstring = workerstring;
 	}
 }
