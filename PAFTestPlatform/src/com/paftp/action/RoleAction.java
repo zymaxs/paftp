@@ -193,13 +193,14 @@ public class RoleAction extends ActionSupport {
 							.equals(managedusers.get(j).getAlias())) {
 						break;
 					}
-					updatedusers.add(this.getManagers().get(i));
+//					updatedusers.add(this.getManagers().get(i));
+					role.getUsers().add(this.getManagers().get(i));
 				}
 			}
 
 			if (updatedusers.size() > 0) {
-				role.setUsers(updatedusers);
-				roleService.updateRole(role); // update ?= insert
+//				role.setUsers(updatedusers);
+				roleService.saveorupdateRole(role); // update ?= insert
 			}
 		} else if (isManager) {
 			this.setRole_name(this.getSut_name() + "Worker");
@@ -213,13 +214,14 @@ public class RoleAction extends ActionSupport {
 							.equals(managedusers.get(j).getAlias())) {
 						break;
 					}
-					updatedusers.add(this.getWorkers().get(i));
+//					updatedusers.add(this.getWorkers().get(i));
+					role.getUsers().add(this.getManagers().get(i));
 				}
 			}
 
 			if (updatedusers.size() > 0) {
-				role.setUsers(updatedusers);
-				roleService.updateRole(role); // update ?= insert
+//				role.setUsers(updatedusers);
+				roleService.saveorupdateRole(role); // update ?= insert
 			}
 		} else {
 			request.setAttribute("error", "This is not a manager for this!");
