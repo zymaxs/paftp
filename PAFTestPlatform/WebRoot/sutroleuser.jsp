@@ -19,6 +19,11 @@
 <%
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialAddRelationship.action").forward(request,response);}
+String isAdmin = String.valueOf(request.getAttribute("isAdmin"));
+String isManager = String.valueOf(request.getAttribute("isManager"));
+List<User> managers = (List<User>)request.getAttribute("managers");
+List<User> workers = (List<User>)request.getAttribute("workers");
+List<User> freeusers = (List<User>)request.getAttribute("freeusers");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
@@ -51,33 +56,93 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/initialAddRelat
 		document.loginform.submit();
 	};
 	
+	function ini(){
+		if ('<%=isAdmin%>' == "true" && '<%=isManager%>' != "true"){
+			document.getElementById('manageselect').style.display = "block";
+			document.getElementById('workerselect').style.display = "none";
+			document.getElementById('workerselect').disabled = "ture";
+			}
+		else if ('<%=isAdmin%>' != "true" && '<%=isManager%>' == "true"){
+			document.getElementById('manageselect').style.display = "none";
+			document.getElementById('manageselect').disabled = "ture";
+			document.getElementById('workerselect').style.display = "block";
+		}
+		};
+		
+	function inifreeuserdata(){
+		<%
+		String freeuserdata = "";
+		for (int i = 0; i < freeusers.size(); i++ ){
+			freeuserdata += "<option>" + freeusers.get(i).getAlias() +"</option>";
+		}
+		%>
+		return '<%=freeuserdata%>';
+		};
+	
+	function iniworkerdata(){
+		<%
+		String workerdata = "";
+		for (int i = 0; i < workers.size(); i++ ){
+			workerdata += "<option>" + workers.get(i).getAlias() +"</option>";
+		}
+		%>
+		return '<%=workerdata%>';
+		};
+	function inimanagerdata(){
+		<%
+		String managerdata = "";
+		for (int i = 0; i < managers.size(); i++ ){
+			managerdata += "<option>" + managers.get(i).getAlias() +"</option>";
+		}
+		%>
+		return '<%=managerdata%>';
+		};
+	function submit()
+	
 $(function(){
+	ini();
+	alert("test");
+	alert(inifreeuserdata());
+	$("#freeuser").append(inifreeuserdata());
+	$("#manage").append(inimanagerdata());
+	$("#worker").append(iniworkerdata());
     //移到右边
     $('#add').click(function() {
     //获取选中的选项，删除并追加给对方
-        $('#select1 option:selected').appendTo('#select2');
+		if (document.getElementById('manageselect').style.display = "block"){
+        $('#freeuser option:selected').appendTo('#manage');
+		}
+		else {
+		$('#freeuser option:selected').appendTo('#worker');
+			}
     });
     //移到左边
     $('#remove').click(function() {
-        $('#select2 option:selected').appendTo('#select1');
+		if (document.getElementById('manageselect').style.display = "block"){
+        $('#manage option:selected').appendTo('#freeuser');
+		}
+		else {
+		$('#worker option:selected').appendTo('#freeuser');
+		}
     });
     //全部移到右边
     $('#add_all').click(function() {
         //获取全部的选项,删除并追加给对方
-        $('#select1 option').appendTo('#select2');
+		if (document.getElementById('manageselect').style.display = "block"){
+        $('#freeuser option').appendTo('#manage');
+		}
+		else {
+		$('#freeuser option').appendTo('#worker');
+		}
     });
     //全部移到左边
     $('#remove_all').click(function() {
-        $('#select2 option').appendTo('#select1');
-    });
-    //双击选项
-    $('#select1').dblclick(function(){ //绑定双击事件
-        //获取全部的选项,删除并追加给对方
-        $("option:selected",this).appendTo('#select2'); //追加给对方
-    });
-    //双击选项
-    $('#select2').dblclick(function(){
-       $("option:selected",this).appendTo('#select1');
+		if (document.getElementById('manageselect').style.display = "block"){
+        $('#manage option').appendTo('#freeuser');
+		}
+		else {
+		$('#worker option').appendTo('#freeuser');
+		}
     });
 });
 </script>
@@ -160,19 +225,12 @@ $(function(){
     </div>
   </div>
   <!--主体-->
-  <form>
+  <form id="userroleForm" name="userroleForm" action="">
     <fieldset>
       <legend>用户权限变更</legend>
       <table align="center">
         <tr>
-          <td><select multiple="multiple" id="select1" style="height:300px;">
-              <option value="1">选项1</option>
-              <option value="2">选项2</option>
-              <option value="3">选项3</option>
-              <option value="4">选项4</option>
-              <option value="5">选项5</option>
-              <option value="6">选项6</option>
-              <option value="7">选项7</option>
+          <td id="freeuserselect"><select multiple="multiple" id="freeuser" name="freeuser" style="height:300px;">
             </select></td>
           <td><table>
               <tr>
@@ -188,10 +246,13 @@ $(function(){
                 <td><input class="btn input-mini" id="remove_all" value="<<"></td>
               </tr>
             </table></td>
-            <if >
-          <td><select multiple="multiple" id="select2" style="height:300px;">
-              <option value="8">选项8</option>
+          <td id="manageselect"><select multiple="multiple" id="manage" name="manage" style="height:300px;">
             </select></td>
+            <td id="workerselect"><select multiple="multiple" id="worker" name="worker" style="height:300px;">
+            </select></td>
+        </tr>
+        <tr style="text-align:center">
+        	<td colspan="3"><input type="button" onClick="updateuserrole()" value="更新"></td>
         </tr>
       </table>
     </fieldset>

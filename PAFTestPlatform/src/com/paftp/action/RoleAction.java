@@ -106,13 +106,13 @@ public class RoleAction extends ActionSupport {
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));
 
-		if (!isAdmin || !isManager) {
-			request.setAttribute("error", "This is not a manager for this!");
-			return "error";
-		} else if (isAdmin) {
+		if (isAdmin) {
 			this.setRole_name(this.getSut_name() + "Manager");
 		} else if (isManager) {
 			this.setRole_name(this.getSut_name() + "Worker");
+		}else {
+			request.setAttribute("error", "This is not a manager for this!");
+			return "error";
 		}
 
 		List<User> users = userService.findAllList();
@@ -124,7 +124,9 @@ public class RoleAction extends ActionSupport {
 			List<Role> roles = users.get(i).getRoles();
 			int j;
 			for (j = 0; j < roles.size(); j++) {
-				if (roles.get(j).getName()
+				if (roles.get(i).getName().equals("administrator")){
+					break;
+				}else if (roles.get(j).getName()
 						.equals(this.getSut_name() + "Manager")) {
 					if (user.getAlias().equals(users.get(i).getAlias())) {
 						break;
@@ -141,10 +143,10 @@ public class RoleAction extends ActionSupport {
 						break;
 				}
 			}
-			if (j > roles.size()) {
+		}
+			if (j == roles.size()) {
 				freeusers.add(users.get(i));
 			}
-		}
 		}
 
 		request.setAttribute("managers", managers);
@@ -177,13 +179,13 @@ public class RoleAction extends ActionSupport {
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));
 
-		if (!isAdmin || !isManager) {
-			request.setAttribute("error", "This is not a manager for this!");
-			return "error";
-		} else if (isAdmin) {
+		if (isAdmin) {
 			this.setRole_name(this.getSut_name() + "Manager");
 		} else if (isManager) {
 			this.setRole_name(this.getSut_name() + "Worker");
+		} else {
+			request.setAttribute("error", "This is not a manager for this!");
+			return "error";
 		} // Verify whether this needs to be initialed!
 
 		Role role = null;
