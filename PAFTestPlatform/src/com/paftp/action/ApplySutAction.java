@@ -92,6 +92,11 @@ public class ApplySutAction extends ActionSupport {
 
 		if (user == null)
 			return "login";
+		
+		if(isSeniorManager(user.getAlias()) == false){
+			request.setAttribute("error", "The user hasn't authority to do this!");
+			return "error";
+		}
 
 		if (this.getCode() == null || this.getSutname() == null) {
 			request.setAttribute("error",
@@ -119,24 +124,6 @@ public class ApplySutAction extends ActionSupport {
 		applySutService.saveApplySut(applySut);
 
 		return "success";
-	}
-	
-	private void generateAdmin(){
-		if (roleService.findRoleByName("administrator") == null) {
-			User user = userService.findUserByAlias("admin");
-			List<Role> roles = new ArrayList<Role>();
-			Role adminRole = null;
-			adminRole = new Role();
-			adminRole.setName("administrator");
-			adminRole.setDescription("The admin role!");
-			List<Permission> adminPermissions = permissionService.findAllList();
-			adminRole.setPermissions(adminPermissions);
-			roleService.saveRole(adminRole); // Save the new system
-												// administrator
-			roles.add(adminRole);
-			user.setRoles(roles);
-			userService.updateUser(user);
-		}
 	}
 
 	public String approveSut() {
@@ -173,7 +160,7 @@ public class ApplySutAction extends ActionSupport {
 	public String initialSuts() throws IOException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-
+		
 		result = new HashMap<String, Object>();
 
 		row = 10;
@@ -187,8 +174,12 @@ public class ApplySutAction extends ActionSupport {
 		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
 		
-		generateAdmin();
+		generateAdminAndManager();
 
+		user = getSessionUser();
+		if (user != null && this.isSeniorManager(user.getAlias()) == true)
+			request.setAttribute("isSeniormanager", true);
+		
 		return "success";
 
 	}
@@ -334,7 +325,8 @@ public class ApplySutAction extends ActionSupport {
 			if (applySutStatus.getId() == 2) { // if pass then create the
 												// corresponding permissions
 
-				initialRolePermissions();
+				initialRolePermissions(applySut.getUser());
+				
 			}
 		}
 
@@ -355,7 +347,7 @@ public class ApplySutAction extends ActionSupport {
 		}
 	}
 
-	private void initialRolePermissions() {
+	private void initialRolePermissions(User user) {
 
 		Sut sut = new Sut();
 		if (sutService.findSutByName(this.getSutname()) == null) {
@@ -415,14 +407,45 @@ public class ApplySutAction extends ActionSupport {
 		role2.setPermissions(permissions2);
 		role2.setSut(sut);
 
-		if (roleService.findRoleByName(sut.getName() + "manager") == null){
+	
+		if (roleService.findRoleByName(sut.getName() + "Manager") == null){
 		roleService.saveRole(role);
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(role);
+		User applyer = userService.findUserByAlias(user.getAlias());
+		applyer.setRoles(roles);
+		userService.saveUser(user);
 		}
-		if (roleService.findRoleByName(sut.getName() + "worker") == null){
+		if (roleService.findRoleByName(sut.getName() + "Worker") == null){
 		roleService.saveRole(role2); // Save the new system worker
 		}
 		
 
+	}
+	
+	private void generateAdminAndManager(){
+		if (roleService.findRoleByName("administrator") == null) {
+			User user = userService.findUserByAlias("admin");
+			List<Role> roles = new ArrayList<Role>();
+			
+			Role adminRole = new Role();
+			adminRole.setName("administrator");
+			adminRole.setDescription("The admin role!");
+			List<Permission> adminPermissions = permissionService.findAllList();
+			adminRole.setPermissions(adminPermissions);
+			
+			Role managerRole = new Role();
+			managerRole.setName("seniormanager");
+			managerRole.setDescription("The up manager role!");
+			managerRole.setPermissions(adminPermissions);
+			
+			roleService.saveRole(adminRole); // Save the new system administrator
+			roleService.saveRole(managerRole);
+			
+			roles.add(adminRole);
+			user.setRoles(roles);
+			userService.updateUser(user);
+		}
 	}
 
 	private Boolean isAdmin(String alias) {
@@ -430,6 +453,17 @@ public class ApplySutAction extends ActionSupport {
 		List<Role> roles = user.getRoles();
 		for (int i = 0; i < roles.size(); i++) {
 			if (roles.get(i).getName().equals("administrator")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private Boolean isSeniorManager(String alias) {
+		user = userService.findUserByAlias(alias);
+		List<Role> roles = user.getRoles();
+		for (int i = 0; i < roles.size(); i++) {
+			if (roles.get(i).getName().equals("seniormanager")) {
 				return true;
 			}
 		}
