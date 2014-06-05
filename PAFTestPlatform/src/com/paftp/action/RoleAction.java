@@ -101,9 +101,9 @@ public class RoleAction extends ActionSupport {
 					break;
 				} else if (roles.get(j).getName().equals("seniormanager")) {
 					seniormanagers.add(users.get(i));
-				} else {
-					normalusers.add(users.get(i));
-				}
+					break;
+				} 
+				
 
 				if (roles.get(j).getName()
 						.equals(this.getSut_name() + "Manager")) {
@@ -124,6 +124,7 @@ public class RoleAction extends ActionSupport {
 				}
 			}
 			if (j == roles.size()) {
+				normalusers.add(users.get(i));
 				freeusers.add(users.get(i));
 			}
 		}
