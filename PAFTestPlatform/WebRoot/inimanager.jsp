@@ -23,7 +23,7 @@ String isAdmin = String.valueOf(request.getAttribute("isAdmin"));
 if ( isAdmin != "true" ){%>
 <Meta http-equiv="refresh" content="0;url='index_1.jsp'; ">
 	<%}
-List<User> seniormanagers = (List<User>)request.getAttribute("seniormanager");
+List<User> seniormanagers = (List<User>)request.getAttribute("seniormanagers");
 List<User> normalusers = (List<User>)request.getAttribute("normalusers");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -119,6 +119,7 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
 </head>
 
 <body>
+<%=seniormanagers.get(0).getAlias() %> test
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">

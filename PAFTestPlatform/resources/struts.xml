@@ -104,11 +104,7 @@
         <result name="success">/sutroleuser.jsp</result>
     	 </action>
     	 <action name="addRelationship" method="addRelationship" class="com.paftp.action.RoleAction">
-<<<<<<< HEAD
         <result name="success">/sutroleuser.jsp</result>
-=======
-        <result name="success" >/sutroleuser.jsp</result>
->>>>>>> d7d3cf31b100c5d28a8e740294bfa4e14d86467b
     	 </action>
 
 	</package>
