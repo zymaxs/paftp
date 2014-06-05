@@ -84,7 +84,7 @@ String sut_name = (String)request.getAttribute("sut_name");
 	function finworker(){
 		var finalworker = "";
 		for (i = 0; i < document.getElementById('worker').length ; i++ ){
-			finalfreeuser += document.getElementById('worker').options[i].value + ";";
+			finalworker += document.getElementById('worker').options[i].value + ";";
 			}
 		return finalworker;
 	};
