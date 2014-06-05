@@ -87,9 +87,9 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
 	
 		
 	function updateroleac(){
-		document.getElementById('seniormanager').value = finseniormanager();
-		document.userroleForm.action = "${pageContext.request.contextPath}/addRelationship.action";
-		document.userroleForm.submit();
+		document.getElementById('seniormanagerstring').value = finseniormanager();
+		document.inimanagerForm.action = "${pageContext.request.contextPath}/addRelationship.action";
+		document.inimanagerForm.submit();
 		};
 	
 	$(function(){
@@ -194,9 +194,9 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
     </div>
   </div>
   <!--主体-->
-  <form id="userroleForm" name="userroleForm" action="">
+  <form id="inimanagerForm" name="inimanagerForm" action="">
     <fieldset>
-      <legend>用户权限变更</legend>
+      <legend>初始化</legend>
       <table align="center">
         <tr>
           <td id="freeuserselect"><select multiple="multiple" id="normaluser" style="height:300px;">
@@ -217,7 +217,7 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
             </table></td>
           <td id="manageselect"><select multiple="multiple" id="seniormanager" style="height:300px;">
             </select></td>
-          <td ><input style="display:none" id="seniormanagerstring" name="seniormanagerstring" value="seniormanagerstring"></td>
+          <td ><input style="display:block" id="seniormanagerstring" name="seniormanagerstring" value="seniormanagerstring"></td>
         </tr>
         <tr style="text-align:center">
           <td colspan="3"><input type="button" onClick="updateroleac()" value="更新"></td>
