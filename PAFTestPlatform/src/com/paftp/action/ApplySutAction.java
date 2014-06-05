@@ -187,7 +187,7 @@ public class ApplySutAction extends ActionSupport {
 		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
 		
-		//generateAdmin();
+		generateAdmin();
 
 		return "success";
 
