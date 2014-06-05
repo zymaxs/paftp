@@ -165,6 +165,7 @@ public class RoleAction extends ActionSupport {
 		if (this.getIsManager())
 			request.setAttribute("isManager", isManager);
 		request.setAttribute("flag", true);
+		request.setAttribute("sut_name", this.getSut_name());
 
 		return "success";
 	}
