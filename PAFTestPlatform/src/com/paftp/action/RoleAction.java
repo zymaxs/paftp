@@ -165,11 +165,11 @@ public class RoleAction extends ActionSupport {
 					updateusers = util.splitString(this.getManagerstring());
 				} else{
 					this.setRole_name("seniormanager");
-					updateusers = util.splitString(this.getManagerstring());
+					updateusers = util.splitString(this.getSeniormanagerstring());
 				}
 			} else {
 				this.setRole_name(this.getSut_name() + "Worker");
-				updateusers = util.splitString(this.getSeniormanagerstring());
+				updateusers = util.splitString(this.getWorkerstring());
 			}
 			Role role = roleService.findRoleByName(this.getRole_name());
 
@@ -208,45 +208,6 @@ public class RoleAction extends ActionSupport {
 				}
 			}
 
-			// } else if (isManager) {
-			// this.setRole_name(this.getSut_name() + "Worker");
-			// Role role = roleService.findRoleByName(this.getRole_name());
-			//
-			// List<User> managedusers = role.getUsers();
-			// String[] updateworkers =
-			// util.splitString(this.getWorkerstring());
-			// List<User> updatedmanagers = new ArrayList<User>();
-			// int changenum = 0;
-			// int i;
-			// if (updateworkers != null) {
-			// for (i = 0; i < updateworkers.length; i++) {
-			// int j;
-			// int total = managedusers.size();
-			// for (j = 0; j < managedusers.size(); j++) {
-			// if (updateworkers[i].equals(managedusers.get(j)
-			// .getAlias())) {
-			// break;
-			// }
-			// }
-			// if (j == total) {
-			// User user = userService
-			// .findUserByAlias(updateworkers[i]);
-			// user.getRoles().add(role);
-			// updatedmanagers.add(user);
-			// changenum++;
-			// }
-			// }
-			// }
-			// for (int l = 0; l < managedusers.size(); l++) {
-			// User user = managedusers.get(l);
-			// user.getRoles().remove(role);
-			// updatedmanagers.add(user);
-			// }
-			// if (changenum > 0) {
-			// for (i = 0; i < updatedmanagers.size(); i++) {
-			// userService.saveUser(updatedmanagers.get(i));
-			// }
-			// }
 		} else {
 			request.setAttribute("error", "This is not a manager for this!");
 			return "error";
