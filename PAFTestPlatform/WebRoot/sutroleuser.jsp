@@ -24,6 +24,7 @@ String isManager = String.valueOf(request.getAttribute("isManager"));
 List<User> managers = (List<User>)request.getAttribute("managers");
 List<User> workers = (List<User>)request.getAttribute("workers");
 List<User> freeusers = (List<User>)request.getAttribute("freeusers");
+String sut_name = (String)request.getAttribute("sut_name");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
@@ -285,6 +286,9 @@ $(function(){
             </td>
             <td>
             <input style="display:none" id="workerstring" name="workerstring" value="workerstring">
+            </td>
+            <td>
+            <input style="display:none" id="sut_name" name="sut_name" value="<%=sut_name%>">
             </td>
         </tr>
         <tr style="text-align:center">
