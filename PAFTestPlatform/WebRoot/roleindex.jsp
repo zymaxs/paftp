@@ -12,7 +12,7 @@
 <% 
 List<Role> currentPageRoles = (List<Role>)request.getAttribute("currentPageRoles");
 String pagenum = request.getAttribute("pages").toString();
-String sut_name = request.getAttribute("sut_name").toString();
+String sut_name = (String)request.getAttribute("sut_name");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -127,7 +127,6 @@ $(document).ready( function(){
 <script type="text/javascript">
 
 function applyUserac(){
-	//document.queryForm.action = "${pageContext.request.contextPath}/initialAddRelationship.action?sut_name=" + '<%=sut_name%>';
 	document.queryForm.action = "${pageContext.request.contextPath}/initialAddRelationship.action";
 	document.queryForm.submit();
 	};
@@ -156,8 +155,8 @@ function inidata(){
 </head>
 
 <body>
-<%=pagenum %>
-<%=sut_name %>
+<%=pagenum%>
+<%=sut_name%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
@@ -216,8 +215,7 @@ function inidata(){
         <td><input type="text" id="alias" name="alias"></td>
         <td>角色</td>
         <td><input type="text" id="role_name" name="role_name"></td>
-         <td>sut</td>
-        <td><input type="text" id="sut_name" name="sut_name"></td>
+        <td><input style="display:none" id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
         <td rowspan="2"><button type="button" class="btn btn-primary" onClick="applyUserac()">授权用户</button></td>
         </tr>
       <tr>
