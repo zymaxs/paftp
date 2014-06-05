@@ -113,8 +113,6 @@ public class RoleAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		this.setSut_name("dota1");
-
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));
 
@@ -288,8 +286,6 @@ public class RoleAction extends ActionSupport {
 		user = this.getSessionUser();
 		if (user == null)
 			return "login";
-
-		this.setSut_name("dota1");
 
 		if (this.getSut_name() == null) {
 			request.setAttribute("error", "One sut must be given!");
