@@ -375,7 +375,7 @@ public class ApplySutAction extends ActionSupport {
 		List<Permission> permissions = null;
 
 		role = new Role();
-		role.setName(sut.getName() + "manager");
+		role.setName(sut.getName() + "Manager");
 		role.setDescription(sut.getName() + "Manager");
 		permissions = new ArrayList<Permission>();
 		if (permissionService.findPermissionByScope("work") == null) {
