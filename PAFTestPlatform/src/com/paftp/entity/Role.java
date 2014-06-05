@@ -66,7 +66,7 @@ public class Role {
 		this.permissions = permissions;
 	}
 	
-	@ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "roles")
+	@ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "roles")
 	public List<User> getUsers() {
 		return users;
 	}

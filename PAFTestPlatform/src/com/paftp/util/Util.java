@@ -59,4 +59,11 @@ public class Util {
 		
 		return sqlDate;
 	}
+	
+	public String[] splitString(String stringstream){
+		if (stringstream == null)
+			return null;
+		String strings[] = stringstream.split(";");
+		return strings;
+	}
 }

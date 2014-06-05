@@ -9,6 +9,8 @@ public interface RoleService {
 	public void saveRole(Role role);
 
 	public void updateRole(Role role);
+	
+	public void saveorupdateRole(Role role);
 
 	public Role findRoleById(int id);
 	
