@@ -112,7 +112,7 @@ public class RoleAction extends ActionSupport {
 
 		if (user == null)
 			return "login";
-
+		this.setSut_name("mtp");
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));
 
@@ -179,6 +179,7 @@ public class RoleAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
+		this.setSut_name("mtp");
 		if (this.getSut_name() == null) {
 			request.setAttribute("error", "The system can't be empty!");
 			return "error";
