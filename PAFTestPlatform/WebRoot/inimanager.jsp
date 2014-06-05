@@ -119,7 +119,6 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
 </head>
 
 <body>
-<%=seniormanagers.get(0).getAlias() %> test
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
