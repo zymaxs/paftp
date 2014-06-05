@@ -410,11 +410,9 @@ public class ApplySutAction extends ActionSupport {
 	
 		if (roleService.findRoleByName(sut.getName() + "Manager") == null){
 		roleService.saveRole(role);
-		List<Role> roles = new ArrayList<Role>();
-		roles.add(role);
 		User applyer = userService.findUserByAlias(user.getAlias());
-		applyer.setRoles(roles);
-		userService.saveUser(user);
+		applyer.getRoles().add(role);
+		userService.saveUser(applyer);
 		}
 		if (roleService.findRoleByName(sut.getName() + "Worker") == null){
 		roleService.saveRole(role2); // Save the new system worker

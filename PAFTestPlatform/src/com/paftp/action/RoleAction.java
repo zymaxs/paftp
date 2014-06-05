@@ -66,20 +66,6 @@ public class RoleAction extends ActionSupport {
 
 	private Util util = new Util();
 
-	public String initialAddManager() {
-
-		HttpServletRequest request = ServletActionContext.getRequest();
-
-		user = this.getSessionUser();
-
-		if (user == null)
-			return "login";
-
-		setIsAdmin(isAdmin(user.getAlias()));
-
-		return "success";
-	}
-
 	public String initialAddRelationship() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -265,6 +251,8 @@ public class RoleAction extends ActionSupport {
 			request.setAttribute("error", "This is not a manager for this!");
 			return "error";
 		}
+		
+		request.setAttribute("sut_name", this.getSut_name());
 
 		return "success";
 	}
