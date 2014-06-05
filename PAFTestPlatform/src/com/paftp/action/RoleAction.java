@@ -112,7 +112,9 @@ public class RoleAction extends ActionSupport {
 
 		if (user == null)
 			return "login";
-
+		
+		this.setSut_name("mtp");
+		
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));
 
@@ -178,6 +180,8 @@ public class RoleAction extends ActionSupport {
 
 		if (user == null)
 			return "login";
+		
+		this.setSut_name("mtp");
 
 		if (this.getSut_name() == null) {
 			request.setAttribute("error", "The system can't be empty!");
@@ -189,15 +193,17 @@ public class RoleAction extends ActionSupport {
 													// be initialed!
 
 		if (isAdmin || isManager) {
+			String[] updateusers;
 			if (isAdmin) {
 				this.setRole_name(this.getSut_name() + "Manager");
+				updateusers = util.splitString(this.getManagerstring());
 			} else {
 				this.setRole_name(this.getSut_name() + "Worker");
+				updateusers = util.splitString(this.getWorkerstring());
 			}
 			Role role = roleService.findRoleByName(this.getRole_name());
 
 			List<User> managedusers = role.getUsers();
-			String[] updateusers = util.splitString(this.getManagerstring());
 			List<User> updatedusers = new ArrayList<User>();
 			int changenum = 0;
 			int i;
