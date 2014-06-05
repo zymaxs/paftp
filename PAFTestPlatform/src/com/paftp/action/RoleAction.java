@@ -57,10 +57,10 @@ public class RoleAction extends ActionSupport {
 	List<User> managers = new ArrayList<User>();
 	List<User> workers = new ArrayList<User>();
 	List<User> freeusers = new ArrayList<User>();
-	
+
 	private String managerstring;
 	private String workerstring;
-	
+
 	private Util util = new Util();
 
 	// public String getWorkers() {
@@ -113,6 +113,8 @@ public class RoleAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
+		this.setSut_name("dota1");
+		
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));
 
@@ -131,7 +133,7 @@ public class RoleAction extends ActionSupport {
 			List<Role> roles = users.get(i).getRoles();
 			int j;
 			for (j = 0; j < roles.size(); j++) {
-				if (roles.get(i).getName().equals("administrator")) {
+				if (roles.get(j).getName().equals("administrator")) {
 					break;
 				} else if (roles.get(j).getName()
 						.equals(this.getSut_name() + "Manager")) {
@@ -193,42 +195,76 @@ public class RoleAction extends ActionSupport {
 			Role role = roleService.findRoleByName(this.getRole_name());
 
 			List<User> managedusers = role.getUsers();
-			String[] updatemanagers = util.splitString(this.getManagerstring()); 
+			String[] updatemanagers = util.splitString(this.getManagerstring());
+			List<User> updatedmanagers = new ArrayList<User>();
 			int changenum = 0;
-			for (int i = 0; i < updatemanagers.length; i++) {
-				for (int j = 0; j < managedusers.size(); j++) {
-					if (updatemanagers[i].equals(managedusers.get(j).getAlias())) {
-						break;
+			int i;
+			if (updatemanagers != null) {
+				for (i = 0; i < updatemanagers.length; i++) {
+					int j;
+					int total = managedusers.size();
+					for (j = 0; j < managedusers.size(); j++) {
+						if (updatemanagers[i].equals(managedusers.get(j)
+								.getAlias())) {
+							managedusers.remove(j);
+							break;
+						}
 					}
-					User user = userService.findUserByAlias(updatemanagers[i]); 
-					role.getUsers().add(user);
-					changenum ++;
+					if (j == total) {
+						User user = userService
+								.findUserByAlias(updatemanagers[i]);
+						user.getRoles().add(role);
+						updatedmanagers.add(user);
+						changenum++;
+					}
+
 				}
 			}
-
-			if (changenum > 0) {
-				roleService.saveorupdateRole(role); // update ?= insert
+			for (int l = 0; l < managedusers.size(); l++) {
+				User user = managedusers.get(l);
+				user.getRoles().remove(role);
+				updatedmanagers.add(user);
+			}
+			if (changenum > 0 || managedusers.size() > 0) {
+				for (i = 0; i < updatedmanagers.size(); i++) {
+					userService.saveUser(updatedmanagers.get(i));
+				}
 			}
 		} else if (isManager) {
 			this.setRole_name(this.getSut_name() + "Worker");
 			Role role = roleService.findRoleByName(this.getRole_name());
-			
+
 			List<User> managedusers = role.getUsers();
-			String[] updateworkers = util.splitString(this.getWorkerstring()); 
+			String[] updateworkers = util.splitString(this.getWorkerstring());
+			List<User> updatedmanagers = new ArrayList<User>();
 			int changenum = 0;
-			for (int i = 0; i < updateworkers.length; i++) {
-				for (int j = 0; j < managedusers.size(); j++) {
+			int i;
+			if (updateworkers != null) {
+			for (i = 0; i < updateworkers.length; i++) {
+				int j;
+				int total = managedusers.size();
+				for (j = 0; j < managedusers.size(); j++) {
 					if (updateworkers[i].equals(managedusers.get(j).getAlias())) {
 						break;
 					}
-					User user = userService.findUserByAlias(updateworkers[i]); 
-					role.getUsers().add(user);
+				}
+				if (j == total) {
+					User user = userService.findUserByAlias(updateworkers[i]);
+					user.getRoles().add(role);
+					updatedmanagers.add(user);
 					changenum++;
 				}
 			}
-
+			}
+			for (int l = 0; l < managedusers.size(); l++) {
+				User user = managedusers.get(l);
+				user.getRoles().remove(role);
+				updatedmanagers.add(user);
+			}
 			if (changenum > 0) {
-				roleService.saveorupdateRole(role); // update ?= insert
+				for (i = 0; i < updatedmanagers.size(); i++) {
+					userService.saveUser(updatedmanagers.get(i));
+				}
 			}
 		} else {
 			request.setAttribute("error", "This is not a manager for this!");

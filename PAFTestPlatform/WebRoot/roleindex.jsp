@@ -127,7 +127,8 @@ $(document).ready( function(){
 <script type="text/javascript">
 
 function applyUserac(){
-	document.queryForm.action = "${pageContext.request.contextPath}/initialAddRelationship.action" + '+<%=sut_name%>';
+	//document.queryForm.action = "${pageContext.request.contextPath}/initialAddRelationship.action?sut_name=" + '<%=sut_name%>';
+	document.queryForm.action = "${pageContext.request.contextPath}/initialAddRelationship.action";
 	document.queryForm.submit();
 	};
 
@@ -215,6 +216,8 @@ function inidata(){
         <td><input type="text" id="alias" name="alias"></td>
         <td>角色</td>
         <td><input type="text" id="role_name" name="role_name"></td>
+         <td>sut</td>
+        <td><input type="text" id="sut_name" name="sut_name"></td>
         <td rowspan="2"><button type="button" class="btn btn-primary" onClick="applyUserac()">授权用户</button></td>
         </tr>
       <tr>

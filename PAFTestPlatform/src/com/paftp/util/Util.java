@@ -64,6 +64,8 @@ public class Util {
 		if (stringstream == null)
 			return null;
 		String strings[] = stringstream.split(";");
+		if (strings.length == 1 && strings[0].equals(""))
+			return null;
 		return strings;
 	}
 }

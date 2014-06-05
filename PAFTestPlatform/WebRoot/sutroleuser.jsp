@@ -141,7 +141,7 @@ $(function(){
     //移到右边
     $('#add').click(function() {
     //获取选中的选项，删除并追加给对方
-		if (document.getElementById('manageselect').style.display = "block"){
+		if (document.getElementById('manageselect').style.display == "block"){
         $('#freeuser option:selected').appendTo('#manage');
 		}
 		else {
@@ -150,7 +150,7 @@ $(function(){
     });
     //移到左边
     $('#remove').click(function() {
-		if (document.getElementById('manageselect').style.display = "block"){
+		if (document.getElementById('manageselect').style.display == "block"){
         $('#manage option:selected').appendTo('#freeuser');
 		}
 		else {
@@ -160,7 +160,7 @@ $(function(){
     //全部移到右边
     $('#add_all').click(function() {
         //获取全部的选项,删除并追加给对方
-		if (document.getElementById('manageselect').style.display = "block"){
+		if (document.getElementById('manageselect').style.display == "block"){
         $('#freeuser option').appendTo('#manage');
 		}
 		else {
@@ -169,7 +169,7 @@ $(function(){
     });
     //全部移到左边
     $('#remove_all').click(function() {
-		if (document.getElementById('manageselect').style.display = "block"){
+		if (document.getElementById('manageselect').style.display == "block"){
         $('#manage option').appendTo('#freeuser');
 		}
 		else {
