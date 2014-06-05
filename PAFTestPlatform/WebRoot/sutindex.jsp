@@ -98,7 +98,7 @@ $(document).ready( function(){
 	
 							$("#sutFormTab").html("");
 							$(root.applySutDtos).each(function(i,value){
-								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td><a href='getuserinfo.action?userid="+value.user_id+"'>"+value.applyer+"</a></td>"+"<td>"+value.applytime+"</td>"+"<td><a href='initialSut.action?sutname="+value.name+"'>"+value.applysutstatusdto.name+"</a></td>"+"</tr>");
+								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td><a href='initialroles.action?sut_name="+value.name+"'>"+value.name+"</td>"+"<td><a href='getuserinfo.action?userid="+value.user_id+"'>"+value.applyer+"</a></td>"+"<td>"+value.applytime+"</td>"+"<td><a href='initialSut.action?sutname="+value.name+"'>"+value.applysutstatusdto.name+"</a></td>"+"</tr>");
 							})
 						},
 
@@ -122,7 +122,7 @@ function inidata(){
 	for(int i=0; i< inisutdata.size() ;i++ ){
 		iniinsertdata +="<tr>";
 		iniinsertdata +="<td>"+inisutdata.get(i).getId()+"</td>";
-		iniinsertdata +="<td>"+inisutdata.get(i).getName()+"</td>";
+		iniinsertdata +="<td><a href='initialroles.action?sut_name="+inisutdata.get(i).getName()+"'>"+inisutdata.get(i).getName()+"</td>";
 		iniinsertdata +="<td><a href='getuserinfo.action?userid="+inisutdata.get(i).getUser().getId()+"'>"+inisutdata.get(i).getUser().getAlias()+"</a></td>";
 		iniinsertdata +="<td>"+inisutdata.get(i).getApplytime()+"</td>";
 		iniinsertdata +="<td><a href='initialSut.action?sutname="+inisutdata.get(i).getName()+"'>"+inisutdata.get(i).getApplysutstatus().getName()+"</a></td>";

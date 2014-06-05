@@ -69,10 +69,8 @@ $(document).ready( function(){
 								$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
 							});
 							});
-							alert("before pa");
+							
 							$('.pagination').jqPagination('option', 'max_page', test.pages);
-
-							alert("after pa");
 							
 						},
 						error : function(root) {
