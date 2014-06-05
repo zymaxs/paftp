@@ -252,8 +252,6 @@ public class RoleAction extends ActionSupport {
 			return "error";
 		}
 		
-		request.setAttribute("sut_name", this.getSut_name());
-
 		return "success";
 	}
 
