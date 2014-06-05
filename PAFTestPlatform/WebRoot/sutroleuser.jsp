@@ -57,8 +57,35 @@ List<User> freeusers = (List<User>)request.getAttribute("freeusers");
 	};
 	
 	function updateroleac(){
+		document.getElementById('managerstring').value = finmanager();
+		document.getElementById('workerstring').value = finworker();
 		document.userroleForm.action = "${pageContext.request.contextPath}/addRelationship.action";
 		document.userroleForm.submit();
+		};
+	
+	
+	function finfreeuser(){
+		var finalfreeuser = "";
+		for (i = 0; i < document.getElementById('freeuser').length ; i++ ){
+			finalfreeuser += document.getElementById('freeuser').options[i].value + ";";
+			}
+		return finalfreeuser;
+	};
+	
+	function finmanager(){
+		var finalmanager = "";
+		for (i = 0; i < document.getElementById('manage').length ; i++ ){
+			finalmanager += document.getElementById('manage').options[i].value + ";";
+			}
+		return finalmanager;
+	};
+	
+	function finworker(){
+		var finalworker = "";
+		for (i = 0; i < document.getElementById('worker').length ; i++ ){
+			finalfreeuser += document.getElementById('worker').options[i].value + ";";
+			}
+		return finalworker;
 	};
 	
 	function ini(){
@@ -66,11 +93,13 @@ List<User> freeusers = (List<User>)request.getAttribute("freeusers");
 			document.getElementById('manageselect').style.display = "block";
 			document.getElementById('workerselect').style.display = "none";
 			document.getElementById('workerselect').disabled = "ture";
+			document.getElementById('workerstring').disabled = "true";
 			}
 		else if ('<%=isAdmin%>' != "true" && '<%=isManager%>' == "true"){
 			document.getElementById('manageselect').style.display = "none";
 			document.getElementById('manageselect').disabled = "ture";
 			document.getElementById('workerselect').style.display = "block";
+			document.getElementById('managerstring').disabled = "true";
 		}
 		};
 		
@@ -105,8 +134,6 @@ List<User> freeusers = (List<User>)request.getAttribute("freeusers");
 	
 $(function(){
 	ini();
-	alert("test");
-	alert(inifreeuserdata());
 	$("#freeuser").append(inifreeuserdata());
 	$("#manage").append(inimanagerdata());
 	$("#worker").append(iniworkerdata());
@@ -233,7 +260,7 @@ $(function(){
       <legend>用户权限变更</legend>
       <table align="center">
         <tr>
-          <td id="freeuserselect"><select multiple="multiple" id="freeuser" name="freeuser" style="height:300px;">
+          <td id="freeuserselect"><select multiple="multiple" id="freeuser" style="height:300px;">
             </select></td>
           <td><table>
               <tr>
@@ -249,10 +276,16 @@ $(function(){
                 <td><input class="btn input-mini" id="remove_all" value="<<"></td>
               </tr>
             </table></td>
-          <td id="manageselect"><select multiple="multiple" id="manage" name="manage" style="height:300px;">
+          <td id="manageselect"><select multiple="multiple" id="manage" style="height:300px;">
             </select></td>
-            <td id="workerselect"><select multiple="multiple" id="worker" name="worker" style="height:300px;">
+            <td id="workerselect"><select multiple="multiple" id="worker" style="height:300px;">
             </select></td>
+            <td >
+            <input style="display:none" id="managerstring" name="managerstring" value="managerstring">
+            </td>
+            <td>
+            <input style="display:none" id="workerstring" name="workerstring" value="workerstring">
+            </td>
         </tr>
         <tr style="text-align:center">
         	<td colspan="3"><input type="button" onClick="updateroleac()" value="更新"></td>
