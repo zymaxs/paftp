@@ -122,7 +122,7 @@ function inidata(){
 	for(int i=0; i< inisutdata.size() ;i++ ){
 		iniinsertdata +="<tr>";
 		iniinsertdata +="<td>"+inisutdata.get(i).getId()+"</td>";
-		iniinsertdata +="<td><a href='initialroles.action?sut_name="+inisutdata.get(i).getName()+"'>"+inisutdata.get(i).getName()+"</td>";
+		iniinsertdata +="<td>"+inisutdata.get(i).getName()+"</td>";
 		iniinsertdata +="<td><a href='getuserinfo.action?userid="+inisutdata.get(i).getUser().getId()+"'>"+inisutdata.get(i).getUser().getAlias()+"</a></td>";
 		iniinsertdata +="<td>"+inisutdata.get(i).getApplytime()+"</td>";
 		iniinsertdata +="<td><a href='initialSut.action?sutname="+inisutdata.get(i).getName()+"'>"+inisutdata.get(i).getApplysutstatus().getName()+"</a></td>";

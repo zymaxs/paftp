@@ -12,7 +12,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%
 	if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/casequeryGroups.action").forward(request,response);}
+request.getRequestDispatcher("${pageContext.request.contextPath}/rolequeryGroups.action").forward(request,response);}
 List<SutGroup> sutGroup = (List<SutGroup>)request.getAttribute("sutgroups");
 %>
 <title>无标题文档</title>
@@ -58,7 +58,7 @@ $(document).ready(function(){
 		for (int i=0; i < sutGroup.size(); i++){
 			String inisutgroupinfo = "";
 			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
-				inisutgroupinfo += sutGroup.get(i).getSuts().get(j).getName() + " ";
+				inisutgroupinfo += "<a href='initialroles.action?sut_name=" + sutGroup.get(i).getSuts().get(j).getName() +"'>" + sutGroup.get(i).getSuts().get(j).getName() + "</a>"+" ";
 			}
 			inisutgroup += "<div class='row-fluid'><div class='span12'><blockquote></p>";
 			inisutgroup += sutGroup.get(i).getName();

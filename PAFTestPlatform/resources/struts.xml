@@ -94,17 +94,26 @@
 		<action name="showsutgroup" method="sutgroup" class="com.paftp.action.StaticAction">
 			<result name="success">/applysutinfo.jsp</result>
 		</action>
-		<action name="queryGroups" method="queryGroups" class="com.paftp.action.ApplySutAction">
+		<action name="casequeryGroups" method="queryGroups" class="com.paftp.action.ApplySutAction">
 			<result name="success">/casemanagement.jsp</result>
 		</action>
-		 <action name="initialroles" method="initialRoles" class="com.paftp.action.RoleAction">
-        <result name="success">/roleindex.jsp</result>
+		<action name="rolequeryGroups" method="queryGroups" class="com.paftp.action.ApplySutAction">
+			<result name="success">/rolemanagement.jsp</result>
+		</action>
+    	 <action name="initialroles" method="initialRoles" class="com.paftp.action.RoleAction">
+        <result name="success" type="redirect">/roleindex.jsp</result>
     	 </action>
-    	 <action name="initialAddRelationship" method="initialAddRelationship" class="com.paftp.action.RoleAction">
+    	 <action name="sutinitialAddRelationship" method="initialAddRelationship" class="com.paftp.action.RoleAction">
         <result name="success">/sutroleuser.jsp</result>
     	 </action>
-    	 <action name="addRelationship" method="addRelationship" class="com.paftp.action.RoleAction">
+    	 <action name="iniinitialAddRelationship" method="initialAddRelationship" class="com.paftp.action.RoleAction">
+        <result name="success">/inimanager.jsp</result>
+    	 </action>
+    	 <action name="sutaddRelationship" method="addRelationship" class="com.paftp.action.RoleAction">
         <result name="success">/sutroleuser.jsp</result>
+    	 </action>
+    	 <action name="iniaddRelationship" method="addRelationship" class="com.paftp.action.RoleAction">
+        <result name="success">/inimanager.jsp</result>
     	 </action>
 
 	</package>

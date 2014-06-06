@@ -18,7 +18,7 @@
 %>
 <%
 if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/initialAddRelationship.action").forward(request,response);}
+request.getRequestDispatcher("${pageContext.request.contextPath}/sutinitialAddRelationship.action").forward(request,response);}
 String isAdmin = String.valueOf(request.getAttribute("isAdmin"));
 String isManager = String.valueOf(request.getAttribute("isManager"));
 List<User> managers = (List<User>)request.getAttribute("managers");
@@ -60,7 +60,7 @@ String sut_name = (String)request.getAttribute("sut_name");
 	function updateroleac(){
 		document.getElementById('managerstring').value = finmanager();
 		document.getElementById('workerstring').value = finworker();
-		document.userroleForm.action = "${pageContext.request.contextPath}/addRelationship.action";
+		document.userroleForm.action = "${pageContext.request.contextPath}/sutaddRelationship.action";
 		document.userroleForm.submit();
 		};
 	

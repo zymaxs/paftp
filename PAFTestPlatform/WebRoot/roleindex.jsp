@@ -122,7 +122,7 @@ $(document).ready( function(){
 <script type="text/javascript">
 
 function applyUserac(){
-	document.queryForm.action = "${pageContext.request.contextPath}/initialAddRelationship.action";
+	document.queryForm.action = "${pageContext.request.contextPath}/sutinitialAddRelationship.action";
 	document.queryForm.submit();
 	};
 

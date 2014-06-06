@@ -18,7 +18,7 @@
 %>
 <%
 if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/initialAddRelationship.action").forward(request,response);}
+request.getRequestDispatcher("${pageContext.request.contextPath}/iniinitialAddRelationship.action").forward(request,response);}
 String isAdmin = String.valueOf(request.getAttribute("isAdmin"));
 if ( isAdmin != "true" ){%>
 <Meta http-equiv="refresh" content="0;url='index_1.jsp'; ">
@@ -88,7 +88,7 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
 		
 	function updateroleac(){
 		document.getElementById('seniormanagerstring').value = finseniormanager();
-		document.inimanagerForm.action = "${pageContext.request.contextPath}/addRelationship.action";
+		document.inimanagerForm.action = "${pageContext.request.contextPath}/iniaddRelationship.action";
 		document.inimanagerForm.submit();
 		};
 	
@@ -111,7 +111,7 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
     });
     //全部移到左边
     $('#remove_all').click(function() {
-        $('#manage option').appendTo('#freeuser');
+        $('#seniormanager option').appendTo('#normaluser');
     });
 });
 
