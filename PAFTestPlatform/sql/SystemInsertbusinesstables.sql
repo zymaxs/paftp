@@ -1,7 +1,5 @@
 
 
-insert into `paftp`.`userinfo` values("1", "1", "1", "7758521", "7758521", null, null);
-insert into `paftp`.`user` values("1","admin","CY9rzUYh03PK3k6DJie09g==", "Admin", "2014-05-28 11:36:02", null, "old", "1");
 insert into `paftp`.`userinfo` values("2", "1", "1", "12421412", "1242141", null, null);
 insert into `paftp`.`user` values("2","test1","CY9rzUYh03PK3k6DJie09g==", "test1", "2014-05-28 11:36:02", null, "old", "2");
 insert into `paftp`.`userinfo` values("3", "1", "1", "12421412", "1242141", null, null);
