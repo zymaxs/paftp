@@ -161,12 +161,12 @@ public class RoleAction extends ActionSupport {
 		if (isAdmin || isManager) {
 			String[] updateusers = null;
 			if (isAdmin) {
-				if (this.getSut_name() != null) {
-					this.setRole_name(this.getSut_name() + "Manager");
-					updateusers = util.splitString(this.getManagerstring());
-				} else{
+				if (this.getSut_name() == null || this.getSut_name().equals("null")) {
 					this.setRole_name("seniormanager");
 					updateusers = util.splitString(this.getSeniormanagerstring());
+				} else{
+					this.setRole_name(this.getSut_name() + "Manager");
+					updateusers = util.splitString(this.getManagerstring());
 				}
 			} else {
 				this.setRole_name(this.getSut_name() + "Worker");
@@ -232,6 +232,11 @@ public class RoleAction extends ActionSupport {
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
 
+		if (sut == null){
+			request.setAttribute("error", "The sut is not exist!");
+			return "error";
+		}
+		
 		List<Role> roles = sut.getRole_results();
 
 		row = 10;

@@ -12,7 +12,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%
 	if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/queryGroups.action").forward(request,response);}
+request.getRequestDispatcher("${pageContext.request.contextPath}/casequeryGroups.action").forward(request,response);}
 List<SutGroup> sutGroup = (List<SutGroup>)request.getAttribute("sutgroups");
 %>
 <title>无标题文档</title>
@@ -41,7 +41,7 @@ List<SutGroup> sutGroup = (List<SutGroup>)request.getAttribute("sutgroups");
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
-		alert(inisutgroup());
+		//alert(inisutgroup());
 		$("#sutgrouptab").append(inisutgroup());
 		}
 		);
@@ -72,7 +72,6 @@ $(document).ready(function(){
 </head>
 
 <body>
-<%=sutGroup.get(1).getSuts().size()%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
