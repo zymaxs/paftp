@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.util.*,com.paftp.entity.*"%>
+	import="java.util.*,com.paftp.entity.*, com.paftp.dto.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -58,7 +58,7 @@ $(document).ready(function(){
 		for (int i=0; i < sutGroup.size(); i++){
 			String inisutgroupinfo = "";
 			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
-				inisutgroupinfo += "<a href='roleindex.jsp?sutname=" + sutGroup.get(i).getSuts().get(j).getName() +"'>" + sutGroup.get(i).getSuts().get(j).getName() + "</a>"+" ";
+				inisutgroupinfo += "<a href='roleindex.jsp?sut_name=" + sutGroup.get(i).getSuts().get(j).getName() +"'>" + sutGroup.get(i).getSuts().get(j).getName() + "</a>"+" ";
 			}
 			inisutgroup += "<div class='row-fluid'><div class='span12'><blockquote></p>";
 			inisutgroup += sutGroup.get(i).getName();
@@ -90,7 +90,7 @@ $(document).ready(function(){
           <div class="span3 whitelink"
 							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
           <%
-							} else { User user = (User) session.getAttribute("user");
+							} else { UserDto user = (UserDto) session.getAttribute("user");
 									String name = user.getAlias();
 						%>
           <div class="span3 whitelink"

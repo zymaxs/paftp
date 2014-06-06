@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.sql.*,java.util.*,com.paftp.entity.*" errorPage=""%>
+	import="java.sql.*,java.util.*,com.paftp.entity.*, com.paftp.dto.*" errorPage=""%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -15,7 +15,7 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/initialroles.ac
 List<Role> currentPageRoles = (List<Role>)request.getAttribute("currentPageRoles");
 List<User> resultusers = (List<User>)request.getAttribute("resultusers");
 String pagenum = request.getAttribute("pages").toString();
-String sutname = (String)request.getAttribute("sutname");
+String sut_name = (String)request.getAttribute("sut_name");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
@@ -52,13 +52,13 @@ String sutname = (String)request.getAttribute("sutname");
 %>
 <script type="text/javascript">
 var pagentotal = '<%=pagenum%>';
-var sutname1 = '<%=sutname%>';
+var sutname1 = '<%=sut_name%>';
 var params;
 $(document).ready( function(){
 	    $("#roleForm").append(inidata());
 		
 		$("#queryrole").click(function(){
-		params = {pagenum:1,sutname:sutname1,rolealias:$("#rolealias").val(),rolename:$("#rolename").val()};
+		params = {pagenum:1,sut_name:sutname1,rolealias:$("#rolealias").val(),rolename:$("#rolename").val()};
 		$.ajax({
 						type : "POST",
 						url : "queryRolesAjax.action",
@@ -92,7 +92,7 @@ $(document).ready( function(){
 				max_page : pagentotal, 
 				paged : function(page) {
 
-						params = {pagenum:page,sutname:sutname1,rolealias:$("#rolealias").val(),rolename:$("#rolename").val()};
+						params = {pagenum:page,sut_name:sutname1,rolealias:$("#rolealias").val(),rolename:$("#rolename").val()};
 
 						$.ajax({
 						type : "POST",
@@ -170,7 +170,7 @@ function inidata(){
           <div class="span7"></div>
           <%if (session.getAttribute("user") == null) {%>
           <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
-          <%} else { User user = (User) session.getAttribute("user");
+          <%} else { UserDto user = (UserDto) session.getAttribute("user");
 					String name = user.getAlias(); %>
           <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
           <%}%>
@@ -239,7 +239,7 @@ function inidata(){
       <td><input type="text" id="rolealias" name="rolealias"></td>
       <td>角色</td>
       <td><input type="text" id="rolename" name="rolename"></td>
-      <td><input style="display:none" id="sutname" name="sutname" value="<%=sutname%>"></td>
+      <td><input style="display:none" id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
       <td rowspan="2"><button type="button" class="btn btn-primary" onClick="applyUserac()">授权用户</button></td>
     </tr>
     <tr>
