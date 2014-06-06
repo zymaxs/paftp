@@ -26,7 +26,7 @@ String sut_name = (String)request.getAttribute("sut_name");
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
-<script type="text/javascript" src="js/jQSelect.js"></script>
+<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="js/jquery.jqpagination.js"></script>
 <style>
 .whitelink A:link {
@@ -83,11 +83,8 @@ $(document).ready( function(){
 
 						}
 				});
-		
 	
-				
-		});
-	
+	});
 	
 	$('.pagination').jqPagination({
 
