@@ -11,7 +11,6 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.paftp.entity.Permission;
 import com.paftp.entity.Role;
 import com.paftp.entity.Sut;
 import com.paftp.entity.User;
@@ -221,9 +220,10 @@ public class RoleAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		user = this.getSessionUser();
-		if (user == null)
-			return "login";
+		this.setSut_name("mtp");
+//		user = this.getSessionUser();
+//		if (user == null)
+//			return "login";
 
 		if (this.getSut_name() == null) {
 			request.setAttribute("error", "One sut must be given!");
@@ -251,11 +251,11 @@ public class RoleAction extends ActionSupport {
 			}
 		}
 
-		setIsAdmin(isAdmin(user.getAlias()));
-		setIsManager(isManager(user.getAlias()));
-
-		request.setAttribute("isAdmin", this.getIsAdmin());
-		request.setAttribute("isManager", this.getIsManager());
+//		setIsAdmin(isAdmin(user.getAlias()));
+//		setIsManager(isManager(user.getAlias()));
+//
+//		request.setAttribute("isAdmin", this.getIsAdmin());
+//		request.setAttribute("isManager", this.getIsManager());
 		request.setAttribute("pages", pages);
 		request.setAttribute("currentPageRoles", roles);
 		request.setAttribute("sut_name", this.getSut_name());
