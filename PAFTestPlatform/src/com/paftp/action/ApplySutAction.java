@@ -174,7 +174,7 @@ public class ApplySutAction extends ActionSupport {
 		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
 		
-		generateAdminAndManager();
+//		generateAdminAndManager();
 
 		user = getSessionUser();
 		if (user != null && this.isSeniorManager(user.getAlias()) == true)
