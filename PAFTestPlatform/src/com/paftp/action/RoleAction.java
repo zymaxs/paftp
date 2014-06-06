@@ -69,7 +69,7 @@ public class RoleAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		user = this.getSessionUser();
+		user = this.sessionUser();
 
 		if (user == null){
 			request.setAttribute("error", "Please log in!");
@@ -149,7 +149,7 @@ public class RoleAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		user = this.getSessionUser();
+		user = this.sessionUser();
 
 		if (user == null){
 			request.setAttribute("error", "Please log in!");
