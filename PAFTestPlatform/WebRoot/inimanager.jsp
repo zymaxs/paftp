@@ -22,7 +22,7 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/iniinitialAddRe
 String isAdmin = String.valueOf(request.getAttribute("isAdmin"));
 if ( isAdmin != "true" ){%>
 <Meta http-equiv="refresh" content="0;url='index_1.jsp'; ">
-	<%}
+<%}
 List<User> seniormanagers = (List<User>)request.getAttribute("seniormanagers");
 List<User> normalusers = (List<User>)request.getAttribute("normalusers");
 %>
@@ -184,8 +184,10 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
           <div class="container-fluid">
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
-                <li class="active"><a href="index_1.jsp">主页</a></li>
-                <li><a href="sutindex.jsp">SUT申请</a></li>
+                <li><a href="index_1.jsp">主页</a></li>
+                <li><a href="sutindex.jsp">SUT</a></li>
+                <li><a href="rolemanagement.jsp">用户权限</a></li>
+                <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
               </ul>
             </div>
           </div>
@@ -217,7 +219,7 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
             </table></td>
           <td id="manageselect"><select multiple="multiple" id="seniormanager" style="height:300px;">
             </select></td>
-          <td ><input style="display:block" id="seniormanagerstring" name="seniormanagerstring" value="seniormanagerstring"></td>
+          <td ><input style="display:none" id="seniormanagerstring" name="seniormanagerstring" value="seniormanagerstring"></td>
         </tr>
         <tr style="text-align:center">
           <td colspan="3"><input type="button" onClick="updateroleac()" value="更新"></td>

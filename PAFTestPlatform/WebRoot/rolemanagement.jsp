@@ -120,15 +120,11 @@ $(document).ready(function(){
     <form id="loginform" name="loginform" method="post" action="">
       <label for="alias" style="Microsoft YaHei; font-size:12px;">Username:</label>
       <input type="text" name="alias" id="alias" tabindex="1">
-      <label
-					for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
+      <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
       <div>
-        <button type="button" class="btn btn-primary" onClick="loginac()"
-						id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
-        <button type="button" class="btn btn-primary"
-						onClick="window.location.href='findpwd.jsp'" id="findpwdbtn"
-						name="findpwdbtn" tabindex="4">找回密码</button>
+        <button type="button" class="btn btn-primary" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -149,8 +145,9 @@ $(document).ready(function(){
           <div class="container-fluid">
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
-                <li class="active"><a href="index_1.jsp">主页</a></li>
-                <li><a href="sutindex.jsp">SUT申请</a></li>
+                <li><a href="index_1.jsp">主页</a></li>
+                <li><a href="sutindex.jsp">SUT</a></li>
+                <li><a href="rolemanagement.jsp">用户权限</a></li>
               </ul>
             </div>
           </div>
@@ -159,8 +156,7 @@ $(document).ready(function(){
     </div>
   </div>
   <!--主体-->
-  <div id="sutgrouptab">
-  </div>
+  <div id="sutgrouptab"> </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

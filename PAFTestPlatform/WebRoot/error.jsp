@@ -30,13 +30,20 @@
 	TEXT-DECORATION: none
 }
 </style>
-<SCRIPT language=javascript>
-function go()
-{
-window.history.go(-1);
-}
-setTimeout("go()",3000);
-</SCRIPT>
+
+<script language="javascript">
+ var i=2;
+ window.setInterval("settime()",1000);
+ window.setTimeout("toload()",3000);
+ function settime(){
+    var divinner=document.getElementById("settime");
+    divinner.innerText=i;
+    i--;
+ }
+ function toload(){
+    history.go(-1);
+ }
+</script>
 </head>
 
 <body>
@@ -101,7 +108,7 @@ setTimeout("go()",3000);
     <div>
       <p>操作失败！</p>
       <p><%=request.getAttribute("error")%></p>
-      <p>3秒后自动返回上一级!</p>
+      <p><span id="settime">3</span>秒后自动返回上一级!</p>
     </div>
   </div>
   <!--网页底部-->

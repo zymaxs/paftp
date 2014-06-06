@@ -43,7 +43,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		User user = null;
 
 		if (this.getAlias() == null || this.getPassword() == null){
-			request.setAttribute("error", "�û�����������!");
+			request.setAttribute("error", "Username or Password cannot be empty!");
 			return "error";
 		}
 			
@@ -59,7 +59,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 			return "logsuccess";
 		} else {
-			request.setAttribute("error", "�û�����������!");
+			request.setAttribute("error", "Username or Password Wrong!");
 			return "error";
 		}
 
@@ -118,7 +118,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		User dbUser = userService.findUserByAliasAndPassword(this.getAlias(), orignpassword_md5);
 		
 		if(dbUser == null){
-			request.setAttribute("error", "���������");
+			request.setAttribute("error", "User cannot be empty!");
 			return "error";
 		}
 		

@@ -246,8 +246,9 @@ $(function(){
           <div class="container-fluid">
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
-                <li class="active"><a href="index_1.jsp">主页</a></li>
-                <li><a href="sutindex.jsp">SUT申请</a></li>
+                <li><a href="index_1.jsp">主页</a></li>
+                <li><a href="sutindex.jsp">SUT</a></li>
+                <li><a href="rolemanagement.jsp">用户权限</a></li>
               </ul>
             </div>
           </div>
@@ -279,20 +280,14 @@ $(function(){
             </table></td>
           <td id="manageselect"><select multiple="multiple" id="manage" style="height:300px;">
             </select></td>
-            <td id="workerselect"><select multiple="multiple" id="worker" style="height:300px;">
+          <td id="workerselect"><select multiple="multiple" id="worker" style="height:300px;">
             </select></td>
-            <td >
-            <input style="display:none" id="managerstring" name="managerstring" value="managerstring">
-            </td>
-            <td>
-            <input style="display:none" id="workerstring" name="workerstring" value="workerstring">
-            </td>
-            <td>
-            <input style="display:none" id="sut_name" name="sut_name" value="<%=sut_name%>">
-            </td>
+          <td ><input style="display:none" id="managerstring" name="managerstring" value="managerstring"></td>
+          <td><input style="display:none" id="workerstring" name="workerstring" value="workerstring"></td>
+          <td><input style="display:none" id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
         </tr>
         <tr style="text-align:center">
-        	<td colspan="3"><input type="button" onClick="updateroleac()" value="更新"></td>
+          <td colspan="3"><input type="button" onClick="updateroleac()" value="更新"></td>
         </tr>
       </table>
     </fieldset>

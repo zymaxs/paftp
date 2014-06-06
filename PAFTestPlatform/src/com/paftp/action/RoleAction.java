@@ -71,9 +71,11 @@ public class RoleAction extends ActionSupport {
 
 		user = this.getSessionUser();
 
-		if (user == null)
-			return "login";
-
+		if (user == null){
+			request.setAttribute("error", "Please log in!");
+			return "error";
+		}
+		
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));
 
@@ -149,8 +151,10 @@ public class RoleAction extends ActionSupport {
 
 		user = this.getSessionUser();
 
-		if (user == null)
-			return "login";
+		if (user == null){
+			request.setAttribute("error", "Please log in!");
+			return "error";
+		}
 
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));// Verify whether this needs to

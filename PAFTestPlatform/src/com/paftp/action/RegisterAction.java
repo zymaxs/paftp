@@ -52,7 +52,7 @@ public class RegisterAction extends ActionSupport {
 		User user = userService.findUserByAlias(alias);
 
 		if (user != null) {
-			request.setAttribute("error", "���û��Ѵ���!");
+			request.setAttribute("error", "用户名已存在!");
 			return "exist";
 		}
 

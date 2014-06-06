@@ -108,9 +108,10 @@
           <div class="container-fluid">
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
-                <li class="active"><a href="index_1.jsp">主页</a></li>
-                <li><a href="sutindex.jsp">SUT申请</a></li>
+                <li><a href="index_1.jsp">主页</a></li>
+                <li><a href="sutindex.jsp">SUT</a></li>
                 <li><a href="rolemanagement.jsp">用户权限</a></li>
+                <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
               </ul>
             </div>
           </div>

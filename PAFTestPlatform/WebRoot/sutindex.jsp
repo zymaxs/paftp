@@ -140,7 +140,6 @@ function inidata(){
 
 	
 </script>
-
 </head>
 
 <body>
@@ -177,27 +176,18 @@ function inidata(){
     </div>
   </div>
   <!--登录-->
-  <div id="loginmodal" style="display:none;">
-    <div align="center">
+  <div id="loginmodal" style="display:none;" align="center">
+    <div>
       <p>用户登录</p>
     </div>
     <form id="loginform" name="loginform" method="post" action="">
       <label for="alias" style="Microsoft YaHei; font-size:12px;">Username:</label>
-      <input type="text" name="alias" id="alias" class="txtfield"
-					tabindex="1">
-      <label for="password"
-					style="Microsoft YaHei; font-size:12px;">Password:</label>
-      <input
-					type="password" name="password" id="password" class="txtfield"
-					tabindex="2">
-      <div class="center">
-        <input type="button" name="loginbtn" id="loginbtn"
-						class="flatbtn-blu hidemodal" value="Login" tabindex="3"
-						onClick="loginac()">
-        <input type="button"
-						name="findpwdbtn" id="findpwdbtn" class="flatbtn-blu hidemodal"
-						value="找回密码" onClick="window.location.href='findpwd.jsp'"
-						tabindex="4">
+      <input type="text" name="alias" id="alias" tabindex="1">
+      <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
+      <input type="password" name="password" id="password" tabindex="2">
+      <div>
+        <button type="button" class="btn btn-primary" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -218,8 +208,9 @@ function inidata(){
           <div class="container-fluid">
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
-                <li class="active"><a href="index_1.jsp">主页</a></li>
-                <li><a href="sutlist.jsp">SUT申请</a></li>
+                <li><a href="index_1.jsp">主页</a></li>
+                <li><a href="sutindex.jsp">SUT</a></li>
+                <li><a href="rolemanagement.jsp">用户权限</a></li>
               </ul>
             </div>
           </div>
@@ -244,7 +235,9 @@ function inidata(){
         <td><input class="easyui-datetimebox"  id="endtime" name="endtime"></td>
       </tr>
       <tr>
-        <td colspan="2" align="center" align="center"><input type="button" id="querysut" name="querysut" value="搜索"></td>
+          <td colspan="2" align="center" align="center">
+        <input type="button" id="querysut" name="querysut" value="搜索">
+          </td>
       </tr>
     </table>
   </form>
@@ -252,24 +245,24 @@ function inidata(){
   <!--TABLE展示-->
   <table id="sutForm" border="1" width="100%">
     <thead>
-    	<tr>
-        	<td>系统序列号</td>
-            <td>系统名</td>
-            <td>申请人</td>
-            <td>申请日期</td>
-            <td>状态</td>
-        </tr>
+      <tr>
+        <td>系统序列号</td>
+        <td>系统名</td>
+        <td>申请人</td>
+        <td>申请日期</td>
+        <td>状态</td>
+      </tr>
     </thead>
     <tbody id="sutFormTab">
     </tbody>
   </table>
-  <div class="pagination">
-		<a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
-			class="previous" data-action="previous">&lsaquo;</a> <input
-			type="text" readonly="readonly"/> <a href="#"
+  <div class="pagination"> <a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
+			class="previous" data-action="previous">&lsaquo;</a>
+    <input
+			type="text" readonly="readonly"/>
+    <a href="#"
 			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
-			data-action="last">&raquo;</a>
-	</div>
+			data-action="last">&raquo;</a> </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
