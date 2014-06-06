@@ -39,8 +39,8 @@ public class RoleAction extends ActionSupport {
 	private String displayname;
 	private String operation;
 	private String description;
-	private String sut_name;
-	private String role_name;
+	private String sutname;
+	private String rolename;
 
 	private User user = null;
 	private Boolean isAdmin;
@@ -78,13 +78,13 @@ public class RoleAction extends ActionSupport {
 		setIsManager(isManager(user.getAlias()));
 
 		if (isAdmin) {
-			if (this.getSut_name() == null) {
-				this.setRole_name("seniormanager");
+			if (this.getSutname() == null) {
+				this.setRolename("seniormanager");
 			} else {
-				this.setRole_name(this.getSut_name() + "Manager");
+				this.setRolename(this.getSutname() + "Manager");
 			}
 		} else if (isManager) {
-			this.setRole_name(this.getSut_name() + "Worker");
+			this.setRolename(this.getSutname() + "Worker");
 		} else {
 			request.setAttribute("error", "This is not a manager for this!");
 			return "error";
@@ -101,11 +101,10 @@ public class RoleAction extends ActionSupport {
 				} else if (roles.get(j).getName().equals("seniormanager")) {
 					seniormanagers.add(users.get(i));
 					break;
-				} 
-				
+				}
 
 				if (roles.get(j).getName()
-						.equals(this.getSut_name() + "Manager")) {
+						.equals(this.getSutname() + "Manager")) {
 					if (user.getAlias().equals(users.get(i).getAlias())) {
 						break;
 					} else {
@@ -113,7 +112,7 @@ public class RoleAction extends ActionSupport {
 						break;
 					}
 				} else if (roles.get(j).getName()
-						.equals(this.getSut_name() + "Worker")) {
+						.equals(this.getSutname() + "Worker")) {
 					if (user.getAlias().equals(users.get(i).getAlias())) {
 						break;
 					} else {
@@ -133,13 +132,13 @@ public class RoleAction extends ActionSupport {
 		request.setAttribute("freeusers", freeusers);
 		request.setAttribute("seniormanagers", seniormanagers);
 		request.setAttribute("normalusers", normalusers);
-		request.setAttribute("role", this.getRole_name());
+		request.setAttribute("role", this.getRolename());
 		if (this.getIsAdmin())
 			request.setAttribute("isAdmin", isAdmin);
 		if (this.getIsManager())
 			request.setAttribute("isManager", isManager);
 		request.setAttribute("flag", true);
-		request.setAttribute("sut_name", this.getSut_name());
+		request.setAttribute("sut_name", this.getSutname());
 
 		return "success";
 	}
@@ -160,18 +159,20 @@ public class RoleAction extends ActionSupport {
 		if (isAdmin || isManager) {
 			String[] updateusers = null;
 			if (isAdmin) {
-				if (this.getSut_name() == null || this.getSut_name().equals("null")) {
-					this.setRole_name("seniormanager");
-					updateusers = util.splitString(this.getSeniormanagerstring());
-				} else{
-					this.setRole_name(this.getSut_name() + "Manager");
+				if (this.getSutname() == null
+						|| this.getSutname().equals("null")) {
+					this.setRolename("seniormanager");
+					updateusers = util.splitString(this
+							.getSeniormanagerstring());
+				} else {
+					this.setRolename(this.getSutname() + "Manager");
 					updateusers = util.splitString(this.getManagerstring());
 				}
 			} else {
-				this.setRole_name(this.getSut_name() + "Worker");
+				this.setRolename(this.getSutname() + "Worker");
 				updateusers = util.splitString(this.getWorkerstring());
 			}
-			Role role = roleService.findRoleByName(this.getRole_name());
+			Role role = roleService.findRoleByName(this.getRolename());
 
 			List<User> managedusers = role.getUsers();
 			List<User> updatedusers = new ArrayList<User>();
@@ -212,7 +213,7 @@ public class RoleAction extends ActionSupport {
 			request.setAttribute("error", "This is not a manager for this!");
 			return "error";
 		}
-		
+
 		return "success";
 	}
 
@@ -220,23 +221,22 @@ public class RoleAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		this.setSut_name("mtp");
-//		user = this.getSessionUser();
-//		if (user == null)
-//			return "login";
+		// user = this.getSessionUser();
+		// if (user == null)
+		// return "login";
 
-		if (this.getSut_name() == null) {
+		if (this.getSutname() == null) {
 			request.setAttribute("error", "One sut must be given!");
 			return "error";
 		}
 
-		Sut sut = sutService.findSutByName(this.getSut_name());
+		Sut sut = sutService.findSutByName(this.getSutname());
 
-		if (sut == null){
+		if (sut == null) {
 			request.setAttribute("error", "The sut is not exist!");
 			return "error";
 		}
-		
+
 		List<Role> roles = sut.getRole_results();
 
 		row = 10;
@@ -251,14 +251,15 @@ public class RoleAction extends ActionSupport {
 			}
 		}
 
-//		setIsAdmin(isAdmin(user.getAlias()));
-//		setIsManager(isManager(user.getAlias()));
-//
-//		request.setAttribute("isAdmin", this.getIsAdmin());
-//		request.setAttribute("isManager", this.getIsManager());
+		// setIsAdmin(isAdmin(user.getAlias()));
+		// setIsManager(isManager(user.getAlias()));
+		//
+		// request.setAttribute("isAdmin", this.getIsAdmin());
+		// request.setAttribute("isManager", this.getIsManager());
 		request.setAttribute("pages", pages);
 		request.setAttribute("currentPageRoles", roles);
-		request.setAttribute("sut_name", this.getSut_name());
+		request.setAttribute("sut_name", this.getSutname());
+		request.setAttribute("flag", true);
 
 		return "success";
 	}
@@ -268,15 +269,16 @@ public class RoleAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = this.getSessionUser();
-		if (user == null)
-			return "login";
+//		if (user == null) {
+////			return "error";
+//		}
 
-		if (this.getSut_name() == null) {
+		if (this.getSutname() == null) {
 			request.setAttribute("error", "One sut must be given!");
 			return "error";
 		}
 
-		Sut sut = sutService.findSutByName(this.getSut_name());
+		Sut sut = sutService.findSutByName(this.getSutname());
 		List<Role> roles = sut.getRole_results();
 
 		row = 10;
@@ -287,8 +289,8 @@ public class RoleAction extends ActionSupport {
 			conditionuser = userService.findUserByAlias(this.getAlias());
 		}
 		Role conditionrole = null;
-		if (this.getRole_name() != null) {
-			conditionrole = roleService.findRoleByName(this.getRole_name());
+		if (this.getRolename() != null) {
+			conditionrole = roleService.findRoleByName(this.getRolename());
 		}
 
 		Role role = null;
@@ -302,6 +304,9 @@ public class RoleAction extends ActionSupport {
 							|| (conditionuser != null && users.get(j)
 									.getAlias()
 									.equals(conditionuser.getAlias()))) {
+						Role seniorrole = roleService
+								.findRoleByName("seniormanager");
+						users.get(j).getRoles().remove(seniorrole);
 						this.resultusers.add(users.get(j));
 					}
 				}
@@ -310,6 +315,7 @@ public class RoleAction extends ActionSupport {
 
 		this.setResultusers(resultusers);
 		this.setPages(pages);
+
 		return "success";
 	}
 
@@ -374,7 +380,7 @@ public class RoleAction extends ActionSupport {
 		user = userService.findUserByAlias(alias);
 		List<Role> roles = user.getRoles();
 		for (int i = 0; i < roles.size(); i++) {
-			if (roles.get(i).getName().equals(this.getSut_name() + "Manager")) {
+			if (roles.get(i).getName().equals(this.getSutname() + "Manager")) {
 				return true;
 			}
 		}
@@ -489,12 +495,12 @@ public class RoleAction extends ActionSupport {
 		this.isManager = isManager;
 	}
 
-	public String getSut_name() {
-		return sut_name;
+	public String getSutname() {
+		return sutname;
 	}
 
-	public void setSut_name(String sut_name) {
-		this.sut_name = sut_name;
+	public void setSutname(String sutname) {
+		this.sutname = sutname;
 	}
 
 	public Integer getRow() {
@@ -521,12 +527,12 @@ public class RoleAction extends ActionSupport {
 		this.pages = pages;
 	}
 
-	public String getRole_name() {
-		return role_name;
+	public String getRolename() {
+		return rolename;
 	}
 
-	public void setRole_name(String role_name) {
-		this.role_name = role_name;
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
 	}
 
 	public List<User> getResultusers() {

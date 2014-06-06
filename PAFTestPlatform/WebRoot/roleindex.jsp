@@ -11,10 +11,10 @@
 <head>
 <% 
 if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/initialSuts.action").forward(request,response);}
+request.getRequestDispatcher("${pageContext.request.contextPath}/initialroles.action").forward(request,response);}
 List<Role> currentPageRoles = (List<Role>)request.getAttribute("currentPageRoles");
 String pagenum = request.getAttribute("pages").toString();
-String sut_name = (String)request.getAttribute("sut_name");
+String sutname = (String)request.getAttribute("sutname");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -22,6 +22,7 @@ String sut_name = (String)request.getAttribute("sut_name");
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/shou.css" rel="stylesheet">
+<link href="css/jqpagination.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
@@ -51,34 +52,33 @@ String sut_name = (String)request.getAttribute("sut_name");
 %>
 <script type="text/javascript">
 var pagentotal = '<%=pagenum%>';
-var sut_name1 = '<%=sut_name%>';
+var sutname1 = '<%=sutname%>';
 var params;
 $(document).ready( function(){
 	    $("#roleForm").append(inidata());
 		
 		$("#queryrole").click(function(){
-		params = {pagenum:1,sut_name:sut_name1,alias:$("#alias").val(),role_name:$("#role_name").val};
-		
+		params = {pagenum:1,sutname:sutname1,alias:$("#alias").val(),rolename:$("#rolename").val()};
 		$.ajax({
 						type : "POST",
 						url : "queryRolesAjax.action",
 						data : params,
 						dataType : "json",
-						success : function(test) {
+						success : function(root) {
 							$("#roleFormTab").html("");
-							$(test.resultusers).each(function(i,value){
+							$(root.resultusers).each(function(i,value){
 							$(value.roles).each(function(j,role){
 								$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
 							});
 							});
 							
-							$('.pagination').jqPagination('option', 'max_page', test.pages);
-							
+							$('.pagination').jqPagination('option', 'max_page', root.pages);
 						},
-						error : function(root) {
+						error : function(XMLHttpRequest,textStatus,errorThrown) {
 
-							alert("json=" + root);
-
+							alert("status=" + XMLHttpRequest.status);
+							alert("readyStatus=" + XMLHttpRequest.readyStatus);
+							alert("testStatus=" + textStatus);
 							return false;
 
 						}
@@ -92,7 +92,7 @@ $(document).ready( function(){
 				max_page : pagentotal, 
 				paged : function(page) {
 
-						params = {pagenum:page,sut_name:sut_name1,alias:$("#alias").val(),role_name:$("#role_name").val()};
+						params = {pagenum:page,sutname:sutname1,alias:$("#alias").val(),rolename:$("#rolename").val()};
 
 						$.ajax({
 						type : "POST",
@@ -102,7 +102,7 @@ $(document).ready( function(){
 						success : function(root) {
 	
 							$("#roleFormTab").html("");
-							$(root.users).each(function(i,value){
+							$(root.resultusers).each(function(i,value){
 								$(value.roles).each(function(j,role){
 									$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
 								});
@@ -153,7 +153,7 @@ function inidata(){
 
 <body>
 <%=pagenum%>
-<%=sut_name%>
+<%=sutname%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff; margin:auto">
@@ -211,8 +211,8 @@ function inidata(){
         <td>用户</td>
         <td><input type="text" id="alias" name="alias"></td>
         <td>角色</td>
-        <td><input type="text" id="role_name" name="role_name"></td>
-        <td><input style="display:none" id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
+        <td><input type="text" id="rolename" name="rolename"></td>
+        <td><input style="display:block" id="sutname" name="sutname" value="<%=sutname%>"></td>
         <td rowspan="2"><button type="button" class="btn btn-primary" onClick="applyUserac()">授权用户</button></td>
         </tr>
       <tr>
