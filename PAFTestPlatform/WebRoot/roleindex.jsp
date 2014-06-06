@@ -10,6 +10,8 @@
 <html>
 <head>
 <% 
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/initialSuts.action").forward(request,response);}
 List<Role> currentPageRoles = (List<Role>)request.getAttribute("currentPageRoles");
 String pagenum = request.getAttribute("pages").toString();
 String sut_name = (String)request.getAttribute("sut_name");
