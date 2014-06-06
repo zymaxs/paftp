@@ -1,6 +1,7 @@
 package com.paftp.action;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -35,7 +36,7 @@ public class RoleAction extends ActionSupport {
 	private PermissionService permissionService;
 	@Resource
 	private SutService sutService;
-	private String alias;
+	private String rolealias;
 	private String displayname;
 	private String operation;
 	private String description;
@@ -272,7 +273,7 @@ public class RoleAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		user = this.getSessionUser();
+//		user = this.getSessionUser();
 //		if (user == null) {
 ////			return "error";
 //		}
@@ -289,8 +290,8 @@ public class RoleAction extends ActionSupport {
 		pages = (long) Math.ceil(roles.size() / (double) row);
 
 		User conditionuser = null;
-		if (this.getAlias() != null) {
-			conditionuser = userService.findUserByAlias(this.getAlias());
+		if (this.getRolealias() != null) {
+			conditionuser = userService.findUserByAlias(this.getRolealias());
 		}
 		Role conditionrole = null;
 		if (this.getRolename() != null) {
@@ -304,7 +305,7 @@ public class RoleAction extends ActionSupport {
 					|| role.getId().equals(conditionrole.getId())) {
 				List<User> users = role.getUsers();
 				for (int j = 0; j < users.size(); j++) {
-					if (this.getAlias() == null
+					if (this.getRolealias() == null || this.getRolealias().equals("")
 							|| (conditionuser != null && users.get(j)
 									.getAlias()
 									.equals(conditionuser.getAlias()))) {
@@ -316,7 +317,7 @@ public class RoleAction extends ActionSupport {
 				}
 			}
 		}
-
+		
 		this.setResultusers(resultusers);
 		this.setPages(pages);
 
@@ -483,14 +484,6 @@ public class RoleAction extends ActionSupport {
 		this.queryUser = queryUser;
 	}
 
-	public String getAlias() {
-		return alias;
-	}
-
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-
 	public Boolean getIsManager() {
 		return isManager;
 	}
@@ -593,5 +586,13 @@ public class RoleAction extends ActionSupport {
 
 	public void setSeniormanagerstring(String seniormanagerstring) {
 		this.seniormanagerstring = seniormanagerstring;
+	}
+
+	public String getRolealias() {
+		return rolealias;
+	}
+
+	public void setRolealias(String rolealias) {
+		this.rolealias = rolealias;
 	}
 }

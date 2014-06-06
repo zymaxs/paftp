@@ -13,6 +13,7 @@
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialroles.action").forward(request,response);}
 List<Role> currentPageRoles = (List<Role>)request.getAttribute("currentPageRoles");
+List<User> resultusers = (List<User>)request.getAttribute("resultusers");
 String pagenum = request.getAttribute("pages").toString();
 String sutname = (String)request.getAttribute("sutname");
 %>
@@ -57,7 +58,7 @@ $(document).ready( function(){
 	    $("#roleForm").append(inidata());
 		
 		$("#queryrole").click(function(){
-		params = {pagenum:1,sutname:sutname1,alias:$("#alias").val(),rolename:$("#rolename").val()};
+		params = {pagenum:1,sutname:sutname1,rolealias:$("#rolealias").val(),rolename:$("#rolename").val()};
 		$.ajax({
 						type : "POST",
 						url : "queryRolesAjax.action",
@@ -91,7 +92,7 @@ $(document).ready( function(){
 				max_page : pagentotal, 
 				paged : function(page) {
 
-						params = {pagenum:page,sutname:sutname1,alias:$("#alias").val(),rolename:$("#rolename").val()};
+						params = {pagenum:page,sutname:sutname1,rolealias:$("#rolealias").val(),rolename:$("#rolename").val()};
 
 						$.ajax({
 						type : "POST",
@@ -235,7 +236,7 @@ function inidata(){
   <table width="900px">
     <tr>
       <td>用户</td>
-      <td><input type="text" id="alias" name="alias"></td>
+      <td><input type="text" id="rolealias" name="rolealias"></td>
       <td>角色</td>
       <td><input type="text" id="rolename" name="rolename"></td>
       <td><input style="display:none" id="sutname" name="sutname" value="<%=sutname%>"></td>

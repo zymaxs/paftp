@@ -1,13 +1,11 @@
 package com.paftp.action;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.SessionMap;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.User;
-import com.paftp.entity.UserInfo;
 import com.paftp.service.user.UserService;
 import com.paftp.util.SSHClient;
 import com.paftp.util.Util;
