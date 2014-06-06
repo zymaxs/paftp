@@ -14,8 +14,8 @@ insert into applysutstatus values("1", "Pending", "待审批");
 insert into applysutstatus values("2", "Pass", "通过");
 insert into applysutstatus values("3", "Reject", "拒绝");
 
-insert into role values("1", "administrator", "The admin role", "");
-insert into role values("2", "seniormanager", "The senior manager role", "");
+insert into role values("1", "administrator", "The admin role", null);
+insert into role values("2", "seniormanager", "The senior manager role", null);
 insert into `paftp`.`userinfo` values("1", "1", "1", "7758521", "7758521", null, null);
 insert into `paftp`.`user` values("1","admin","CY9rzUYh03PK3k6DJie09g==", "Admin", "2014-05-28 11:36:02", null, "old", "1");
 insert into user_role values ("1","1","1", "");
