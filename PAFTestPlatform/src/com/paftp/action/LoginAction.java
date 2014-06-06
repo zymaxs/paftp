@@ -13,7 +13,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.paftp.dto.UserDto;
 import com.paftp.entity.User;
 import com.paftp.service.user.UserService;
 import com.paftp.util.SSHClient;
@@ -50,9 +49,9 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		
 		if (user != null) {
 			
-			UserDto sessionuser = userService.getUserDto(user);
+//			UserDto sessionuser = userService.getUserDto(user);
 			
-			sessionMap.put("user", sessionuser);
+			sessionMap.put("user", user);
 			if(user.getStatus().equals("initial"))
 				return "update";
 

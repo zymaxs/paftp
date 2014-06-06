@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.sql.*,java.util.*,com.paftp.entity.*, com.paftp.dto.*" errorPage=""%>
+	import="java.sql.*,java.util.*,com.paftp.entity.*" errorPage=""%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -170,7 +170,7 @@ function inidata(){
           <div class="span7"></div>
           <%if (session.getAttribute("user") == null) {%>
           <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
-          <%} else { UserDto user = (UserDto) session.getAttribute("user");
+          <%} else { User user = (User) session.getAttribute("user");
 					String name = user.getAlias(); %>
           <div class="span3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
           <%}%>
