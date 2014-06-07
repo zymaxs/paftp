@@ -102,7 +102,6 @@ public class RoleAction extends ActionSupport {
 					break;
 				} else if (roles.get(j).getName().equals("seniormanager")) {
 					seniormanagers.add(users.get(i));
-					break;
 				}
 
 				if (roles.get(j).getName()
@@ -255,11 +254,6 @@ public class RoleAction extends ActionSupport {
 			}
 		}
 
-		// setIsAdmin(isAdmin(user.getAlias()));
-		// setIsManager(isManager(user.getAlias()));
-		//
-		// request.setAttribute("isAdmin", this.getIsAdmin());
-		// request.setAttribute("isManager", this.getIsManager());
 		request.setAttribute("pages", pages);
 		request.setAttribute("currentPageRoles", roles);
 		request.setAttribute("sut_name", this.getSut_name());
@@ -271,13 +265,11 @@ public class RoleAction extends ActionSupport {
 	public String queryRoles() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-
-//		request.getSession().invalidate();
 		
-//		user = this.getSessionUser();
-//		if (user == null) {
-////			return "error";
-//		}
+		user = this.sessionUser();
+		if (user == null) {
+			return "error";
+		}
 
 		if (this.getSut_name() == null) {
 			request.setAttribute("error", "One sut must be given!");
@@ -325,7 +317,7 @@ public class RoleAction extends ActionSupport {
 		return "success";
 	}
 
-	public List<String> getManagedSut(String alias) {
+	private List<String> getManagedSut(String alias) {
 
 		String sutName;
 		List<String> sut_names = new ArrayList<String>();
@@ -347,7 +339,7 @@ public class RoleAction extends ActionSupport {
 		return sut_names;
 	}
 
-	public List<String> getRoles(String roleName) {
+	private List<String> getRoles(String roleName) {
 		List<Role> roles = roleService.findAllList();
 		List<String> names = new ArrayList<String>();
 		for (int i = 0; i < roles.size(); i++) {
@@ -358,7 +350,7 @@ public class RoleAction extends ActionSupport {
 		return names;
 	}
 
-	public User sessionUser() {
+	private User sessionUser() {
 
 		HttpSession session = ServletActionContext.getRequest().getSession(
 				false);
