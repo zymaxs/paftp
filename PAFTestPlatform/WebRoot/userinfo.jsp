@@ -21,11 +21,13 @@ UserInfo userinfo = (UserInfo) user.getUserInfo();
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/shou.css" rel="stylesheet">
+<link href="css/jqpagination.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <script type="text/javascript" src="js/jQSelect.js"></script>
+<script type="text/javascript" src="js/jquery.jqpagination.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -90,7 +92,7 @@ if (userinfo.getOthermail() != null) {
 var pagentotal = <%=pagenum%>;
 var params;
 $(document).ready( function(){
-	$("#roleForm").append(inidata());
+	$("#roleFormTab").append(inidata());
 		
 	$('.pagination').jqPagination({
 		link_string : '/?page={page_number}',
@@ -104,7 +106,7 @@ $(document).ready( function(){
 				dataType : "json",
 				success : function(root) {
 
-					$("#sutFormTab").html("");
+					$("#roleFormTab").html("");
 					$(root.currentPageRoles).each(function(i,value){
 						if (value.sut == null)
 							$("#sutFormTab").append("<tr>"+"<td>"+value.name+"</td>"+"<td>"+value.description+"</td>"+"</tr>");
