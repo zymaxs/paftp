@@ -49,7 +49,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		
 		if (user != null) {
 			
-//			UserDto sessionuser = userService.getUserDto(user);
+//			User newuser = new User();
+//			newuser.setAlias(user.getAlias());
+//			newuser.setStatus("old");
+//			newuser.setDisplayName(user.getDisplayName());
 			
 			sessionMap.put("user", user);
 			if(user.getStatus().equals("initial"))
