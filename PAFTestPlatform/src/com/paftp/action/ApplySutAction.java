@@ -210,7 +210,7 @@ public class ApplySutAction extends ActionSupport {
 		User applyer = userService.findUserByAlias(this.getApplyer());
 		
 		Integer applyer_id = null;
-		if (this.getApplyer() != null && applyer == null){
+		if (this.getApplyer() != null && this.getApplyer().equals("") == false && applyer == null){
 			applyer_id = -1;
 		}else if(applyer != null){
 			applyer_id = applyer.getId();
