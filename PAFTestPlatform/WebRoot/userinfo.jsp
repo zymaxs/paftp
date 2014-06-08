@@ -141,7 +141,7 @@ function inidata(){
 			iniinsertdata +="<td>"+roles.get(i).getSut().getName()+"</td>";
 		}
 		else {
-			iniinsertdata += "<td></td>"
+			iniinsertdata += "<td></td>";
 			}
 		iniinsertdata +="<td>"+roles.get(i).getDescription()+"</td>";
 		iniinsertdata +="</tr>";
