@@ -255,8 +255,7 @@ public class ApplySutAction extends ActionSupport {
 
 	public String updateSut() {
 
-		ApplySut applySut = applySutService.findApplySutByName(this
-				.getSutname());
+		ApplySut applySut = applySutService.findApplySutById(this.getId());
 
 		User user = userService.findUserByAlias(applySut.getUser().getAlias());
 		applySut.setUser(user);
