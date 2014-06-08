@@ -327,7 +327,7 @@ public class ApplySutAction extends ActionSupport {
 			applySut.setComment(this.getComment());
 			applySut.setGroup(sutGroup);
 
-			if (applySutStatus.getId() == 2) { // if pass then create the
+			if (applySutStatus.getId() == 3) { // if pass then create the
 												// corresponding permissions
 
 				initialRolePermissions(applySut.getUser());
