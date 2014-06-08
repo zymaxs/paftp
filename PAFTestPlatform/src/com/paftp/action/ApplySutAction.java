@@ -232,8 +232,12 @@ public class ApplySutAction extends ActionSupport {
 
 		if (this.getRow() == null)
 			this.setRow(10);
-
+		
+		if (pagecount > 0){
 		pages = (long) Math.ceil(pagecount / (double) this.getRow());
+		}else {
+			pages = (long) 1;
+		}
 
 		List<ApplySut> applySuts = applySutService
 				.findAllOrderByMultiConditions(conditions,
