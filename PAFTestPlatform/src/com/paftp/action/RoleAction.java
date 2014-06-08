@@ -265,11 +265,6 @@ public class RoleAction extends ActionSupport {
 	public String queryRoles() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
-		user = this.sessionUser();
-		if (user == null) {
-			return "error";
-		}
 
 		if (this.getSut_name() == null) {
 			request.setAttribute("error", "One sut must be given!");
