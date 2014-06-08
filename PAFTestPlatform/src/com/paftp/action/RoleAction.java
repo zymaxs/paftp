@@ -97,33 +97,44 @@ public class RoleAction extends ActionSupport {
 		for (int i = 0; i < users.size(); i++) {
 			List<Role> roles = users.get(i).getRoles();
 			int j;
+			boolean freeuser = true;
+			boolean normaluser = true;
 			for (j = 0; j < roles.size(); j++) {
 				if (roles.get(j).getName().equals("administrator")) {
+					freeuser = false;
+					normaluser = false;
 					break;
-				} else if (roles.get(j).getName().equals("seniormanager")) {
+				} else if (roles.get(j).getName().equals("seniormanager") && normaluser == true) {
 					seniormanagers.add(users.get(i));
+					normaluser = false;
 				}
 
 				if (roles.get(j).getName()
 						.equals(this.getSut_name() + "Manager")) {
 					if (user.getAlias().equals(users.get(i).getAlias())) {
+						freeuser = false;
 						break;
 					} else {
 						managers.add(users.get(i));
+						freeuser = false;
 						break;
 					}
 				} else if (roles.get(j).getName()
 						.equals(this.getSut_name() + "Worker")) {
 					if (user.getAlias().equals(users.get(i).getAlias())) {
+						freeuser = false;
 						break;
 					} else {
 						workers.add(users.get(i));
+						freeuser = false;
 						break;
 					}
 				}
 			}
-			if (j == roles.size()) {
+			if (normaluser){
 				normalusers.add(users.get(i));
+			}
+			if (freeuser) {
 				freeusers.add(users.get(i));
 			}
 		}

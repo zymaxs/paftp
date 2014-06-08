@@ -197,8 +197,7 @@ public class ApplySutAction extends ActionSupport {
 			}
 		}
 
-		ApplySut applySut = applySutService.findApplySutByName(this
-				.getSutname());
+		ApplySut applySut = applySutService.findApplySutById(this.getId());
 
 		request.setAttribute("applySut", applySut);
 
