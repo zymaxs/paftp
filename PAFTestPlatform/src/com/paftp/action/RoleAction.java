@@ -227,6 +227,8 @@ public class RoleAction extends ActionSupport {
 			request.setAttribute("error", "This is not a manager for this!");
 			return "error";
 		}
+		
+		request.setAttribute("sut_name", this.getSut_name());
 
 		return "success";
 	}
