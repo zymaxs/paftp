@@ -68,7 +68,7 @@ $(document).ready( function(){
 							$("#roleFormTab").html("");
 							$(root.resultusers).each(function(i,value){
 							$(value.roles).each(function(j,role){
-								$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+value.displayname+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
+								$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+value.displayName+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
 							});
 							});
 							
@@ -104,7 +104,7 @@ $(document).ready( function(){
 							$("#roleFormTab").html("");
 							$(root.resultusers).each(function(i,value){
 								$(value.roles).each(function(j,role){
-									$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+value.displayname+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
+									$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+value.displayName+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
 								});
 							});
 						},
@@ -236,7 +236,7 @@ function inidata(){
 <form id="queryForm" name="queryForm" action="" style="width:100%">
   <table width="900px">
     <tr>
-      <td>用户</td>
+      <td>账号</td>
       <td><input type="text" id="rolealias" name="rolealias"></td>
       <td>角色</td>
       <td><input type="text" id="role_name" name="role_name"></td>

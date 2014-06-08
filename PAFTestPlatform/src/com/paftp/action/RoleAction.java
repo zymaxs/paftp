@@ -295,7 +295,7 @@ public class RoleAction extends ActionSupport {
 			conditionuser = userService.findUserByAlias(this.getRolealias());
 		}
 		Role conditionrole = null;
-		if (this.getRole_name() != null) {
+		if (this.getRole_name() != null && this.getRole_name().equals("") == false) {
 			conditionrole = roleService.findRoleByName(this.getRole_name());
 		}
 
@@ -310,9 +310,11 @@ public class RoleAction extends ActionSupport {
 							|| (conditionuser != null && users.get(j)
 									.getAlias()
 									.equals(conditionuser.getAlias()))) {
-						Role seniorrole = roleService
-								.findRoleByName("seniormanager");
-						users.get(j).getRoles().remove(seniorrole);
+//						Role seniorrole = roleService
+//								.findRoleByName("seniormanager");
+						List<Role> currentroles = new ArrayList<Role>();
+						currentroles.add(role);
+						users.get(j).setRoles(currentroles);
 						this.resultusers.add(users.get(j));
 					}
 				}
