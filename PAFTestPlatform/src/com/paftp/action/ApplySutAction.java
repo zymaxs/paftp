@@ -207,18 +207,15 @@ public class ApplySutAction extends ActionSupport {
 
 	public String querySut() throws ParseException {
 
-		User applyerUser = userService.findUserByAlias(this.getApplyer());
-		ApplySutStatus applySutStatus = applySutStatusService
-				.findApplySutStatusByName(this.getStatus());
-
-		Integer applyerid = null;
-		Integer status_id = null;
-		if (applyerUser != null) {
-			applyerid = applyerUser.getId();
+		User applyer = userService.findUserByAlias(this.getApplyer());
+		
+		Integer applyer_id = null;
+		if (this.getApplyer() != null && applyer == null){
+			applyer_id = -1;
+		}else if(applyer != null){
+			applyer_id = applyer.getId();
 		}
-		if (applySutStatus != null) {
-			status_id = applySutStatus.getId();
-		}
+		
 
 		result = new HashMap<String, Object>();
 
@@ -227,10 +224,9 @@ public class ApplySutAction extends ActionSupport {
 
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("name", this.getSutname());
-		conditions.put("user.id", applyerid);
+		conditions.put("user.id", applyer_id);
 		conditions.put("starttime", util.stringToSqlDate(newStartTime));
 		conditions.put("endtime", util.stringToSqlDate(newEndTime));
-		conditions.put("status_id", status_id);
 
 		Long pagecount = applySutService.findPagesByMultiConditions(conditions);
 
