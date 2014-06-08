@@ -1,6 +1,5 @@
 package com.paftp.service.user.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,9 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
-import com.paftp.dto.ApplySutDto;
-import com.paftp.entity.Permission;
-import com.paftp.entity.Role;
 import com.paftp.entity.User;
 import com.paftp.service.user.UserService;
 

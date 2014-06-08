@@ -69,7 +69,7 @@
 			<result name="success">/sutindex.jsp</result>
 			<result name="error">/error.jsp</result>
 			<result name="login">/login.jsp</result>
-			<result name="exist">/exist.jsp</result>
+			<result name="exist">/error.jsp</result>
 		</action>
 		<action name="approveSut" method="approveSut" class="com.paftp.action.ApplySutAction">
 			<result name="success">/sutindex.jsp</result>
@@ -117,7 +117,7 @@
         <result name="error">/error.jsp</result>
     	 </action>
     	 <action name="sutaddRelationship" method="addRelationship" class="com.paftp.action.RoleAction">
-        <result name="success">/sutroleuser.jsp</result>
+        <result name="success">/dispatch.jsp</result>
         <result name="error">/error.jsp</result>
     	 </action>
     	 <action name="iniaddRelationship" method="addRelationship" class="com.paftp.action.RoleAction">

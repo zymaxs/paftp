@@ -106,7 +106,7 @@ public class ApplySut {
 		this.description = description;
 	}
 	
-	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "group_id")
 	public SutGroup getGroup() {
 		return group;
@@ -115,7 +115,7 @@ public class ApplySut {
 		this.group = group;
 	}
 
-	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "status_id")
 	public ApplySutStatus getApplysutstatus() {
 		return applysutstatus;

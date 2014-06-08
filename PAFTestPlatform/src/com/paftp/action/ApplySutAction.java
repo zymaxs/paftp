@@ -92,9 +92,10 @@ public class ApplySutAction extends ActionSupport {
 
 		if (user == null)
 			return "login";
-		
-		if(isSeniorManager(user.getAlias()) == false){
-			request.setAttribute("error", "The user hasn't authority to do this!");
+
+		if (isSeniorManager(user.getAlias()) == false) {
+			request.setAttribute("error",
+					"The user hasn't authority to do this!");
 			return "error";
 		}
 
@@ -135,7 +136,7 @@ public class ApplySutAction extends ActionSupport {
 		if (user == null)
 			return "login";
 
-		 this.isAdmin = this.isAdmin(user.getAlias());
+		this.isAdmin = this.isAdmin(user.getAlias());
 
 		if (this.getStatus() == null) {
 			request.setAttribute("error",
@@ -143,10 +144,10 @@ public class ApplySutAction extends ActionSupport {
 			return "error";
 		}
 
-		 if (!this.isAdmin) {
-		 request.setAttribute("error", "You are not the admin to do this!");
-		 return "error";
-		 }
+		if (!this.isAdmin) {
+			request.setAttribute("error", "You are not the admin to do this!");
+			return "error";
+		}
 		ApplySut applySut = applySutService.findApplySutByName(this
 				.getSutname());
 
@@ -160,7 +161,7 @@ public class ApplySutAction extends ActionSupport {
 	public String initialSuts() throws IOException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
+
 		result = new HashMap<String, Object>();
 
 		row = 10;
@@ -173,13 +174,13 @@ public class ApplySutAction extends ActionSupport {
 		request.setAttribute("pages", pages);
 		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
-		
-//		generateAdminAndManager();
+
+		// generateAdminAndManager();
 
 		user = getSessionUser();
 		if (user != null && this.isSeniorManager(user.getAlias()) == true)
 			request.setAttribute("isSeniormanager", true);
-		
+
 		return "success";
 
 	}
@@ -193,11 +194,10 @@ public class ApplySutAction extends ActionSupport {
 			this.isAdmin = this.isAdmin(user.getAlias());
 			if (isAdmin) {
 				request.setAttribute("isAdmin", "true");
-			} 
+			}
 		}
 
-		ApplySut applySut = applySutService.findApplySutByName(this
-				.getSutname());
+		ApplySut applySut = applySutService.findApplySutById(this.getId());
 
 		request.setAttribute("applySut", applySut);
 
@@ -207,18 +207,15 @@ public class ApplySutAction extends ActionSupport {
 
 	public String querySut() throws ParseException {
 
-		User applyerUser = userService.findUserByAlias(this.getApplyer());
-		ApplySutStatus applySutStatus = applySutStatusService
-				.findApplySutStatusByName(this.getStatus());
-
-		Integer applyerid = null;
-		Integer status_id = null;
-		if (applyerUser != null) {
-			applyerid = applyerUser.getId();
+		User applyer = userService.findUserByAlias(this.getApplyer());
+		
+		Integer applyer_id = null;
+		if (this.getApplyer() != null && this.getApplyer().equals("") == false && applyer == null){
+			applyer_id = -1;
+		}else if(applyer != null){
+			applyer_id = applyer.getId();
 		}
-		if (applySutStatus != null) {
-			status_id = applySutStatus.getId();
-		}
+		
 
 		result = new HashMap<String, Object>();
 
@@ -227,17 +224,20 @@ public class ApplySutAction extends ActionSupport {
 
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("name", this.getSutname());
-		conditions.put("user.id", applyerid);
+		conditions.put("user.id", applyer_id);
 		conditions.put("starttime", util.stringToSqlDate(newStartTime));
 		conditions.put("endtime", util.stringToSqlDate(newEndTime));
-		conditions.put("status_id", status_id);
 
 		Long pagecount = applySutService.findPagesByMultiConditions(conditions);
 
 		if (this.getRow() == null)
 			this.setRow(10);
-
+		
+		if (pagecount > 0){
 		pages = (long) Math.ceil(pagecount / (double) this.getRow());
+		}else {
+			pages = (long) 1;
+		}
 
 		List<ApplySut> applySuts = applySutService
 				.findAllOrderByMultiConditions(conditions,
@@ -254,8 +254,7 @@ public class ApplySutAction extends ActionSupport {
 
 	public String updateSut() {
 
-		ApplySut applySut = applySutService.findApplySutByName(this
-				.getSutname());
+		ApplySut applySut = applySutService.findApplySutById(this.getId());
 
 		User user = userService.findUserByAlias(applySut.getUser().getAlias());
 		applySut.setUser(user);
@@ -263,14 +262,15 @@ public class ApplySutAction extends ActionSupport {
 				.getGroupname());
 		applySut.setGroup(sutgroup);
 		ApplySutStatus applySutStatus = applySutStatusService
-				.findApplySutStatusByName(applySut.getApplysutstatus().getName());
+				.findApplySutStatusByName(applySut.getApplysutstatus()
+						.getName());
 		applySut.setApplysutstatus(applySutStatus);
 
 		applySut.setCode(this.getCode());
 		applySut.setName(this.getSutname());
 		applySut.setComment(this.getComment());
 		applySut.setDescription(this.getDescription());
-		
+
 		this.resolvetime = new Date();
 		applySut.setResolvetime(this.getResolvetime());
 
@@ -278,25 +278,25 @@ public class ApplySutAction extends ActionSupport {
 
 		return "success";
 	}
-	
-	public String queryGroups(){
-		
+
+	public String queryGroups() {
+
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
+
 		List<SutGroup> sutgroups = sutgroupService.findAllList();
-		
+
 		request.setAttribute("sutgroups", sutgroups);
 		request.setAttribute("flag", "true");
-		
+
 		return "success";
 	}
 
 	private ApplySut setApplySut(ApplySut applySut, String status) {
 
-		if(status == null){
+		if (status == null) {
 			status = "Pending";
 		}
-		
+
 		ApplySutStatus applySutStatus = applySutStatusService
 				.findApplySutStatusByName(status);
 
@@ -306,27 +306,32 @@ public class ApplySutAction extends ActionSupport {
 
 		if (applySutStatus.getId() == 1) { // status: �����
 			this.applytime = new Date();
+			java.sql.Timestamp applydatetime = new java.sql.Timestamp(applytime.getTime());
+			applySut.setApplytime(applydatetime);
+
 			applySut.setApplysutstatus(applySutStatus);
-			applySut.setApplytime(applytime);
+
 			applySut.setCode(this.getCode());
 			applySut.setName(this.getSutname());
 			applySut.setDescription(this.getDescription());
-			SutGroup group = sutgroupService.findSutGroupByName(this.getGroupname());
+			SutGroup group = sutgroupService.findSutGroupByName(this
+					.getGroupname());
 			applySut.setGroup(group);
 		} else { // status: ͨ����߾ܾ�
 			this.resolvetime = new Date();
+			java.sql.Timestamp resolvedatetime = new java.sql.Timestamp(resolvetime.getTime());
 			applySut.setApplysutstatus(applySutStatus);
 			SutGroup sutGroup = sutgroupService.findSutGroupByName(this
 					.getGroupname());
-			applySut.setResolvetime(resolvetime);
+			applySut.setResolvetime(resolvedatetime);
 			applySut.setComment(this.getComment());
 			applySut.setGroup(sutGroup);
 
-			if (applySutStatus.getId() == 2) { // if pass then create the
+			if (applySutStatus.getId() == 3) { // if pass then create the
 												// corresponding permissions
 
 				initialRolePermissions(applySut.getUser());
-				
+
 			}
 		}
 
@@ -354,7 +359,8 @@ public class ApplySutAction extends ActionSupport {
 			sut.setCode(this.getCode());
 			sut.setName(this.getSutname());
 			sut.setDescription(this.getDescription());
-			SutGroup group = sutgroupService.findSutGroupByName(this.getGroupname());
+			SutGroup group = sutgroupService.findSutGroupByName(this
+					.getGroupname());
 			sut.setGroup(group);
 			sutService.saveSut(sut);
 		}
@@ -398,7 +404,7 @@ public class ApplySutAction extends ActionSupport {
 		Permission permission2 = null;
 		List<Permission> permissions2 = null;
 		role2 = new Role();
-		role2.setName(sut.getName() + "Worker");
+		role2.setName(sut.getName() + "Sdet");
 		role2.setDescription("The role is:" + sut.getName());
 		role2.setSut(sut);
 		permissions2 = new ArrayList<Permission>();
@@ -407,39 +413,38 @@ public class ApplySutAction extends ActionSupport {
 		role2.setPermissions(permissions2);
 		role2.setSut(sut);
 
-	
-		if (roleService.findRoleByName(sut.getName() + "Manager") == null){
-		roleService.saveRole(role);
-		User applyer = userService.findUserByAlias(user.getAlias());
-		applyer.getRoles().add(role);
-		userService.saveUser(applyer);
+		if (roleService.findRoleByName(sut.getName() + "Manager") == null) {
+			roleService.saveRole(role);
+			User applyer = userService.findUserByAlias(user.getAlias());
+			applyer.getRoles().add(role);
+			userService.saveUser(applyer);
 		}
-		if (roleService.findRoleByName(sut.getName() + "Worker") == null){
-		roleService.saveRole(role2); // Save the new system worker
+		if (roleService.findRoleByName(sut.getName() + "Sdet") == null) {
+			roleService.saveRole(role2); // Save the new system worker
 		}
-		
 
 	}
-	
-	private void generateAdminAndManager(){
+
+	private void generateAdminAndManager() {
 		if (roleService.findRoleByName("administrator") == null) {
 			User user = userService.findUserByAlias("admin");
 			List<Role> roles = new ArrayList<Role>();
-			
+
 			Role adminRole = new Role();
 			adminRole.setName("administrator");
 			adminRole.setDescription("The admin role!");
 			List<Permission> adminPermissions = permissionService.findAllList();
 			adminRole.setPermissions(adminPermissions);
-			
+
 			Role managerRole = new Role();
 			managerRole.setName("seniormanager");
 			managerRole.setDescription("The up manager role!");
 			managerRole.setPermissions(adminPermissions);
-			
-			roleService.saveRole(adminRole); // Save the new system administrator
+
+			roleService.saveRole(adminRole); // Save the new system
+												// administrator
 			roleService.saveRole(managerRole);
-			
+
 			roles.add(adminRole);
 			user.setRoles(roles);
 			userService.updateUser(user);
@@ -456,7 +461,7 @@ public class ApplySutAction extends ActionSupport {
 		}
 		return false;
 	}
-	
+
 	private Boolean isSeniorManager(String alias) {
 		user = userService.findUserByAlias(alias);
 		List<Role> roles = user.getRoles();

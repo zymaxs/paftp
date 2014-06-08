@@ -58,7 +58,7 @@ $(document).ready( function(){
 	    $("#roleForm").append(inidata());
 		
 		$("#queryrole").click(function(){
-		params = {pagenum:1,sut_name:sutname1,rolealias:$("#rolealias").val(),rolename:$("#rolename").val()};
+		params = {pagenum:1,sut_name:sutname1,rolealias:$("#rolealias").val(),role_name:$("#role_name").val()};
 		$.ajax({
 						type : "POST",
 						url : "queryRolesAjax.action",
@@ -68,7 +68,7 @@ $(document).ready( function(){
 							$("#roleFormTab").html("");
 							$(root.resultusers).each(function(i,value){
 							$(value.roles).each(function(j,role){
-								$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
+								$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+value.displayName+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
 							});
 							});
 							
@@ -92,7 +92,7 @@ $(document).ready( function(){
 				max_page : pagentotal, 
 				paged : function(page) {
 
-						params = {pagenum:page,sut_name:sutname1,rolealias:$("#rolealias").val(),rolename:$("#rolename").val()};
+						params = {pagenum:page,sut_name:sutname1,rolealias:$("#rolealias").val(),role_name:$("#role_name").val()};
 
 						$.ajax({
 						type : "POST",
@@ -104,7 +104,7 @@ $(document).ready( function(){
 							$("#roleFormTab").html("");
 							$(root.resultusers).each(function(i,value){
 								$(value.roles).each(function(j,role){
-									$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
+									$("#roleFormTab").append("<tr>"+"<td>"+value.alias+"</td>"+"<td>"+value.displayName+"</td>"+"<td>"+role.name+"</td>"+"<td>"+role.description+"</td>"+"</tr>");
 								});
 							});
 						},
@@ -142,6 +142,7 @@ function inidata(){
 		for (int j=0; j<currentPageRoles.get(i).getUsers().size(); j++){
 		iniinsertdata +="<tr>";
 		iniinsertdata +="<td>"+currentPageRoles.get(i).getUsers().get(j).getAlias()+"</td>";
+		iniinsertdata +="<td>"+currentPageRoles.get(i).getUsers().get(j).getDisplayName()+"</td>";
 		iniinsertdata +="<td>"+currentPageRoles.get(i).getName()+"</td>";
 		iniinsertdata +="<td>"+currentPageRoles.get(i).getDescription()+"</td>";
 		iniinsertdata +="</tr>";
@@ -235,10 +236,10 @@ function inidata(){
 <form id="queryForm" name="queryForm" action="" style="width:100%">
   <table width="900px">
     <tr>
-      <td>用户</td>
+      <td>账号</td>
       <td><input type="text" id="rolealias" name="rolealias"></td>
       <td>角色</td>
-      <td><input type="text" id="rolename" name="rolename"></td>
+      <td><input type="text" id="role_name" name="role_name"></td>
       <td><input style="display:none" id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
       <td rowspan="2"><button type="button" class="btn btn-primary" onClick="applyUserac()">授权用户</button></td>
     </tr>
@@ -255,7 +256,8 @@ function inidata(){
     <table id="roleForm" border="1" width="100%">
       <thead>
         <tr>
-          <td>用户</td>
+          <td>账号</td>
+          <td>昵称</td>
           <td>角色</td>
           <td>描述</td>
         </tr>

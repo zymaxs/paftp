@@ -26,11 +26,10 @@ import com.paftp.service.userinfo.UserInfoService;
 import com.paftp.util.Util;
 
 @Controller
-public class UserProfileAction extends ActionSupport{
+public class UserProfileAction extends ActionSupport {
 
 	/**
-	 * Lei Lei 
-	 * For updating user information
+	 * Lei Lei For updating user information
 	 */
 	private static final long serialVersionUID = -3885840931640610465L;
 
@@ -53,7 +52,7 @@ public class UserProfileAction extends ActionSupport{
 	private String othermail;
 	private String otherinfo;
 	private Integer userid;
-	
+
 	private String alias;
 
 	private Integer row;
@@ -62,125 +61,130 @@ public class UserProfileAction extends ActionSupport{
 
 	private User user;
 
-	private User updatedUser; 
+	private User updatedUser;
 	private Util util = new Util();
 	private List<Role> currentPageRoles = new ArrayList<Role>();
-	
+
 	private HttpSession session;
-	
-	public String getUserInfo(){
-		
+
+	public String getUserInfo() {
+
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
+
 		user = userService.findUserById(this.getUserid());
-		
-		if (user == null){
+
+		if (user == null) {
 			request.setAttribute("error", "The user account is not exist!");
 		}
-		
+
 		row = 10;
 
 		List<Role> roles = user.getRoles();
-		
+
 		pages = (long) Math.ceil(roles.size() / (double) row);
-		
+
 		Role role = null;
-		for (int i = 0; i< row; i++){
-			if (i < roles.size()){
-			role = roleService.findRoleById(roles.get(i).getId());
-			currentPageRoles.add(role);
-			}else{
+		for (int i = 0; i < row; i++) {
+			if (i < roles.size()) {
+				role = roleService.findRoleById(roles.get(i).getId());
+				if (role.getName().equals("seniormanager") == false) {
+					currentPageRoles.add(role);
+				}
+			} else {
 				break;
 			}
 		}
 
 		request.setAttribute("pages", pages);
 		request.setAttribute("currentpageroles", currentPageRoles);
-		
+
 		request.setAttribute("user", user);
-		
+
 		return "success";
-		
+
 	}
-	
-	public String getRoles(){
+
+	public String getRoles() {
 		row = 10;
 
 		List<Role> roles = user.getRoles();
-		
+
 		pages = (long) Math.ceil(roles.size() / (double) row);
-		
-		if (pagenum == null || pagenum == 0){
+
+		if (pagenum == null || pagenum == 0) {
 			pagenum = 1;
 		}
-		
-		for (int i = (pagenum-1)*10; i<((pagenum-1)*10 + row); i++){
-			if (i < roles.size()){
-			Role role = new Role();
-			role = roles.get(i);
-			currentPageRoles.add(role);
-			}else{
+
+		for (int i = (pagenum - 1) * 10; i < ((pagenum - 1) * 10 + row); i++) {
+			if (i < roles.size()) {
+				Role role = new Role();
+				role = roles.get(i);
+				currentPageRoles.add(role);
+			} else {
 				break;
 			}
 		}
 
 		this.setPages(pages);
 		this.setCurrentPageRoles(currentPageRoles);
-		
+
 		return "success";
 	}
-	
-	public String updateUserInfo(){
-		
+
+	public String updateUserInfo() {
+
 		user = getSessionUser();
-		
+
 		if (user == null)
 			return "login";
-		
+
 		if (this.getDepartment() == null || this.getPosition() == null)
 			return "error";
 
 		updatedUser = setUserInfo(user);
-		
+
 		setSession("user", updatedUser);
-		
+
 		return "success";
-		
+
 	}
-	
-	public String updatePassword(){
-		
+
+	public String updatePassword() {
+
 		user = getSessionUser();
-		
+
 		if (user == null)
 			return "login";
-		
+
 		String orignpassword_md5 = util.md5Encryption(this.orignpassword);
-		User dbUser = userService.findUserByAliasAndPassword(user.getAlias(), orignpassword_md5);
-		
-		if(dbUser == null)
-			return "error";     //source password error
-			
-		if(dbUser.getStatus().equals("initial"))
+		User dbUser = userService.findUserByAliasAndPassword(user.getAlias(),
+				orignpassword_md5);
+
+		if (dbUser == null)
+			return "error"; // source password error
+
+		if (dbUser.getStatus().equals("initial"))
 			dbUser.setStatus("old");
-		
+
 		String password_md5 = util.md5Encryption(this.password);
 		dbUser.setPassword(password_md5);
-				
+
 		userService.updateUser(dbUser);
-		
+
 		return "success";
-	
+
 	}
-	
-	private User setUserInfo(User user){
-		
+
+	private User setUserInfo(User user) {
+
 		UserInfo userInfo = new UserInfo();
-		
+
 		userInfo.setId(user.getUserInfo().getId());
-		Department department = departmentService.findDepartmentByName(this.getDepartment());
+		Department department = departmentService.findDepartmentByName(this
+				.getDepartment());
 		userInfo.setDepartment(department);
-		Position position = positionService.findPositionByName(this.getPosition());
+		Position position = positionService.findPositionByName(this
+				.getPosition());
 		userInfo.setPosition(position);
 		userInfo.setMobile(this.getMobile());
 		userInfo.setTelephone(this.getTelephone());
@@ -190,31 +194,28 @@ public class UserProfileAction extends ActionSupport{
 		user.setUserInfo(userInfo);
 
 		return user;
-		
+
 	}
-	
-	private User getSessionUser(){
-		
-		session = ServletActionContext.getRequest().getSession(false);  
-		
-        if(session==null || session.getAttribute("user")==null){  
-            return null;  
-        }  
-        else{  
-        	User user = (User) session.getAttribute("user");
-            return user;  
-        }  
-	}
-	
-	
-	private void setSession(String key, Object content){
-		
+
+	private User getSessionUser() {
+
 		session = ServletActionContext.getRequest().getSession(false);
-		
+
+		if (session == null || session.getAttribute("user") == null) {
+			return null;
+		} else {
+			User user = (User) session.getAttribute("user");
+			return user;
+		}
+	}
+
+	private void setSession(String key, Object content) {
+
+		session = ServletActionContext.getRequest().getSession(false);
+
 		session.removeAttribute(key);
 		session.setAttribute(key, content);
 	}
-	
 
 	public String getMobile() {
 		return mobile;
@@ -283,8 +284,7 @@ public class UserProfileAction extends ActionSupport{
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	
-	
+
 	public String getAlias() {
 		return alias;
 	}
@@ -324,7 +324,7 @@ public class UserProfileAction extends ActionSupport{
 	public void setPages(Long pages) {
 		this.pages = pages;
 	}
-	
+
 	public List<Role> getCurrentPageRoles() {
 		return currentPageRoles;
 	}
@@ -332,7 +332,7 @@ public class UserProfileAction extends ActionSupport{
 	public void setCurrentPageRoles(List<Role> currentPageRoles) {
 		this.currentPageRoles = currentPageRoles;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -340,6 +340,5 @@ public class UserProfileAction extends ActionSupport{
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 
 }

@@ -11,8 +11,8 @@ insert into sutgroup values("2", "风控平台", "风控平台");
 insert into sutgroup values("3", "测试平台", "测试平台");
 
 insert into applysutstatus values("1", "Pending", "待审批");
-insert into applysutstatus values("2", "Pass", "通过");
-insert into applysutstatus values("3", "Reject", "拒绝");
+insert into applysutstatus values("3", "Pass", "通过");
+insert into applysutstatus values("2", "Reject", "拒绝");
 
 insert into role values("1", "administrator", "The admin role", null);
 insert into role values("2", "seniormanager", "The senior manager role", null);

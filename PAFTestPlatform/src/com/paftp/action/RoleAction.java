@@ -71,11 +71,11 @@ public class RoleAction extends ActionSupport {
 
 		user = this.sessionUser();
 
-		if (user == null){
+		if (user == null) {
 			request.setAttribute("error", "Please log in!");
 			return "error";
 		}
-		
+
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));
 
@@ -97,34 +97,45 @@ public class RoleAction extends ActionSupport {
 		for (int i = 0; i < users.size(); i++) {
 			List<Role> roles = users.get(i).getRoles();
 			int j;
+			boolean freeuser = true;
+			boolean normaluser = true;
 			for (j = 0; j < roles.size(); j++) {
 				if (roles.get(j).getName().equals("administrator")) {
+					freeuser = false;
+					normaluser = false;
 					break;
-				} else if (roles.get(j).getName().equals("seniormanager")) {
+				} else if (roles.get(j).getName().equals("seniormanager")
+						&& normaluser == true) {
 					seniormanagers.add(users.get(i));
-					break;
+					normaluser = false;
 				}
 
 				if (roles.get(j).getName()
 						.equals(this.getSut_name() + "Manager")) {
 					if (user.getAlias().equals(users.get(i).getAlias())) {
+						freeuser = false;
 						break;
 					} else {
 						managers.add(users.get(i));
+						freeuser = false;
 						break;
 					}
 				} else if (roles.get(j).getName()
 						.equals(this.getSut_name() + "Worker")) {
 					if (user.getAlias().equals(users.get(i).getAlias())) {
+						freeuser = false;
 						break;
 					} else {
 						workers.add(users.get(i));
+						freeuser = false;
 						break;
 					}
 				}
 			}
-			if (j == roles.size()) {
+			if (normaluser) {
 				normalusers.add(users.get(i));
+			}
+			if (freeuser) {
 				freeusers.add(users.get(i));
 			}
 		}
@@ -151,7 +162,7 @@ public class RoleAction extends ActionSupport {
 
 		user = this.sessionUser();
 
-		if (user == null){
+		if (user == null) {
 			request.setAttribute("error", "Please log in!");
 			return "error";
 		}
@@ -173,7 +184,7 @@ public class RoleAction extends ActionSupport {
 					updateusers = util.splitString(this.getManagerstring());
 				}
 			} else {
-				this.setRole_name(this.getSut_name() + "Worker");
+				this.setRole_name(this.getSut_name() + "Sdet");
 				updateusers = util.splitString(this.getWorkerstring());
 			}
 			Role role = roleService.findRoleByName(this.getRole_name());
@@ -218,6 +229,8 @@ public class RoleAction extends ActionSupport {
 			return "error";
 		}
 
+		request.setAttribute("sut_name", this.getSut_name());
+
 		return "success";
 	}
 
@@ -249,17 +262,17 @@ public class RoleAction extends ActionSupport {
 		for (int i = 0; i < row; i++) {
 			if (i < roles.size()) {
 				role = roleService.findRoleById(roles.get(i).getId());
+				if (role.getName().equals(this.getSut_name() + "Manager")){
+					role.setName("Manager");
+				}else if (role.getName().equals(this.getSut_name() + "Sdet")){
+					role.setName("Sdet");
+				}
 				currentPageRoles.add(role);
 			} else {
 				break;
 			}
 		}
 
-		// setIsAdmin(isAdmin(user.getAlias()));
-		// setIsManager(isManager(user.getAlias()));
-		//
-		// request.setAttribute("isAdmin", this.getIsAdmin());
-		// request.setAttribute("isManager", this.getIsManager());
 		request.setAttribute("pages", pages);
 		request.setAttribute("currentPageRoles", roles);
 		request.setAttribute("sut_name", this.getSut_name());
@@ -271,13 +284,6 @@ public class RoleAction extends ActionSupport {
 	public String queryRoles() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-
-//		request.getSession().invalidate();
-		
-//		user = this.getSessionUser();
-//		if (user == null) {
-////			return "error";
-//		}
 
 		if (this.getSut_name() == null) {
 			request.setAttribute("error", "One sut must be given!");
@@ -291,41 +297,56 @@ public class RoleAction extends ActionSupport {
 		pages = (long) Math.ceil(roles.size() / (double) row);
 
 		User conditionuser = null;
-		if (this.getRolealias() != null) {
+		if (this.getRolealias() != null
+				&& this.getRolealias().equals("") == false) {
 			conditionuser = userService.findUserByAlias(this.getRolealias());
 		}
 		Role conditionrole = null;
-		if (this.getRole_name() != null) {
-			conditionrole = roleService.findRoleByName(this.getRole_name());
+		if (this.getRole_name() != null
+				&& this.getRole_name().equals("") == false) {
+			if (this.getRole_name().equals("Manager")
+					|| this.getRole_name().equals("Sdet")) {
+				conditionrole = roleService.findRoleByName(this.getSut_name() + this.getRole_name());
+			} else {
+				conditionrole = roleService.findRoleByName(this.getSut_name() + this.getRole_name());
+			}
 		}
 
 		Role role = null;
 		for (int i = 0; i < roles.size(); i++) {
 			role = roleService.findRoleById(roles.get(i).getId());
-			if (conditionrole == null
-					|| role.getId().equals(conditionrole.getId())) {
+			if ((this.getRole_name() == null || this.getRole_name().equals(""))
+					|| (conditionrole != null && role.getId().equals(conditionrole.getId()))) {
 				List<User> users = role.getUsers();
 				for (int j = 0; j < users.size(); j++) {
-					if (this.getRolealias() == null || this.getRolealias().equals("")
+					if (this.getRolealias() == null
+							|| this.getRolealias().equals("")
 							|| (conditionuser != null && users.get(j)
 									.getAlias()
 									.equals(conditionuser.getAlias()))) {
-						Role seniorrole = roleService
-								.findRoleByName("seniormanager");
-						users.get(j).getRoles().remove(seniorrole);
+						// Role seniorrole = roleService
+						// .findRoleByName("seniormanager");
+						if (role.getName().equals(this.getSut_name() + "Manager")){
+							role.setName("Manager");
+						}else if (role.getName().equals(this.getSut_name() + "Sdet")){
+							role.setName("Sdet");
+						}
+						List<Role> currentroles = new ArrayList<Role>();
+						currentroles.add(role);
+						users.get(j).setRoles(currentroles);
 						this.resultusers.add(users.get(j));
 					}
 				}
 			}
 		}
-		
+
 		this.setResultusers(resultusers);
 		this.setPages(pages);
 
 		return "success";
 	}
 
-	public List<String> getManagedSut(String alias) {
+	private List<String> getManagedSut(String alias) {
 
 		String sutName;
 		List<String> sut_names = new ArrayList<String>();
@@ -347,7 +368,7 @@ public class RoleAction extends ActionSupport {
 		return sut_names;
 	}
 
-	public List<String> getRoles(String roleName) {
+	private List<String> getRoles(String roleName) {
 		List<Role> roles = roleService.findAllList();
 		List<String> names = new ArrayList<String>();
 		for (int i = 0; i < roles.size(); i++) {
@@ -358,7 +379,7 @@ public class RoleAction extends ActionSupport {
 		return names;
 	}
 
-	public User sessionUser() {
+	private User sessionUser() {
 
 		HttpSession session = ServletActionContext.getRequest().getSession(
 				false);
