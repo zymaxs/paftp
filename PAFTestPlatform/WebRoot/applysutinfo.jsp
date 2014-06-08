@@ -28,6 +28,7 @@ if ((String)request.getAttribute("isAdmin") != null){
 	
 ApplySut applySut = (ApplySut)request.getAttribute("applySut");
 String applyer = applySut.getUser().getAlias();
+int id = applySut.getId();
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
@@ -291,6 +292,9 @@ var applyer = '<%=applyer%>';
           <td><textarea rows="4" class="input-xlarge" id="description"
 								name="description" readonly><%=applySut.getDescription()%></textarea></td>
         </tr>
+        <td>
+        <td colspan="2"><input type="text" id="id" name="id" value="<%=id %>" style="display:none"></td>
+        </td>
         <tr>
           <table>
             <tr>
