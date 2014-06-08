@@ -46,7 +46,7 @@ List<String> sutgroup = (List<String>)request.getAttribute("sutgroupnames");
 $(document).ready(function(){
     $("#applysutform").validate({
         rules: {
-            "name":{
+            "sutname":{
                 required: true,
 				maxlength: 20
             },
@@ -60,7 +60,7 @@ $(document).ready(function(){
             }
         },
         messages: {
-            "name":{
+            "sutname":{
                 required: "请输入系统名",
 				maxlength: $.validator.format("系统名最大不超过20个字符")
             },
@@ -82,7 +82,7 @@ $(document).ready(function(){
 		document.loginform.submit();
 	}
 	function applysutac() {
-		if ('<%=session.getAttribute("user")%>' !=null){
+		if ('<%=session.getAttribute("user")%>' != "null"){
 			document.applysutform.action = "${pageContext.request.contextPath}/applySut.action";
 			if($("#applysutform").valid()){
     		 $("#applysutform").submit();
