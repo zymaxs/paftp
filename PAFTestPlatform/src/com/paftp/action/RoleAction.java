@@ -289,7 +289,7 @@ public class RoleAction extends ActionSupport {
 		pages = (long) Math.ceil(roles.size() / (double) row);
 
 		User conditionuser = null;
-		if (this.getRolealias() != null) {
+		if (this.getRolealias() != null && this.getRolealias().equals("") == false) {
 			conditionuser = userService.findUserByAlias(this.getRolealias());
 		}
 		Role conditionrole = null;
