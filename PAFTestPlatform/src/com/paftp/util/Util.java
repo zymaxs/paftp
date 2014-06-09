@@ -98,4 +98,20 @@ public class Util {
 
 		return parentNode000;
 	}
+	
+	public String nodeType(String type){
+		if (type == "0"){
+			return "interfacetestcase";
+		}
+		
+		if (type == "00"){
+			return "testcase";
+		}
+		
+		if (type == "1"){
+			return "stresstestcase";
+		}
+		
+		return "";
+	}
 }

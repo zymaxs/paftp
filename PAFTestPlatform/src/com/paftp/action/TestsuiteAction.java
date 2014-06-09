@@ -81,18 +81,18 @@ public class TestsuiteAction extends ActionSupport {
 		
 
 		JSONArray parentNode0 = new JSONArray();
-		JSONObject childNode00 = util.childNode("login001", "testcase", null);
-		JSONObject childNode01 = util.childNode("login002", "testcase", null);
+		JSONObject childNode00 = util.childNode("login001", util.nodeType("00"), null);
+		JSONObject childNode01 = util.childNode("login002", util.nodeType("00"), null);
 		parentNode0.add(childNode00);
 		parentNode0.add(childNode01);
 		
 		JSONArray parentNode00 = new JSONArray();
-		JSONObject childNode000 = util.childNode("Login", "interfacetestcase", parentNode0);
+		JSONObject childNode000 = util.childNode("Login", util.nodeType("0"), parentNode0);
 		parentNode00.add(childNode000);
 		
 		JSONArray parentNode1 = new JSONArray();
-		JSONObject childNode10 = util.childNode("register001", "stresstestcase", null);
-		JSONObject childNode11 = util.childNode("register002", "stresstestcase", null);
+		JSONObject childNode10 = util.childNode("register001", util.nodeType("1"), null);
+		JSONObject childNode11 = util.childNode("register002", util.nodeType("1"), null);
 		parentNode1.add(childNode10);
 		parentNode1.add(childNode11);
 	
