@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.util.*,com.paftp.entity.*"%>
+	import="java.util.*,com.paftp.entity.*, net.sf.json.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -9,6 +9,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -129,7 +130,6 @@
 					</div>
     					<div class="col-md-4 col-sm-8 col-xs-8">
 						<button type="button" class="btn btn-success btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i> Create</button>
-						<button type="button" class="btn btn-warning btn-sm" onclick="demo_rename();"><i class="glyphicon glyphicon-pencil"></i> Rename</button>
 						<button type="button" class="btn btn-danger btn-sm" onclick="demo_delete();"><i class="glyphicon glyphicon-remove"></i> Delete</button>				
 					</div>
     
@@ -141,30 +141,39 @@
   <script src="dist/jstree.min.js"></script>
   <script>
   function demo_create() {
-		var ref = $('#jstree').jstree(true),
-			sel = ref.get_selected();
+		var ref = $('#jstree').jstree(true);
+		var	sel = ref.get_selected();
 		if(!sel.length) { return false; }
-		sel = sel[0];
-		
-		sel = ref.create_node(sel, {"type":"file"});
-		if(sel) {
-			ref.edit(sel);
+		var type = ref.get_type(sel, true);
+		if (type.type != "sut"){
+			if(type.valid_children == "interfacetestcase")
+				sel = ref.create_node(sel, {"type":type.valid_children[0]});
+			else
+        		sel = ref.create_node(sel, {"type":type.valid_children[0]});
+        	if(sel) {
+    			ref.edit(sel);
+    		}
 		}
+	
 	};
-	function demo_rename() {
-		var ref = $('#jstree').jstree(true),
-			sel = ref.get_selected();
+	/*function demo_rename() {
+		var ref = $('#jstree').jstree(true);
+		var	sel = ref.get_selected();
 		if(!sel.length) { return false; }
-		sel = sel[0];
-		ref.edit(sel);
-	};
+		var type = ref.get_type(sel, true);
+		if (type.type != "sut" && type.type != "testsuite")
+			ref.edit(sel);
+	};*/
 	function demo_delete() {
-		var ref = $('#jstree').jstree(true),
-			sel = ref.get_selected();
+		var ref = $('#jstree').jstree(true);
+		var	sel = ref.get_selected();
 		if(!sel.length) { return false; }
-		ref.delete_node(sel);
+		var type = ref.get_type(sel, true);
+		if (type.type != "sut" && type.type != "interfacetestsuite" && type.type != "stresstestsuite")
+			ref.delete_node(sel);
+
 	};
-var datadata;
+var datadata = "test";
 	$(document).ready( function(){
 		  $.ajax({
 				type : "POST",
@@ -172,8 +181,8 @@ var datadata;
 				data : "",
 				dataType : "json",
 				success : function(root) {
-					datadata = root.jsonStr;
-					alert(datadata);
+					datadata = root.jsonArray;
+					testtest();
 				},
 
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -182,8 +191,8 @@ var datadata;
                     alert(textStatus);
                 }
 			});
-
-    // 6 create an instance when the DOM is ready
+function testtest(){
+	// 6 create an instance when the DOM is ready
     $('#jstree').on('changed.jstree', function (e, data) {
         var i, j, r = [];
         for(i = 0, j = data.selected.length; i < j; i++) {
@@ -192,19 +201,45 @@ var datadata;
         $('#event_result').html('Selected: ' + r.join(', '));
       }).jstree({
 
+
         'core' : {
 			//"animation" : 0,
-			//"check_callback" : true,
+			"check_callback" : true,
 			//"themes" : { "stripes" : true },
-			//'data': "[{ 'id' : 'ajson1', 'parent' : '#', 'text' : 'Simple root node' },{ 'id' : 'ajson2', 'parent' : '#', 'text' : 'Root node 2' },{ 'id' : 'ajson3', 'parent' : 'ajson2', 'text' : 'Child 1' },{ 'id' : 'ajson4', 'parent' : 'ajson2', 'text' : 'Child 2'}]"
+			//'data': [{ 'id' : 'ajson1', 'parent' : '#', 'text' : 'Simple root node' },{ 'id' : 'ajson2', 'parent' : '#', 'text' : 'Root node 2' },{ 'id' : 'ajson3', 'parent' : 'ajson2', 'text' : 'Child 1' },{ 'id' : 'ajson4', 'parent' : 'ajson2', 'text' : 'Child 2'}]
         	//'data': datadata 
-
         	'data' :datadata
-
 			},
-     
+			"types" : {
+			    "#" : {
+			        "max_children" : -2, 
+			        "max_depth" : 4, 
+			        "valid_children" : ["sut"]
+			      },
+			    "sut" : {
+				  "valid_firstchildren" : ["interfacetestsuite"],
+			      "valid_secondchildren" : ["stresstestsuite"]
+			    },
+			    "interfacetestsuite" : {
+			      "valid_children" : ["interfacetestcase"]
+			    },
+			  	"stresstestsuite" : {
+			        "valid_children" : ["stresstestcase"]
+			    },
+			    "interfacetestcase" : {
+			    	"valid_children": ["testcase"]
+			    },
+			    "stresstestcase" : {
+			    	"icon":"xxx",
+			      "valid_children" : []
+			    },
+			    "testcase":{
+			    	"icon":"xxx",
+			    	"valid_children":[]
+			    }
 
-         'plugins' : ['contextmenu','types','unique','search' ]
+			  },
+         'plugins' : ['types','unique','search' ]
 
   });
     
@@ -226,6 +261,8 @@ var datadata;
       //$('#jstree').jstree('select_node', 'child_node_1');
       //$.jstree.reference('#jstree').select_node('child_node_1');
     //});
+}
+    
   });
 
   </script>
