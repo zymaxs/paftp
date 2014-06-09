@@ -25,6 +25,7 @@
          </result>
     </action>
     </package>
+
 	<package name="s2sh" extends="struts-default">
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
 			<result name="success" type="redirect">/index_1.jsp</result>

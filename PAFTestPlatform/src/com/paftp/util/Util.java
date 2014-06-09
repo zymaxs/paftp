@@ -5,6 +5,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import sun.misc.BASE64Encoder;
 
 /**
@@ -46,9 +48,9 @@ public class Util {
 			return true;
 		}
 	}
-	
-	public java.sql.Date stringToSqlDate(String time) throws ParseException{
-		
+
+	public java.sql.Date stringToSqlDate(String time) throws ParseException {
+
 		DateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
 		if (time == null || time.equals(""))
 			return null;
@@ -56,16 +58,44 @@ public class Util {
 		if (date == null)
 			return null;
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-		
+
 		return sqlDate;
 	}
-	
-	public String[] splitString(String stringstream){
+
+	public String[] splitString(String stringstream) {
 		if (stringstream == null)
 			return null;
 		String strings[] = stringstream.split(";");
 		if (strings.length == 1 && strings[0].equals(""))
 			return null;
 		return strings;
+	}
+
+	public JSONObject childNode(String text, String type, JSONArray parent) {
+
+		JSONObject children = new JSONObject();
+		children.put("text", text);
+		children.put("type", type);
+
+		if (parent != null) {
+			children.put("children", parent);
+		}
+
+		return children;
+	}
+
+	public JSONArray rootNode(JSONArray parentNode0, JSONArray parentNode1) {
+
+		JSONArray parentNode00 = new JSONArray();
+		JSONObject childNode000 = childNode("接口案例", "interfacetestsuite", parentNode0);
+		JSONObject childNode001 = childNode("压力场景", "stresstestsuite", parentNode1);
+		parentNode00.add(childNode000);
+		parentNode00.add(childNode001);
+
+		JSONArray parentNode000 = new JSONArray();
+		JSONObject parentNode0000 = childNode("MTP", "sut", parentNode00);
+		parentNode000.add(parentNode0000);
+
+		return parentNode000;
 	}
 }
