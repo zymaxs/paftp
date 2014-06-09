@@ -68,7 +68,6 @@ $(document).ready( function(){
 							});
 							
 							$('.pagination').jqPagination('option', 'max_page', test.pages);
-							$('.pagination').jqPagination('option', 'current_page', 1);
 							
 						},
 						error : function(root) {
