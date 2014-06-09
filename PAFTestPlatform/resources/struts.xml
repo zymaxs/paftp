@@ -20,6 +20,10 @@
     <action name="getUserInfoAjax" method="getRoles" class="com.paftp.action.UserProfileAction">
          <result type="json"></result>
     </action>
+    <action name="getTestsuites" method="getTestsuites" class="com.paftp.action.TestsuiteAction">
+         <result type="json">
+         </result>
+    </action>
     </package>
 	<package name="s2sh" extends="struts-default">
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
