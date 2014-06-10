@@ -24,6 +24,22 @@
          <result type="json">
          </result>
     </action>
+        <action name="createTestsuite" method="createTestsuite" class="com.paftp.action.TestsuiteAction">
+         <result type="json">
+         </result>
+    </action>
+         <action name="deleteTestsuite" method="createTestsuite" class="com.paftp.action.TestsuiteAction">
+         <result type="json">
+         </result>
+    </action>
+         <action name="createTestcase" method="createTestsuite" class="com.paftp.action.TestsuiteAction">
+         <result type="json">
+         </result>
+    </action>
+         <action name="deleteTestcase" method="createTestsuite" class="com.paftp.action.TestsuiteAction">
+         <result type="json">
+         </result>
+    </action>
     </package>
 
 	<package name="s2sh" extends="struts-default">
