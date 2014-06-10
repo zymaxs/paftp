@@ -148,17 +148,24 @@ public class TestsuiteAction extends ActionSupport {
 	}
 
 	public String initialTestsuites() throws ServletException, IOException {
-
-		this.setJsonArray(this.getRootNode());
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		this.setJsonArray(this.getRootNode(this.getSut_name()));
+		
+		request.setAttribute("sut_name", this.getSut_name());
 
 		return "success";
 
 	}
 
-	private JSONArray getRootNode() {
+	private JSONArray getRootNode(String sut_name) {
 
-		List<Sut> suts = sutService.findAllList();
-
+		List<Sut> suts = new ArrayList<Sut>();
+		
+		Sut sut = sutService.findSutByName(sut_name);
+		suts.add(sut);
+		
 		JSONArray parentNode0000 = new JSONArray();
 
 		for (int i = 0; i < suts.size(); i++) {
