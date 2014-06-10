@@ -9,6 +9,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import sun.misc.BASE64Encoder;
 
+
 /**
  * 閫氱敤宸ュ叿绫�
  */
@@ -83,21 +84,6 @@ public class Util {
 
 		return children;
 	}
-
-	public JSONArray rootNode(JSONArray parentNode0, JSONArray parentNode1) {
-
-		JSONArray parentNode00 = new JSONArray();
-		JSONObject childNode000 = childNode("接口案例", "interfacetestsuite", parentNode0);
-		JSONObject childNode001 = childNode("压力场景", "stresstestsuite", parentNode1);
-		parentNode00.add(childNode000);
-		parentNode00.add(childNode001);
-
-		JSONArray parentNode000 = new JSONArray();
-		JSONObject parentNode0000 = childNode("MTP", "sut", parentNode00);
-		parentNode000.add(parentNode0000);
-
-		return parentNode000;
-	}
 	
 	public String nodeType(String type){
 		if (type == "0"){
@@ -108,7 +94,7 @@ public class Util {
 			return "testcase";
 		}
 		
-		if (type == "1"){
+		if (type == "01"){
 			return "stresstestcase";
 		}
 		

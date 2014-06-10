@@ -145,7 +145,7 @@ public class Testcase {
 		this.caseChangeHistorys = caseChangeHistorys;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "testsuite_id")
 	public Testsuite getTestsuite() {
 		return testsuite;

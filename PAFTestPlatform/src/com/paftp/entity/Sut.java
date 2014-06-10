@@ -24,6 +24,7 @@ public class Sut {
 	private String description;
 	private SutGroup group;
 	private List<Role> role_results;
+	private List<Testsuite> testsuites;
 //	private List<Testpass> testpass_results;
 //	private List<StressResult> stress_results;
 	
@@ -78,6 +79,14 @@ public class Sut {
 
 	public void setRole_results(List<Role> role_results) {
 		this.role_results = role_results;
+	}
+	
+	@OneToMany(mappedBy = "sut")
+	public List<Testsuite> getTestsuites() {
+		return testsuites;
+	}
+	public void setTestsuites(List<Testsuite> testsuites) {
+		this.testsuites = testsuites;
 	}
 	
 //	@OneToMany(mappedBy = "sut")

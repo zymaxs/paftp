@@ -11,6 +11,7 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -169,15 +170,16 @@
 		var	sel = ref.get_selected();
 		if(!sel.length) { return false; }
 		var type = ref.get_type(sel, true);
-		if (type.type != "sut" && type.type != "interfacetestsuite" && type.type != "stresstestsuite")
+		if (type.type != "sut" && type.type != "interfacetestsuite" && type.type != "stresstestsuite"){
 			ref.delete_node(sel);
-
+		}
+		
 	};
 var datadata = "test";
 	$(document).ready( function(){
 		  $.ajax({
 				type : "POST",
-				url : "getTestsuites.action",
+				url : "initialTestsuites.action",
 				data : "",
 				dataType : "json",
 				success : function(root) {
