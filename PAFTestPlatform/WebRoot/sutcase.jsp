@@ -10,8 +10,7 @@
 <html>
 <head>
 <% 
-if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/initialSuts.action").forward(request,response);}
+String sut_name = (String)request.getAttribute("sut_name");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
@@ -67,7 +66,7 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/initialSuts.act
     			ref.select_node(sel);
 				if(ref.get_node(sel).type == "interfacetestcase"){
 					interfacetestsuite = ref.get_node(sel).text;
-					document.getElementById('newTestSuitename').value = interfacetestsuite;
+					document.getElementById('testsuite_name').value = interfacetestsuite;
 					document.getElementById('iniTd').style.display = "none";
 					document.getElementById('showTestSuiteTd').style.display = "none";
 					document.getElementById('newTestSuiteTd').style.display = "block";
@@ -105,15 +104,22 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/initialSuts.act
 	};
 	
 	function newTestSuiteac(){
-		var tsparams = {testsuitename:$("#newTestSuitename").val(),sutname:$("#sutname").val()};
+		var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val()};
 		$.ajax({
 				type : "POST",
-				url : "getTestsuites.action",
+				url : "createTestsuite.action",
 				data : tsparams,
 				dataType : "json",
 				success : function(root) {
-					datadata = root.jsonArray;
-					testtest();
+					
+					interfacetestcase = ref.get_node(sel).text;
+					document.getElementById('showtestsuite_name').value = interfacetestsuite;
+					document.getElementById('iniTd').style.display = "none";
+					document.getElementById('showTestSuiteTd').style.display = "block";
+					document.getElementById('newTestSuiteTd').style.display = "none";
+					document.getElementById('newTestCaseTd').style.display = "none";
+					document.getElementById('showTestCaseTd').style.display = "none";
+					
 				},
 
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -129,8 +135,8 @@ var datadata = "test";
 	$(document).ready( function(){
 		  $.ajax({
 				type : "POST",
-				url : "getTestsuites.action",
-				data : "",
+				url : "initialTestsuites.action",
+				data : {sut_name:'<%=sut_name%>'},
 				dataType : "json",
 				success : function(root) {
 					datadata = root.jsonArray;
@@ -317,12 +323,12 @@ function testtest(){
           <td width="75%" style="display:none" id="newTestSuiteTd"><form>
             <table width="100%">
             <tr>
-                <td><label for="newTestSuitename">TestSuiteName</label></td>
-                <td><input id="newTestSuitename" name="" value=""></td>
+                <td><label for="testsuite_name">TestSuiteName</label></td>
+                <td><input id="testsuite_name" name="testsuite_name" value=""></td>
               </tr>
               <tr>
-              	<td><label for="sutname">所属系统</label></td>
-                <td><input id="sutname" name="sutname" value=""></td>
+              	<td><label for="sut_name">所属系统</label></td>
+                <td><input id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
               </tr>
               <tr>
               <td></td>
@@ -335,16 +341,19 @@ function testtest(){
           </table>
           </form></td>
           <td width="75%" style="display:none" id="showTestSuiteTd">
-          <form>
+          <form id="showTestSuiteForm" name="showTestSuiteForm" action="">
           <table width="100%">
           <tr>
-          <td><label for="showTestSuitename">TestSuiteName</label></td>
-			<script>document.write("<td><input id=\"showTestSuitename\" name=\"\" value='"+interfacetestsuite+"'></td>")</script>
-          <td><input id="showTestSuitename" name="" value=""></td>
+          <td><label for="showtestsuite_name">TestSuiteName</label></td>
+			<td><input id="showtestsuite_name" name="testsuite_name" value=""></td>
+            </tr>
+            <tr>
+            <td><label for="showsut_name">所属系统</label></td>
+          <td><input id="showsut_name" name="sut_name" value="<%=sut_name%>"></td>
           </tr>
           <tr>
-          <td><button type="button" class="btn btn-default" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite">确认</button></td>
-          <td><button type="button" class="btn btn-default" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite">更新</button></td>
+          <td><button type="button" class="btn btn-default" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite" style="display:block">更新</button></td>
+          <td><button type="button" class="btn btn-default" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite" style="display:none">保存</button></td>
           </tr>
           </table>
           </form>

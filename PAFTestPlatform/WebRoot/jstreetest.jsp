@@ -85,7 +85,7 @@ var datadata = "test";
 		  $.ajax({
 				type : "POST",
 				url : "initialTestsuites.action",
-				data : "",
+				data : {sut_name:vincent},
 				dataType : "json",
 				success : function(root) {
 					datadata = root.jsonArray;

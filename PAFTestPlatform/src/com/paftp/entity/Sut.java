@@ -81,7 +81,7 @@ public class Sut {
 		this.role_results = role_results;
 	}
 	
-	@OneToMany(mappedBy = "sut")
+	@OneToMany(mappedBy = "sut", cascade = CascadeType.ALL)
 	public List<Testsuite> getTestsuites() {
 		return testsuites;
 	}

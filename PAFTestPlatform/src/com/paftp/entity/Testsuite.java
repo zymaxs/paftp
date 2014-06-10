@@ -53,14 +53,14 @@ public class Testsuite {
 		this.testcases = testcases;
 	}
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "sut_id")
 	public Sut getSut() {
 		return sut;
 	}
 
-	public void setSut(Sut sut2) {
-		this.sut = sut2;
+	public void setSut(Sut sut) {
+		this.sut = sut;
 	}
 	
 	@OneToMany(mappedBy = "testsuite")

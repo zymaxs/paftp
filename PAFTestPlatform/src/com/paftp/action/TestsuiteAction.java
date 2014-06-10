@@ -111,19 +111,21 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 
-		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
-		}
+//		if (user == null) {
+//			request.setAttribute("error", "Please log in firstly!");
+//			return "error";
+//		}
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		Testsuite testsuite = new Testsuite();
 		testsuite.setName(this.getTestsuite_name());
-		List<Testsuite> testsuites = new ArrayList<Testsuite>();
-		testsuites.add(testsuite);
-		sut.setTestsuites(testsuites);
-
-		sutService.saveSut(sut);
+		testsuite.setSut(sut);
+		testsuiteService.saveTestsuite(testsuite);
+//		List<Testsuite> testsuites = new ArrayList<Testsuite>();
+//		testsuites.add(testsuite);
+//		sut.setTestsuites(testsuites);
+//
+//		sutService.saveSut(sut);
 
 		return "success";
 
@@ -147,13 +149,23 @@ public class TestsuiteAction extends ActionSupport {
 		return "success";
 	}
 
+	public String initialParameters(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		request.setAttribute("sut_name", this.getSut_name());
+		
+		return "success";
+	}
+	
 	public String initialTestsuites() throws ServletException, IOException {
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
 		
-		request.setAttribute("sut_name", this.getSut_name());
+//		request.setAttribute("sut_name", this.getSut_name());
+//		request.setAttribute("flag", true);
 
 		return "success";
 

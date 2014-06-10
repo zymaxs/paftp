@@ -140,6 +140,10 @@
     	 <action name="iniaddRelationship" method="addRelationship" class="com.paftp.action.RoleAction">
         <result name="success">/inimanager.jsp</result>
     	 </action>
+    	 <action name="initialParameters" method="initialParameters" class="com.paftp.action.TestsuiteAction">
+        <result name="success">/sutcase.jsp</result>
+    	 </action>
+    	 
 
 	</package>
 

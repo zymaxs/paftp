@@ -58,7 +58,7 @@ $(document).ready(function(){
 		for (int i=0; i < sutGroup.size(); i++){
 			String inisutgroupinfo = "";
 			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
-				inisutgroupinfo += sutGroup.get(i).getSuts().get(j).getName() + " ";
+				inisutgroupinfo += "<a href='initialParameters.action?sut_name=" + sutGroup.get(i).getSuts().get(j).getName() +"'>" +sutGroup.get(i).getSuts().get(j).getName() + "</a>"+" ";
 			}
 			inisutgroup += "<div class='row-fluid'><div class='span12'><blockquote></p>";
 			inisutgroup += sutGroup.get(i).getName();
