@@ -75,7 +75,12 @@ public class TestsuiteAction extends ActionSupport {
 		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
 				.getTestsuite_name());
 		List<Testcase> testcases = new ArrayList<Testcase>();
-		Testcase testcase = new Testcase();
+		Testcase testcase  = testcaseService.findTestcaseByName(this.getTestcase_name());
+		if (testcase != null){
+			request.setAttribute("error", "The testcase already exist!");
+			return "error";
+		}
+		testcase = new Testcase();
 		testcase.setCaseName(this.getTestcase_name());
 		testcases.add(testcase);
 		testsuite.setTestcases(testcases);
@@ -117,15 +122,18 @@ public class TestsuiteAction extends ActionSupport {
 //		}
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
-		Testsuite testsuite = new Testsuite();
+		
+		
+		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
+		if(testsuite != null){
+			request.setAttribute("error", "The testsuite already exist!");
+			return "error";
+		}
+				
+		testsuite =	new Testsuite();
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setSut(sut);
 		testsuiteService.saveTestsuite(testsuite);
-//		List<Testsuite> testsuites = new ArrayList<Testsuite>();
-//		testsuites.add(testsuite);
-//		sut.setTestsuites(testsuites);
-//
-//		sutService.saveSut(sut);
 
 		return "success";
 
@@ -161,9 +169,6 @@ public class TestsuiteAction extends ActionSupport {
 	public String initialTestsuites() throws ServletException, IOException {
 		
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
-		
-//		request.setAttribute("sut_name", this.getSut_name());
-//		request.setAttribute("flag", true);
 
 		return "success";
 

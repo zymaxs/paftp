@@ -2,7 +2,7 @@
 CREATE TABLE `testcase` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `testsuite_id` int(11) DEFAULT NULL,
-    `name` varchar(50) DEFAULT NULL,
+    `name` varchar(50) DEFAULT NULL UNIQUE,
     `priority` varchar(8) DEFAULT NULL,
     `status` varchar(20) DEFAULT NULL,
     `description` varchar(200) DEFAULT NULL,
