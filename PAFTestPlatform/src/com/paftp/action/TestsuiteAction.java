@@ -160,8 +160,6 @@ public class TestsuiteAction extends ActionSupport {
 	
 	public String initialTestsuites() throws ServletException, IOException {
 		
-		HttpServletRequest request = ServletActionContext.getRequest();
-		
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
 		
 //		request.setAttribute("sut_name", this.getSut_name());
