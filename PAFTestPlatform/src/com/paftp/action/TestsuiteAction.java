@@ -86,7 +86,7 @@ public class TestsuiteAction extends ActionSupport {
 		return "success";
 
 	}
-	
+
 	public String deleteTestcase() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -97,11 +97,12 @@ public class TestsuiteAction extends ActionSupport {
 			request.setAttribute("error", "Please log in firstly!");
 			return "error";
 		}
-	
-		Testcase testcase = testcaseService.findTestcaseByName(this.getTestcase_name());
-		
+
+		Testcase testcase = testcaseService.findTestcaseByName(this
+				.getTestcase_name());
+
 		testcaseService.deleteTestcase(testcase);
-		
+
 		return "success";
 	}
 
@@ -111,26 +112,28 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 
-//		if (user == null) {
-//			request.setAttribute("error", "Please log in firstly!");
-//			return "error";
-//		}
+		// if (user == null) {
+		// request.setAttribute("error", "Please log in firstly!");
+		// return "error";
+		// }
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		Testsuite testsuite = new Testsuite();
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setSut(sut);
 		testsuiteService.saveTestsuite(testsuite);
-//		List<Testsuite> testsuites = new ArrayList<Testsuite>();
-//		testsuites.add(testsuite);
-//		sut.setTestsuites(testsuites);
-//
-//		sutService.saveSut(sut);
+		// List<Testsuite> testsuites = new ArrayList<Testsuite>();
+		// testsuites.add(testsuite);
+		// sut.setTestsuites(testsuites);
+		//
+		// sutService.saveSut(sut);
+		JSONArray jsonarray = this.getRootNode(this.getSut_name());
+		this.setJsonArray(jsonarray);
 
 		return "success";
 
 	}
-	
+
 	public String deleteTestsuite() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -141,31 +144,33 @@ public class TestsuiteAction extends ActionSupport {
 			request.setAttribute("error", "Please log in firstly!");
 			return "error";
 		}
-	
-		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
-		
+
+		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
+				.getTestsuite_name());
+
 		testsuiteService.deleteTestsuite(testsuite);
-		
+
 		return "success";
 	}
 
-	public String initialParameters(){
-		
+	public String initialParameters() {
+
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
+
 		request.setAttribute("sut_name", this.getSut_name());
-		
+		request.setAttribute("flag", true);
+
 		return "success";
 	}
-	
+
 	public String initialTestsuites() throws ServletException, IOException {
-		
+
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
+
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
-		
-//		request.setAttribute("sut_name", this.getSut_name());
-//		request.setAttribute("flag", true);
+
+		// request.setAttribute("sut_name", this.getSut_name());
+		// request.setAttribute("flag", true);
 
 		return "success";
 
@@ -174,10 +179,10 @@ public class TestsuiteAction extends ActionSupport {
 	private JSONArray getRootNode(String sut_name) {
 
 		List<Sut> suts = new ArrayList<Sut>();
-		
+
 		Sut sut = sutService.findSutByName(sut_name);
 		suts.add(sut);
-		
+
 		JSONArray parentNode0000 = new JSONArray();
 
 		for (int i = 0; i < suts.size(); i++) {
@@ -187,10 +192,12 @@ public class TestsuiteAction extends ActionSupport {
 			for (int j = 0; j < testsuites.size(); j++) {
 				List<Testcase> testcases = testsuites.get(j).getTestcases();
 				JSONArray parentNode0 = new JSONArray();
-				for (int l = 0; l < testcases.size(); l++) {
-					JSONObject childNode0 = util.childNode(testcases.get(l)
-							.getCaseName(), util.nodeType("00"), null);
-					parentNode0.add(childNode0);
+				if (testcases != null) {
+					for (int l = 0; l < testcases.size(); l++) {
+						JSONObject childNode0 = util.childNode(testcases.get(l)
+								.getCaseName(), util.nodeType("00"), null);
+						parentNode0.add(childNode0);
+					}
 				}
 				JSONObject childNode00 = util.childNode(testsuites.get(j)
 						.getName(), util.nodeType("0"), parentNode0);
