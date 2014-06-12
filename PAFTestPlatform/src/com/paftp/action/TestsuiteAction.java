@@ -61,6 +61,7 @@ public class TestsuiteAction extends ActionSupport {
 	private String testcase_name;
 	private String stresstestcase_name;
 	private String testsuite_description;
+	private Integer testsuite_id;
 
 	private String priority;
 	private String status;
@@ -185,23 +186,23 @@ public class TestsuiteAction extends ActionSupport {
 		return "true";
 	}
 	
-	public String deleteTestcase() {
-
-		HttpServletRequest request = ServletActionContext.getRequest();
-
-		user = getSessionUser();
-
-		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
-		}
-	
-		Testcase testcase = testcaseService.findTestcaseByName(this.getTestcase_name());
-		
-		testcaseService.deleteTestcase(testcase);
-		
-		return "success";
-	}
+//	public String deleteTestcase() {
+//
+//		HttpServletRequest request = ServletActionContext.getRequest();
+//
+//		user = getSessionUser();
+//
+//		if (user == null) {
+//			request.setAttribute("error", "Please log in firstly!");
+//			return "error";
+//		}
+//	
+//		Testcase testcase = testcaseService.findTestcaseByName(this.getTestcase_name());
+//		
+//		testcaseService.deleteTestcase(testcase);
+//		
+//		return "success";
+//	}
 
 	public String createTestsuite() {
 
@@ -235,23 +236,66 @@ public class TestsuiteAction extends ActionSupport {
 
 	}
 	
-	public String deleteTestsuite() {
-
+	public String queryTestsuite(){
+		
+		
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
 
 		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
-		}
-	
+		request.setAttribute("error", "Please log in firstly!");
+		return "error";
+	}
+		
 		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
 		
-		testsuiteService.deleteTestsuite(testsuite);
+		request.setAttribute("testsuite", testsuite);
+		
+		return "success";
+		
+	}
+	
+	public String updateTestsuite(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		user = getSessionUser();
+
+		if (user == null) {
+		request.setAttribute("error", "Please log in firstly!");
+		return "error";
+	}
+		
+		Testsuite testsuite = testsuiteService.findTestsuiteById(this.getTestsuite_id());
+		
+		testsuite.setDescription(this.getTestsuite_description());
+		testsuite.setName(this.getSut_name());
+		
+		testsuiteService.updateTestsuite(testsuite);
+		
+		request.setAttribute("testsuite", testsuite);
 		
 		return "success";
 	}
+	
+//	public String deleteTestsuite() {
+//
+//		HttpServletRequest request = ServletActionContext.getRequest();
+//
+//		user = getSessionUser();
+//
+//		if (user == null) {
+//			request.setAttribute("error", "Please log in firstly!");
+//			return "error";
+//		}
+//	
+//		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
+//		
+//		testsuiteService.deleteTestsuite(testsuite);
+//		
+//		return "success";
+//	}
 
 	public String initialParameters(){
 		
@@ -494,6 +538,14 @@ public class TestsuiteAction extends ActionSupport {
 
 	public void setTestsuite_description(String testsuite_description) {
 		this.testsuite_description = testsuite_description;
+	}
+
+	public Integer getTestsuite_id() {
+		return testsuite_id;
+	}
+
+	public void setTestsuite_id(Integer testsuite_id) {
+		this.testsuite_id = testsuite_id;
 	}
 
 }
