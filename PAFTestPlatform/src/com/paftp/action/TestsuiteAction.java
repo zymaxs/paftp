@@ -302,6 +302,7 @@ public class TestsuiteAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
 		request.setAttribute("sut_name", this.getSut_name());
+		request.setAttribute("flag", true);
 		
 		return "success";
 	}
