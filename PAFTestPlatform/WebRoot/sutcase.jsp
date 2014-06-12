@@ -53,7 +53,7 @@ String sut_name = (String)request.getAttribute("sut_name");
 	var diag = new Dialog();
 	diag.Width = 500;
 	diag.Height = 150;
-	diag.Title = "内容页为隐藏的元素的html";
+	diag.Title = "创建TestSuite";
 	diag.InvokeElementId="createTestSuite"
 	diag.OKEvent = function(){
 					//alert(topWin.$id("testsuite_name").value);
