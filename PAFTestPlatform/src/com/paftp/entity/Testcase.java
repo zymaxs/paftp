@@ -28,8 +28,6 @@ public class Testcase {
 	private String priority;
 	private User creator;
 	private Date createTime;
-	private User updator;
-	private Date updateTime;
 
 	private Testsuite testsuite;
 
@@ -97,16 +95,6 @@ public class Testcase {
 		this.createTime = createTime;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_time")
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "creator_id")
 	public User getCreator() {
@@ -115,16 +103,6 @@ public class Testcase {
 
 	public void setCreator(User creator) {
 		this.creator = creator;
-	}
-
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "updator_id")
-	public User getUpdator() {
-		return updator;
-	}
-
-	public void setUpdator(User updator) {
-		this.updator = updator;
 	}
 
 	@OneToMany(mappedBy = "testcase",cascade = CascadeType.ALL)
@@ -136,7 +114,7 @@ public class Testcase {
 		this.testcaseSteps = testcaseSteps;
 	}
 
-	@OneToMany(mappedBy = "testcase")
+	@OneToMany(mappedBy = "testcase",cascade = CascadeType.ALL)
 	public List<CaseChangeHistory> getCaseChangeHistorys() {
 		return caseChangeHistorys;
 	};

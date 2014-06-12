@@ -26,6 +26,7 @@ public class CaseChangeHistory {
 	private Integer id;
 	private Testcase testcase;
 	private User updator;
+	private Date update_time;
 	private List<CaseChangeOperation> caseChangeOperations;
 
 	@Id
@@ -50,7 +51,7 @@ public class CaseChangeHistory {
 		this.updator = updator;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "testcase_id")
 	public Testcase getTestcase() {
 		return testcase;
@@ -60,13 +61,23 @@ public class CaseChangeHistory {
 		this.testcase = testcase;
 	}
 	
-	@OneToMany(mappedBy = "caseChangeHistory")
+	@OneToMany(mappedBy = "caseChangeHistory",cascade = CascadeType.ALL)
 	public List<CaseChangeOperation> getCaseChangeOperations() {
 		return caseChangeOperations;
 	}
 
 	public void setCaseChangeOperations(List<CaseChangeOperation> caseChangeOperations) {
 		this.caseChangeOperations = caseChangeOperations;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "update_time")
+	public Date getUpdate_time() {
+		return update_time;
+	}
+
+	public void setUpdate_time(Date update_time) {
+		this.update_time = update_time;
 	}
 	
 }

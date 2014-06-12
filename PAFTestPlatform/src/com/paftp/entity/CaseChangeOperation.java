@@ -27,6 +27,7 @@ public class CaseChangeOperation {
 	private CaseChangeHistory caseChangeHistory;
 	private String oldValue;
 	private String newValue;
+	private String field;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -41,7 +42,7 @@ public class CaseChangeOperation {
 	}
 	
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "casechangehistory_id")
 	public CaseChangeHistory getCaseChangeHistory() {
 		return caseChangeHistory;
@@ -67,5 +68,14 @@ public class CaseChangeOperation {
 
 	public void setNewValue(String newValue) {
 		this.newValue = newValue;
+	}
+
+	@Column(name = "field", length = 50)
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
 	}
 }
