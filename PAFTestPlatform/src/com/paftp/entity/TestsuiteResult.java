@@ -64,7 +64,7 @@ public class TestsuiteResult {
 		this.testsuite = testsuite;
 	}
 	
-	@OneToMany(mappedBy = "testsuite_result")
+	@OneToMany(mappedBy = "testsuite_result", cascade = CascadeType.REFRESH)
 	public List<TestcaseResult> getTestcase_results() {
 		return testcase_results;
 	}

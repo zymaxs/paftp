@@ -8,24 +8,20 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
 import com.paftp.entity.CaseChangeHistory;
 import com.paftp.entity.CaseChangeOperation;
 import com.paftp.entity.Sut;
-import com.paftp.entity.TestcaseStep;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.Testsuite;
 import com.paftp.entity.User;
-import com.paftp.entity.UserInfo;
 import com.paftp.service.CaseChangeHistory.CaseChangeHistoryService;
 import com.paftp.service.CaseChangeOperation.CaseChangeOperationService;
 import com.paftp.service.Testcase.TestcaseService;

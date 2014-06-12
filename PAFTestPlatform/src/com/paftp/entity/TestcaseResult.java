@@ -84,7 +84,7 @@ public class TestcaseResult {
 		this.testsuite_result = testsuite_result;
 	}
 	
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "testcase_id")
 	public Testcase getTestcase() {
 		return testcase;
