@@ -24,6 +24,7 @@ public class Sut {
 	private String description;
 	private SutGroup group;
 	private List<Role> role_results;
+	private List<Testpass> testpasses;
 	private List<Testsuite> testsuites;
 //	private List<Testpass> testpass_results;
 //	private List<StressResult> stress_results;
@@ -79,6 +80,14 @@ public class Sut {
 
 	public void setRole_results(List<Role> role_results) {
 		this.role_results = role_results;
+	}
+	
+	@OneToMany(mappedBy = "sut", cascade = CascadeType.REFRESH)
+	public List<Testpass> getTestpasses() {
+		return testpasses;
+	}
+	public void setTestpasses(List<Testpass> testpasses) {
+		this.testpasses = testpasses;
 	}
 	
 	@OneToMany(mappedBy = "sut", cascade = CascadeType.ALL)

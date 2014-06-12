@@ -59,7 +59,7 @@ public class Testpass {
 		this.createtime = createtime;
 	}
 
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "sut_id")
 	public Sut getSut() {
 		return sut;
@@ -69,7 +69,7 @@ public class Testpass {
 		this.sut = sut;
 	}
 
-	@OneToMany(mappedBy = "testpass")
+	@OneToMany(mappedBy = "testpass", cascade = CascadeType.REFRESH)
 	public List<TestsuiteResult> getTestsuite_results() {
 		return testsuite_results;
 	}
