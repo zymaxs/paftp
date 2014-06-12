@@ -32,7 +32,7 @@
          <result type="json">
          </result>
     </action>
-         <action name="createTestcase" method="createTestsuite" class="com.paftp.action.TestsuiteAction">
+         <action name="createTestcase" method="createTestcase" class="com.paftp.action.TestsuiteAction">
          <result type="json">
          </result>
     </action>

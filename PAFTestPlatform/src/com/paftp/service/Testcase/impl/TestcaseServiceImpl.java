@@ -35,7 +35,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 
 	@Override
 	public Testcase findTestcaseByName(String name) {
-		return baseDAO.get(" from Testcase u where u.name = ?",
+		return baseDAO.get(" from Testcase u where u.caseName = ?",
 				new Object[] { name });
 	}
 

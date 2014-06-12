@@ -92,7 +92,6 @@ public class TestsuiteAction extends ActionSupport {
 
 		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
 				.getTestsuite_name());
-		List<Testcase> testcases = new ArrayList<Testcase>();
 		Testcase testcase  = testcaseService.findTestcaseByName(this.getTestcase_name());
 		if (testcase != null){
 			request.setAttribute("error", "The testcase already exist!");
@@ -109,12 +108,10 @@ public class TestsuiteAction extends ActionSupport {
 		this.createtime = new Date();
 		java.sql.Timestamp createdatetime = new java.sql.Timestamp(createtime.getTime());
 		testcase.setCreateTime(createdatetime);
-		testcases.add(testcase);
-		testsuite.setTestcases(testcases);
-		sut.getTestsuites().add(testsuite);
+		testcase.setTestsuite(testsuite);
 
-		sutService.saveSut(sut);
-
+		testcaseService.saveTestcase(testcase);
+		
 		return "success";
 
 	}
