@@ -20,6 +20,7 @@ public class Testsuite {
 	private Integer id;
 	private String name;
 	private Sut sut;
+	private String description;
 	private List<Testcase> testcases;
 	private List<TestsuiteResult> testsuite_results;
 
@@ -70,6 +71,15 @@ public class Testsuite {
 
 	public void setTestsuite_results(List<TestsuiteResult> testsuite_results) {
 		this.testsuite_results = testsuite_results;
+	}
+
+	@Column(name = "description", length = 150)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

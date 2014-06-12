@@ -28,8 +28,8 @@ public class Testcase {
 	private String priority;
 	private User creator;
 	private Date createTime;
-	private User updator;
-	private Date updateTime;
+	private String casesteps;
+	private String casetype;
 
 	private Testsuite testsuite;
 
@@ -78,7 +78,7 @@ public class Testcase {
 		this.status = status;
 	}
 
-	@Column(name = "description", length = 200)
+	@Column(name = "description", length = 150)
 	public String getDescription() {
 		return description;
 	}
@@ -97,16 +97,6 @@ public class Testcase {
 		this.createTime = createTime;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_time")
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "creator_id")
 	public User getCreator() {
@@ -115,16 +105,6 @@ public class Testcase {
 
 	public void setCreator(User creator) {
 		this.creator = creator;
-	}
-
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "updator_id")
-	public User getUpdator() {
-		return updator;
-	}
-
-	public void setUpdator(User updator) {
-		this.updator = updator;
 	}
 
 	@OneToMany(mappedBy = "testcase",cascade = CascadeType.ALL)
@@ -136,7 +116,7 @@ public class Testcase {
 		this.testcaseSteps = testcaseSteps;
 	}
 
-	@OneToMany(mappedBy = "testcase")
+	@OneToMany(mappedBy = "testcase",cascade = CascadeType.ALL)
 	public List<CaseChangeHistory> getCaseChangeHistorys() {
 		return caseChangeHistorys;
 	};
@@ -145,7 +125,7 @@ public class Testcase {
 		this.caseChangeHistorys = caseChangeHistorys;
 	}
 
-	@ManyToOne(cascade = CascadeType.DETACH)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "testsuite_id")
 	public Testsuite getTestsuite() {
 		return testsuite;
@@ -162,6 +142,24 @@ public class Testcase {
 	
 	public void setTestcase_results(List<TestcaseResult> testcase_results) {
 		this.testcase_results = testcase_results;
+	}
+
+	@Column(name = "casesteps", length = 500)
+	public String getCasesteps() {
+		return casesteps;
+	}
+
+	public void setCasesteps(String casesteps) {
+		this.casesteps = casesteps;
+	}
+
+	@Column(name = "casetype", length = 10)
+	public String getCasetype() {
+		return casetype;
+	}
+
+	public void setCasetype(String casetype) {
+		this.casetype = casetype;
 	}
 
 }
