@@ -76,6 +76,7 @@ function demo_create() {
 				  }
 			  else if(ref.get_node(sel).type == "testcase"){
 				  interfacetestcase = ref.get_node(sel).text;
+				  document.getElementById('testcase_name').value = interfacetestcase;
 				  document.getElementById('iniTd').style.display = "none";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('newTestSuiteTd').style.display = "none";
@@ -104,6 +105,8 @@ function demo_create() {
 
   };
  var datadata = "test"; 
+ 
+ // 创建TestSuite
   function newTestSuiteac(){
 	  var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val()};
 	  $.ajax({
@@ -132,20 +135,151 @@ function demo_create() {
 	  
 	  };
 
+//更新并且保存TestSuite
+function updateTestSuiteac(){
+	
+	document.getElementById('showtestsuite_name').readOnly = false;
+	document.getElementById('upTestSuite').style.display = "none";
+	document.getElementById('saveTestSuite').style.display = "block";
+	
+	};
+
+function saveTestSuiteac(){
+	var tsparams = {testsuite_name:$("#showtestsuite_name").val(),sut_name:$("#showsut_name").val()};
+	  $.ajax({
+			  type : "POST",
+			  url : "createTestsuite.action",
+			  cache : false,
+			  data : tsparams,
+			  dataType : "json",
+			  success : function(root) {
+				  $('#jstree').jstree(true).destroy();
+				  datadata = root.jsonArray;
+				  testtest();
+				  document.getElementById('iniTd').style.display = "block";
+				  document.getElementById('showTestSuiteTd').style.display = "none";
+				  document.getElementById('newTestSuiteTd').style.display = "none";
+				  document.getElementById('newTestCaseTd').style.display = "none";
+				  document.getElementById('showTestCaseTd').style.display = "none";
+			  },
+
+			  error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  alert(XMLHttpRequest.status);
+				  alert(XMLHttpRequest.readyState);
+				  alert(textStatus);
+			  }
+		  });
+	};
+	  
+//创建TestCase
+function newTestCaseac(){
+	  var tsparams = {testsuite_name:$("#testcase_name").val(),sut_name:$("#sut_name").val()};
+	  $.ajax({
+			  type : "POST",
+			  url : "createTestcase.action",
+			  cache : false,
+			  data : tsparams,
+			  dataType : "json",
+			  success : function(root) {
+				  $('#jstree').jstree(true).destroy();
+				  datadata = root.jsonArray;
+				  testtest();
+				  document.getElementById('iniTd').style.display = "block";
+				  document.getElementById('showTestSuiteTd').style.display = "none";
+				  document.getElementById('newTestSuiteTd').style.display = "none";
+				  document.getElementById('newTestCaseTd').style.display = "none";
+				  document.getElementById('showTestCaseTd').style.display = "none";
+			  },
+
+			  error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  alert(XMLHttpRequest.status);
+				  alert(XMLHttpRequest.readyState);
+				  alert(textStatus);
+			  }
+		  });
+	  
+	  };
+	  
+//更新并且保存TestCase
+
+function updateTestCaseac(){	
+	document.getElementById('showtestcase_name').readOnly = false;
+	document.getElementById('upTestCase').style.display = "none";
+	document.getElementById('saveTestCase').style.display = "block";
+	}
+
+function saveTestCaseac(){
+	var tsparams = {testsuite_name:$("#showtestsuite_name").val(),sut_name:$("#showsut_name").val()};
+	  $.ajax({
+			  type : "POST",
+			  url : "createTestsuite.action",
+			  cache : false,
+			  data : tsparams,
+			  dataType : "json",
+			  success : function(root) {
+				  $('#jstree').jstree(true).destroy();
+				  datadata = root.jsonArray;
+				  testtest();
+				  document.getElementById('iniTd').style.display = "block";
+				  document.getElementById('showTestSuiteTd').style.display = "none";
+				  document.getElementById('newTestSuiteTd').style.display = "none";
+				  document.getElementById('newTestCaseTd').style.display = "none";
+				  document.getElementById('showTestCaseTd').style.display = "none";
+			  },
+
+			  error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  alert(XMLHttpRequest.status);
+				  alert(XMLHttpRequest.readyState);
+				  alert(textStatus);
+			  }
+		  });
+	}
+
 function testtest(){
   // 6 create an instance when the DOM is ready
   $('#jstree').on('changed.jstree', function (e, data) {
-	  var i, j, r = [];
+	   var ref = $('#jstree').jstree(true);
+	   var sel = ref.get_selected();
+	   var type = ref.get_type(sel, true);
+	   var zhou = ref.get_node(sel);
+	   
+	   if ( type.type == "interfacetestcase"){
+		interfacetestsuite = ref.get_node(sel).text;
+		document.getElementById('showtestsuite_name').value = interfacetestsuite;
+		document.getElementById('iniTd').style.display = "none";
+		document.getElementById('showTestSuiteTd').style.display = "block";
+		document.getElementById('newTestSuiteTd').style.display = "none";
+		document.getElementById('newTestCaseTd').style.display = "none";
+		document.getElementById('showTestCaseTd').style.display = "none";
+		}
+		else if (type.type == "testcase"){
+		interfacetestcase = ref.get_node(sel).text;
+		document.getElementById('showtestcase_name').value = interfacetestcase;
+	    document.getElementById('iniTd').style.display = "none";
+		document.getElementById('showTestSuiteTd').style.display = "none";
+		document.getElementById('newTestSuiteTd').style.display = "none";
+		document.getElementById('newTestCaseTd').style.display = "none";
+		document.getElementById('showTestCaseTd').style.display = "block";	
+		}
+		else {
+		document.getElementById('iniTd').style.display = "block";
+		document.getElementById('showTestSuiteTd').style.display = "none";
+		document.getElementById('newTestSuiteTd').style.display = "none";
+		document.getElementById('newTestCaseTd').style.display = "none";
+		document.getElementById('showTestCaseTd').style.display = "none";
+			}
+	   
+	   var i, j, r = [];
 	  for(i = 0, j = data.selected.length; i < j; i++) {
 		r.push(data.instance.get_node(data.selected[i]).text);
 	  }
-	  $('#event_result').html('Selected: ' + r.join(', ') + i +j);
+	  $('#event_result').html('Selected: ' + r.join(', '));
 	}).jstree({
 
 
 	  'core' : {
-		  "multiple" : false,
-    	  "animation" : 0,
+		  //"multiple" : false,
+    	  //"animation" : 0,
 		  "check_callback" : true,
 		  //"themes" : { "stripes" : true },
 		  //'data': [{ 'id' : 'ajson1', 'parent' : '#', 'text' : 'Simple root node' },{ 'id' : 'ajson2', 'parent' : '#', 'text' : 'Root node 2' },{ 'id' : 'ajson3', 'parent' : 'ajson2', 'text' : 'Child 1' },{ 'id' : 'ajson4', 'parent' : 'ajson2', 'text' : 'Child 2'}]
@@ -344,11 +478,11 @@ function testtest(){
           <table width="100%">
             <tr>
               <td><label for="showtestsuite_name">TestSuiteName</label></td>
-              <td><input id="showtestsuite_name" name="testsuite_name" value=""></td>
+              <td><input id="showtestsuite_name" name="testsuite_name" value="" readonly></td>
             </tr>
             <tr>
               <td><label for="showsut_name">所属系统</label></td>
-              <td><input id="showsut_name" name="sut_name" value="<%=sut_name%>"></td>
+              <td><input id="showsut_name" name="sut_name" value="<%=sut_name%>" readonly></td>
             </tr>
             <tr>
               <td><button type="button" class="btn btn-default" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite" style="display:block">更新</button></td>
@@ -356,11 +490,15 @@ function testtest(){
             </tr>
           </table>
         </form></td>
-      <td width="75%" style="display:none" id="newTestCaseTd"><form>
+      <td width="75%" style="display:none" id="newTestCaseTd"><form id="newTestCase" name="newTestCase" action="">
           <table width="100%">
             <tr>
-              <td><label for="newTestCase">TestCase</label></td>
-              <td><input id="newTestCase" name="" value=""></td>
+              <td><label for="testcase_name">TestCase</label></td>
+              <td><input id="testcase_name" name="testcase_name" value=""></td>
+            </tr>
+            <tr>
+              <td><label for="sut_name">所属系统</label></td>
+              <td><input id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
             </tr>
             <tr>
               <td colspan="2"><button type="button" class="btn btn-default" onClick="newTestCaseac()" id="newTestCase" name="newTestCase">确认</button></td>
@@ -370,12 +508,16 @@ function testtest(){
       <td width="75%" style="display:none" id="showTestCaseTd"><form>
           <table width="100%">
             <tr>
-              <td><label for="showTestCase">TestSuiteName</label></td>
-              <td><input id="showTestCase" name="" value=""></td>
+              <td><label for="showtestcase_name">TestSuiteName</label></td>
+              <td><input id="showtestcase_name" name="testcase_name" value="" readonly></td>
             </tr>
             <tr>
-              <td><button type="button" class="btn btn-default" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite">确认</button></td>
-              <td><button type="button" class="btn btn-default" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite">更新</button></td>
+              <td><label for="sut_name">所属系统</label></td>
+              <td><input id="sut_name" name="sut_name" value="<%=sut_name%>" readonly></td>
+            </tr>
+            <tr>
+              <td><button type="button" class="btn btn-default" onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" style="display:block">更新</button></td>
+              <td><button type="button" class="btn btn-default" onClick="saveTestCaseac()" id="saveTestCase" name="saveTestCase" style="display:none">保存</button></td>
             </tr>
           </table>
         </form></td>
