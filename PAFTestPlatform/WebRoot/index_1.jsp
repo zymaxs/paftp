@@ -111,6 +111,7 @@
                 <li><a href="index_1.jsp">主页</a></li>
                 <li><a href="sutindex.jsp">SUT</a></li>
                 <li><a href="rolemanagement.jsp">用户权限</a></li>
+                <li><a href="casemanagement.jsp">case管理</a></li>
                 <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
               </ul>
             </div>

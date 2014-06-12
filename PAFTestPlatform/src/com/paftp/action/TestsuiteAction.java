@@ -222,6 +222,8 @@ public class TestsuiteAction extends ActionSupport {
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setSut(sut);
 		testsuiteService.saveTestsuite(testsuite);
+		JSONArray jsonarray = this.getRootNode(this.getSut_name());
+		this.setJsonArray(jsonarray);
 
 		return "success";
 
@@ -258,6 +260,7 @@ public class TestsuiteAction extends ActionSupport {
 		
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
 
+
 		return "success";
 
 	}
@@ -278,10 +281,12 @@ public class TestsuiteAction extends ActionSupport {
 			for (int j = 0; j < testsuites.size(); j++) {
 				List<Testcase> testcases = testsuites.get(j).getTestcases();
 				JSONArray parentNode0 = new JSONArray();
+				if (testcases != null) {
 				for (int l = 0; l < testcases.size(); l++) {
 					JSONObject childNode0 = util.childNode(testcases.get(l)
 							.getCaseName(), util.nodeType("00"), null);
 					parentNode0.add(childNode0);
+				}
 				}
 				JSONObject childNode00 = util.childNode(testsuites.get(j)
 						.getName(), util.nodeType("0"), parentNode0);
