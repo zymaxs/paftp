@@ -5,9 +5,11 @@ CREATE TABLE `testcase` (
     `name` varchar(50) DEFAULT NULL UNIQUE,
     `priority` varchar(8) DEFAULT NULL,
     `status` varchar(20) DEFAULT NULL,
-    `description` varchar(500) DEFAULT NULL,
+    `description` varchar(150) DEFAULT NULL,
     `creator_id` int(11) DEFAULT NULL,
     `create_time` datetime DEFAULT NULL,
+	`casetype` varchar(10) DEFAULT NULL,
+    `casesteps` varchar(500) DEFAULT NULL,
     INDEX testsuite_ind (testsuite_id),
     FOREIGN KEY (testsuite_id)
         REFERENCES testsuite (id)

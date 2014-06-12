@@ -28,6 +28,8 @@ public class Testcase {
 	private String priority;
 	private User creator;
 	private Date createTime;
+	private String casesteps;
+	private String casetype;
 
 	private Testsuite testsuite;
 
@@ -76,7 +78,7 @@ public class Testcase {
 		this.status = status;
 	}
 
-	@Column(name = "description", length = 200)
+	@Column(name = "description", length = 150)
 	public String getDescription() {
 		return description;
 	}
@@ -140,6 +142,24 @@ public class Testcase {
 	
 	public void setTestcase_results(List<TestcaseResult> testcase_results) {
 		this.testcase_results = testcase_results;
+	}
+
+	@Column(name = "casesteps", length = 500)
+	public String getCasesteps() {
+		return casesteps;
+	}
+
+	public void setCasesteps(String casesteps) {
+		this.casesteps = casesteps;
+	}
+
+	@Column(name = "casetype", length = 10)
+	public String getCasetype() {
+		return casetype;
+	}
+
+	public void setCasetype(String casetype) {
+		this.casetype = casetype;
 	}
 
 }

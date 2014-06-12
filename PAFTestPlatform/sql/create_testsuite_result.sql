@@ -1,7 +1,6 @@
 CREATE TABLE `testsuiteresult`(
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`suitename` varchar(50) DEFAULT NULL,
-	`description` varchar(150) DEFAULT NULL,
 	`testpass_id` int(11) DEFAULT NULL,
 	`testsuite_id` int(11) DEFAULT NULL,
 	INDEX testsuite_ind (testsuite_id),

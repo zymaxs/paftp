@@ -60,10 +60,13 @@ public class TestsuiteAction extends ActionSupport {
 	private String testsuite_name;
 	private String testcase_name;
 	private String stresstestcase_name;
+	private String testsuite_description;
 
 	private String priority;
 	private String status;
 	private String description;
+	private String casetype;
+	private String casesteps;
 	private Date createtime;
 	private Date updatetime;
 
@@ -99,6 +102,8 @@ public class TestsuiteAction extends ActionSupport {
 		testcase.setDescription(this.getDescription());
 		testcase.setPriority(this.getPriority());
 		testcase.setStatus(this.getStatus());
+		testcase.setCasetype(this.getCasetype());
+		testcase.setCasesteps(this.getCasesteps());
 		testcase.setCreator(user);
 		this.createtime = new Date();
 		java.sql.Timestamp createdatetime = new java.sql.Timestamp(createtime.getTime());
@@ -221,6 +226,7 @@ public class TestsuiteAction extends ActionSupport {
 		testsuite =	new Testsuite();
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setSut(sut);
+		testsuite.setDescription(this.getTestsuite_description());
 		testsuiteService.saveTestsuite(testsuite);
 		JSONArray jsonarray = this.getRootNode(this.getSut_name());
 		this.setJsonArray(jsonarray);
@@ -259,7 +265,6 @@ public class TestsuiteAction extends ActionSupport {
 	public String initialTestsuites() throws ServletException, IOException {
 		
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
-
 
 		return "success";
 
@@ -339,6 +344,24 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperations.get(i).setNewValue(this.getDescription());
 			casechangeoperations.get(i).setField("priority");
 			testcase.setDescription(this.getDescription());
+			i++;
+		}
+		
+		if(testcase.getCasetype().equals(this.getCasetype()) == false){
+			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
+			casechangeoperations.get(i).setOldValue(testcase.getCasetype());
+			casechangeoperations.get(i).setNewValue(this.getCasetype());
+			casechangeoperations.get(i).setField("priority");
+			testcase.setCasetype(this.getCasetype());
+			i++;
+		}
+		
+		if(testcase.getCasesteps().equals(this.getCasesteps()) == false){
+			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
+			casechangeoperations.get(i).setOldValue(testcase.getCasesteps());
+			casechangeoperations.get(i).setNewValue(this.getCasesteps());
+			casechangeoperations.get(i).setField("priority");
+			testcase.setCasesteps(this.getCasesteps());
 			i++;
 		}
 		
@@ -447,6 +470,30 @@ public class TestsuiteAction extends ActionSupport {
 
 	public void setUpdatetime(Date updatetime) {
 		this.updatetime = updatetime;
+	}
+
+	public String getCasetype() {
+		return casetype;
+	}
+
+	public void setCasetype(String casetype) {
+		this.casetype = casetype;
+	}
+
+	public String getCasesteps() {
+		return casesteps;
+	}
+
+	public void setCasesteps(String casesteps) {
+		this.casesteps = casesteps;
+	}
+
+	public String getTestsuite_description() {
+		return testsuite_description;
+	}
+
+	public void setTestsuite_description(String testsuite_description) {
+		this.testsuite_description = testsuite_description;
 	}
 
 }

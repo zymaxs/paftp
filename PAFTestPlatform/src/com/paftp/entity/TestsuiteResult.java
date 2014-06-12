@@ -19,7 +19,6 @@ public class TestsuiteResult {
 	
 	private Integer id;
 	private String suitename;
-	private String description;
 	private Testpass testpass;
 	private Testsuite testsuite;
 	private List<TestcaseResult> testcase_results;
@@ -43,15 +42,6 @@ public class TestsuiteResult {
 	
 	public void setSuitename(String suitename) {
 		this.suitename = suitename;
-	}
-	
-	@Column(name = "description", length = 150) 
-	public String getDescription() {
-		return description;
-	}
-	
-	public void setDescription(String description) {
-		this.description = description;
 	}
 	
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
