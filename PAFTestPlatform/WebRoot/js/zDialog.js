@@ -2,7 +2,7 @@
  * zDialog 2.0
  * 最后修正：2009-12-18
  **/
-var IMAGESPATH = 'images/'; //图片路径配置
+var IMAGESPATH = 'img/images/'; //图片路径配置
 //var IMAGESPATH = 'http://www.5icool.org/'; //图片路径配置
 /*************************一些公用方法和属性****************************/
 var isIE = navigator.userAgent.indexOf('MSIE') != -1;
@@ -540,7 +540,7 @@ Dialog.alert = function (msg, func, w, h) {
         diag.close();
         if (func) func();
     };
-    diag.InnerHtml = '<table height="100%" border="0" align="center" cellpadding="10" cellspacing="0">\
+    diag.InnerHtml = '<table height="100%" width="100%" border="0" align="center" cellpadding="10" cellspacing="0" style="background:#FFF">\
 		<tr><td align="right"><img id="Icon_' + this.ID + '" src="' + IMAGESPATH + 'icon_alert.gif" width="34" height="34" align="absmiddle"></td>\
 			<td align="left" id="Message_' + this.ID + '" style="font-size:9pt">' + msg + '</td></tr>\
 	</table>';

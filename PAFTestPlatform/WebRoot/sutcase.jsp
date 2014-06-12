@@ -23,6 +23,8 @@ String sut_name = (String)request.getAttribute("sut_name");
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <script src="dist/jstree.min.js"></script>
+<script type="text/javascript" src="js/zDialog.js"></script>
+<script type="text/javascript" src="js/zDrag.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -46,6 +48,25 @@ String sut_name = (String)request.getAttribute("sut_name");
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+	
+	function createTestSuite(){
+	var diag = new Dialog();
+	diag.Width = 500;
+	diag.Height = 150;
+	diag.Title = "内容页为隐藏的元素的html";
+	diag.InvokeElementId="createTestSuite"
+	diag.OKEvent = function(){
+					//alert(topWin.$id("testsuite_name").value);
+					if (topWin.$id("testsuite_name").value == ""){
+					Dialog.alert("用户名不能为空");
+						}
+					else {
+					newTestSuiteac();
+					diag.close();
+					}
+					};//点击确定后调用的方法
+	diag.show();
+	};
 </script>
 <script type="text/javascript">
 var interfacetestsuite = "";
@@ -63,16 +84,10 @@ function demo_create() {
 			  sel = ref.create_node(sel, {"type":type.valid_children[0]});
 		  }
 		  if(sel) {
-			  ref.deselect_node(ref.get_parent(sel));
-			  ref.select_node(sel);
 			  if(ref.get_node(sel).type == "interfacetestcase"){
 				  interfacetestsuite = ref.get_node(sel).text;
 				  document.getElementById('testsuite_name').value = interfacetestsuite;
-				  document.getElementById('iniTd').style.display = "none";
-				  document.getElementById('showTestSuiteTd').style.display = "none";
-				  document.getElementById('newTestSuiteTd').style.display = "block";
-				  document.getElementById('newTestCaseTd').style.display = "none";
-				  document.getElementById('showTestCaseTd').style.display = "none";
+				  createTestSuite();
 				  }
 			  else if(ref.get_node(sel).type == "testcase"){
 				  interfacetestcase = ref.get_node(sel).text;
@@ -456,24 +471,6 @@ function testtest(){
           <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
         </div></td>
       <td width="75" id="iniTd" style="display:block; text-align:center" > HelloWorld! </td>
-      <td width="75%" style="display:none" id="newTestSuiteTd"><form>
-          <table width="100%">
-            <tr>
-              <td><label for="testsuite_name">TestSuiteName</label></td>
-              <td><input id="testsuite_name" name="testsuite_name" value=""></td>
-            </tr>
-            <tr>
-              <td><label for="sut_name">所属系统</label></td>
-              <td><input id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="2"><button type="button" class="btn btn-default" onClick="newTestSuiteac()" id="newTestSuite" name="newTestSuite">确认</button></td>
-            </tr>
-          </table>
-        </form></td>
       <td width="75%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm" action="">
           <table width="100%">
             <tr>
@@ -523,6 +520,25 @@ function testtest(){
         </form></td>
     </tr>
   </table>
+  
+  
+  <div id="createTestSuite" style="display:none">
+  <form>
+          <table width="500" height="150" style="background:#FFF">
+            <tr>
+              <td><label for="testsuite_name">TestSuiteName</label></td>
+              <td><input id="testsuite_name" name="testsuite_name" value=""></td>
+            </tr>
+            <tr>
+              <td><label for="sut_name">所属系统</label></td>
+              <td><input id="sut_name" name="sut_name" value="<%=sut_name%>" readonly></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+          </table>
+        </form>
+  </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
