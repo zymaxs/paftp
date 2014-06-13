@@ -65,6 +65,7 @@
 			<interceptor name="session" class="com.paftp.util.SessionInterceptor" />
 			<interceptor-stack name="sessionExpirayStack">
     			<interceptor-ref name="session"/>
+    			<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
    		</interceptors>
    		<global-results> 
@@ -100,23 +101,28 @@
 		</action>
 		<action name="updateuserinfo" method="updateUserInfo"
 			class="com.paftp.action.UserProfileAction">
+			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/index_1.jsp</result>
 		</action>
 		<action name="updatepassword" method="updatePassword"
 			class="com.paftp.action.UserProfileAction">
+			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/index_1.jsp</result>
 			<result name="error">/opr_error.jsp</result>
 		</action>
 		<action name="getuserinfo" method="getUserInfo" class="com.paftp.action.UserProfileAction">
+			<interceptor-ref name="sessionExpirayStack" />
         	<result name="success">/userinfo.jsp</result>
     	</action>
 		<action name="applySut" method="applySut" class="com.paftp.action.ApplySutAction">
+        	<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/sutindex.jsp</result>
 			<result name="error">/error.jsp</result>
 			<result name="exist">/error.jsp</result>
 		</action>
 		<action name="approveSut" method="approveSut"
 			class="com.paftp.action.ApplySutAction">
+			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/sutindex.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
@@ -131,6 +137,7 @@
 		</action>
 		<action name="updateSut" method="updateSut"
 			class="com.paftp.action.ApplySutAction">
+			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/sutindex.jsp</result>
 		</action>
 		<action name="reguserinfo" method="userinfo"
@@ -139,10 +146,12 @@
 		</action>
 		<action name="upuserinfo" method="userinfo"
 			class="com.paftp.action.StaticAction">
+			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/updateuserinfo.jsp</result>
 		</action>
 		<action name="applysutgroup" method="sutgroup"
 			class="com.paftp.action.StaticAction">
+			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/applysut.jsp</result>
 		</action>
 		<action name="showsutgroup" method="sutgroup"
