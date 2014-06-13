@@ -19,6 +19,8 @@ public class TestsuiteResult {
 	
 	private Integer id;
 	private String suitename;
+	private Integer setupstatus;
+	private Integer setupdescription;
 	private Testpass testpass;
 	private Testsuite testsuite;
 	private List<TestcaseResult> testcase_results;
@@ -71,6 +73,24 @@ public class TestsuiteResult {
 	
 	public void setTestcase_results(List<TestcaseResult> testcase_results) {
 		this.testcase_results = testcase_results;
+	}
+
+	@Column(name = "setupstatus", length = 11)
+	public Integer getSetupstatus() {
+		return setupstatus;
+	}
+
+	public void setSetupstatus(Integer setupstatus) {
+		this.setupstatus = setupstatus;
+	}
+
+	@Column(name = "setupdescription", length = 200)  
+	public Integer getSetupdescription() {
+		return setupdescription;
+	}
+
+	public void setSetupdescription(Integer setupdescription) {
+		this.setupdescription = setupdescription;
 	}
 
 

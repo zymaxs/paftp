@@ -208,10 +208,10 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 
-//		if (user == null) {
-//			request.setAttribute("error", "Please log in firstly!");
-//			return "error";
-//		}
+		if (user == null || this.isRoleOfSut(user, this.getSut_name()) == false) {
+			request.setAttribute("error", "Please log in firstly or you are not the role for this system!");
+			return "error";
+		}
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		
@@ -260,8 +260,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 
-		if (user == null) {
-		request.setAttribute("error", "Please log in firstly!");
+		if (user == null || this.isRoleOfSut(user, this.getSut_name()) == false) {
+		request.setAttribute("error", "Please log in firstly or you are not the role for this system!");
 		return "error";
 	}
 		
@@ -316,6 +316,15 @@ public class TestsuiteAction extends ActionSupport {
 	}
 	
 	public String initialTestsuites() throws ServletException, IOException {
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		user = this.getSessionUser();
+		
+		if (user == null || this.isRoleOfSut(user, this.getSut_name()) == false) {
+			request.setAttribute("error", "Please log in firstly or you are not the role for this system!");
+			return "error";
+		}
 		
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
 
