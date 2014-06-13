@@ -66,6 +66,29 @@ String sut_name = (String)request.getAttribute("sut_name");
 					diag.close();
 					}
 					};//点击确定后调用的方法
+	diag.CancelEvent = function(){
+						$.ajax({
+			 			 type : "POST",
+			 			 url : "initialTestsuites.action",
+			 			 cache : false,
+					     data : {sut_name:'<%=sut_name%>'},
+			  			 dataType : "json",
+			 			 success : function(root) {
+								   $('#jstree').jstree(true).destroy();
+				  				   datadata = root.jsonArray;
+				 				   testtest();
+								   diag.close();
+								   document.getElementById('iniTd').style.display = "block";
+				  				   document.getElementById('showTestSuiteTd').style.display = "none";
+				                   document.getElementById('showTestCaseTd').style.display = "none";
+			 					   },
+			  			 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  				alert(XMLHttpRequest.status);
+				  				alert(XMLHttpRequest.readyState);
+				  				alert(textStatus);
+			  					}
+		  				});
+						};
 	diag.show();
 	};
 	
@@ -76,15 +99,14 @@ String sut_name = (String)request.getAttribute("sut_name");
 	diag.Title = "创建TestCase";
 	diag.InvokeElementId="createTestCase"
 	diag.OKEvent = function(){
-					alert("start createTestCase");
-					//alert(topWin.$id("testsuite_name").value);
+					alert(topWin.$id('description').value.length);
 					if (topWin.$id("testcase_name").value == ""){
 					Dialog.alert("用户名不能为空");
 						}
 					else if ( topWin.$id('description').value.length > 50){
 					Dialog.alert("描述不能超过50个字符");
 						}
-					else if (topWin.$id('description').value.length > 150 ){
+					else if (topWin.$id('casesteps').value.length > 150 ){
 					Dialog.alert("描述不能超过150个字符");
 						}
 					else{
@@ -93,6 +115,29 @@ String sut_name = (String)request.getAttribute("sut_name");
 						diag.close();
 						}
 					};//点击确定后调用的方法
+	diag.CancelEvent = function(){
+						$.ajax({
+			 			 type : "POST",
+			 			 url : "initialTestsuites.action",
+			 			 cache : false,
+					     data : {sut_name:'<%=sut_name%>'},
+			  			 dataType : "json",
+			 			 success : function(root) {
+								   $('#jstree').jstree(true).destroy();
+				  				   datadata = root.jsonArray;
+				 				   testtest();
+								   diag.close();
+								   document.getElementById('iniTd').style.display = "block";
+				  				   document.getElementById('showTestSuiteTd').style.display = "none";
+				                   document.getElementById('showTestCaseTd').style.display = "none";
+			 					   },
+			  			 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  				alert(XMLHttpRequest.status);
+				  				alert(XMLHttpRequest.readyState);
+				  				alert(textStatus);
+			  					}
+		  				});
+						};
 	diag.show();
 	};
 </script>
@@ -162,8 +207,6 @@ function demo_create() {
 				  testtest();
 				  document.getElementById('iniTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
-				  document.getElementById('newTestSuiteTd').style.display = "none";
-				  document.getElementById('newTestCaseTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 			  },
 
@@ -199,8 +242,6 @@ function saveTestSuiteac(){
 				  testtest();
 				  document.getElementById('iniTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
-				  document.getElementById('newTestSuiteTd').style.display = "none";
-				  document.getElementById('newTestCaseTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 			  },
 
@@ -236,10 +277,7 @@ function newTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
-	  alert("before ajax");
 	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val()};
-	  alert(tsparams);
-	  alert("1111111");
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestcase.action",
@@ -289,8 +327,6 @@ function saveTestCaseac(){
 				  testtest();
 				  document.getElementById('iniTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
-				  document.getElementById('newTestSuiteTd').style.display = "none";
-				  document.getElementById('newTestCaseTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 			  },
 
@@ -315,8 +351,6 @@ function testtest(){
 		document.getElementById('showtestsuite_name').value = interfacetestsuite;
 		document.getElementById('iniTd').style.display = "none";
 		document.getElementById('showTestSuiteTd').style.display = "block";
-		document.getElementById('newTestSuiteTd').style.display = "none";
-		document.getElementById('newTestCaseTd').style.display = "none";
 		document.getElementById('showTestCaseTd').style.display = "none";
 		}
 		else if (type.type == "testcase"){
@@ -324,15 +358,11 @@ function testtest(){
 		document.getElementById('showtestcase_name').value = interfacetestcase;
 	    document.getElementById('iniTd').style.display = "none";
 		document.getElementById('showTestSuiteTd').style.display = "none";
-		document.getElementById('newTestSuiteTd').style.display = "none";
-		document.getElementById('newTestCaseTd').style.display = "none";
-		document.getElementById('showTestCaseTd').style.display = "block";	
+		document.getElementById('showTestCaseTd').style.display = "block";
 		}
 		else {
 		document.getElementById('iniTd').style.display = "block";
 		document.getElementById('showTestSuiteTd').style.display = "none";
-		document.getElementById('newTestSuiteTd').style.display = "none";
-		document.getElementById('newTestCaseTd').style.display = "none";
 		document.getElementById('showTestCaseTd').style.display = "none";
 			}
 	   
@@ -539,11 +569,10 @@ function testtest(){
             </tr>
           </table>
         </form></td>
-      <td width="75%" style="display:none" id="newTestCaseTd"></td>
       <td width="75%" style="display:none" id="showTestCaseTd"><form>
           <table width="100%">
             <tr>
-              <td><label for="showtestcase_name">TestSuiteName</label></td>
+              <td><label for="showtestcase_name">TestCaseName</label></td>
               <td><input id="showtestcase_name" name="testcase_name" value="" readonly></td>
             </tr>
             <tr>
@@ -582,7 +611,7 @@ function testtest(){
           <td><input id="testcase_name" name="testcase_name" value="" maxlength="15"></td>
         </tr>
         <tr> 
-          <td colspan="2"><input id="casesut_name" style="display:block" name="sut_name" value="<%=sut_name%>"></td>
+          <td colspan="2"><input id="casesut_name" style="display:none" name="sut_name" value="<%=sut_name%>"></td>
         </tr>
         <tr>
         <td>所属TestSuite</td>
@@ -590,15 +619,15 @@ function testtest(){
         </tr>
         <tr>
         <td>优先级</td>
-        <td><input type="radio" name="priority" id="p1" value="P1" checked>P1     <input type="radio" name="priority" id="p2" value="P2" checked>P2     <input type="radio" name="priority" id="p3" value="P3" checked>P3</td>
+        <td><input type="radio" name="priority" id="p1" value="P1" checked>P1&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="priority" id="p2" value="P2" checked>P2&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="priority" id="p3" value="P3" checked>P3</td>
         </tr>
         <tr>
         <td>状态</td>
-        <td><input type="radio" name="status" id="manul" value="手动" checked>手动     <input type="radio" name="status" id="auto" value="自动">自动  <input type="radio" name="status" value="废弃" id="discard">废弃</td>
+        <td><input type="radio" name="status" id="manul" value="手动" checked>手动&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="status" id="auto" value="自动">自动&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="status" value="废弃" id="discard">废弃</td>
         </tr>
         <tr>
         <td>正例 or 反例</td>
-        <td><input type="radio" name="type" id="zhengli" value="正例" checked>正例     <input type="radio" id="fanli" name="type" value="反例">反例</td>
+        <td><input type="radio" name="type" id="zhengli" value="正例" checked>正例&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="fanli" name="type" value="反例">反例</td>
         </tr>
         <tr>
         <td>描述</td>
