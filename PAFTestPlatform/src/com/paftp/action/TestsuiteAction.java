@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 
 import com.paftp.entity.CaseChangeHistory;
 import com.paftp.entity.CaseChangeOperation;
+import com.paftp.entity.Role;
 import com.paftp.entity.Sut;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.Testsuite;
@@ -70,6 +71,10 @@ public class TestsuiteAction extends ActionSupport {
 	private JSONArray jsonArray;
 	private JSONObject jsonObject;
 	private User user;
+	
+	private Testcase testcase;
+	
+	private Testsuite testsuite;
 
 	private Util util = new Util();
 
@@ -155,7 +160,7 @@ public class TestsuiteAction extends ActionSupport {
 		
 		Testcase testcase  = testcaseService.findTestcaseByName(this.getTestcase_name());
 		
-		request.setAttribute("testcase", testcase);
+		this.setTestcase(testcase);
 		
 		return "success";
 	}
@@ -243,7 +248,7 @@ public class TestsuiteAction extends ActionSupport {
 		
 		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
 		
-		request.setAttribute("testsuite", testsuite);
+		this.setTestsuite(testsuite);
 		
 		return "success";
 		
@@ -294,10 +299,20 @@ public class TestsuiteAction extends ActionSupport {
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
-		request.setAttribute("sut_name", this.getSut_name());
-		request.setAttribute("flag", true);
+		user = getSessionUser();
 		
+		if (this.isRoleOfSut(user, this.getSut_name())){
+			request.setAttribute("sut_name", this.getSut_name());
+			request.setAttribute("flag", false);
+		}else{
+			request.setAttribute("error", "You are not the role for this sut!");
+			return "error";
+		}
+
 		return "success";
+		
+
+
 	}
 	
 	public String initialTestsuites() throws ServletException, IOException {
@@ -307,6 +322,17 @@ public class TestsuiteAction extends ActionSupport {
 		return "success";
 
 	}
+	
+	private Boolean isRoleOfSut(User user, String sut_name){
+		List<Role> roles = user.getRoles();
+		for(int i=0; i<roles.size(); i++){
+			if(roles.get(i).getSut().equals(this.getSut_name())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 
 	private JSONArray getRootNode(String sut_name) {
 
@@ -541,5 +567,22 @@ public class TestsuiteAction extends ActionSupport {
 	public void setTestsuite_id(Integer testsuite_id) {
 		this.testsuite_id = testsuite_id;
 	}
+	
+	public Testcase getTestcase() {
+		return testcase;
+	}
+
+	public void setTestcase(Testcase testcase) {
+		this.testcase = testcase;
+	}
+
+	public Testsuite getTestsuite() {
+		return testsuite;
+	}
+
+	public void setTestsuite(Testsuite testsuite) {
+		this.testsuite = testsuite;
+	}
+
 
 }
