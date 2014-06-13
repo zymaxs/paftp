@@ -7,7 +7,7 @@ CREATE TABLE `testcaseresult`(
 	`testcase_id` int(11) DEFAULT NULL,
 	INDEX testcase_ind (testcase_id),
 	FOREIGN KEY (testcase_id) REFERENCES testcase(id) ON DELETE NO ACTION,
-	INDEX testsuite_ind (testsuite_id), 
+	INDEX testsuite_ind (testsuiteresult_id), 
 	FOREIGN KEY (testsuiteresult_id) REFERENCES testsuiteresult(id) ON DELETE cascade,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
