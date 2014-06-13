@@ -128,7 +128,6 @@ public class TestsuiteAction extends ActionSupport {
 			return "error";
 		}
 		
-		
 		Testcase testcase  = testcaseService.findTestcaseByName(this.getTestcase_name());
 		if(testcase == null){
 			testcase = new Testcase();
@@ -215,8 +214,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		
-		
-		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
+		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
+				.getTestsuite_name());
 		if(testsuite != null){
 			request.setAttribute("error", "The testsuite already exist!");
 			return "error";
@@ -236,7 +235,6 @@ public class TestsuiteAction extends ActionSupport {
 	
 	public String queryTestsuite(){
 		
-		
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
@@ -246,7 +244,8 @@ public class TestsuiteAction extends ActionSupport {
 		return "error";
 	}
 		
-		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
+		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
+				.getTestsuite_name());
 		
 		this.setTestsuite(testsuite);
 		
@@ -265,7 +264,8 @@ public class TestsuiteAction extends ActionSupport {
 		return "error";
 	}
 		
-		Testsuite testsuite = testsuiteService.findTestsuiteById(this.getTestsuite_id());
+		Testsuite testsuite = testsuiteService.findTestsuiteById(this
+				.getTestsuite_id());
 		
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getSut_name());
@@ -288,7 +288,8 @@ public class TestsuiteAction extends ActionSupport {
 //			return "error";
 //		}
 //	
-//		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
+	// Testsuite testsuite =
+	// testsuiteService.findTestsuiteByName(this.getTestsuite_name());
 //		
 //		testsuiteService.deleteTestsuite(testsuite);
 //		
@@ -301,18 +302,12 @@ public class TestsuiteAction extends ActionSupport {
 		
 		user = getSessionUser();
 		
-		if (this.isRoleOfSut(user, this.getSut_name())){
+			request.setAttribute("isCurrentRole", this.isRoleOfSut(user, this.getSut_name()));
 			request.setAttribute("sut_name", this.getSut_name());
 			request.setAttribute("flag", false);
-		}else{
-			request.setAttribute("error", "You are not the role for this sut!");
-			return "error";
-		}
 
 		return "success";
 		
-
-
 	}
 	
 	public String initialTestsuites() throws ServletException, IOException {
@@ -333,16 +328,18 @@ public class TestsuiteAction extends ActionSupport {
 	}
 	
 	private Boolean isRoleOfSut(User user, String sut_name){
-		List<Role> roles = user.getRoles();
+		User currentuser = userService.findUserByAlias(user.getAlias());
+		List<Role> roles = currentuser.getRoles();
 		for(int i=0; i<roles.size(); i++){
+			if (roles.get(i).getSut() != null) {
 			if(roles.get(i).getSut().equals(this.getSut_name())){
 				return true;
 			}
 		}
+		}
 		return false;
 	}
 	
-
 	private JSONArray getRootNode(String sut_name) {
 
 		List<Sut> suts = new ArrayList<Sut>();
