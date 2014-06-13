@@ -202,7 +202,7 @@ function demo_create() {
  
  // 创建TestSuite
   function newTestSuiteac(){
-	  var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val()};
+	  var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val(),description:$("#testsuite_description").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestsuite.action",
@@ -763,7 +763,7 @@ function initree(){
         </tr>
         <tr>
           <td>所属TestSuite</td>
-          <td><input id="casetestsuite_name" name="testsuite_name" value="" maxlength="15"></td>
+          <td><input id="casetestsuite_name" name="testsuite_name" value="" maxlength="15" readonly></td>
         </tr>
         <tr>
           <td>优先级</td>
