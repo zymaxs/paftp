@@ -75,7 +75,7 @@ public class TestcaseResult {
 	}
 	
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-	@JoinColumn(name = "testsuite_id")
+	@JoinColumn(name = "testsuiteresult_id")
 	public TestsuiteResult getTestsuite_result() {
 		return testsuite_result;
 	}
