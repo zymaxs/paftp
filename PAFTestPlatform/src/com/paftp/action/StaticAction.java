@@ -57,7 +57,8 @@ public class StaticAction extends ActionSupport{
 	}
 	
 	public String sutgroup(){
-	HttpServletRequest request = ServletActionContext.getRequest();
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
 		
 		List<String> sutgroupnames = new ArrayList<String>();
 		List<SutGroup> sutgroups = sutgroupService.findAllList();

@@ -90,9 +90,6 @@ public class ApplySutAction extends ActionSupport {
 
 		user = getSessionUser();
 
-		if (user == null)
-			return "login";
-
 		if (isSeniorManager(user.getAlias()) == false) {
 			request.setAttribute("error",
 					"The user hasn't authority to do this!");
@@ -132,9 +129,6 @@ public class ApplySutAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
-
-		if (user == null)
-			return "login";
 
 		this.isAdmin = this.isAdmin(user.getAlias());
 

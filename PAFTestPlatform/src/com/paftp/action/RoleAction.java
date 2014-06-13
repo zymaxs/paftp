@@ -70,12 +70,7 @@ public class RoleAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = this.sessionUser();
-
-		if (user == null) {
-			request.setAttribute("error", "Please log in!");
-			return "error";
-		}
-
+		
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));
 
@@ -161,11 +156,6 @@ public class RoleAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = this.sessionUser();
-
-		if (user == null) {
-			request.setAttribute("error", "Please log in!");
-			return "error";
-		}
 
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));// Verify whether this needs to
