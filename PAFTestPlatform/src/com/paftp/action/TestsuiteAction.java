@@ -71,9 +71,9 @@ public class TestsuiteAction extends ActionSupport {
 	private JSONArray jsonArray;
 	private JSONObject jsonObject;
 	private User user;
-	
+
 	private Testcase testcase;
-	
+
 	private Testsuite testsuite;
 
 	private Util util = new Util();
@@ -93,8 +93,9 @@ public class TestsuiteAction extends ActionSupport {
 
 		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
 				.getTestsuite_name());
-		Testcase testcase  = testcaseService.findTestcaseByName(this.getTestcase_name());
-		if (testcase != null){
+		Testcase testcase = testcaseService.findTestcaseByName(this
+				.getTestcase_name());
+		if (testcase != null) {
 			request.setAttribute("error", "The testcase already exist!");
 			return "error";
 		}
@@ -107,18 +108,19 @@ public class TestsuiteAction extends ActionSupport {
 		testcase.setCasesteps(this.getCasesteps());
 		testcase.setCreator(user);
 		this.createtime = new Date();
-		java.sql.Timestamp createdatetime = new java.sql.Timestamp(createtime.getTime());
+		java.sql.Timestamp createdatetime = new java.sql.Timestamp(
+				createtime.getTime());
 		testcase.setCreateTime(createdatetime);
 		testcase.setTestsuite(testsuite);
 
 		testcaseService.saveTestcase(testcase);
-		
+
 		return "success";
 
 	}
-	
-	public String updateTestcase(){
-		
+
+	public String updateTestcase() {
+
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
@@ -127,28 +129,28 @@ public class TestsuiteAction extends ActionSupport {
 			request.setAttribute("error", "Please log in firstly!");
 			return "error";
 		}
-		
-		
-		Testcase testcase  = testcaseService.findTestcaseByName(this.getTestcase_name());
-		if(testcase == null){
+
+		Testcase testcase = testcaseService.findTestcaseByName(this
+				.getTestcase_name());
+		if (testcase == null) {
 			testcase = new Testcase();
 		}
 		CaseChangeHistory casechangehistory = new CaseChangeHistory();
 		casechangehistory.setUpdator(user);
 		casechangehistory.setTestcase(testcase);
 		this.updatetime = new Date();
-		java.sql.Timestamp updatedatetime = new java.sql.Timestamp(updatetime.getTime());
+		java.sql.Timestamp updatedatetime = new java.sql.Timestamp(
+				updatetime.getTime());
 		casechangehistory.setUpdate_time(updatedatetime);
 		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
-	
+
 		this.updateTestcase(testcase, casechangehistory);
 
-		
 		return "success";
 	}
-	
-	public String queryTestcase(){
-		
+
+	public String queryTestcase() {
+
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
@@ -157,15 +159,16 @@ public class TestsuiteAction extends ActionSupport {
 			request.setAttribute("error", "Please log in firstly!");
 			return "error";
 		}
-		
-		Testcase testcase  = testcaseService.findTestcaseByName(this.getTestcase_name());
-		
+
+		Testcase testcase = testcaseService.findTestcaseByName(this
+				.getTestcase_name());
+
 		this.setTestcase(testcase);
-		
+
 		return "success";
 	}
-	
-	public String queryTestcaseChangehistory(){
+
+	public String queryTestcaseChangehistory() {
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
@@ -174,33 +177,36 @@ public class TestsuiteAction extends ActionSupport {
 			request.setAttribute("error", "Please log in firstly!");
 			return "error";
 		}
-		
-		Testcase testcase  = testcaseService.findTestcaseByName(this.getTestcase_name());
-		
-		List<CaseChangeHistory> casechangehistorys = testcase.getCaseChangeHistorys();
-		
+
+		Testcase testcase = testcaseService.findTestcaseByName(this
+				.getTestcase_name());
+
+		List<CaseChangeHistory> casechangehistorys = testcase
+				.getCaseChangeHistorys();
+
 		request.setAttribute("casechangehistorys", casechangehistorys);
-		
+
 		return "true";
 	}
-	
-//	public String deleteTestcase() {
-//
-//		HttpServletRequest request = ServletActionContext.getRequest();
-//
-//		user = getSessionUser();
-//
-//		if (user == null) {
-//			request.setAttribute("error", "Please log in firstly!");
-//			return "error";
-//		}
-//	
-//		Testcase testcase = testcaseService.findTestcaseByName(this.getTestcase_name());
-//		
-//		testcaseService.deleteTestcase(testcase);
-//		
-//		return "success";
-//	}
+
+	// public String deleteTestcase() {
+	//
+	// HttpServletRequest request = ServletActionContext.getRequest();
+	//
+	// user = getSessionUser();
+	//
+	// if (user == null) {
+	// request.setAttribute("error", "Please log in firstly!");
+	// return "error";
+	// }
+	//
+	// Testcase testcase =
+	// testcaseService.findTestcaseByName(this.getTestcase_name());
+	//
+	// testcaseService.deleteTestcase(testcase);
+	//
+	// return "success";
+	// }
 
 	public String createTestsuite() {
 
@@ -208,21 +214,21 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 
-//		if (user == null) {
-//			request.setAttribute("error", "Please log in firstly!");
-//			return "error";
-//		}
+		// if (user == null) {
+		// request.setAttribute("error", "Please log in firstly!");
+		// return "error";
+		// }
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
-		
-		
-		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
-		if(testsuite != null){
+
+		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
+				.getTestsuite_name());
+		if (testsuite != null) {
 			request.setAttribute("error", "The testsuite already exist!");
 			return "error";
 		}
-				
-		testsuite =	new Testsuite();
+
+		testsuite = new Testsuite();
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setSut(sut);
 		testsuite.setDescription(this.getTestsuite_description());
@@ -233,114 +239,112 @@ public class TestsuiteAction extends ActionSupport {
 		return "success";
 
 	}
-	
-	public String queryTestsuite(){
-		
-		
+
+	public String queryTestsuite() {
+
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
 
 		if (user == null) {
-		request.setAttribute("error", "Please log in firstly!");
-		return "error";
-	}
-		
-		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
-		
-		this.setTestsuite(testsuite);
-		
-		return "success";
-		
-	}
-	
-	public String updateTestsuite(){
-		
-		HttpServletRequest request = ServletActionContext.getRequest();
-
-		user = getSessionUser();
-
-		if (user == null) {
-		request.setAttribute("error", "Please log in firstly!");
-		return "error";
-	}
-		
-		Testsuite testsuite = testsuiteService.findTestsuiteById(this.getTestsuite_id());
-		
-		testsuite.setDescription(this.getTestsuite_description());
-		testsuite.setName(this.getSut_name());
-		
-		testsuiteService.updateTestsuite(testsuite);
-		
-		request.setAttribute("testsuite", testsuite);
-		
-		return "success";
-	}
-	
-//	public String deleteTestsuite() {
-//
-//		HttpServletRequest request = ServletActionContext.getRequest();
-//
-//		user = getSessionUser();
-//
-//		if (user == null) {
-//			request.setAttribute("error", "Please log in firstly!");
-//			return "error";
-//		}
-//	
-//		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
-//		
-//		testsuiteService.deleteTestsuite(testsuite);
-//		
-//		return "success";
-//	}
-
-	public String initialParameters(){
-		
-		HttpServletRequest request = ServletActionContext.getRequest();
-		
-		user = getSessionUser();
-		
-		if (this.isRoleOfSut(user, this.getSut_name())){
-			request.setAttribute("sut_name", this.getSut_name());
-			request.setAttribute("flag", false);
-		}else{
-			request.setAttribute("error", "You are not the role for this sut!");
+			request.setAttribute("error", "Please log in firstly!");
 			return "error";
 		}
 
-		return "success";
-		
+		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
+				.getTestsuite_name());
 
+		this.setTestsuite(testsuite);
+
+		return "success";
 
 	}
-	
+
+	public String updateTestsuite() {
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		user = getSessionUser();
+
+		if (user == null) {
+			request.setAttribute("error", "Please log in firstly!");
+			return "error";
+		}
+
+		Testsuite testsuite = testsuiteService.findTestsuiteById(this
+				.getTestsuite_id());
+
+		testsuite.setDescription(this.getTestsuite_description());
+		testsuite.setName(this.getSut_name());
+
+		testsuiteService.updateTestsuite(testsuite);
+
+		request.setAttribute("testsuite", testsuite);
+
+		return "success";
+	}
+
+	// public String deleteTestsuite() {
+	//
+	// HttpServletRequest request = ServletActionContext.getRequest();
+	//
+	// user = getSessionUser();
+	//
+	// if (user == null) {
+	// request.setAttribute("error", "Please log in firstly!");
+	// return "error";
+	// }
+	//
+	// Testsuite testsuite =
+	// testsuiteService.findTestsuiteByName(this.getTestsuite_name());
+	//
+	// testsuiteService.deleteTestsuite(testsuite);
+	//
+	// return "success";
+	// }
+
+	public String initialParameters() {
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		user = getSessionUser();
+
+			request.setAttribute("isCurrentRole", this.isRoleOfSut(user, this.getSut_name()));
+			request.setAttribute("sut_name", this.getSut_name());
+			request.setAttribute("flag", false);
+
+		return "success";
+
+	}
+
 	public String initialTestsuites() throws ServletException, IOException {
-		
+
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
 
 		return "success";
 
 	}
-	
-	private Boolean isRoleOfSut(User user, String sut_name){
-		List<Role> roles = user.getRoles();
-		for(int i=0; i<roles.size(); i++){
-			if(roles.get(i).getSut().equals(this.getSut_name())){
-				return true;
+
+	private Boolean isRoleOfSut(User user, String sut_name) {
+		User currentuser = userService.findUserByAlias(user.getAlias());
+		List<Role> roles = currentuser.getRoles();
+		for (int i = 0; i < roles.size(); i++) {
+			if (roles.get(i).getSut() != null) {
+				if (roles.get(i).getSut().equals(this.getSut_name())) {
+					return true;
+				}
 			}
 		}
 		return false;
 	}
-	
 
 	private JSONArray getRootNode(String sut_name) {
 
 		List<Sut> suts = new ArrayList<Sut>();
-		
+
 		Sut sut = sutService.findSutByName(sut_name);
 		suts.add(sut);
-		
+
 		JSONArray parentNode0000 = new JSONArray();
 
 		for (int i = 0; i < suts.size(); i++) {
@@ -351,11 +355,11 @@ public class TestsuiteAction extends ActionSupport {
 				List<Testcase> testcases = testsuites.get(j).getTestcases();
 				JSONArray parentNode0 = new JSONArray();
 				if (testcases != null) {
-				for (int l = 0; l < testcases.size(); l++) {
-					JSONObject childNode0 = util.childNode(testcases.get(l)
-							.getCaseName(), util.nodeType("00"), null);
-					parentNode0.add(childNode0);
-				}
+					for (int l = 0; l < testcases.size(); l++) {
+						JSONObject childNode0 = util.childNode(testcases.get(l)
+								.getCaseName(), util.nodeType("00"), null);
+						parentNode0.add(childNode0);
+					}
 				}
 				JSONObject childNode00 = util.childNode(testsuites.get(j)
 						.getName(), util.nodeType("0"), parentNode0);
@@ -372,10 +376,11 @@ public class TestsuiteAction extends ActionSupport {
 		return parentNode0000;
 	}
 
-	private void updateTestcase(Testcase testcase, CaseChangeHistory casechangehistory){
+	private void updateTestcase(Testcase testcase,
+			CaseChangeHistory casechangehistory) {
 		int i = 0;
 		List<CaseChangeOperation> casechangeoperations = new ArrayList<CaseChangeOperation>();
-		if(testcase.getCaseName().equals(this.getTestcase_name()) == false){
+		if (testcase.getCaseName().equals(this.getTestcase_name()) == false) {
 			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
 			casechangeoperations.get(i).setOldValue(testcase.getCaseName());
 			casechangeoperations.get(i).setNewValue(this.getTestcase_name());
@@ -383,8 +388,8 @@ public class TestsuiteAction extends ActionSupport {
 			testcase.setCaseName(this.getTestcase_name());
 			i++;
 		}
-		
-		if(testcase.getPriority().equals(this.getPriority()) == false){
+
+		if (testcase.getPriority().equals(this.getPriority()) == false) {
 			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
 			casechangeoperations.get(i).setOldValue(testcase.getPriority());
 			casechangeoperations.get(i).setNewValue(this.getPriority());
@@ -392,8 +397,8 @@ public class TestsuiteAction extends ActionSupport {
 			testcase.setPriority(this.getPriority());
 			i++;
 		}
-		
-		if(testcase.getStatus().equals(this.getStatus()) == false){
+
+		if (testcase.getStatus().equals(this.getStatus()) == false) {
 			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
 			casechangeoperations.get(i).setOldValue(testcase.getStatus());
 			casechangeoperations.get(i).setNewValue(this.getStatus());
@@ -401,8 +406,8 @@ public class TestsuiteAction extends ActionSupport {
 			testcase.setStatus(this.getStatus());
 			i++;
 		}
-		
-		if(testcase.getDescription().equals(this.getDescription()) == false){
+
+		if (testcase.getDescription().equals(this.getDescription()) == false) {
 			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
 			casechangeoperations.get(i).setOldValue(testcase.getDescription());
 			casechangeoperations.get(i).setNewValue(this.getDescription());
@@ -410,8 +415,8 @@ public class TestsuiteAction extends ActionSupport {
 			testcase.setDescription(this.getDescription());
 			i++;
 		}
-		
-		if(testcase.getCasetype().equals(this.getCasetype()) == false){
+
+		if (testcase.getCasetype().equals(this.getCasetype()) == false) {
 			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
 			casechangeoperations.get(i).setOldValue(testcase.getCasetype());
 			casechangeoperations.get(i).setNewValue(this.getCasetype());
@@ -419,8 +424,8 @@ public class TestsuiteAction extends ActionSupport {
 			testcase.setCasetype(this.getCasetype());
 			i++;
 		}
-		
-		if(testcase.getCasesteps().equals(this.getCasesteps()) == false){
+
+		if (testcase.getCasesteps().equals(this.getCasesteps()) == false) {
 			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
 			casechangeoperations.get(i).setOldValue(testcase.getCasesteps());
 			casechangeoperations.get(i).setNewValue(this.getCasesteps());
@@ -428,13 +433,14 @@ public class TestsuiteAction extends ActionSupport {
 			testcase.setCasesteps(this.getCasesteps());
 			i++;
 		}
-		
-		for (int j =0; j<i; j++){
-			casechangeoperationService.saveCaseChangeOperation(casechangeoperations.get(j));
+
+		for (int j = 0; j < i; j++) {
+			casechangeoperationService
+					.saveCaseChangeOperation(casechangeoperations.get(j));
 		}
 		testcaseService.saveTestcase(testcase);
 	}
-	
+
 	private User getSessionUser() {
 
 		HttpSession session = ServletActionContext.getRequest().getSession(
@@ -519,7 +525,7 @@ public class TestsuiteAction extends ActionSupport {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public Date getCreatetime() {
 		return createtime;
 	}
@@ -567,7 +573,7 @@ public class TestsuiteAction extends ActionSupport {
 	public void setTestsuite_id(Integer testsuite_id) {
 		this.testsuite_id = testsuite_id;
 	}
-	
+
 	public Testcase getTestcase() {
 		return testcase;
 	}
@@ -583,6 +589,5 @@ public class TestsuiteAction extends ActionSupport {
 	public void setTestsuite(Testsuite testsuite) {
 		this.testsuite = testsuite;
 	}
-
 
 }
