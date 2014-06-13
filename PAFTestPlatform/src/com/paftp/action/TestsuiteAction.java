@@ -70,6 +70,10 @@ public class TestsuiteAction extends ActionSupport {
 	private JSONArray jsonArray;
 	private JSONObject jsonObject;
 	private User user;
+	
+	private Testcase testcase;
+	
+	private Testsuite testsuite;
 
 	private Util util = new Util();
 
@@ -158,7 +162,7 @@ public class TestsuiteAction extends ActionSupport {
 		
 		Testcase testcase  = testcaseService.findTestcaseByName(this.getTestcase_name());
 		
-		request.setAttribute("testcase", testcase);
+		this.setTestcase(testcase);
 		
 		return "success";
 	}
@@ -246,7 +250,7 @@ public class TestsuiteAction extends ActionSupport {
 		
 		Testsuite testsuite = testsuiteService.findTestsuiteByName(this.getTestsuite_name());
 		
-		request.setAttribute("testsuite", testsuite);
+		this.setTestsuite(testsuite);
 		
 		return "success";
 		
@@ -544,5 +548,22 @@ public class TestsuiteAction extends ActionSupport {
 	public void setTestsuite_id(Integer testsuite_id) {
 		this.testsuite_id = testsuite_id;
 	}
+	
+	public Testcase getTestcase() {
+		return testcase;
+	}
+
+	public void setTestcase(Testcase testcase) {
+		this.testcase = testcase;
+	}
+
+	public Testsuite getTestsuite() {
+		return testsuite;
+	}
+
+	public void setTestsuite(Testsuite testsuite) {
+		this.testsuite = testsuite;
+	}
+
 
 }
