@@ -73,10 +73,6 @@ public class UserProfileAction extends ActionSupport {
 
 		user = userService.findUserById(this.getUserid());
 
-		if (user == null) {
-			request.setAttribute("error", "The user account is not exist!");
-		}
-
 		row = 10;
 
 		List<Role> roles = user.getRoles();
@@ -135,9 +131,6 @@ public class UserProfileAction extends ActionSupport {
 
 		user = getSessionUser();
 
-		if (user == null)
-			return "login";
-
 		if (this.getDepartment() == null || this.getPosition() == null)
 			return "error";
 
@@ -152,9 +145,6 @@ public class UserProfileAction extends ActionSupport {
 	public String updatePassword() {
 
 		user = getSessionUser();
-
-		if (user == null)
-			return "login";
 
 		String orignpassword_md5 = util.md5Encryption(this.orignpassword);
 		User dbUser = userService.findUserByAliasAndPassword(user.getAlias(),

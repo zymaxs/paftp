@@ -10,13 +10,6 @@
 <html>
 <head>
 <%
-	if (session.getAttribute("user") == null) {
-%>
-<Meta http-equiv="refresh" content="0;url='index_1.jsp'; ">
-<%
-	}
-%>
-<%
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/iniinitialAddRelationship.action").forward(request,response);}
 String isAdmin = String.valueOf(request.getAttribute("isAdmin"));
@@ -60,8 +53,10 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
 	function ininormaluserdata(){
 		<%
 		String normaluserdata = "";
+		if(normalusers != null){
 		for (int i = 0; i < normalusers.size(); i++ ){
 			normaluserdata += "<option>" + normalusers.get(i).getAlias() +"</option>";
+		}
 		}
 		%>
 		return '<%=normaluserdata%>';
@@ -70,8 +65,10 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
 	function iniseniormanagerdata(){
 		<%
 		String seniormanagerdata = "";
+		if (seniormanagers != null){
 		for (int i = 0; i < seniormanagers.size(); i++ ){
 			seniormanagerdata += "<option>" + seniormanagers.get(i).getAlias() +"</option>";
+		}
 		}
 		%>
 		return '<%=seniormanagerdata%>';
@@ -93,8 +90,8 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
 		};
 	
 	$(function(){
-	$("#normaluser").append(ininormaluserdata());
-	$("#seniormanager").append(iniseniormanagerdata());
+			$("#normaluser").append(ininormaluserdata());
+			$("#seniormanager").append(iniseniormanagerdata());
     //移到右边
     $('#add').click(function() {
     //获取选中的选项，删除并追加给对方
