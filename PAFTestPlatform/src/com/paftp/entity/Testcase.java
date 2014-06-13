@@ -51,14 +51,6 @@ public class Testcase {
 		this.id = id;
 	}
 
-	@Column(name = "name", length = 100)
-	public String getCaseName() {
-		return caseName;
-	}
-
-	public void setCaseName(String caseName) {
-		this.caseName = caseName;
-	}
 
 	@Column(name = "priority", length = 8)
 	public String getPriority() {
@@ -160,6 +152,15 @@ public class Testcase {
 
 	public void setCasetype(String casetype) {
 		this.casetype = casetype;
+	}
+
+	@Column(name = "casename", length = 100)
+	public String getCaseName() {
+		return caseName;
+	}
+
+	public void setCaseName(String caseName) {
+		this.caseName = caseName;
 	}
 
 }
