@@ -1,7 +1,7 @@
 
 CREATE TABLE `testsuite` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `name` varchar(50) DEFAULT NULL UNIQUE,
+    `name` varchar(50) DEFAULT NULL,
     `code` varchar(50) DEFAULT NULL,
     `description` varchar(150) DEFAULT NULL,
     `sut_id` int(11) DEFAULT NULL,

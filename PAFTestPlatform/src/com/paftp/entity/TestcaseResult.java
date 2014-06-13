@@ -20,7 +20,6 @@ public class TestcaseResult {
 	private Integer id;
 	private String casename;
 	private String description;
-	private String casetype;
 	private Boolean ispass;
 	private Testcase testcase;
 	private TestsuiteResult testsuite_result;
@@ -54,15 +53,6 @@ public class TestcaseResult {
 	
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	
-	@Column(name = "casetype", length = 20) 
-	public String getCasetype() {
-		return casetype;
-	}
-	
-	public void setCasetype(String casetype) {
-		this.casetype = casetype;
 	}
 	
 	@Column(name = "ispass", columnDefinition = "TINYINT")

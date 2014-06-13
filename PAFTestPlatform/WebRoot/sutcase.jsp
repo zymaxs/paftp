@@ -13,6 +13,11 @@
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialParameters.action").forward(request,response);}
 String sut_name = (String)request.getAttribute("sut_name");
+String isCurrentRole;
+if (String.valueOf(request.getAttribute("isCurrentRole")) == "true"){
+	isCurrentRole = "y";
+}
+else { isCurrentRole = "n";};
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
@@ -60,6 +65,9 @@ String sut_name = (String)request.getAttribute("sut_name");
 					//alert(topWin.$id("testsuite_name").value.length);
 					if (topWin.$id("testsuite_name").value == ""){
 					Dialog.alert("用户名不能为空");
+						}
+					else if ( topWin.$id('testsuite_description').value.length > 50){
+					Dialog.alert("描述不能超过50个字符");
 						}
 					else {
 					newTestSuiteac();
@@ -221,28 +229,31 @@ function demo_create() {
 
 //更新并且保存TestSuite
 function updateTestSuiteac(){
-	
 	document.getElementById('showtestsuite_name').readOnly = false;
+	document.getElementById('showtestsuite_description').readOnly = false;
 	document.getElementById('upTestSuite').style.display = "none";
 	document.getElementById('saveTestSuite').style.display = "block";
 	
 	};
 
 function saveTestSuiteac(){
-	var tsparams = {testsuite_name:$("#showtestsuite_name").val(),sut_name:$("#showsut_name").val()};
+	var tsparams = {testsuite_name:$("#showtestsuite_name").val(),sut_name:$("#showsut_name").val(),testsuite_id:$("#showtestsuite_id").val(),testsuite_description:$("#showtestsuite_description").val()};
 	  $.ajax({
 			  type : "POST",
-			  url : "createTestsuite.action",
+			  url : "updateTestsuite.action",
 			  cache : false,
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
 				  $('#jstree').jstree(true).destroy();
-				  datadata = root.jsonArray;
-				  testtest();
+				  initree();
 				  document.getElementById('iniTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
+				  document.getElementById('showtestsuite_name').readOnly = true;
+				  document.getElementById('showtestsuite_description').readOnly = true;
+				  document.getElementById('upTestSuite').style.display = "block";
+				  document.getElementById('saveTestSuite').style.display = "none";
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -255,7 +266,6 @@ function saveTestSuiteac(){
 	  
 //创建TestCase
 function newTestCaseac(){
-	  alert("before priority_value");
 	  var priority_value;
 	  priority_radio = document.getElementsByName('priority');
 	  for(i=0;i<priority_radio.length;i++){  
@@ -285,15 +295,11 @@ function newTestCaseac(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
-				  alert("success");
-				 //$('#jstree').jstree(true).destroy();
-//				  datadata = root.jsonArray;
-//				  testtest();
-//				  document.getElementById('iniTd').style.display = "block";
-//				  document.getElementById('showTestSuiteTd').style.display = "none";
-//				  document.getElementById('newTestSuiteTd').style.display = "none";
-//				  document.getElementById('newTestCaseTd').style.display = "none";
-//				  document.getElementById('showTestCaseTd').style.display = "none";
+				  $('#jstree').jstree(true).destroy();
+				  initree();
+				  document.getElementById('iniTd').style.display = "block";
+				  document.getElementById('showTestSuiteTd').style.display = "none";
+				  document.getElementById('showTestCaseTd').style.display = "none";
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -307,27 +313,69 @@ function newTestCaseac(){
 	  
 //更新并且保存TestCase
 
-function updateTestCaseac(){	
+function updateTestCaseac(){
+		
 	document.getElementById('showtestcase_name').readOnly = false;
+	document.getElementById('showcaseprioritytd').style.display = "none";
+	document.getElementById('showcasepriorityoption').style.display = "block";
+	document.getElementById('showcasestatustd').style.display = "none";
+	document.getElementById('showcasestatusoption').style.display = "block";
+	document.getElementById('showcasetypetd').style.display = "none";
+	document.getElementById('showcasetypeoption').style.display = "block";
+	document.getElementById('showcasedescription').readOnly = false;
+	document.getElementById('showcasesteps').readOnly = false;	
 	document.getElementById('upTestCase').style.display = "none";
 	document.getElementById('saveTestCase').style.display = "block";
 	}
 
 function saveTestCaseac(){
-	var tsparams = {testsuite_name:$("#showtestsuite_name").val(),sut_name:$("#showsut_name").val()};
+	var priority_value;
+	  priority_radio = document.getElementsByName('updatepriority');
+	  for(i=0;i<priority_radio.length;i++){  
+	  	if(priority_radio[i].checked){
+	    	priority_value = priority_radio[i].value;
+	  	}
+	  };
+	  var status_value;
+	  status_radio = document.getElementsByName('updatestatus');
+	  for(i=0;i<status_radio.length;i++){  
+	  	if(status_radio[i].checked){
+	    	status_value = status_radio[i].value;
+	  	}
+	  };
+	  var type_value;
+	  type_radio = document.getElementsByName('updatetype');
+	  for(i=0;i<type_radio.length;i++){  
+	  	if(type_radio[i].checked){
+	    	type_value = type_radio[i].value;
+	  	}
+	  };
+	  var sut_name = '<%=sut_name%>';
+	  var tsparams = {testcase_name:$("#showtestcase_name").val(),sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val()};
 	  $.ajax({
 			  type : "POST",
-			  url : "createTestsuite.action",
+			  url : "updateTestcase.action",
 			  cache : false,
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
 				  $('#jstree').jstree(true).destroy();
-				  datadata = root.jsonArray;
-				  testtest();
+				  alert("ini tree");
+				  initree();
 				  document.getElementById('iniTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
+				  document.getElementById('showtestcase_name').readOnly = true;
+				  document.getElementById('showcaseprioritytd').style.display = "block";
+	  		      document.getElementById('showcasepriorityoption').style.display = "none";
+				  document.getElementById('showcasestatustd').style.display = "block";
+				  document.getElementById('showcasestatusoption').style.display = "none";
+				  document.getElementById('showcasetypetd').style.display = "block";
+				  document.getElementById('showcasetypeoption').style.display = "none";
+	  			  document.getElementById('showcasedescription').readOnly = true;
+			   	  document.getElementById('showcasesteps').readOnly = true;	
+				  document.getElementById('upTestCase').style.display = "block";
+				  document.getElementById('saveTestCase').style.display = "none";
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -345,8 +393,29 @@ function testtest(){
 	   var sel = ref.get_selected();
 	   var type = ref.get_type(sel, true);
 	   var zhou = ref.get_node(sel);
-	   
+	   var tsparams;
+	   var sut_name = '<%=sut_name%>';
 	   if ( type.type == "interfacetestcase"){
+		interfacetestsuite = ref.get_node(sel).text;
+		document.getElementById('showtestsuite_name').value = interfacetestsuite;
+		tsparams = {testsuite_name:interfacetestsuite,sut_name:sut_name};
+		$.ajax({
+			  type : "POST",
+			  url : "queryTestsuite.action",
+			  cache : false,
+			  data : tsparams,
+			  dataType : "json",
+			  success : function(root) {
+				  document.getElementById('showtestsuite_id').value = root.testsuite.id;
+				  document.getElementById('showtestsuite_description').value = root.testsuite.description;
+			  },
+
+			  error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  alert(XMLHttpRequest.status);
+				  alert(XMLHttpRequest.readyState);
+				  alert(textStatus);
+			  }
+		  });
 		interfacetestsuite = ref.get_node(sel).text;
 		document.getElementById('showtestsuite_name').value = interfacetestsuite;
 		document.getElementById('iniTd').style.display = "none";
@@ -356,6 +425,30 @@ function testtest(){
 		else if (type.type == "testcase"){
 		interfacetestcase = ref.get_node(sel).text;
 		document.getElementById('showtestcase_name').value = interfacetestcase;
+		document.getElementById('showcasetestsuite_name').value = ref.get_node(ref.get_parent(sel)).text;
+		tsparams = {testcase_name:interfacetestcase,sut_name:sut_name};
+		$.ajax({
+			  type : "POST",
+			  url : "queryTestcase.action",
+			  cache : false,
+			  data : tsparams,
+			  dataType : "json",
+			  success : function(root) {
+				  document.getElementById('showtestcase_id').value = root.testcase.id;
+				  document.getElementById('showcasepriority').value = root.testcase.priority;
+				  document.getElementById('showcasestatus').value = root.testcase.status;
+				  document.getElementById('showcasetype').value = root.testcase.casetype;
+				  document.getElementById('showcasedescription').value = root.testcase.description;
+				  document.getElementById('showcasesteps').value = root.testcase.casesteps;
+			  },
+
+			  error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  alert("function error");
+				  alert(XMLHttpRequest.status);
+				  alert(XMLHttpRequest.readyState);
+				  alert(textStatus);
+			  }
+		  });
 	    document.getElementById('iniTd').style.display = "none";
 		document.getElementById('showTestSuiteTd').style.display = "none";
 		document.getElementById('showTestCaseTd').style.display = "block";
@@ -435,9 +528,9 @@ function testtest(){
 	//$.jstree.reference('#jstree').select_node('child_node_1');
   //});
 };
-  
-  $(document).ready( function(){
-		$.ajax({
+
+function initree(){
+	$.ajax({
 			  type : "POST",
 			  url : "initialTestsuites.action",
 			  cache : false,
@@ -454,6 +547,11 @@ function testtest(){
 				  alert(textStatus);
 			  }
 		  });
+	};
+
+  $(document).ready( function(){
+	  initree();
+		
   
 });
 
@@ -560,9 +658,16 @@ function testtest(){
               <td><input id="showtestsuite_name" name="testsuite_name" value="" readonly></td>
             </tr>
             <tr>
+            <td colspan="2"><input id="showtestsuite_id" name="testsuite_id" value="" style="display:block" readonly></td>
+            </tr>
+            <tr>
               <td><label for="showsut_name">所属系统</label></td>
               <td><input id="showsut_name" name="sut_name" value="<%=sut_name%>" readonly></td>
             </tr>
+            <tr>
+          <td>描述</td>
+          <td><textarea  rows="4" name="testsuite_description" class="input-xlarge" readonly id="showtestsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
+        </tr>
             <tr>
               <td><button type="button" class="btn btn-default" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite" style="display:block">更新</button></td>
               <td><button type="button" class="btn btn-default" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite" style="display:none">保存</button></td>
@@ -576,8 +681,47 @@ function testtest(){
               <td><input id="showtestcase_name" name="testcase_name" value="" readonly></td>
             </tr>
             <tr>
-              <td><label for="sut_name">所属系统</label></td>
-              <td><input id="sut_name" name="sut_name" value="<%=sut_name%>" readonly></td>
+            	<td colspan="2"><input id="showtestcase_id" name="testcase_id" value="" style="display:block" readonly></td>
+            </tr>
+            <tr>
+              <td>所属TestSuite</td>
+              <td><input id="showcasetestsuite_name" name="testsuite_name" value="" maxlength="15" readonly></td>
+            </tr>
+            <tr>
+              <td>优先级</td>
+              <td id="showcaseprioritytd" style="display:block"><input id="showcasepriority" value="" readonly></td>
+              <td id="showcasepriorityoption" style="display:none"><input type="radio" name="updatepriority" id="p1" value="P1" checked>
+            P1&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="updatepriority" id="p2" value="P2">
+            P2&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="updatepriority" id="p3" value="P3">
+            P3</td>
+            </tr>
+            <tr>
+              <td>状态</td>
+              <td id="showcasestatustd" style="display:block"><input id="showcasestatus" value="" readonly></td>
+              <td id="showcasestatusoption" style="display:none"><input type="radio" name="updatestatus" id="manul" value="手动" checked>
+            手动&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="updatestatus" id="auto" value="自动">
+            自动&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="updatestatus" value="废弃" id="discard">
+            废弃</td>
+            </tr>
+            <tr>
+              <td>正例 or 反例</td>
+              <td id="showcasetypetd" style="display:block"><input id="showcasetype" value="" readonly></td>
+              <td id="showcasetypeoption" style="display:none"><input type="radio" name="updatetype" id="zhengli" value="正例" checked>
+            正例&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" id="fanli" name="updatetype" value="反例" >
+            反例</td>
+            </tr>
+            <tr>
+              <td>描述</td>
+              <td><textarea  rows="4" name="description" class="input-xlarge" id="showcasedescription" style="max-height:50px; max-width:200px; width:200px; height:50px;" readonly></textarea></td>
+            </tr>
+            <tr>
+              <td>步骤</td>
+              <td><textarea  rows="4" name="casesteps" class="input-xlarge" id="showcasesteps" style="max-height:150px; max-width:200px; width:200px; height:150px;" readonly></textarea></td>
             </tr>
             <tr>
               <td><button type="button" class="btn btn-default" onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" style="display:block">更新</button></td>
@@ -598,6 +742,10 @@ function testtest(){
           <td colspan="2"><input id="sut_name" name="sut_name" style="display:none" value="<%=sut_name%>" readonly></td>
         </tr>
         <tr>
+          <td>描述</td>
+          <td><textarea  rows="4" name="testsuite_description" class="input-xlarge" id="testsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
+        </tr>
+        <tr>
           <td></td>
         </tr>
       </table>
@@ -610,32 +758,45 @@ function testtest(){
           <td>TestCase</td>
           <td><input id="testcase_name" name="testcase_name" value="" maxlength="15"></td>
         </tr>
-        <tr> 
+        <tr>
           <td colspan="2"><input id="casesut_name" style="display:none" name="sut_name" value="<%=sut_name%>"></td>
         </tr>
         <tr>
-        <td>所属TestSuite</td>
-        <td><input id="casetestsuite_name" name="testsuite_name" value="" maxlength="15"></td>
+          <td>所属TestSuite</td>
+          <td><input id="casetestsuite_name" name="testsuite_name" value="" maxlength="15"></td>
         </tr>
         <tr>
-        <td>优先级</td>
-        <td><input type="radio" name="priority" id="p1" value="P1" checked>P1&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="priority" id="p2" value="P2" checked>P2&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="priority" id="p3" value="P3" checked>P3</td>
+          <td>优先级</td>
+          <td><input type="radio" name="priority" id="p1" value="P1" checked>
+            P1&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="priority" id="p2" value="P2">
+            P2&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="priority" id="p3" value="P3">
+            P3</td>
         </tr>
         <tr>
-        <td>状态</td>
-        <td><input type="radio" name="status" id="manul" value="手动" checked>手动&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="status" id="auto" value="自动">自动&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="status" value="废弃" id="discard">废弃</td>
+          <td>状态</td>
+          <td><input type="radio" name="status" id="manul" value="手动" checked>
+            手动&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="status" id="auto" value="自动">
+            自动&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="status" value="废弃" id="discard">
+            废弃</td>
         </tr>
         <tr>
-        <td>正例 or 反例</td>
-        <td><input type="radio" name="type" id="zhengli" value="正例" checked>正例&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="fanli" name="type" value="反例">反例</td>
+          <td>正例 or 反例</td>
+          <td><input type="radio" name="type" id="zhengli" value="正例" checked>
+            正例&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" id="fanli" name="type" value="反例">
+            反例</td>
         </tr>
         <tr>
-        <td>描述</td>
-        <td><textarea  rows="4" name="description" class="input-xlarge" id="description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
+          <td>描述</td>
+          <td><textarea  rows="4" name="description" class="input-xlarge" id="description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
         </tr>
         <tr>
-        <td>步骤</td>
-        <td><textarea  rows="4" name="casesteps" class="input-xlarge" id="casesteps" style="max-height:150px; max-width:200px; width:200px; height:150px;"></textarea></td>
+          <td>步骤</td>
+          <td><textarea  rows="4" name="casesteps" class="input-xlarge" id="casesteps" style="max-height:150px; max-width:200px; width:200px; height:150px;"></textarea></td>
         </tr>
       </table>
     </form>

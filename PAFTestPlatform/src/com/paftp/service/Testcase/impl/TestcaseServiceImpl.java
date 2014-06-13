@@ -49,6 +49,13 @@ public class TestcaseServiceImpl implements TestcaseService {
 		return baseDAO.find(" from Testcase u order by u.createTime");
 	}
 
+	@Override
+	public Testcase findTestcaseByNameAndTestsuiteid(String name, Integer id) {
+		// TODO Auto-generated method stub
+		return baseDAO.get(" from Testcase u where u.caseName = ? and testsuite.id = ?",
+				new Object[] { name, id });
+	}
+
 //	@Override
 //	public User findUserByNameAndPassword(String username, String password) {
 //		return baseDAO.get(

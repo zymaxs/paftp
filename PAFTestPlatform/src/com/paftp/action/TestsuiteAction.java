@@ -67,10 +67,14 @@ public class TestsuiteAction extends ActionSupport {
 	private String casesteps;
 	private Date createtime;
 	private Date updatetime;
+	private Integer testcase_id;
 
 	private JSONArray jsonArray;
 	private JSONObject jsonObject;
 	private User user;
+
+	private String prompt;
+
 
 	private Testcase testcase;
 
@@ -85,19 +89,19 @@ public class TestsuiteAction extends ActionSupport {
 		user = getSessionUser();
 
 		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
+			this.setPrompt("Please log in firstly!");
+			return "success";
 		}
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
-
-		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
-				.getTestsuite_name());
-		Testcase testcase = testcaseService.findTestcaseByName(this
-				.getTestcase_name());
+		
+		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(this
+				.getTestsuite_name(), sut.getId());
+		Testcase testcase = testcaseService.findTestcaseByNameAndTestsuiteid(this
+				.getTestcase_name(), testsuite.getId());
 		if (testcase != null) {
-			request.setAttribute("error", "The testcase already exist!");
-			return "error";
+			this.setPrompt("The testcase already exist!");
+			return "success";
 		}
 		testcase = new Testcase();
 		testcase.setCaseName(this.getTestcase_name());
@@ -119,6 +123,19 @@ public class TestsuiteAction extends ActionSupport {
 
 	}
 
+	private Boolean existTestcase(Testsuite testsuite, Integer testcase_id){
+		
+		if (testsuite == null)
+			return false;
+		List<Testcase> testcases = testsuite.getTestcases();
+		for (int i=0; i<testcases.size(); i++){
+			if (testcases.get(i).getId() == testcase_id)
+				return true;
+		}
+		
+		return false;
+	}
+	
 	public String updateTestcase() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -130,8 +147,8 @@ public class TestsuiteAction extends ActionSupport {
 			return "error";
 		}
 
-		Testcase testcase = testcaseService.findTestcaseByName(this
-				.getTestcase_name());
+		Testcase testcase = testcaseService.findTestcaseById(this.getTestcase_id());
+		
 		if (testcase == null) {
 			testcase = new Testcase();
 		}
@@ -150,15 +167,6 @@ public class TestsuiteAction extends ActionSupport {
 	}
 
 	public String queryTestcase() {
-
-		HttpServletRequest request = ServletActionContext.getRequest();
-
-		user = getSessionUser();
-
-		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
-		}
 
 		Testcase testcase = testcaseService.findTestcaseByName(this
 				.getTestcase_name());
@@ -221,8 +229,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
 
-		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
-				.getTestsuite_name());
+		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(this
+				.getTestsuite_name(), sut.getId());
 		if (testsuite != null) {
 			request.setAttribute("error", "The testsuite already exist!");
 			return "error";
@@ -242,17 +250,17 @@ public class TestsuiteAction extends ActionSupport {
 
 	public String queryTestsuite() {
 
-		HttpServletRequest request = ServletActionContext.getRequest();
 
-		user = getSessionUser();
+//		user = getSessionUser();
+//
+//		if (user == null) {
+//			request.setAttribute("error", "Please log in firstly!");
+//			return "error";
+//		}
 
-		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
-		}
-
-		Testsuite testsuite = testsuiteService.findTestsuiteByName(this
-				.getTestsuite_name());
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		
+		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(this.getTestsuite_name(), sut.getId());
 
 		this.setTestsuite(testsuite);
 
@@ -275,7 +283,7 @@ public class TestsuiteAction extends ActionSupport {
 				.getTestsuite_id());
 
 		testsuite.setDescription(this.getTestsuite_description());
-		testsuite.setName(this.getSut_name());
+		testsuite.setName(this.getTestsuite_name());
 
 		testsuiteService.updateTestsuite(testsuite);
 
@@ -330,7 +338,7 @@ public class TestsuiteAction extends ActionSupport {
 		List<Role> roles = currentuser.getRoles();
 		for (int i = 0; i < roles.size(); i++) {
 			if (roles.get(i).getSut() != null) {
-				if (roles.get(i).getSut().equals(this.getSut_name())) {
+				if (roles.get(i).getSut().getName().equals(this.getSut_name())) {
 					return true;
 				}
 			}
@@ -381,55 +389,67 @@ public class TestsuiteAction extends ActionSupport {
 		int i = 0;
 		List<CaseChangeOperation> casechangeoperations = new ArrayList<CaseChangeOperation>();
 		if (testcase.getCaseName().equals(this.getTestcase_name()) == false) {
-			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
-			casechangeoperations.get(i).setOldValue(testcase.getCaseName());
-			casechangeoperations.get(i).setNewValue(this.getTestcase_name());
-			casechangeoperations.get(i).setField("name");
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getCaseName());
+			casechangeoperation.setNewValue(this.getTestcase_name());
+			casechangeoperation.setField("name");
+			casechangeoperations.add(casechangeoperation);
 			testcase.setCaseName(this.getTestcase_name());
 			i++;
 		}
 
 		if (testcase.getPriority().equals(this.getPriority()) == false) {
-			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
-			casechangeoperations.get(i).setOldValue(testcase.getPriority());
-			casechangeoperations.get(i).setNewValue(this.getPriority());
-			casechangeoperations.get(i).setField("priority");
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getPriority());
+			casechangeoperation.setNewValue(this.getPriority());
+			casechangeoperation.setField("priority");
+			casechangeoperations.add(casechangeoperation);
 			testcase.setPriority(this.getPriority());
 			i++;
 		}
 
 		if (testcase.getStatus().equals(this.getStatus()) == false) {
-			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
-			casechangeoperations.get(i).setOldValue(testcase.getStatus());
-			casechangeoperations.get(i).setNewValue(this.getStatus());
-			casechangeoperations.get(i).setField("priority");
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getStatus());
+			casechangeoperation.setNewValue(this.getStatus());
+			casechangeoperation.setField("priority");
+			casechangeoperations.add(casechangeoperation);
 			testcase.setStatus(this.getStatus());
 			i++;
 		}
 
 		if (testcase.getDescription().equals(this.getDescription()) == false) {
-			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
-			casechangeoperations.get(i).setOldValue(testcase.getDescription());
-			casechangeoperations.get(i).setNewValue(this.getDescription());
-			casechangeoperations.get(i).setField("priority");
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getDescription());
+			casechangeoperation.setNewValue(this.getDescription());
+			casechangeoperation.setField("priority");
+			casechangeoperations.add(casechangeoperation);
 			testcase.setDescription(this.getDescription());
 			i++;
 		}
 
 		if (testcase.getCasetype().equals(this.getCasetype()) == false) {
-			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
-			casechangeoperations.get(i).setOldValue(testcase.getCasetype());
-			casechangeoperations.get(i).setNewValue(this.getCasetype());
-			casechangeoperations.get(i).setField("priority");
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getCasetype());
+			casechangeoperation.setNewValue(this.getCasetype());
+			casechangeoperation.setField("priority");
+			casechangeoperations.add(casechangeoperation);
 			testcase.setCasetype(this.getCasetype());
 			i++;
 		}
 
 		if (testcase.getCasesteps().equals(this.getCasesteps()) == false) {
-			casechangeoperations.get(i).setCaseChangeHistory(casechangehistory);
-			casechangeoperations.get(i).setOldValue(testcase.getCasesteps());
-			casechangeoperations.get(i).setNewValue(this.getCasesteps());
-			casechangeoperations.get(i).setField("priority");
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getCasesteps());
+			casechangeoperation.setNewValue(this.getCasesteps());
+			casechangeoperation.setField("priority");
+			casechangeoperations.add(casechangeoperation);
 			testcase.setCasesteps(this.getCasesteps());
 			i++;
 		}
@@ -590,4 +610,20 @@ public class TestsuiteAction extends ActionSupport {
 		this.testsuite = testsuite;
 	}
 
+	
+	public String getPrompt() {
+		return prompt;
+	}
+
+	public void setPrompt(String prompt) {
+		this.prompt = prompt;
+	}
+	
+	public Integer getTestcase_id() {
+		return testcase_id;
+	}
+
+	public void setTestcase_id(Integer testcase_id) {
+		this.testcase_id = testcase_id;
+	}
 }

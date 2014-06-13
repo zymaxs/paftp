@@ -36,12 +36,6 @@ public class TestsuiteServiceImpl implements TestsuiteService {
 	}
 
 	@Override
-	public Testsuite findTestsuiteByName(String name) {
-		return baseDAO.get(" from Testsuite u where u.name = ?",
-				new Object[] { name });
-	}
-
-	@Override
 	public void deleteTestsuite(Testsuite testsuite) {
 		baseDAO.delete(testsuite);
 	}
@@ -49,6 +43,13 @@ public class TestsuiteServiceImpl implements TestsuiteService {
 	@Override
 	public List<Testsuite> findAllList() {
 		return baseDAO.find(" from Testsuite u order by u.id");
+	}
+
+	@Override
+	public Testsuite findTestsuiteByNameAndSutid(String name, Integer id) {
+		// TODO Auto-generated method stub
+		return baseDAO.get(" from Testsuite u where u.name = ? and sut.id = ?",
+				new Object[] { name, id });
 	}
 
 //	@Override

@@ -42,7 +42,7 @@ public class CaseChangeOperation {
 	}
 	
 
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "casechangehistory_id")
 	public CaseChangeHistory getCaseChangeHistory() {
 		return caseChangeHistory;

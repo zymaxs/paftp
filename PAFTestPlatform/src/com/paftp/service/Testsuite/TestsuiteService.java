@@ -12,8 +12,8 @@ public interface TestsuiteService {
 	public void updateTestsuite(Testsuite testsuite);
 
 	public Testsuite findTestsuiteById(int id);
-
-	public Testsuite findTestsuiteByName(String name);
+	
+	public Testsuite findTestsuiteByNameAndSutid(String name, Integer id);
 
 	public void deleteTestsuite(Testsuite testsuite);
 

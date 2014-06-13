@@ -14,6 +14,8 @@ public interface TestcaseService {
 	public Testcase findTestcaseById(int id);
 
 	public Testcase findTestcaseByName(String name);
+	
+	public Testcase findTestcaseByNameAndTestsuiteid(String name, Integer id);
 
 	public void deleteTestcase(Testcase testcase);
 
