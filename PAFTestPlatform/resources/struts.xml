@@ -186,14 +186,6 @@
     	 <action name="initialParameters" method="initialParameters" class="com.paftp.action.TestsuiteAction">
         <result name="success">/sutcase.jsp</result>
     	 </action>
-    	 <action name="applysutgroup" method="sutgroup"
-			class="com.paftp.action.StaticAction">
-			<result name="success">/applysut.jsp</result>
-		</action>
-		<action name="showsutgroup" method="sutgroup"
-			class="com.paftp.action.StaticAction">
-			<result name="success">/applysutinfo.jsp</result>
-		</action>
     	 <action name="testDelete" method="testDelete" class="com.paftp.action.TestAction">
     	 	 <interceptor-ref name="sessionExpirayStack" />
         	 <result name="success">/test.jsp</result>
