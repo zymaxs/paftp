@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 
 import com.paftp.entity.CaseChangeHistory;
 import com.paftp.entity.CaseChangeOperation;
+import com.paftp.entity.Role;
 import com.paftp.entity.Sut;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.Testsuite;
@@ -298,10 +299,20 @@ public class TestsuiteAction extends ActionSupport {
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
-		request.setAttribute("sut_name", this.getSut_name());
-		request.setAttribute("flag", true);
+		user = getSessionUser();
 		
+		if (this.isRoleOfSut(user, this.getSut_name())){
+			request.setAttribute("sut_name", this.getSut_name());
+			request.setAttribute("flag", false);
+		}else{
+			request.setAttribute("error", "You are not the role for this sut!");
+			return "error";
+		}
+
 		return "success";
+		
+
+
 	}
 	
 	public String initialTestsuites() throws ServletException, IOException {
@@ -311,6 +322,17 @@ public class TestsuiteAction extends ActionSupport {
 		return "success";
 
 	}
+	
+	private Boolean isRoleOfSut(User user, String sut_name){
+		List<Role> roles = user.getRoles();
+		for(int i=0; i<roles.size(); i++){
+			if(roles.get(i).getSut().equals(this.getSut_name())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 
 	private JSONArray getRootNode(String sut_name) {
 
