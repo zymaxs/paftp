@@ -21,6 +21,7 @@ public class Testsuite {
 	private String name;
 	private Sut sut;
 	private String description;
+	private String iniversion;
 	private List<Testcase> testcases;
 	private List<TestsuiteResult> testsuite_results;
 
@@ -80,6 +81,15 @@ public class Testsuite {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Column(name = "iniversion", length = 20)
+	public String getIniversion() {
+		return iniversion;
+	}
+
+	public void setIniversion(String iniversion) {
+		this.iniversion = iniversion;
 	}
 
 }

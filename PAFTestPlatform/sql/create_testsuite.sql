@@ -3,6 +3,7 @@ CREATE TABLE `testsuite` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(50) DEFAULT NULL,
     `code` varchar(50) DEFAULT NULL,
+    `iniversion` varchar(20) DEFAULT NULL,
     `description` varchar(150) DEFAULT NULL,
     `sut_id` int(11) DEFAULT NULL,
     INDEX sut_ind (sut_id),

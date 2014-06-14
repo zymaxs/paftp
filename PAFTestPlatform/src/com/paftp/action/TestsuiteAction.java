@@ -59,6 +59,7 @@ public class TestsuiteAction extends ActionSupport {
 	private String stresstestcase_name;
 	private String testsuite_description;
 	private Integer testsuite_id;
+	private String testsuite_iniversion;
 
 	private String priority;
 	private String status;
@@ -238,6 +239,7 @@ public class TestsuiteAction extends ActionSupport {
 
 		testsuite = new Testsuite();
 		testsuite.setName(this.getTestsuite_name());
+		testsuite.setIniversion(this.getTestsuite_iniversion());
 		testsuite.setSut(sut);
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuiteService.saveTestsuite(testsuite);
@@ -625,5 +627,13 @@ public class TestsuiteAction extends ActionSupport {
 
 	public void setTestcase_id(Integer testcase_id) {
 		this.testcase_id = testcase_id;
+	}
+
+	public String getTestsuite_iniversion() {
+		return testsuite_iniversion;
+	}
+
+	public void setTestsuite_iniversion(String testsuite_iniversion) {
+		this.testsuite_iniversion = testsuite_iniversion;
 	}
 }
