@@ -33,7 +33,7 @@ public class VersionServiceImpl implements VersionService {
 
 	@Override
 	public Version findVersionByVersionNum(String versionnum) {
-		return baseDAO.get("from version v where v.versionnum = ?",
+		return baseDAO.get("from Version v where v.versionNum = ?",
 				new Object[] { versionnum });
 	}
 
