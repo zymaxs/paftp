@@ -8,7 +8,7 @@ import com.paftp.dao.BaseDAO;
 import com.paftp.entity.Version;
 import com.paftp.service.version.VersionService;
 
-@Service("VersionService")
+@Service("versionService")
 public class VersionServiceImpl implements VersionService {
 
 	@Resource

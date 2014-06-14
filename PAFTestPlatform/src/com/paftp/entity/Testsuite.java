@@ -21,7 +21,7 @@ public class Testsuite {
 	private String name;
 	private Sut sut;
 	private String description;
-	private String iniversion;
+	private Version version;
 	private List<Testcase> testcases;
 	private List<TestsuiteResult> testsuite_results;
 
@@ -83,13 +83,15 @@ public class Testsuite {
 		this.description = description;
 	}
 
-	@Column(name = "iniversion", length = 20)
-	public String getIniversion() {
-		return iniversion;
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "version_id")
+	public Version getVersion() {
+		return version;
 	}
 
-	public void setIniversion(String iniversion) {
-		this.iniversion = iniversion;
+	public void setVersion(Version version) {
+		this.version = version;
 	}
+
 
 }

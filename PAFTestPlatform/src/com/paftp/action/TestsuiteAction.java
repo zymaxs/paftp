@@ -23,6 +23,7 @@ import com.paftp.entity.Sut;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.Testsuite;
 import com.paftp.entity.User;
+import com.paftp.entity.Version;
 import com.paftp.service.CaseChangeHistory.CaseChangeHistoryService;
 import com.paftp.service.CaseChangeOperation.CaseChangeOperationService;
 import com.paftp.service.Testcase.TestcaseService;
@@ -30,6 +31,7 @@ import com.paftp.service.Testsuite.TestsuiteService;
 import com.paftp.service.sut.SutService;
 import com.paftp.service.TestcaseStep.TestcaseStepService;
 import com.paftp.service.user.UserService;
+import com.paftp.service.version.VersionService;
 import com.paftp.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -52,6 +54,8 @@ public class TestsuiteAction extends ActionSupport {
 	private CaseChangeHistoryService casechangehistoryService;
 	@Resource
 	private CaseChangeOperationService casechangeoperationService;
+	@Resource
+	private VersionService versionService;
 
 	private String sut_name;
 	private String testsuite_name;
@@ -59,7 +63,7 @@ public class TestsuiteAction extends ActionSupport {
 	private String stresstestcase_name;
 	private String testsuite_description;
 	private Integer testsuite_id;
-	private String testsuite_iniversion;
+	private String version;
 
 	private String priority;
 	private String status;
@@ -239,7 +243,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		testsuite = new Testsuite();
 		testsuite.setName(this.getTestsuite_name());
-		testsuite.setIniversion(this.getTestsuite_iniversion());
+		Version currentversion = versionService.findVersionByVersionNum(this.getVersion());
+		testsuite.setVersion(currentversion);
 		testsuite.setSut(sut);
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuiteService.saveTestsuite(testsuite);
@@ -629,11 +634,11 @@ public class TestsuiteAction extends ActionSupport {
 		this.testcase_id = testcase_id;
 	}
 
-	public String getTestsuite_iniversion() {
-		return testsuite_iniversion;
+	public String getVersion() {
+		return version;
 	}
 
-	public void setTestsuite_iniversion(String testsuite_iniversion) {
-		this.testsuite_iniversion = testsuite_iniversion;
+	public void setVersion(String version) {
+		this.version = version;
 	}
 }

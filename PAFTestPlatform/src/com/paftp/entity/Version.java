@@ -21,6 +21,7 @@ public class Version {
 	private Date createTime;
 	private String creatorId;
 	private List<Testpass> testpass_results;
+	private List<Testsuite> testsuites;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -69,6 +70,15 @@ public class Version {
 
 	public void setTestpass_results(List<Testpass> testpass_results) {
 		this.testpass_results = testpass_results;
+	}
+
+	@OneToMany(mappedBy = "version")
+	public List<Testsuite> getTestsuites() {
+		return testsuites;
+	}
+
+	public void setTestsuites(List<Testsuite> testsuites) {
+		this.testsuites = testsuites;
 	}
 	
 }
