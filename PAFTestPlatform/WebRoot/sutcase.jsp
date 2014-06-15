@@ -107,7 +107,7 @@ else { isCurrentRole = "n";};
 	diag.Title = "创建TestCase";
 	diag.InvokeElementId="createTestCase"
 	diag.OKEvent = function(){
-					alert(topWin.$id('description').value.length);
+					//alert(topWin.$id('description').value.length);
 					if (topWin.$id("testcase_name").value == ""){
 					Dialog.alert("用户名不能为空");
 						}
@@ -265,6 +265,7 @@ function saveTestSuiteac(){
 	  
 //创建TestCase
 function newTestCaseac(){
+	alert("begin create Testcase");
 	  var priority_value;
 	  priority_radio = document.getElementsByName('priority');
 	  for(i=0;i<priority_radio.length;i++){  
@@ -286,7 +287,6 @@ function newTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
-	  alert(type_value);
 	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val()};
 	  $.ajax({
 			  type : "POST",
@@ -360,7 +360,6 @@ function saveTestCaseac(){
 			  dataType : "json",
 			  success : function(root) {
 				  $('#jstree').jstree(true).destroy();
-				  alert("ini tree");
 				  initree();
 				  document.getElementById('iniTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
