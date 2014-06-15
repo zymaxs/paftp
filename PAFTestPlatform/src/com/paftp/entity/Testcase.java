@@ -30,6 +30,7 @@ public class Testcase {
 	private Date createTime;
 	private String casesteps;
 	private String casetype;
+	private String approval;
 
 	private Testsuite testsuite;
 
@@ -161,6 +162,15 @@ public class Testcase {
 
 	public void setCaseName(String caseName) {
 		this.caseName = caseName;
+	}
+
+	@Column(name = "approval", length = 20)
+	public String getApproval() {
+		return approval;
+	}
+
+	public void setApproval(String approval) {
+		this.approval = approval;
 	}
 
 }
