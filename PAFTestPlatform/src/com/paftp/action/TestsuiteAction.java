@@ -64,6 +64,7 @@ public class TestsuiteAction extends ActionSupport {
 	private String testsuite_description;
 	private Integer testsuite_id;
 	private String version;
+	private String testsuite_status;
 
 	private String priority;
 	private String status;
@@ -102,6 +103,9 @@ public class TestsuiteAction extends ActionSupport {
 		
 		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(this
 				.getTestsuite_name(), sut.getId());
+		if (testsuite.getStatus().equals("废弃")){
+			testsuite.setStatus("正常");
+		}
 		Testcase testcase = testcaseService.findTestcaseByNameAndTestsuiteid(this
 				.getTestcase_name(), testsuite.getId());
 		if (testcase != null) {
@@ -246,6 +250,7 @@ public class TestsuiteAction extends ActionSupport {
 		Version currentversion = versionService.findVersionByVersionNum(this.getVersion());
 		testsuite.setVersion(currentversion);
 		testsuite.setSut(sut);
+		testsuite.setStatus("运行");
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuiteService.saveTestsuite(testsuite);
 		JSONArray jsonarray = this.getRootNode(this.getSut_name());
@@ -291,6 +296,16 @@ public class TestsuiteAction extends ActionSupport {
 
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getTestsuite_name());
+		testsuite.setStatus(this.getTestsuite_status());
+		
+		if(this.getTestsuite_status().equals("废弃")){
+			
+			List<Testcase> testcases = testsuite.getTestcases();
+			
+			for(int i = 0; i< testcases.size(); i++){
+				testcases.get(i).setStatus("废弃");
+			}
+		}
 
 		testsuiteService.updateTestsuite(testsuite);
 
@@ -640,5 +655,14 @@ public class TestsuiteAction extends ActionSupport {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+	
+
+	public String getTestsuite_status() {
+		return testsuite_status;
+	}
+
+	public void setTestsuite_status(String testsuite_status) {
+		this.testsuite_status = testsuite_status;
 	}
 }

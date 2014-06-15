@@ -19,6 +19,7 @@ public class Testsuite {
 
 	private Integer id;
 	private String name;
+	private String status;
 	private Sut sut;
 	private String description;
 	private Version version;
@@ -93,5 +94,12 @@ public class Testsuite {
 		this.version = version;
 	}
 
+	@Column(name = "status", length = 20)
+	public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }
