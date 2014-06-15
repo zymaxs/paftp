@@ -118,7 +118,6 @@ else { isCurrentRole = "n";};
 					Dialog.alert("描述不能超过150个字符");
 						}
 					else{
-						alert("before newTesac");
 						newTestCaseac();
 						diag.close();
 						}
@@ -202,7 +201,7 @@ function demo_create() {
  
  // 创建TestSuite
   function newTestSuiteac(){
-	  var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val(),description:$("#testsuite_description").val()};
+	  var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestsuite.action",
@@ -287,6 +286,7 @@ function newTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
+	  alert(type_value);
 	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val()};
 	  $.ajax({
 			  type : "POST",
@@ -731,6 +731,7 @@ function initree(){
         </form></td>
     </tr>
   </table>
+  <!--隐藏表单创建testsuite-->
   <div id="createTestSuite" style="display:none">
     <form>
       <table width="500" height="150" style="background:#FFF">
@@ -751,6 +752,7 @@ function initree(){
       </table>
     </form>
   </div>
+  <!--隐藏表单创建testcase-->
   <div id="createTestCase" style="display:none">
     <form>
       <table width="600" height="500" style="background:#FFF">
