@@ -19,6 +19,8 @@ import org.springframework.stereotype.Repository;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.entity.ApplySut;
+import com.paftp.entity.Testcase;
+import com.paftp.entity.Testsuite;
 
 @Repository("baseDAO")
 @SuppressWarnings("all")
@@ -236,6 +238,26 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		return c.setFirstResult((page - 1)* row).setMaxResults(row).list();
 	}
 	
+	public List<T> findbyconditions(HashMap<String, Object> param){
+		
+		DetachedCriteria dc = DetachedCriteria.forClass(Testcase.class);
+		
+		Iterator<Entry<String, Object>> iter = param.entrySet().iterator();
+		
+		while(iter.hasNext()){
+			
+			Entry<String, Object> condition = iter.next();     
+			if (condition.getValue() != null  && !condition.getValue().equals("")) {
+		
+		           dc.add(Restrictions.eq(condition.getKey(),condition.getValue()));
+				}
+		}
+
+		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
+		
+		return c.list();
+	}
+
 	public Long count(HashMap<String, Object> param){
 		
 	DetachedCriteria dc = DetachedCriteria.forClass(ApplySut.class);
@@ -265,5 +287,26 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		long num = applySuts.size();
 		
 		return num;
+	}
+
+	@Override
+	public List<T> findbyconditionsfortestsuites(HashMap<String, Object> param) {
+		// TODO Auto-generated method stub
+		DetachedCriteria dc = DetachedCriteria.forClass(Testsuite.class);
+		
+		Iterator<Entry<String, Object>> iter = param.entrySet().iterator();
+		
+		while(iter.hasNext()){
+			
+			Entry<String, Object> condition = iter.next();     
+			if (condition.getValue() != null  && !condition.getValue().equals("")) {
+		
+		           dc.add(Restrictions.eq(condition.getKey(),condition.getValue()));
+				}
+		}
+
+		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
+		
+		return c.list();
 	}
 }

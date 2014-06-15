@@ -1,5 +1,6 @@
 package com.paftp.service.Testsuite.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -50,6 +51,14 @@ public class TestsuiteServiceImpl implements TestsuiteService {
 		// TODO Auto-generated method stub
 		return baseDAO.get(" from Testsuite u where u.name = ? and sut.id = ?",
 				new Object[] { name, id });
+	}
+
+	@Override
+	public List<Testsuite> findAllSuiteByMultiConditions(
+			HashMap<String, Object> conditions) {
+		// TODO Auto-generated method stub
+		List<Testsuite> testsuites = baseDAO.findbyconditionsfortestsuites(conditions);
+		return testsuites;
 	}
 
 //	@Override

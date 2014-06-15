@@ -1,7 +1,9 @@
 package com.paftp.service.Testsuite;
 
+import java.util.HashMap;
 import java.util.List;
 
+import com.paftp.entity.Testcase;
 import com.paftp.entity.Testsuite;
 import com.paftp.entity.User;
 
@@ -18,6 +20,8 @@ public interface TestsuiteService {
 	public void deleteTestsuite(Testsuite testsuite);
 
 	public List<Testsuite> findAllList();
+	
+	public List<Testsuite> findAllSuiteByMultiConditions(HashMap<String, Object> conditions);
 
 	//public User findUserByNameAndPassword(String username, String password);
 
