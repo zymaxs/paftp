@@ -65,6 +65,8 @@ public class TestsuiteAction extends ActionSupport {
 	private Integer testsuite_id;
 	private String version;
 	private String testsuite_status;
+	private Integer testsuite_quantity;
+	private Integer testcase_quantity;
 
 	private String priority;
 	private String status;
@@ -276,6 +278,7 @@ public class TestsuiteAction extends ActionSupport {
 		
 		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(this.getTestsuite_name(), sut.getId());
 
+		this.setTestcase_quantity(testsuite.getTestcases().size());
 		this.setTestsuite(testsuite);
 
 		return "success";
@@ -353,6 +356,13 @@ public class TestsuiteAction extends ActionSupport {
 
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
 
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		if (sut == null || sut.getTestsuites() == null){
+			this.setTestsuite_quantity(0);
+		}else{
+			this.setTestsuite_quantity(sut.getTestsuites().size());
+		}
+		
 		return "success";
 
 	}
@@ -688,4 +698,22 @@ public class TestsuiteAction extends ActionSupport {
 	public void setTestcase_approval(String testcase_approval) {
 		this.testcase_approval = testcase_approval;
 	}
+	
+
+	public Integer getTestcase_quantity() {
+		return testcase_quantity;
+	}
+
+	public void setTestcase_quantity(Integer testcase_quantity) {
+		this.testcase_quantity = testcase_quantity;
+	}
+	
+	public Integer getTestsuite_quantity() {
+		return testsuite_quantity;
+	}
+
+	public void setTestsuite_quantity(Integer testsuite_quantity) {
+		this.testsuite_quantity = testsuite_quantity;
+	}
+
 }
