@@ -389,9 +389,11 @@ public class TestsuiteAction extends ActionSupport {
 				JSONArray parentNode0 = new JSONArray();
 				if (testcases != null) {
 					for (int l = 0; l < testcases.size(); l++) {
+						if (this.getStatus() == null || this.getStatus().equals("") || this.getStatus().equals(testcases.get(l).getStatus())){
 						JSONObject childNode0 = util.childNode(testcases.get(l)
 								.getCaseName(), util.nodeType("00"), null);
 						parentNode0.add(childNode0);
+						}
 					}
 				}
 				JSONObject childNode00 = util.childNode(testsuites.get(j)
