@@ -3,11 +3,15 @@ package com.paftp.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -17,9 +21,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class Version {
 
 	private Integer id;
-	private Integer versionNum;
+	private String versionNum;
 	private Date createTime;
-	private String creatorId;
+	private User user;
 	private List<Testpass> testpass_results;
 	private List<Testsuite> testsuites;
 
@@ -35,12 +39,12 @@ public class Version {
 		this.id = id;
 	}
 
-	@Column(name = "version_num", length = 11)
-	public Integer getVersionNum() {
+	@Column(name = "version_num", length = 50)
+	public String getVersionNum() {
 		return versionNum;
 	}
 
-	public void setVersionNum(Integer versionNum) {
+	public void setVersionNum(String versionNum) {
 		this.versionNum = versionNum;
 	}
 
@@ -54,15 +58,15 @@ public class Version {
 		this.createTime = createTime;
 	}
 	
-	@Column(name = "creator_id", length = 100)
-	public String getCreatorId() {
-		return creatorId;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "creator_id")
+	public User getUser() {
+		return user;
 	}
-
-	public void setCreatorId(String creatorId) {
-		this.creatorId = creatorId;
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
-
 	@OneToMany(mappedBy = "version")
 	public List<Testpass> getTestpass_results() {
 		return testpass_results;
