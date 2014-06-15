@@ -278,7 +278,17 @@ public class TestsuiteAction extends ActionSupport {
 		
 		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(this.getTestsuite_name(), sut.getId());
 
-		this.setTestcase_quantity(testsuite.getTestcases().size());
+		List<Testcase> testcases = testsuite.getTestcases();
+		
+		Integer testcasenum = 0;
+		
+		for (int i=0; i<testcases.size(); i++){
+			if (this.getStatus() == null || this.getStatus().equals("") || this.getStatus().equals(testcases.get(i).getStatus())){
+				testcasenum++;
+			}
+		}
+		
+		this.setTestcase_quantity(testcasenum);
 		this.setTestsuite(testsuite);
 
 		return "success";
@@ -337,6 +347,30 @@ public class TestsuiteAction extends ActionSupport {
 	//
 	// return "success";
 	// }
+	
+	public String queryTestsuiteQuantity() {
+		
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		
+		List<Testsuite> testsuites = sut.getTestsuites();
+		
+		Integer testsuitenum = 0;
+		
+		for(int i=0; i<testsuites.size(); i++){
+			List<Testcase> testcases = testsuites.get(i).getTestcases();
+		for (int j=0; j<testcases.size(); j++){
+			if (this.getStatus() == null || this.getStatus().equals("") || this.getStatus().equals(testcases.get(j).getStatus())){
+				testsuitenum++;
+				break;
+			}
+		}
+		}
+		
+		this.setTestsuite_quantity(testsuitenum);
+
+		return "success";
+
+	}
 
 	public String initialParameters() {
 
@@ -355,13 +389,6 @@ public class TestsuiteAction extends ActionSupport {
 	public String initialTestsuites() throws ServletException, IOException {
 
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
-
-		Sut sut = sutService.findSutByName(this.getSut_name());
-		if (sut == null || sut.getTestsuites() == null){
-			this.setTestsuite_quantity(0);
-		}else{
-			this.setTestsuite_quantity(sut.getTestsuites().size());
-		}
 		
 		return "success";
 
