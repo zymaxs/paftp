@@ -118,7 +118,7 @@ public class TestsuiteAction extends ActionSupport {
 		testcase.setDescription(this.getDescription());
 		testcase.setPriority(this.getPriority());
 		testcase.setStatus(this.getStatus());
-		testcase.setApproval("待审批");
+		testcase.setApproval(this.getTestcase_approval());
 		testcase.setCasetype(this.getCasetype());
 		testcase.setCasesteps(this.getCasesteps());
 		testcase.setCreator(user);
