@@ -14,6 +14,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.stereotype.Controller;
 
 import com.paftp.entity.CaseChangeHistory;
@@ -74,6 +75,7 @@ public class TestsuiteAction extends ActionSupport {
 	private Date createtime;
 	private Date updatetime;
 	private Integer testcase_id;
+	private String testcase_approval;
 
 	private JSONArray jsonArray;
 	private JSONObject jsonObject;
@@ -117,6 +119,7 @@ public class TestsuiteAction extends ActionSupport {
 		testcase.setDescription(this.getDescription());
 		testcase.setPriority(this.getPriority());
 		testcase.setStatus(this.getStatus());
+		testcase.setApproval("待审批");
 		testcase.setCasetype(this.getCasetype());
 		testcase.setCasesteps(this.getCasesteps());
 		testcase.setCreator(user);
@@ -437,7 +440,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getStatus());
 			casechangeoperation.setNewValue(this.getStatus());
-			casechangeoperation.setField("priority");
+			casechangeoperation.setField("status");
 			casechangeoperations.add(casechangeoperation);
 			testcase.setStatus(this.getStatus());
 			i++;
@@ -448,7 +451,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getDescription());
 			casechangeoperation.setNewValue(this.getDescription());
-			casechangeoperation.setField("priority");
+			casechangeoperation.setField("description");
 			casechangeoperations.add(casechangeoperation);
 			testcase.setDescription(this.getDescription());
 			i++;
@@ -459,7 +462,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getCasetype());
 			casechangeoperation.setNewValue(this.getCasetype());
-			casechangeoperation.setField("priority");
+			casechangeoperation.setField("casetype");
 			casechangeoperations.add(casechangeoperation);
 			testcase.setCasetype(this.getCasetype());
 			i++;
@@ -470,12 +473,23 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getCasesteps());
 			casechangeoperation.setNewValue(this.getCasesteps());
-			casechangeoperation.setField("priority");
+			casechangeoperation.setField("casesteps");
 			casechangeoperations.add(casechangeoperation);
 			testcase.setCasesteps(this.getCasesteps());
 			i++;
 		}
 
+		if (testcase.getApproval().equals(this.getTestcase_approval()) == false) {
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getApproval());
+			casechangeoperation.setNewValue(this.getTestcase_approval());
+			casechangeoperation.setField("approval");
+			casechangeoperations.add(casechangeoperation);
+			testcase.setApproval(this.getTestcase_approval());
+			i++;
+		}
+		
 		for (int j = 0; j < i; j++) {
 			casechangeoperationService
 					.saveCaseChangeOperation(casechangeoperations.get(j));
@@ -664,5 +678,13 @@ public class TestsuiteAction extends ActionSupport {
 
 	public void setTestsuite_status(String testsuite_status) {
 		this.testsuite_status = testsuite_status;
+	}
+
+	public String getTestcase_approval() {
+		return testcase_approval;
+	}
+
+	public void setTestcase_approval(String testcase_approval) {
+		this.testcase_approval = testcase_approval;
 	}
 }
