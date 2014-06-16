@@ -201,7 +201,14 @@ function demo_create() {
  
  // 创建TestSuite
   function newTestSuiteac(){
-	  var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val()};
+	  var isdiscard_value;
+	  isdiacard_radio = document.getElementsByName('isdiscard');
+	  for(i=0;i<isdiacard_radio.length;i++){  
+	  	if(isdiacard_radio[i].checked){
+	    	isdiscard_value = isdiacard_radio[i].value;
+	  	}
+	  };
+	  var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:isdiscard_value,version:$("#version").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestsuite.action",
@@ -230,6 +237,9 @@ function demo_create() {
 function updateTestSuiteac(){
 	document.getElementById('showtestsuite_name').readOnly = false;
 	document.getElementById('showtestsuite_description').readOnly = false;
+	document.getElementById('showversion').readOnly = false;
+	document.getElementById('showisdiscardtd').style.display = "none";
+	document.getElementById('showisdiscardoption').style.display = "block";	
 	document.getElementById('upTestSuite').style.display = "none";
 	document.getElementById('saveTestSuite').style.display = "block";
 	
@@ -251,6 +261,9 @@ function saveTestSuiteac(){
 				  document.getElementById('showTestCaseTd').style.display = "none";
 				  document.getElementById('showtestsuite_name').readOnly = true;
 				  document.getElementById('showtestsuite_description').readOnly = true;
+				  document.getElementById('showversion').readOnly = true;
+				  document.getElementById('showisdiscardtd').style.display = "block";
+				  document.getElementById('showisdiscardoption').style.display = "none";
 				  document.getElementById('upTestSuite').style.display = "block";
 				  document.getElementById('saveTestSuite').style.display = "none";
 			  },
@@ -265,7 +278,6 @@ function saveTestSuiteac(){
 	  
 //创建TestCase
 function newTestCaseac(){
-	alert("begin create Testcase");
 	  var priority_value;
 	  priority_radio = document.getElementsByName('priority');
 	  for(i=0;i<priority_radio.length;i++){  
@@ -287,7 +299,7 @@ function newTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
-	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val()};
+	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),approval:待审批};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestcase.action",
@@ -322,6 +334,8 @@ function updateTestCaseac(){
 	document.getElementById('showcasestatusoption').style.display = "block";
 	document.getElementById('showcasetypetd').style.display = "none";
 	document.getElementById('showcasetypeoption').style.display = "block";
+	document.getElementById('showapprovaltd').style.display = "none";
+	document.getElementById('showaprovaloption').style.display = "block";
 	document.getElementById('showcasedescription').readOnly = false;
 	document.getElementById('showcasesteps').readOnly = false;	
 	document.getElementById('upTestCase').style.display = "none";
@@ -371,6 +385,8 @@ function saveTestCaseac(){
 				  document.getElementById('showcasestatusoption').style.display = "none";
 				  document.getElementById('showcasetypetd').style.display = "block";
 				  document.getElementById('showcasetypeoption').style.display = "none";
+				  document.getElementById('showapprovaltd').style.display = "block";
+				  document.getElementById('showaprovaloption').style.display = "none";
 	  			  document.getElementById('showcasedescription').readOnly = true;
 			   	  document.getElementById('showcasesteps').readOnly = true;	
 				  document.getElementById('upTestCase').style.display = "block";
@@ -407,6 +423,8 @@ function testtest(){
 			  success : function(root) {
 				  document.getElementById('showtestsuite_id').value = root.testsuite.id;
 				  document.getElementById('showtestsuite_description').value = root.testsuite.description;
+				  document.getElementById('showversion').value = root.testsuite.version;
+				  document.getElementById('showisdiscard').value = root.testsuite.isdiscard;
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -439,6 +457,7 @@ function testtest(){
 				  document.getElementById('showcasetype').value = root.testcase.casetype;
 				  document.getElementById('showcasedescription').value = root.testcase.description;
 				  document.getElementById('showcasesteps').value = root.testcase.casesteps;
+				  document.getElementById('showapproval').value = root.testcase.approval;
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -649,7 +668,62 @@ function initree(){
           <div id="jstree"></div>
           <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
         </div></td>
-      <td width="75" id="iniTd" style="display:block; text-align:center" > HelloWorld! </td>
+      <td width="75" id="iniTd" style="display:block;" ><!--查询-->
+        
+        <table border="1">
+          <tr>
+            <td colspan="5" style="text-align:center">查询条件</td>
+          </tr>
+          <tr>
+            <td>Testuite</td>
+            <td colspan="2">是否废弃
+              <select id="querydiscard" >
+                <option selected value="All" selected>
+                
+                All
+                
+                </option>
+                <option value="是">是</option>
+                <option value="否">否</option>
+              </select></td>
+            <td colspan="2">初始版本号
+              <input id="queryversion" value="0719"></td>
+          </tr>
+          <tr>
+            <td>TestCase</td>
+            <td>自动化
+              <select id="querystatus">
+                <option value="All" selected>All</option>
+                <option value="自动">自动</option>
+                <option value="手动">手动</option>
+                <option value="废弃">废弃</option>
+              </select></td>
+            <td>优先级
+              <select id="querypriority">
+                <option value="All" selected>All</option>
+                <option value="P1">P1</option>
+                <option value="P2">P2</option>
+                <option value="P3">P3</option>
+              </select></td>
+            <td>正反例
+              <select id="querytype">
+                <option value="All" selected>All</option>
+                <option value="正例">正例</option>
+                <option value="反例">反例</option>
+              </select></td>
+            <td>用例评审
+              <select id="queryapproval">
+                <option value="All" selected>All</option>
+                <option value="待评审">待评审</option>
+                <option value="通过">通过</option>
+                <option value="未通过">未通过</option>
+              </select></td>
+          </tr>
+          <tr>
+          <td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
+          </tr>
+        </table></td>
+      <!--展示、更新testsuite-->
       <td width="75%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm" action="">
           <table width="100%">
             <tr>
@@ -657,22 +731,35 @@ function initree(){
               <td><input id="showtestsuite_name" name="testsuite_name" value="" readonly></td>
             </tr>
             <tr>
-            <td colspan="2"><input id="showtestsuite_id" name="testsuite_id" value="" style="display:block" readonly></td>
+              <td colspan="2"><input id="showtestsuite_id" name="testsuite_id" value="" style="display:block" readonly></td>
             </tr>
             <tr>
               <td><label for="showsut_name">所属系统</label></td>
               <td><input id="showsut_name" name="sut_name" value="<%=sut_name%>" readonly></td>
             </tr>
             <tr>
-          <td>描述</td>
-          <td><textarea  rows="4" name="testsuite_description" class="input-xlarge" readonly id="showtestsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
-        </tr>
+              <td>起始版本</td>
+              <td><input id="showversion" name="version" value=""></td>
+            </tr>
+            <tr>
+              <td>是否废弃</td>
+              <td id="showisdiscardtd" style="display:block"><input id="showisdiscard" value="" readonly></td>
+              <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="否" checked>
+                否&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updateisdiscard" value="是">
+                是&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+              <td>描述</td>
+              <td><textarea  rows="4" name="testsuite_description" class="input-xlarge" readonly id="showtestsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
+            </tr>
             <tr>
               <td><button type="button" class="btn btn-default" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite" style="display:block">更新</button></td>
               <td><button type="button" class="btn btn-default" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite" style="display:none">保存</button></td>
             </tr>
           </table>
         </form></td>
+      <!--展示更新testcase-->
       <td width="75%" style="display:none" id="showTestCaseTd"><form>
           <table width="100%">
             <tr>
@@ -680,7 +767,7 @@ function initree(){
               <td><input id="showtestcase_name" name="testcase_name" value="" readonly></td>
             </tr>
             <tr>
-            	<td colspan="2"><input id="showtestcase_id" name="testcase_id" value="" style="display:block" readonly></td>
+              <td colspan="2"><input id="showtestcase_id" name="testcase_id" value="" style="display:block" readonly></td>
             </tr>
             <tr>
               <td>所属TestSuite</td>
@@ -690,29 +777,39 @@ function initree(){
               <td>优先级</td>
               <td id="showcaseprioritytd" style="display:block"><input id="showcasepriority" value="" readonly></td>
               <td id="showcasepriorityoption" style="display:none"><input type="radio" name="updatepriority" id="p1" value="P1" checked>
-            P1&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" name="updatepriority" id="p2" value="P2">
-            P2&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" name="updatepriority" id="p3" value="P3">
-            P3</td>
+                P1&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updatepriority" id="p2" value="P2">
+                P2&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updatepriority" id="p3" value="P3">
+                P3</td>
             </tr>
             <tr>
               <td>状态</td>
               <td id="showcasestatustd" style="display:block"><input id="showcasestatus" value="" readonly></td>
               <td id="showcasestatusoption" style="display:none"><input type="radio" name="updatestatus" id="manul" value="手动" checked>
-            手动&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" name="updatestatus" id="auto" value="自动">
-            自动&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" name="updatestatus" value="废弃" id="discard">
-            废弃</td>
+                手动&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updatestatus" id="auto" value="自动">
+                自动&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updatestatus" value="废弃" id="discard">
+                废弃</td>
             </tr>
             <tr>
               <td>正例 or 反例</td>
               <td id="showcasetypetd" style="display:block"><input id="showcasetype" value="" readonly></td>
               <td id="showcasetypeoption" style="display:none"><input type="radio" name="updatetype" id="zhengli" value="正例" checked>
-            正例&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" id="fanli" name="updatetype" value="反例" >
-            反例</td>
+                正例&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" id="fanli" name="updatetype" value="反例" >
+                反例</td>
+            </tr>
+            <tr>
+              <td>用例评审</td>
+              <td id="showapprovaltd" style="display:block"><input id="showapproval" value="" readonly></td>
+              <td id="showaprovaloption" style="display:none"><input type="radio" name="updateapproval" value="待评审" checked>
+                待评审&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updateapproval" value="通过">
+                通过&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updateapproval" value="未通过">
+                未通过&nbsp;&nbsp;&nbsp;&nbsp;</td>
             </tr>
             <tr>
               <td>描述</td>
@@ -740,6 +837,17 @@ function initree(){
         </tr>
         <tr>
           <td colspan="2"><input id="sut_name" name="sut_name" style="display:none" value="<%=sut_name%>" readonly></td>
+        </tr>
+        <tr>
+          <td>起始版本</td>
+          <td><input type="text" id="version" name="version" value="0719"></td>
+        </tr>
+        <tr>
+          <td>是否废弃</td>
+          <td><input type="radio" name="isdiscard" value="否" checked>
+            否&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="isdiscard" value="是">
+            是&nbsp;&nbsp;&nbsp;&nbsp;</td>
         </tr>
         <tr>
           <td>描述</td>
