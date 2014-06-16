@@ -405,7 +405,7 @@ public class TestsuiteAction extends ActionSupport {
 		conditions.put("status", this.getStatus());
 		conditions.put("priority", this.getPriority());
 		conditions.put("casetype", this.getCasetype());
-		conditions.put("approval", this.getTestcase_approval());
+		conditions.put("testcase_approval", this.getTestcase_approval());
 		conditions.put("testsuite.id", testsuite.getId());
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
@@ -486,10 +486,10 @@ public class TestsuiteAction extends ActionSupport {
 						parentNode0.add(childNode0);
 
 					}
-					JSONObject childNode00 = util.childNode(testsuites.get(j)
-							.getName(), util.nodeType("0"), parentNode0);
-					parentNode00.add(childNode00);
 				}
+				JSONObject childNode00 = util.childNode(testsuites.get(j)
+						.getName(), util.nodeType("0"), parentNode0);
+				parentNode00.add(childNode00);
 	
 			}
 			JSONObject childNode000 = util.childNode("接口案例",
