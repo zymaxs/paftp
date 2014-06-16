@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -47,7 +48,7 @@ public class Testsuite {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "testsuite", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "testsuite", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<Testcase> getTestcases() {
 		return testcases;
 	}
@@ -56,7 +57,8 @@ public class Testsuite {
 		this.testcases = testcases;
 	}
 	
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JSON(serialize=false)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "sut_id")
 	public Sut getSut() {
 		return sut;
@@ -66,7 +68,7 @@ public class Testsuite {
 		this.sut = sut;
 	}
 	
-	@OneToMany(mappedBy = "testsuite")
+	@OneToMany(mappedBy = "testsuite", fetch = FetchType.LAZY)
 	public List<TestsuiteResult> getTestsuite_results() {
 		return testsuite_results;
 	}
@@ -84,7 +86,8 @@ public class Testsuite {
 		this.description = description;
 	}
 
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "version_id")
 	public Version getVersion() {
 		return version;

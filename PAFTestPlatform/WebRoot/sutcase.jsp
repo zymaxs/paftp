@@ -12,6 +12,9 @@
 <% 
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialParameters.action").forward(request,response);}
+if (request.getAttribute("versionflag") == null ){
+request.getRequestDispatcher("${pageContext.request.contextPath}/queryVersion.action").forward(request,response);}
+List<Version> versions = (List<Version>)request.getAttribute("versions");
 String sut_name = (String)request.getAttribute("sut_name");
 String isCurrentRole;
 if (String.valueOf(request.getAttribute("isCurrentRole")) == "true"){
@@ -24,12 +27,14 @@ else { isCurrentRole = "n";};
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+<link href="css/shou.css" rel="stylesheet">
 <script src="dist/libs/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <script src="dist/jstree.min.js"></script>
 <script type="text/javascript" src="js/zDialog.js"></script>
 <script type="text/javascript" src="js/zDrag.js"></script>
+<script type="text/javascript" src="js/jQSelect.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -239,14 +244,23 @@ function updateTestSuiteac(){
 	document.getElementById('showtestsuite_description').readOnly = false;
 	document.getElementById('showversion').readOnly = false;
 	document.getElementById('showisdiscardtd').style.display = "none";
-	document.getElementById('showisdiscardoption').style.display = "block";	
+	document.getElementById('showisdiscardoption').style.display = "block";
+	document.getElementById('showversiontd').style.display = "none";
+	document.getElementById('showversionoption').style.display = "block";	
 	document.getElementById('upTestSuite').style.display = "none";
 	document.getElementById('saveTestSuite').style.display = "block";
 	
 	};
 
 function saveTestSuiteac(){
-	var tsparams = {testsuite_name:$("#showtestsuite_name").val(),sut_name:$("#showsut_name").val(),testsuite_id:$("#showtestsuite_id").val(),testsuite_description:$("#showtestsuite_description").val()};
+	var isdiscard_value;
+	  isdiacard_radio = document.getElementsByName('updateisdiscard');
+	  for(i=0;i<isdiacard_radio.length;i++){  
+	  	if(isdiacard_radio[i].checked){
+	    	isdiscard_value = isdiacard_radio[i].value;
+	  	}
+	  };
+	var tsparams = {testsuite_name:$("#showtestsuite_name").val(),sut_name:$("#showsut_name").val(),testsuite_id:$("#showtestsuite_id").val(),testsuite_description:$("#showtestsuite_description").val(),isdiscard:isdiscard_value,version:$("#updateversion").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "updateTestsuite.action",
@@ -262,6 +276,8 @@ function saveTestSuiteac(){
 				  document.getElementById('showtestsuite_name').readOnly = true;
 				  document.getElementById('showtestsuite_description').readOnly = true;
 				  document.getElementById('showversion').readOnly = true;
+				  document.getElementById('showversiontd').style.display = "block";
+				  document.getElementById('showversionoption').style.display = "none";
 				  document.getElementById('showisdiscardtd').style.display = "block";
 				  document.getElementById('showisdiscardoption').style.display = "none";
 				  document.getElementById('upTestSuite').style.display = "block";
@@ -299,7 +315,7 @@ function newTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
-	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),approval:待审批};
+	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),approval:"待审批"};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestcase.action",
@@ -423,8 +439,8 @@ function testtest(){
 			  success : function(root) {
 				  document.getElementById('showtestsuite_id').value = root.testsuite.id;
 				  document.getElementById('showtestsuite_description').value = root.testsuite.description;
-				  document.getElementById('showversion').value = root.testsuite.version;
-				  document.getElementById('showisdiscard').value = root.testsuite.isdiscard;
+				  document.getElementById('showversion').value = root.testsuite.version.versionNum;
+				  document.getElementById('showisdiscard').value = root.testsuite.status;
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -569,7 +585,8 @@ function initree(){
 
   $(document).ready( function(){
 	  initree();
-		
+	$("#versiongroup").jQSelect({});
+	$("#updateversiongroup").jQSelect({});
   
 });
 
@@ -739,15 +756,29 @@ function initree(){
             </tr>
             <tr>
               <td>起始版本</td>
-              <td><input id="showversion" name="version" value=""></td>
+              <td id="showversiontd" style="display:block"><input id="showversion" value="" readonly></td>
+              <td id="showversionoption" style="display:none"><div id="updateversiongroup" class="selectbox">
+                <div class="cartes">
+                  <input type="text" value="<%=versions.get(0).getVersionNum()%>" id="updateversion" name="version" class="listTxt" readonly />
+                  <div class="listBtn"><b></b></div>
+                  <input type="hidden" value="" class="listVal" />
+                </div>
+                <div class="lists">
+                  <ul class="list">
+                    <% for (int i =0; i<versions.size(); i++){%>
+                    <li id=<%=i%>><%=versions.get(i).getVersionNum()%></li>
+                    <%}%>
+                  </ul>
+                </div>
+              </div></td>
             </tr>
             <tr>
               <td>是否废弃</td>
               <td id="showisdiscardtd" style="display:block"><input id="showisdiscard" value="" readonly></td>
-              <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="否" checked>
-                否&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateisdiscard" value="是">
-                是&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="alive" checked>
+                Alive&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updateisdiscard" value="discard">
+                Discard&nbsp;&nbsp;&nbsp;&nbsp;</td>
             </tr>
             <tr>
               <td>描述</td>
@@ -840,14 +871,28 @@ function initree(){
         </tr>
         <tr>
           <td>起始版本</td>
-          <td><input type="text" id="version" name="version" value="0719"></td>
+          <td><div id="versiongroup" class="selectbox">
+                <div class="cartes">
+                  <input type="text" value="<%=versions.get(0).getVersionNum()%>" id="version" name="version" class="listTxt" readonly />
+                  <div class="listBtn"><b></b></div>
+                  <input type="hidden" value="" class="listVal" />
+                </div>
+                <div class="lists">
+                  <ul class="list">
+                    <% for (int i =0; i<versions.size(); i++){%>
+                    <li id=<%=i%>><%=versions.get(i).getVersionNum()%></li>
+                    <%}%>
+                  </ul>
+                </div>
+              </div>
+          </td>
         </tr>
         <tr>
           <td>是否废弃</td>
-          <td><input type="radio" name="isdiscard" value="否" checked>
-            否&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" name="isdiscard" value="是">
-            是&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td><input type="radio" name="isdiscard" value="alive" checked>
+            Alive&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="isdiscard" value="discard">
+            Discard&nbsp;&nbsp;&nbsp;&nbsp;</td>
         </tr>
         <tr>
           <td>描述</td>

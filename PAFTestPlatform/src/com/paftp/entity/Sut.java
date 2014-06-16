@@ -101,9 +101,7 @@ public class Sut {
 		this.testsuites = testsuites;
 	}
 
-	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinTable(name = "sut_version", joinColumns = { @JoinColumn(name = "sut_id") }, inverseJoinColumns = { @JoinColumn(name = "version_id") })
-	
+	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "suts")
 	public List<Version> getVersions() {
 		return versions;
 	}

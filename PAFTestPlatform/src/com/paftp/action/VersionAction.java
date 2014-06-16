@@ -63,9 +63,7 @@ public class VersionAction  extends ActionSupport{
 		version.setUser(user);
 		
 		List<Sut> suts = sutService.findAllList();
-		for(int i=0; i<suts.size(); i++){
-			version.getSuts().add(suts.get(i));
-		}
+		version.setSuts(suts);
 		
 		versionService.saveVersion(version);
 		
@@ -103,6 +101,7 @@ public class VersionAction  extends ActionSupport{
 		List<Version> versions = versionService.findAllList();
 		
 		request.setAttribute("versions", versions);
+		request.setAttribute("versionflag", true);
 		
 		return "success";
 		

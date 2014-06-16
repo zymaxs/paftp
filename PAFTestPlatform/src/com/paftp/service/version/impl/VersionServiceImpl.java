@@ -48,7 +48,7 @@ public class VersionServiceImpl implements VersionService {
 	@Override
 	public List<Version> findAllList() {
 		// TODO Auto-generated method stub
-		return baseDAO.find(" from Version v order by u.createTime");
+		return baseDAO.find(" from Version v order by v.createTime");
 	}
 
 }

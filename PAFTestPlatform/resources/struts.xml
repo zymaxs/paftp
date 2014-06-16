@@ -2,7 +2,7 @@
 <!DOCTYPE struts PUBLIC
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
-   
+
 <struts>
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<constant name="struts.action.extension" value="action" />
@@ -61,17 +61,17 @@
 	</package>
 
 	<package name="s2sh" extends="struts-default">
-		<interceptors> 
+		<interceptors>
 			<interceptor name="session" class="com.paftp.util.SessionInterceptor" />
 			<interceptor-stack name="sessionExpirayStack">
-    			<interceptor-ref name="session"/>
-    			<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="session" />
+				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
-   		</interceptors>
-   		<global-results> 
-   			<!-- 下面定义的结果对所有的Action都有效 --> 
-   			<result name="session" type="redirect">/sutindex.jsp</result>
-  		</global-results> 
+		</interceptors>
+		<global-results>
+			<!-- 下面定义的结果对所有的Action都有效 -->
+			<result name="session" type="redirect">/sutindex.jsp</result>
+		</global-results>
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
 			<result name="success" type="redirect">/index_1.jsp</result>
 			<result name="logsuccess">/index_1.jsp</result>
@@ -110,12 +110,14 @@
 			<result name="success">/index_1.jsp</result>
 			<result name="error">/opr_error.jsp</result>
 		</action>
-		<action name="getuserinfo" method="getUserInfo" class="com.paftp.action.UserProfileAction">
+		<action name="getuserinfo" method="getUserInfo"
+			class="com.paftp.action.UserProfileAction">
 			<interceptor-ref name="sessionExpirayStack" />
-        	<result name="success">/userinfo.jsp</result>
-    	</action>
-		<action name="applySut" method="applySut" class="com.paftp.action.ApplySutAction">
-        	<interceptor-ref name="sessionExpirayStack" />
+			<result name="success">/userinfo.jsp</result>
+		</action>
+		<action name="applySut" method="applySut"
+			class="com.paftp.action.ApplySutAction">
+			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/sutindex.jsp</result>
 			<result name="error">/error.jsp</result>
 			<result name="exist">/error.jsp</result>
@@ -166,31 +168,43 @@
 			class="com.paftp.action.ApplySutAction">
 			<result name="success">/rolemanagement.jsp</result>
 		</action>
-    	 <action name="initialroles" method="initialRoles" class="com.paftp.action.RoleAction">
-        <result name="success">/roleindex.jsp</result>
-    	 </action>
-    	<action name="sutinitialAddRelationship" method="initialAddRelationship" class="com.paftp.action.RoleAction">
-        	<result name="success">/sutroleuser.jsp</result>
-    	</action>
-    	<action name="iniinitialAddRelationship" method="initialAddRelationship" class="com.paftp.action.RoleAction">
-        	<interceptor-ref name="sessionExpirayStack" />
-        	<result name="success">/inimanager.jsp</result>
-        	<result name="error">/error.jsp</result>
-    	</action>
-    	 <action name="sutaddRelationship" method="addRelationship" class="com.paftp.action.RoleAction">
-        	<result name="success">/dispatch.jsp</result>
-        	<result name="error">/error.jsp</result>
-    	 </action>
-    	 <action name="iniaddRelationship" method="addRelationship" class="com.paftp.action.RoleAction">
-        <result name="success">/inimanager.jsp</result>
-    	 </action>
-    	 <action name="initialParameters" method="initialParameters" class="com.paftp.action.TestsuiteAction">
-        <result name="success">/sutcase.jsp</result>
-    	 </action>
-    	 <action name="testDelete" method="testDelete" class="com.paftp.action.TestAction">
-    	 	 <interceptor-ref name="sessionExpirayStack" />
-        	 <result name="success">/test.jsp</result>
-    	 </action>
+		<action name="initialroles" method="initialRoles"
+			class="com.paftp.action.RoleAction">
+			<result name="success">/roleindex.jsp</result>
+		</action>
+		<action name="sutinitialAddRelationship" method="initialAddRelationship"
+			class="com.paftp.action.RoleAction">
+			<result name="success">/sutroleuser.jsp</result>
+		</action>
+		<action name="iniinitialAddRelationship" method="initialAddRelationship"
+			class="com.paftp.action.RoleAction">
+			<interceptor-ref name="sessionExpirayStack" />
+			<result name="success">/inimanager.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="sutaddRelationship" method="addRelationship"
+			class="com.paftp.action.RoleAction">
+			<result name="success">/dispatch.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="iniaddRelationship" method="addRelationship"
+			class="com.paftp.action.RoleAction">
+			<result name="success">/inimanager.jsp</result>
+		</action>
+		<action name="initialParameters" method="initialParameters"
+			class="com.paftp.action.TestsuiteAction">
+			<result name="success">/sutcase.jsp</result>
+		</action>
+		<action name="testDelete" method="testDelete" class="com.paftp.action.TestAction">
+			<interceptor-ref name="sessionExpirayStack" />
+			<result name="success">/test.jsp</result>
+		</action>
+		<action name="createVersion" method="createVersion" class="com.paftp.action.VersionAction">
+			<result name="success">/iniversion.jsp</result>
+		</action>
+		<action name="queryVersion" method="queryVersion" class="com.paftp.action.VersionAction">
+			<result name="success">/sutcase.jsp</result>
+		</action>
 
 	</package>
 

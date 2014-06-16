@@ -121,7 +121,7 @@
     </div>
   </div>
   <!--主体-->
-<div>
+<div id="createVersionDiv">
 <form id="crateversionForm" name="createversionForm" action="${pageContext.request.contextPath}/createVersion.action">
 <table>
 <tr>
@@ -130,6 +130,9 @@
 </tr>
 </table>
 </form>
+</div>
+<div>
+
 </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">

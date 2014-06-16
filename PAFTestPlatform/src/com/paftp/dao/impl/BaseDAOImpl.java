@@ -255,7 +255,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 
 		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
 		
-		return c.list();
+		return  c.list();
 	}
 
 	public Long count(HashMap<String, Object> param){

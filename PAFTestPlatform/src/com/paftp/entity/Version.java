@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -87,7 +88,8 @@ public class Version {
 		this.testsuites = testsuites;
 	}
 
-	@ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "versions")
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "sut_version", joinColumns = { @JoinColumn(name = "version_id") }, inverseJoinColumns = { @JoinColumn(name = "sut_id") })
 	public List<Sut> getSuts() {
 		return suts;
 	}

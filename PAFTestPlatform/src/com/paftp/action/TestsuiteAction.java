@@ -57,7 +57,7 @@ public class TestsuiteAction extends ActionSupport {
 	private CaseChangeOperationService casechangeoperationService;
 	@Resource
 	private VersionService versionService;
-
+	
 	private String sut_name;
 	private String testsuite_name;
 	private String testcase_name;
@@ -65,7 +65,7 @@ public class TestsuiteAction extends ActionSupport {
 	private String testsuite_description;
 	private Integer testsuite_id;
 	private String version;
-	private String testsuite_status;
+	private String isdiscard;
 	private Integer testsuite_quantity;
 	private Integer testcase_quantity;
 
@@ -80,7 +80,6 @@ public class TestsuiteAction extends ActionSupport {
 	private String testcase_approval;
 
 	private JSONArray jsonArray;
-	private JSONObject jsonObject;
 	private User user;
 
 	private String prompt;
@@ -265,7 +264,7 @@ public class TestsuiteAction extends ActionSupport {
 				.getVersion());
 		testsuite.setVersion(currentversion);
 		testsuite.setSut(sut);
-		testsuite.setStatus("运行");
+		testsuite.setStatus(this.getIsdiscard());
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuiteService.saveTestsuite(testsuite);
 		JSONArray jsonarray = this.getRootNode(this.getSut_name());
@@ -294,7 +293,7 @@ public class TestsuiteAction extends ActionSupport {
 		conditions.put("priority", this.getPriority());
 		conditions.put("casetype", this.getCasetype());
 		conditions.put("approval", this.getTestcase_approval());
-		conditions.put("testsuite_id", testsuite.getId());
+		conditions.put("testsuite.id", testsuite.getId());
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
 
@@ -306,7 +305,7 @@ public class TestsuiteAction extends ActionSupport {
 				testcasenum++;
 			}
 		}
-
+		
 		this.setTestcase_quantity(testcasenum);
 		this.setTestsuite(testsuite);
 
@@ -330,14 +329,14 @@ public class TestsuiteAction extends ActionSupport {
 
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getTestsuite_name());
-		testsuite.setStatus(this.getTestsuite_status());
+		testsuite.setStatus(this.getIsdiscard());
 
-		if (this.getTestsuite_status().equals("废弃")) {
+		if (this.getIsdiscard().equals("discard")) {
 
 			List<Testcase> testcases = testsuite.getTestcases();
 
 			for (int i = 0; i < testcases.size(); i++) {
-				testcases.get(i).setStatus("废弃");
+				testcases.get(i).setStatus("discard");
 			}
 		}
 
@@ -442,11 +441,11 @@ public class TestsuiteAction extends ActionSupport {
 				conditions.put("priority", this.getPriority());
 				conditions.put("casetype", this.getCasetype());
 				conditions.put("approval", this.getTestcase_approval());
-				conditions.put("testsuite_id", testsuites.get(j).getId());
+				conditions.put("testsuite.id", testsuites.get(j).getId());
 				List<Testcase> testcases = testcaseService
 						.findAllCaseByMultiConditions(conditions);
 				JSONArray parentNode0 = new JSONArray();
-				if (testcases != null) {
+				if (testcases != null && testcases.size() > 0) {
 					for (int l = 0; l < testcases.size(); l++) {
 						JSONObject childNode0 = util.childNode(testcases.get(l)
 								.getCaseName(), util.nodeType("00"), null);
@@ -578,14 +577,6 @@ public class TestsuiteAction extends ActionSupport {
 
 	public void setJsonArray(JSONArray jsonArray) {
 		this.jsonArray = jsonArray;
-	}
-
-	public JSONObject getJsonObject() {
-		return jsonObject;
-	}
-
-	public void setJsonObject(JSONObject jsonObject) {
-		this.jsonObject = jsonObject;
 	}
 
 	public String getSut_name() {
@@ -732,14 +723,6 @@ public class TestsuiteAction extends ActionSupport {
 		this.version = version;
 	}
 
-	public String getTestsuite_status() {
-		return testsuite_status;
-	}
-
-	public void setTestsuite_status(String testsuite_status) {
-		this.testsuite_status = testsuite_status;
-	}
-
 	public String getTestcase_approval() {
 		return testcase_approval;
 	}
@@ -771,5 +754,14 @@ public class TestsuiteAction extends ActionSupport {
 	public void setIsSelf(String isSelf) {
 		this.isSelf = isSelf;
 	}
+
+	public String getIsdiscard() {
+		return isdiscard;
+	}
+
+	public void setIsdiscard(String isdiscard) {
+		this.isdiscard = isdiscard;
+	}
+
 
 }
