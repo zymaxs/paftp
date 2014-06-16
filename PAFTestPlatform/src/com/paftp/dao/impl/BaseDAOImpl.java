@@ -247,7 +247,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		while(iter.hasNext()){
 			
 			Entry<String, Object> condition = iter.next();     
-			if (condition.getValue() != null  && !condition.getValue().equals("")) {
+			if (condition.getValue() != null  && condition.getValue().equals("") == false && condition.getValue().equals("All") == false) {
 		
 		           dc.add(Restrictions.eq(condition.getKey(),condition.getValue()));
 				}
@@ -255,7 +255,9 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 
 		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
 		
-		return  c.list();
+		List<Testcase> testcases = c.list();
+		
+		return  (List<T>) testcases;
 	}
 
 	public Long count(HashMap<String, Object> param){

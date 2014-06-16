@@ -415,6 +415,7 @@ public class TestsuiteAction extends ActionSupport {
 		}
 		
 		this.setTestcase_quantity(testcasenum);
+		this.setJsonArray(this.getRootNode(this.getSut_name()));
 		
 		return "success";
 	}

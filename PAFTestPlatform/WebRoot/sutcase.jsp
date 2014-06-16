@@ -590,6 +590,35 @@ function initree(){
 		  });
 	};
 
+function queryinterfaceac(){
+	var querystatus = $("#querystatus").val();
+	var querypriority = $("#querypriority").val();
+	var querytype = $("#querytype").val();
+	var queryapproval = $("#queryapproval").val();
+	var queryparams = {status:querystatus,priority:querypriority,casetype:querytype,testcase_approval:queryapproval,sut_name:'<%=sut_name%>'};
+	$.ajax({
+			  type : "POST",
+			  url : "queryCombineConditions.action",
+			  data : queryparams,
+			  dataType : "json",
+			  success : function(root) {
+				  $('#jstree').jstree(true).destroy();
+				  datadata = root.jsonArray;
+				  testtest();
+				   
+			  },
+
+			  error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  alert(XMLHttpRequest.status);
+				  alert(XMLHttpRequest.readyState);
+				  alert(textStatus);
+			  }
+		  });
+	
+};
+
+
+
   $(document).ready( function(){
 	  initree();
 	$("#versiongroup").jQSelect({});
@@ -693,7 +722,6 @@ function initree(){
           <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
         </div></td>
       <td width="75" id="iniTd" style="display:block;" ><!--查询-->
-        <form id="queryinterfaceForm" action="">
         <table border="1">
           <tr>
             <td colspan="5" style="text-align:center">查询条件</td>
@@ -731,7 +759,10 @@ function initree(){
           <tr>
             <td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
           </tr>
-        </table></form></td>
+        </table>
+        <table id="resulttable">
+        
+        </table></td>
       <!--展示、更新testsuite-->
       <td width="75%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm" action="">
           <table width="100%">

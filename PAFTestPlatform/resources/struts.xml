@@ -58,6 +58,11 @@
 			<result type="json">
 			</result>
 		</action>
+		<action name="queryCombineConditions" method="queryCombineConditions"
+			class="com.paftp.action.TestsuiteAction">
+			<result type="json">
+			</result>
+		</action>
 	</package>
 
 	<package name="s2sh" extends="struts-default">
