@@ -1,6 +1,7 @@
 package com.paftp.action;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,9 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.paftp.service.sut.SutService;
 import com.paftp.service.version.VersionService;
+import com.paftp.entity.Sut;
 import com.paftp.entity.User;
 import com.paftp.entity.Version;
 
@@ -24,6 +27,8 @@ public class VersionAction  extends ActionSupport{
 
 	@Resource
 	private VersionService versionService;
+	@Resource
+	private SutService sutService;
 	
 	private String version_num;
 	private Integer sut_id;
@@ -57,6 +62,11 @@ public class VersionAction  extends ActionSupport{
 		version.setCreateTime(createdatetime);
 		version.setUser(user);
 		
+		List<Sut> suts = sutService.findAllList();
+		for(int i=0; i<suts.size(); i++){
+			version.getSuts().add(suts.get(i));
+		}
+		
 		versionService.saveVersion(version);
 		
 		return "success";
@@ -84,6 +94,18 @@ public class VersionAction  extends ActionSupport{
 		versionService.updateVersion(version);
 		
 		return "success";
+	}
+	
+	public String queryVersion(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		List<Version> versions = versionService.findAllList();
+		
+		request.setAttribute("versions", versions);
+		
+		return "success";
+		
 	}
 	
 	private User getSessionUser() {

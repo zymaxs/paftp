@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -26,6 +27,7 @@ public class Version {
 	private User user;
 	private List<Testpass> testpass_results;
 	private List<Testsuite> testsuites;
+	private List<Sut> suts;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -83,6 +85,15 @@ public class Version {
 
 	public void setTestsuites(List<Testsuite> testsuites) {
 		this.testsuites = testsuites;
+	}
+
+	@ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "versions")
+	public List<Sut> getSuts() {
+		return suts;
+	}
+
+	public void setSuts(List<Sut> suts) {
+		this.suts = suts;
 	}
 	
 }

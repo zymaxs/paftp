@@ -1,5 +1,7 @@
 package com.paftp.service.version.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -41,6 +43,12 @@ public class VersionServiceImpl implements VersionService {
 	public void deleteVersion(Version version) {
 		baseDAO.delete(version);
 
+	}
+
+	@Override
+	public List<Version> findAllList() {
+		// TODO Auto-generated method stub
+		return baseDAO.find(" from Version v order by u.createTime");
 	}
 
 }
