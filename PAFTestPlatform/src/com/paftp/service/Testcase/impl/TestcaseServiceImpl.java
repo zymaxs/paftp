@@ -1,5 +1,6 @@
 package com.paftp.service.Testcase.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
+import com.paftp.entity.ApplySut;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.User;
 import com.paftp.service.Testcase.TestcaseService;
@@ -54,6 +56,14 @@ public class TestcaseServiceImpl implements TestcaseService {
 		// TODO Auto-generated method stub
 		return baseDAO.get(" from Testcase u where u.caseName = ? and testsuite.id = ?",
 				new Object[] { name, id });
+	}
+
+	@Override
+	public List<Testcase> findAllCaseByMultiConditions(
+			HashMap<String, Object> conditions) {
+		// TODO Auto-generated method stub
+		List<Testcase> testcases = baseDAO.findbyconditions(conditions);
+		return testcases;
 	}
 
 //	@Override
