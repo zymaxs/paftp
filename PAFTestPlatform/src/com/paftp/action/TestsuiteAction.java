@@ -330,6 +330,9 @@ public class TestsuiteAction extends ActionSupport {
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setStatus(this.getIsdiscard());
+		
+		Version version = versionService.findVersionByVersionNum(this.getVersion());
+		testsuite.setVersion(version);
 
 		if (this.getIsdiscard().equals("discard")) {
 

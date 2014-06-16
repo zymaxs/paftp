@@ -102,6 +102,7 @@ public class Testcase {
 		this.creator = creator;
 	}
 
+	@JSON(serialize=false)
 	@OneToMany(mappedBy = "testcase",cascade = CascadeType.ALL)
 	public List<TestcaseStep> getTestcaseSteps() {
 		return testcaseSteps;
@@ -111,6 +112,7 @@ public class Testcase {
 		this.testcaseSteps = testcaseSteps;
 	}
 
+	@JSON(serialize=false)
 	@OneToMany(mappedBy = "testcase",cascade = CascadeType.ALL)
 	public List<CaseChangeHistory> getCaseChangeHistorys() {
 		return caseChangeHistorys;
@@ -131,6 +133,7 @@ public class Testcase {
 		this.testsuite = testsuite;
 	}
 	
+	@JSON(serialize=false)
 	@OneToMany(mappedBy = "testcase")
 	public List<TestcaseResult> getTestcase_results() {
 		return testcase_results;

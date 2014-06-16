@@ -693,7 +693,7 @@ function initree(){
           <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
         </div></td>
       <td width="75" id="iniTd" style="display:block;" ><!--查询-->
-        
+        <form id="queryinterfaceForm" action="">
         <table border="1">
           <tr>
             <td colspan="5" style="text-align:center">查询条件</td>
@@ -702,13 +702,7 @@ function initree(){
             <td>Testuite</td>
             <td colspan="2">是否废弃
               <select id="querydiscard" >
-                <option selected value="All" selected>
-                
-                
-                All
-                
-                
-                </option>
+                <option value="All" selected>All</option>
                 <option value="是">是</option>
                 <option value="否">否</option>
               </select></td>
@@ -748,7 +742,7 @@ function initree(){
           <tr>
             <td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
           </tr>
-        </table></td>
+        </table></form></td>
       <!--展示、更新testsuite-->
       <td width="75%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm" action="">
           <table width="100%">
