@@ -699,17 +699,6 @@ function initree(){
             <td colspan="5" style="text-align:center">查询条件</td>
           </tr>
           <tr>
-            <td>Testuite</td>
-            <td colspan="2">是否废弃
-              <select id="querydiscard" >
-                <option value="All" selected>All</option>
-                <option value="是">是</option>
-                <option value="否">否</option>
-              </select></td>
-            <td colspan="2">初始版本号
-              <input id="queryversion" value="0719"></td>
-          </tr>
-          <tr>
             <td>TestCase</td>
             <td>自动化
               <select id="querystatus">
