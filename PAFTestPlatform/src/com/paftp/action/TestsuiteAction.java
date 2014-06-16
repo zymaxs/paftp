@@ -297,14 +297,7 @@ public class TestsuiteAction extends ActionSupport {
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
 
-		Integer testcasenum = 0;
-
-		for (int i = 0; i < testcases.size(); i++) {
-			if (this.getStatus() == null || this.getStatus().equals("")
-					|| this.getStatus().equals(testcases.get(i).getStatus())) {
-				testcasenum++;
-			}
-		}
+		Integer testcasenum = testcases.size();
 		
 		this.setTestcase_quantity(testcasenum);
 		this.setTestsuite(testsuite);
@@ -387,6 +380,43 @@ public class TestsuiteAction extends ActionSupport {
 
 		return "success";
 
+	}
+	
+	public String queryCombineConditions(){
+		
+		Sut sut = sutService.findSutByName(this.getSut_name());
+
+//		Version version = versionService.findVersionByVersionNum(this
+//				.getVersion());
+//		HashMap<String, Object> conditions = new HashMap<String, Object>();
+//		conditions.put("status", this.getStatus());
+//		conditions.put("version_id", version.getId());
+//		conditions.put("sut_id", sut.getId());
+//		List<Testsuite> testsuites = testsuiteService
+//				.findAllSuiteByMultiConditions(conditions);
+		
+		List<Testsuite> testsuites = sut.getTestsuites();
+		Integer testcasenum = 0;
+		
+		for(int i=0; i<testsuites.size(); i++){
+			
+		Testsuite testsuite = testsuites.get(i);
+		HashMap<String, Object> conditions = new HashMap<String, Object>();
+		conditions.put("status", this.getStatus());
+		conditions.put("priority", this.getPriority());
+		conditions.put("casetype", this.getCasetype());
+		conditions.put("approval", this.getTestcase_approval());
+		conditions.put("testsuite.id", testsuite.getId());
+		List<Testcase> testcases = testcaseService
+				.findAllCaseByMultiConditions(conditions);
+
+		testcasenum += testcases.size();
+		
+		}
+		
+		this.setTestcase_quantity(testcasenum);
+		
+		return "success";
 	}
 
 	public String initialParameters() {
