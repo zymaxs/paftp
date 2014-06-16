@@ -35,4 +35,5 @@ source C:\GitHub\paftp\PAFTestPlatform\sql\create_testcase_result.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_testcase_result_content.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_analysecomment_history.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\create_analysecomment_content.sql
+source C:\GitHub\paftp\PAFTestPlatform\sql\create_sutversion.sql
 source C:\GitHub\paftp\PAFTestPlatform\sql\SystemInsertstatictables.sql

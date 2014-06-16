@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -23,6 +25,7 @@ public class Sut {
 	private String name;
 	private String description;
 	private SutGroup group;
+	private List<Version> versions;
 	private List<Role> role_results;
 	private List<Testpass> testpasses;
 	private List<Testsuite> testsuites;
@@ -96,6 +99,16 @@ public class Sut {
 	}
 	public void setTestsuites(List<Testsuite> testsuites) {
 		this.testsuites = testsuites;
+	}
+
+	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinTable(name = "sut_version", joinColumns = { @JoinColumn(name = "sut_id") }, inverseJoinColumns = { @JoinColumn(name = "version_id") })
+	
+	public List<Version> getVersions() {
+		return versions;
+	}
+	public void setVersions(List<Version> versions) {
+		this.versions = versions;
 	}
 	
 //	@OneToMany(mappedBy = "sut")
