@@ -485,10 +485,11 @@ public class TestsuiteAction extends ActionSupport {
 						parentNode0.add(childNode0);
 
 					}
+					JSONObject childNode00 = util.childNode(testsuites.get(j)
+							.getName(), util.nodeType("0"), parentNode0);
+					parentNode00.add(childNode00);
 				}
-				JSONObject childNode00 = util.childNode(testsuites.get(j)
-						.getName(), util.nodeType("0"), parentNode0);
-				parentNode00.add(childNode00);
+	
 			}
 			JSONObject childNode000 = util.childNode("接口案例",
 					"interfacetestsuite", parentNode00);
