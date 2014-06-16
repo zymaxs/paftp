@@ -106,8 +106,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
 				this.getTestsuite_name(), sut.getId());
-		if (testsuite.getStatus().equals("废弃")) {
-			testsuite.setStatus("正常");
+		if (testsuite.getStatus().equals("discard")) {
+			testsuite.setStatus("alive");
 		}
 		Testcase testcase = testcaseService.findTestcaseByNameAndTestsuiteid(
 				this.getTestcase_name(), testsuite.getId());
@@ -120,7 +120,7 @@ public class TestsuiteAction extends ActionSupport {
 		testcase.setDescription(this.getDescription());
 		testcase.setPriority(this.getPriority());
 		testcase.setStatus(this.getStatus());
-		testcase.setApproval(this.getTestcase_approval());
+		testcase.setTestcase_approval(this.getTestcase_approval());
 		testcase.setCasetype(this.getCasetype());
 		testcase.setCasesteps(this.getCasesteps());
 		testcase.setCreator(user);
@@ -538,15 +538,15 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 
-		if (testcase.getApproval().equals(this.getTestcase_approval()) == false) {
+		if (testcase.getTestcase_approval().equals(this.getTestcase_approval()) == false) {
 			if (user.getAlias().equals(testcase.getCreator().getAlias()) == false) {
 				CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 				casechangeoperation.setCaseChangeHistory(casechangehistory);
-				casechangeoperation.setOldValue(testcase.getApproval());
+				casechangeoperation.setOldValue(testcase.getTestcase_approval());
 				casechangeoperation.setNewValue(this.getTestcase_approval());
 				casechangeoperation.setField("approval");
 				casechangeoperations.add(casechangeoperation);
-				testcase.setApproval(this.getTestcase_approval());
+				testcase.setTestcase_approval(this.getTestcase_approval());
 				i++;
 			}
 		}

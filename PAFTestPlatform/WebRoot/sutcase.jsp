@@ -315,7 +315,7 @@ function newTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
-	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),approval:"待审批"};
+	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待审批"};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestcase.action",
@@ -380,8 +380,15 @@ function saveTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
+	  var approval_value;
+	  approval_radio = document.getElementsByName('updateapproval');
+	  for(i=0;i<approval_radio.length;i++){  
+	  	if(approval_radio[i].checked){
+	    	approval_value = approval_radio[i].value;
+	  	}
+	  };
 	  var sut_name = '<%=sut_name%>';
-	  var tsparams = {testcase_name:$("#showtestcase_name").val(),sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val()};
+	  var tsparams = {testcase_name:$("#showtestcase_name").val(),sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value};
 	  $.ajax({
 			  type : "POST",
 			  url : "updateTestcase.action",
@@ -473,7 +480,7 @@ function testtest(){
 				  document.getElementById('showcasetype').value = root.testcase.casetype;
 				  document.getElementById('showcasedescription').value = root.testcase.description;
 				  document.getElementById('showcasesteps').value = root.testcase.casesteps;
-				  document.getElementById('showapproval').value = root.testcase.approval;
+				  document.getElementById('showapproval').value = root.testcase.testcase_approval;
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -697,7 +704,9 @@ function initree(){
               <select id="querydiscard" >
                 <option selected value="All" selected>
                 
+                
                 All
+                
                 
                 </option>
                 <option value="是">是</option>
@@ -737,7 +746,7 @@ function initree(){
               </select></td>
           </tr>
           <tr>
-          <td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
+            <td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
           </tr>
         </table></td>
       <!--展示、更新testsuite-->
@@ -758,19 +767,19 @@ function initree(){
               <td>起始版本</td>
               <td id="showversiontd" style="display:block"><input id="showversion" value="" readonly></td>
               <td id="showversionoption" style="display:none"><div id="updateversiongroup" class="selectbox">
-                <div class="cartes">
-                  <input type="text" value="<%=versions.get(0).getVersionNum()%>" id="updateversion" name="version" class="listTxt" readonly />
-                  <div class="listBtn"><b></b></div>
-                  <input type="hidden" value="" class="listVal" />
-                </div>
-                <div class="lists">
-                  <ul class="list">
-                    <% for (int i =0; i<versions.size(); i++){%>
-                    <li id=<%=i%>><%=versions.get(i).getVersionNum()%></li>
-                    <%}%>
-                  </ul>
-                </div>
-              </div></td>
+                  <div class="cartes">
+                    <input type="text" value="<%=versions.get(0).getVersionNum()%>" id="updateversion" name="version" class="listTxt" readonly />
+                    <div class="listBtn"><b></b></div>
+                    <input type="hidden" value="" class="listVal" />
+                  </div>
+                  <div class="lists">
+                    <ul class="list">
+                      <% for (int i =0; i<versions.size(); i++){%>
+                      <li id=<%=i%>><%=versions.get(i).getVersionNum()%></li>
+                      <%}%>
+                    </ul>
+                  </div>
+                </div></td>
             </tr>
             <tr>
               <td>是否废弃</td>
@@ -872,20 +881,19 @@ function initree(){
         <tr>
           <td>起始版本</td>
           <td><div id="versiongroup" class="selectbox">
-                <div class="cartes">
-                  <input type="text" value="<%=versions.get(0).getVersionNum()%>" id="version" name="version" class="listTxt" readonly />
-                  <div class="listBtn"><b></b></div>
-                  <input type="hidden" value="" class="listVal" />
-                </div>
-                <div class="lists">
-                  <ul class="list">
-                    <% for (int i =0; i<versions.size(); i++){%>
-                    <li id=<%=i%>><%=versions.get(i).getVersionNum()%></li>
-                    <%}%>
-                  </ul>
-                </div>
+              <div class="cartes">
+                <input type="text" value="<%=versions.get(0).getVersionNum()%>" id="version" name="version" class="listTxt" readonly />
+                <div class="listBtn"><b></b></div>
+                <input type="hidden" value="" class="listVal" />
               </div>
-          </td>
+              <div class="lists">
+                <ul class="list">
+                  <% for (int i =0; i<versions.size(); i++){%>
+                  <li id=<%=i%>><%=versions.get(i).getVersionNum()%></li>
+                  <%}%>
+                </ul>
+              </div>
+            </div></td>
         </tr>
         <tr>
           <td>是否废弃</td>

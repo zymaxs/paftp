@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -30,7 +31,7 @@ public class Testcase {
 	private Date createTime;
 	private String casesteps;
 	private String casetype;
-	private String approval;
+	private String testcase_approval;
 
 	private Testsuite testsuite;
 
@@ -90,6 +91,7 @@ public class Testcase {
 		this.createTime = createTime;
 	}
 
+	@JSON(serialize=false)
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "creator_id")
 	public User getCreator() {
@@ -118,6 +120,7 @@ public class Testcase {
 		this.caseChangeHistorys = caseChangeHistorys;
 	}
 
+	@JSON(serialize=false)
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "testsuite_id")
 	public Testsuite getTestsuite() {
@@ -165,12 +168,12 @@ public class Testcase {
 	}
 
 	@Column(name = "approval", length = 20)
-	public String getApproval() {
-		return approval;
+	public String getTestcase_approval() {
+		return testcase_approval;
 	}
 
-	public void setApproval(String approval) {
-		this.approval = approval;
+	public void setTestcase_approval(String testcase_approval) {
+		this.testcase_approval = testcase_approval;
 	}
 
 }

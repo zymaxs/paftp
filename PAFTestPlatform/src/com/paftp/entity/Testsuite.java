@@ -57,7 +57,7 @@ public class Testsuite {
 		this.testcases = testcases;
 	}
 	
-	@JSON(serialize=false)
+
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "sut_id")
 	public Sut getSut() {
