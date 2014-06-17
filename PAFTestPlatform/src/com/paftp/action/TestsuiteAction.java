@@ -22,11 +22,13 @@ import com.paftp.entity.CaseChangeOperation;
 import com.paftp.entity.Role;
 import com.paftp.entity.Sut;
 import com.paftp.entity.Testcase;
+import com.paftp.entity.TestcaseProject;
 import com.paftp.entity.Testsuite;
 import com.paftp.entity.User;
 import com.paftp.entity.Version;
 import com.paftp.service.CaseChangeHistory.CaseChangeHistoryService;
 import com.paftp.service.CaseChangeOperation.CaseChangeOperationService;
+import com.paftp.service.StaticColumn.TestcaseProjectService;
 import com.paftp.service.Testcase.TestcaseService;
 import com.paftp.service.Testsuite.TestsuiteService;
 import com.paftp.service.sut.SutService;
@@ -57,6 +59,8 @@ public class TestsuiteAction extends ActionSupport {
 	private CaseChangeOperationService casechangeoperationService;
 	@Resource
 	private VersionService versionService;
+	@Resource
+	private TestcaseProjectService testcaseProjectService;
 	
 	private String sut_name;
 	private String testsuite_name;
@@ -76,6 +80,8 @@ public class TestsuiteAction extends ActionSupport {
 	private String casesteps;
 	private Date createtime;
 	private Date updatetime;
+	private Integer project_id;
+	private String project_name;
 	private Integer testcase_id;
 	private String testcase_approval;
 
@@ -129,7 +135,9 @@ public class TestsuiteAction extends ActionSupport {
 				createtime.getTime());
 		testcase.setCreateTime(createdatetime);
 		testcase.setTestsuite(testsuite);
-
+		TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectById(this.getProject_id());
+		testcase.setTestcaseproject(testcaseproject);
+		
 		testcaseService.saveTestcase(testcase);
 
 		return "success";
@@ -293,6 +301,7 @@ public class TestsuiteAction extends ActionSupport {
 		conditions.put("priority", this.getPriority());
 		conditions.put("casetype", this.getCasetype());
 		conditions.put("testcase_approval", this.getTestcase_approval());
+		conditions.put("testcaseproject.id", this.getProject_id());
 		conditions.put("testsuite.id", testsuite.getId());
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
@@ -406,6 +415,7 @@ public class TestsuiteAction extends ActionSupport {
 		conditions.put("priority", this.getPriority());
 		conditions.put("casetype", this.getCasetype());
 		conditions.put("testcase_approval", this.getTestcase_approval());
+		conditions.put("testcaseproject.id", this.getProject_id());
 		conditions.put("testsuite.id", testsuite.getId());
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
@@ -428,7 +438,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		request.setAttribute("isCurrentRole",
 				this.isRoleOfSut(user, this.getSut_name()));
-		request.setAttribute("sut_name", this.getSut_name());
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		request.setAttribute("sut", sut);
 		request.setAttribute("flag", false);
 
 		return "success";
@@ -475,6 +486,7 @@ public class TestsuiteAction extends ActionSupport {
 				conditions.put("priority", this.getPriority());
 				conditions.put("casetype", this.getCasetype());
 				conditions.put("testcase_approval", this.getTestcase_approval());
+				conditions.put("testcaseproject.id", this.getProject_id());
 				conditions.put("testsuite.id", testsuites.get(j).getId());
 				List<Testcase> testcases = testcaseService
 						.findAllCaseByMultiConditions(conditions);
@@ -584,6 +596,17 @@ public class TestsuiteAction extends ActionSupport {
 				testcase.setTestcase_approval(this.getTestcase_approval());
 				i++;
 			}
+		}
+		
+		if (testcase.getTestcaseproject().getName().equals(this.getProject_name()) == false) {
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getTestcaseproject().getName());
+			casechangeoperation.setNewValue(this.getProject_name());
+			casechangeoperation.setField("project_name");
+			casechangeoperations.add(casechangeoperation);
+			testcase.getTestcaseproject().setName(this.getProject_name());
+			i++;
 		}
 
 		for (int j = 0; j < i; j++) {
@@ -798,5 +821,19 @@ public class TestsuiteAction extends ActionSupport {
 		this.isdiscard = isdiscard;
 	}
 
+	public Integer getProject_id() {
+		return project_id;
+	}
+
+	public void setProject_id(Integer project_id) {
+		this.project_id = project_id;
+	}
+	public String getProject_name() {
+		return project_name;
+	}
+
+	public void setProject_name(String project_name) {
+		this.project_name = project_name;
+	}
 
 }

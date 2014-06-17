@@ -32,6 +32,7 @@ public class Testcase {
 	private String casesteps;
 	private String casetype;
 	private String testcase_approval;
+	private TestcaseProject testcaseproject;
 
 	private Testsuite testsuite;
 
@@ -177,6 +178,17 @@ public class Testcase {
 
 	public void setTestcase_approval(String testcase_approval) {
 		this.testcase_approval = testcase_approval;
+	}
+
+
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "project_id")
+	public TestcaseProject getTestcaseproject() {
+		return testcaseproject;
+	}
+
+	public void setTestcaseproject(TestcaseProject testcaseproject) {
+		this.testcaseproject = testcaseproject;
 	}
 
 }
