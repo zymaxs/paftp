@@ -39,7 +39,7 @@ public class TestcaseprojectAction  extends ActionSupport{
 		
 		testcaseproject = new TestcaseProject();
 		testcaseproject.setName(this.getName());
-		testcaseproject.setDescription(this.getDescription());
+		//testcaseproject.setDescription(this.getDescription());
 		
 		testcaseProjectService.saveTestcaseProject(testcaseproject);
 		
