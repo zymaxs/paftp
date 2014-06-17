@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
+import com.paftp.dto.TestcaseCountDto;
 import com.paftp.entity.ApplySut;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.User;
@@ -19,6 +20,9 @@ public class TestcaseServiceImpl implements TestcaseService {
 
 	@Resource
 	private BaseDAO<Testcase> baseDAO;
+	
+	@Resource
+	private BaseDAO<TestcaseCountDto> baseDAODto;
 
 	@Override
 	public void saveTestcase(Testcase testcase) {
@@ -64,6 +68,12 @@ public class TestcaseServiceImpl implements TestcaseService {
 		// TODO Auto-generated method stub
 		List<Testcase> testcases = baseDAO.findbyconditions(conditions);
 		return testcases;
+	}
+
+	@Override
+	public List<TestcaseCountDto> queryCountByColumn(String name) {
+		// TODO Auto-generated method stub
+		return baseDAODto.getgroup("select ?, count(*) from Testcase group by ?", new Object[] {name});
 	}
 
 //	@Override

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
+import com.paftp.dto.TestcaseCountDto;
+
 /**
  * 基础数据库操作类
  * 
@@ -113,6 +115,7 @@ public interface BaseDAO<T> {
 	 */
 	public T get(String hql, Object[] param);
 
+	public List<T> getgroup(String hql, Object[] param);
 	/**
 	 * 获得一个对象
 	 * 
