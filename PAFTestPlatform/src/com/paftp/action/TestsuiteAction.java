@@ -302,7 +302,9 @@ public class TestsuiteAction extends ActionSupport {
 		conditions.put("priority", this.getPriority());
 		conditions.put("casetype", this.getCasetype());
 		conditions.put("testcase_approval", this.getTestcase_approval());
-		conditions.put("testcaseproject.id", testcaseproject.getId());
+		if (testcaseproject != null){
+			conditions.put("testcaseproject.id", testcaseproject.getId());
+			}
 		conditions.put("testsuite.id", testsuite.getId());
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
@@ -418,7 +420,9 @@ public class TestsuiteAction extends ActionSupport {
 		conditions.put("priority", this.getPriority());
 		conditions.put("casetype", this.getCasetype());
 		conditions.put("testcase_approval", this.getTestcase_approval());
-		conditions.put("testcaseproject.id", testcaseproject.getId());
+		if (testcaseproject != null){
+			conditions.put("testcaseproject.id", testcaseproject.getId());
+			}
 		conditions.put("testsuite.id", testsuite.getId());
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
@@ -490,7 +494,9 @@ public class TestsuiteAction extends ActionSupport {
 				conditions.put("priority", this.getPriority());
 				conditions.put("casetype", this.getCasetype());
 				conditions.put("testcase_approval", this.getTestcase_approval());
+				if (testcaseproject != null){
 				conditions.put("testcaseproject.id", testcaseproject.getId());
+				}
 				conditions.put("testsuite.id", testsuites.get(j).getId());
 				List<Testcase> testcases = testcaseService
 						.findAllCaseByMultiConditions(conditions);

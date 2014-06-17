@@ -212,7 +212,7 @@ function demo_create() {
 	  if (type.type != "sut" && type.type != "testsuite")
 		  ref.edit(sel);
   };*/
-  function demo_delete() {
+  /*function demo_delete() {
 	  var ref = $('#jstree').jstree(true);
 	  var	sel = ref.get_selected();
 	  if(!sel.length) { return false; }
@@ -220,7 +220,7 @@ function demo_create() {
 	  if (type.type != "sut" && type.type != "interfacetestsuite" && type.type != "stresstestsuite")
 		  ref.delete_node(sel);
 
-  };
+  };*/
  var datadata = "test"; 
  
  // 创建TestSuite
@@ -336,7 +336,7 @@ function newTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
-	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待评审",};
+	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待评审",project_name:$("#project").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestcase.action",
@@ -371,6 +371,8 @@ function updateTestCaseac(){
 	document.getElementById('showcasestatusoption').style.display = "block";
 	document.getElementById('showcasetypetd').style.display = "none";
 	document.getElementById('showcasetypeoption').style.display = "block";
+	document.getElementById('showprojecttd').style.display = "none";
+	document.getElementById('showprojectoption').style.display = "block";
 	document.getElementById('showapprovaltd').style.display = "none";
 	document.getElementById('showaprovaloption').style.display = "block";
 	document.getElementById('showcasedescription').readOnly = false;
@@ -410,7 +412,7 @@ function saveTestCaseac(){
 	  	}
 	  };
 	  var sut_name = '<%=sut_name%>';
-	  var tsparams = {testcase_name:$("#showtestcase_name").val(),sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value};
+	  var tsparams = {testcase_name:$("#showtestcase_name").val(),sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "updateTestcase.action",
@@ -424,6 +426,8 @@ function saveTestCaseac(){
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 				  document.getElementById('showtestcase_name').readOnly = true;
+				  document.getElementById('showprojecttd').style.display = "block";
+				  document.getElementById('showprojectoption').style.display = "none";
 				  document.getElementById('showcaseprioritytd').style.display = "block";
 	  		      document.getElementById('showcasepriorityoption').style.display = "none";
 				  document.getElementById('showcasestatustd').style.display = "block";
@@ -504,6 +508,7 @@ function testtest(){
 				  document.getElementById('showcasedescription').value = root.testcase.description;
 				  document.getElementById('showcasesteps').value = root.testcase.casesteps;
 				  document.getElementById('showapproval').value = root.testcase.testcase_approval;
+				  document.getElementById('showproject').value = root.testcase.testcaseproject.name;
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -908,7 +913,7 @@ function queryinterfaceac(){
                 <td id="showprojecttd" style="display:block"><input id="showproject" value="" readonly></td>
                 <td id="showprojectoption" style="display:none"><div id="updateprojectgroup" class="selectbox">
               <div class="cartes">
-                <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="version" name="version" class="listTxt" readonly />
+                <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="updateproject" name="updateproject" class="listTxt" readonly />
                 <div class="listBtn"><b></b></div>
                 <input type="hidden" value="" class="listVal" />
               </div>
@@ -1032,7 +1037,7 @@ function queryinterfaceac(){
         	<td>所属Project</td>
             <td><div id="projectgroup" class="selectbox">
               <div class="cartes">
-                <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="version" name="version" class="listTxt" readonly />
+                <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="project" name="project" class="listTxt" readonly />
                 <div class="listBtn"><b></b></div>
                 <input type="hidden" value="" class="listVal" />
               </div>
