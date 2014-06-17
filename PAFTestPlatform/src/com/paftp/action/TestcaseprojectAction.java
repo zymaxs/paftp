@@ -1,5 +1,7 @@
 package com.paftp.action;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,6 +45,17 @@ public class TestcaseprojectAction  extends ActionSupport{
 		
 		testcaseProjectService.saveTestcaseProject(testcaseproject);
 		
+		return "success";
+	}
+	
+	public String queryTestcaseproject(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		List<TestcaseProject> testcaseprojects = testcaseProjectService.findAllList();
+		
+		request.setAttribute("testcaseprojects", testcaseprojects);
+
 		return "success";
 	}
 	
