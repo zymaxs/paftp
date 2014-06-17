@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.paftp.dao.BaseDAO;
+import com.paftp.dto.TestcaseCountDto;
 import com.paftp.entity.ApplySut;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.Testsuite;
@@ -310,5 +311,16 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
 		
 		return c.list();
+	}
+
+	@Override
+	public List<T> getgroup(String hql, Object[] param) {
+		// TODO Auto-generated method stub
+		List<T> l = this.find(hql, param);
+		if (l != null && l.size() > 0) {
+			return (List<T>) l.get(0);
+		} else {
+			return null;
+		}
 	}
 }

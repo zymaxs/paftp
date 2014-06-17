@@ -8,7 +8,7 @@
 	<constant name="struts.action.extension" value="action" />
 	<constant name="struts.serve.static.browserCache" value="false" />
 	<constant name="struts.devMode" value="true" />
-
+	
 	<package name="ajax" extends="json-default">
 		<action name="querySutsAjax" method="querySut"
 			class="com.paftp.action.ApplySutAction">
@@ -212,9 +212,6 @@
 		</action>
 		<action name="createTestcaseproject" method="createTestcaseproject" class="com.paftp.action.TestcaseprojectAction">
 			<result name="success">/inidata.jsp</result>
-		</action>
-		<action name="queryTestcaseproject" method="queryTestcaseproject" class="com.paftp.action.TestcaseprojectAction">
-			<result name="success">/sutcase.jsp</result>
 		</action>
 
 	</package>

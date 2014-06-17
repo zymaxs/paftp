@@ -3,6 +3,7 @@ package com.paftp.service.Testcase;
 import java.util.HashMap;
 import java.util.List;
 
+import com.paftp.dto.TestcaseCountDto;
 import com.paftp.entity.ApplySut;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.User;
@@ -24,6 +25,8 @@ public interface TestcaseService {
 	public void deleteTestcase(Testcase testcase);
 
 	public List<Testcase> findAllList();
+	
+	public List<TestcaseCountDto> queryCountByColumn(String name);
 
 	//public User findUserByNameAndPassword(String username, String password);
 

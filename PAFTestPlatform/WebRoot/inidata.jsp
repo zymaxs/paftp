@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.util.*,com.paftp.entity.*"%>
+<%@ page contentType="text/html" language="java"
+	import="java.util.*,com.paftp.entity.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -9,7 +9,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -122,7 +122,7 @@
   </div>
   <!--主体-->
 <div id="createVersionDiv">
-<form id="crateversionForm" name="createversionForm" action="${pageContext.request.contextPath}/createVersion.action">
+<form id="crateversionForm" name="createversionForm" method="post" action="${pageContext.request.contextPath}/createVersion.action">
 <table>
 <tr>
 <td>创建版本<input id="createversion" name="version_num"></td>
@@ -132,10 +132,10 @@
 </form>
 </div>
 <div id="createProjectDiv">
-<form id="crateprojectForm" name="crateprojectForm" action="${pageContext.request.contextPath}/createTestcaseproject.action">
+<form id="crateprojectForm" name="crateprojectForm" method="post" action="${pageContext.request.contextPath}/createTestcaseproject.action">
 <table>
 <tr>
-<td>创建项目<input id="createproject" name="name"></td>
+<td>创建项目<input type="text" id="createproject" name="name"></td>
 <td><input type="submit" id="createprojectbtn" value="创建项目"></td>
 </tr>
 </table>

@@ -55,7 +55,6 @@ public class TestcaseprojectAction  extends ActionSupport{
 		List<TestcaseProject> testcaseprojects = testcaseProjectService.findAllList();
 		
 		request.setAttribute("testcaseprojects", testcaseprojects);
-		request.setAttribute("projectflag", true);
 
 		return "success";
 	}
