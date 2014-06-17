@@ -292,7 +292,7 @@ public class TestsuiteAction extends ActionSupport {
 		conditions.put("status", this.getStatus());
 		conditions.put("priority", this.getPriority());
 		conditions.put("casetype", this.getCasetype());
-		conditions.put("approval", this.getTestcase_approval());
+		conditions.put("testcase_approval", this.getTestcase_approval());
 		conditions.put("testsuite.id", testsuite.getId());
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
@@ -474,7 +474,7 @@ public class TestsuiteAction extends ActionSupport {
 				conditions.put("status", this.getStatus());
 				conditions.put("priority", this.getPriority());
 				conditions.put("casetype", this.getCasetype());
-				conditions.put("approval", this.getTestcase_approval());
+				conditions.put("testcase_approval", this.getTestcase_approval());
 				conditions.put("testsuite.id", testsuites.get(j).getId());
 				List<Testcase> testcases = testcaseService
 						.findAllCaseByMultiConditions(conditions);

@@ -31,6 +31,7 @@ else { isCurrentRole = "n";};
 <script src="dist/libs/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <script src="dist/jstree.min.js"></script>
 <script type="text/javascript" src="js/zDialog.js"></script>
 <script type="text/javascript" src="js/zDrag.js"></script>
@@ -213,7 +214,7 @@ function demo_create() {
 	    	isdiscard_value = isdiacard_radio[i].value;
 	  	}
 	  };
-	  var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:isdiscard_value,version:$("#version").val()};
+	  var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:"alive",version:$("#version").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestsuite.action",
@@ -315,7 +316,7 @@ function newTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
-	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待审批"};
+	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待评审"};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestcase.action",
@@ -619,10 +620,45 @@ function queryinterfaceac(){
 
 
 
+function validateac(){
+	if($("#validateForm").valid()){
+			alert("validate success");
+			}
+		else {alert("validate failed");}
+	};
+
   $(document).ready( function(){
 	  initree();
 	$("#versiongroup").jQSelect({});
 	$("#updateversiongroup").jQSelect({});
+	$("#showTestSuiteForm").validate({
+			rules : {
+				"testsuite_name" : {
+					required : true,
+					maxlength : 15
+				}
+			},
+			messages : {
+				"testsuite_name" : {
+					required : "请输入TestSuiteName",
+					maxlength : $.validator.format("TestSuiteName最大输入不超过十五个字符.")
+				}
+			}
+		});
+		/*$("#validateForm").validate({
+			rules : {
+				"validatezhou1111" : {
+					required : true,
+					maxlength : 15
+				}
+			},
+			messages : {
+				"validatezhou1111" : {
+					required : "请输入TestSuiteName",
+					maxlength : $.validator.format("TestSuiteName最大输入不超过十五个字符.")
+				}
+			}
+		});*/
   
 });
 
@@ -761,10 +797,10 @@ function queryinterfaceac(){
           </tr>
         </table>
         <table id="resulttable">
-        
-        </table></td>
+        </table>
+        </td>
       <!--展示、更新testsuite-->
-      <td width="75%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm" action="">
+      <td width="75%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm">
           <table width="100%">
             <tr>
               <td><label for="showtestsuite_name">TestSuiteName</label></td>
@@ -814,7 +850,7 @@ function queryinterfaceac(){
           </table>
         </form></td>
       <!--展示更新testcase-->
-      <td width="75%" style="display:none" id="showTestCaseTd"><form>
+      <td width="75%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm">
           <table width="100%">
             <tr>
               <td><label for="showtestcase_name">TestCaseName</label></td>
@@ -908,13 +944,6 @@ function queryinterfaceac(){
                 </ul>
               </div>
             </div></td>
-        </tr>
-        <tr>
-          <td>是否废弃</td>
-          <td><input type="radio" name="isdiscard" value="alive" checked>
-            Alive&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" name="isdiscard" value="discard">
-            Discard&nbsp;&nbsp;&nbsp;&nbsp;</td>
         </tr>
         <tr>
           <td>描述</td>
