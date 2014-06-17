@@ -438,7 +438,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		request.setAttribute("isCurrentRole",
 				this.isRoleOfSut(user, this.getSut_name()));
-		request.setAttribute("sut_name", this.getSut_name());
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		request.setAttribute("sut", sut);
 		request.setAttribute("flag", false);
 
 		return "success";
