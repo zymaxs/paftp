@@ -14,6 +14,9 @@ if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialParameters.action").forward(request,response);}
 if (request.getAttribute("versionflag") == null ){
 request.getRequestDispatcher("${pageContext.request.contextPath}/queryVersion.action").forward(request,response);}
+if (request.getAttribute("projectflag") == null ){
+request.getRequestDispatcher("${pageContext.request.contextPath}/queryTestcaseproject.action").forward(request,response);}
+List<TestcaseProject> testcaseprojects = (List<TestcaseProject>)request.getAttribute("testcaseprojects");
 List<Version> versions = (List<Version>)request.getAttribute("versions");
 String sut_name = (String)request.getAttribute("sut_name");
 String isCurrentRole;
@@ -333,7 +336,7 @@ function newTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
-	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待评审"};
+	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待评审",};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestcase.action",
@@ -642,6 +645,8 @@ function queryinterfaceac(){
 	  initree();
 	$("#versiongroup").jQSelect({});
 	$("#updateversiongroup").jQSelect({});
+	$("#projectgroup").jQSelect({});
+	$("#updateprojectgroup").jQSelect({});
 	$("#showTestSuiteForm").validate({
 			rules : {
 				"showtestsuite_name" : {
@@ -788,7 +793,6 @@ function queryinterfaceac(){
           </div>
           <div>
             <button type="button" class="btn btn-success btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i>Create</button>
-            <button type="button" class="btn btn-danger btn-sm" onclick="demo_delete();"><i class="glyphicon glyphicon-remove"></i>Delete</button>
           </div>
           <div id="jstree"></div>
           <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
@@ -900,6 +904,24 @@ function queryinterfaceac(){
               <td><input id="showcasetestsuite_name" name="showcasetestsuite_name" value="" maxlength="15" readonly></td>
             </tr>
             <tr>
+            	<td>所属Project</td>
+                <td id="showprojecttd" style="display:block"><input id="showproject" value="" readonly></td>
+                <td id="showprojectoption" style="display:none"><div id="updateprojectgroup" class="selectbox">
+              <div class="cartes">
+                <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="version" name="version" class="listTxt" readonly />
+                <div class="listBtn"><b></b></div>
+                <input type="hidden" value="" class="listVal" />
+              </div>
+              <div class="lists">
+                <ul class="list">
+                  <% for (int i =0; i<testcaseprojects.size(); i++){%>
+                  <li id=<%=i%>><%=testcaseprojects.get(i).getName()%></li>
+                  <%}%>
+                </ul>
+              </div>
+            </div></td>
+            </tr>
+            <tr>
               <td>优先级</td>
               <td id="showcaseprioritytd" style="display:block"><input id="showcasepriority" value="" readonly></td>
               <td id="showcasepriorityoption" style="display:none"><input type="radio" name="updatepriority" id="p1" value="P1" checked>
@@ -1005,6 +1027,23 @@ function queryinterfaceac(){
         <tr>
           <td>所属TestSuite</td>
           <td><input id="casetestsuite_name" name="testsuite_name" value="" maxlength="15" readonly></td>
+        </tr>
+        <tr>
+        	<td>所属Project</td>
+            <td><div id="projectgroup" class="selectbox">
+              <div class="cartes">
+                <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="version" name="version" class="listTxt" readonly />
+                <div class="listBtn"><b></b></div>
+                <input type="hidden" value="" class="listVal" />
+              </div>
+              <div class="lists">
+                <ul class="list">
+                  <% for (int i =0; i<testcaseprojects.size(); i++){%>
+                  <li id=<%=i%>><%=testcaseprojects.get(i).getName()%></li>
+                  <%}%>
+                </ul>
+              </div>
+            </div></td>
         </tr>
         <tr>
           <td>优先级</td>

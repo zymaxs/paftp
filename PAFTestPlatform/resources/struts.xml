@@ -213,6 +213,9 @@
 		<action name="createTestcaseproject" method="createTestcaseproject" class="com.paftp.action.TestcaseprojectAction">
 			<result name="success">/inidata.jsp</result>
 		</action>
+		<action name="queryTestcaseproject" method="queryTestcaseproject" class="com.paftp.action.TestcaseprojectAction">
+			<result name="success">/sutcase.jsp</result>
+		</action>
 
 	</package>
 
