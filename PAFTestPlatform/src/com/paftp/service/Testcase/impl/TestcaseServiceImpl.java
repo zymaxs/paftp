@@ -73,7 +73,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 	@Override
 	public List<TestcaseCountDto> queryCountByColumn(String name) {
 		// TODO Auto-generated method stub
-		return baseDAODto.getgroup("select ?, count(*) from Testcase group by ?", new Object[] {name});
+		return baseDAODto.getgroup("select t.'+?+', count(*) from Testcase t group by t.'+?+'", new Object[] {name});
 	}
 
 //	@Override

@@ -418,13 +418,6 @@ public class TestsuiteAction extends ActionSupport {
 		List<TestcaseCountDto> condtestcase_approval = testcaseService
 				.queryCountByColumn("testcase_approval");
 		condtestcase_quantity.put("testcase_approval", condtestcase_approval);
-		TestcaseProject testcaseproject = testcaseProjectService
-				.findTestcaseProjectByName(this.getProject_name());
-		if (testcaseproject != null) {
-			List<TestcaseCountDto> condtestcase_projectid = testcaseService
-					.queryCountByColumn("testcaseproject.name");
-			condtestcase_quantity.put("testcaseproject", condtestcase_projectid);
-		}
 
 		this.setTestsuite_quantity(testsuites.size());
 		this.setTestcase_quantity(testcase_quantity);
