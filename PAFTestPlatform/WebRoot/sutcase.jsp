@@ -72,6 +72,12 @@ else { isCurrentRole = "n";};
 					if (topWin.$id("testsuite_name").value == ""){
 					Dialog.alert("用户名不能为空");
 						}
+					else if ( topWin.$id('testsuite_name').value.length > 50){
+					Dialog.alert("名字不能超过50个字符");
+						}
+					else if (topWin.$id('testsuite_description').value == ""){
+					Dialog.alert("TestSuite描述不能为空");	
+						}
 					else if ( topWin.$id('testsuite_description').value.length > 50){
 					Dialog.alert("描述不能超过50个字符");
 						}
@@ -115,13 +121,22 @@ else { isCurrentRole = "n";};
 	diag.OKEvent = function(){
 					//alert(topWin.$id('description').value.length);
 					if (topWin.$id("testcase_name").value == ""){
-					Dialog.alert("用户名不能为空");
+					Dialog.alert("用例名称不能为空");
+						}
+					else if ( topWin.$id('testcase_name').value.length > 15){
+					Dialog.alert("用例名称不能超过15个字符");
+						}
+					else if (topWin.$id('description').value == ""){
+					Dialog.alert("用例描述描述不能为空");	
 						}
 					else if ( topWin.$id('description').value.length > 50){
-					Dialog.alert("描述不能超过50个字符");
+					Dialog.alert("用例描述不能超过50个字符");
+						}
+					else if (topWin.$id('casesteps').value == ""){
+					Dialog.alert("用例步骤不能为空");	
 						}
 					else if (topWin.$id('casesteps').value.length > 150 ){
-					Dialog.alert("描述不能超过150个字符");
+					Dialog.alert("用例步骤不能超过150个字符");
 						}
 					else{
 						newTestCaseac();
@@ -254,6 +269,7 @@ function updateTestSuiteac(){
 	};
 
 function saveTestSuiteac(){
+	if($("#showTestSuiteForm").valid()){
 	var isdiscard_value;
 	  isdiacard_radio = document.getElementsByName('updateisdiscard');
 	  for(i=0;i<isdiacard_radio.length;i++){  
@@ -291,6 +307,7 @@ function saveTestSuiteac(){
 				  alert(textStatus);
 			  }
 		  });
+	}
 	};
 	  
 //创建TestCase
@@ -360,6 +377,7 @@ function updateTestCaseac(){
 	}
 
 function saveTestCaseac(){
+	if($("#showTestCaseForm").valid()){
 	var priority_value;
 	  priority_radio = document.getElementsByName('updatepriority');
 	  for(i=0;i<priority_radio.length;i++){  
@@ -423,6 +441,7 @@ function saveTestCaseac(){
 				  alert(textStatus);
 			  }
 		  });
+	}
 	}
 
 function testtest(){
@@ -619,46 +638,63 @@ function queryinterfaceac(){
 };
 
 
-
-function validateac(){
-	if($("#validateForm").valid()){
-			alert("validate success");
-			}
-		else {alert("validate failed");}
-	};
-
   $(document).ready( function(){
 	  initree();
 	$("#versiongroup").jQSelect({});
 	$("#updateversiongroup").jQSelect({});
 	$("#showTestSuiteForm").validate({
 			rules : {
-				"testsuite_name" : {
+				"showtestsuite_name" : {
 					required : true,
 					maxlength : 15
+				},
+				"showtestsuite_description" : {
+					required : true,
+					maxlength : 50
 				}
 			},
 			messages : {
-				"testsuite_name" : {
+				"showtestsuite_name" : {
 					required : "请输入TestSuiteName",
 					maxlength : $.validator.format("TestSuiteName最大输入不超过十五个字符.")
+				},
+				"showtestsuite_description" : {
+					required : "请输入TestSuite描述",
+					maxlength : $.validator.format("TestSuite描述最大输入不超过五十个字符.")
 				}
 			}
 		});
-		/*$("#validateForm").validate({
+	 $("#showTestCaseForm").validate({
 			rules : {
-				"validatezhou1111" : {
+				"showtestcase_name" : {
 					required : true,
 					maxlength : 15
-				}
+				},
+				"showcasedescription" : {
+					required : true,
+					maxlength : 50
+				},
+				"showcasesteps" : {
+					required : true,
+					maxlength : 150
+				},
 			},
 			messages : {
-				"validatezhou1111" : {
-					required : "请输入TestSuiteName",
-					maxlength : $.validator.format("TestSuiteName最大输入不超过十五个字符.")
+				"showtestcase_name" : {
+					required : "请输入用例名称",
+					maxlength : $.validator.format("用例名称最大输入不超过十五个字符.")
+				},
+				"showcasedescription" : {
+					required : "请输入用例详细描述",
+					maxlength : $.validator.format("用例详细描述最大输入不超过五十个字符.")
+				},
+				"showcasesteps" : {
+					required : "请输入用例步骤",
+					maxlength : $.validator.format("用例步骤最大输入不超过一百五十个字符.")
 				}
 			}
-		});*/
+		});
+		
   
 });
 
@@ -804,14 +840,14 @@ function validateac(){
           <table width="100%">
             <tr>
               <td><label for="showtestsuite_name">TestSuiteName</label></td>
-              <td><input id="showtestsuite_name" name="testsuite_name" value="" readonly></td>
+              <td><input id="showtestsuite_name" name="showtestsuite_name" value="" readonly></td>
             </tr>
             <tr>
-              <td colspan="2"><input id="showtestsuite_id" name="testsuite_id" value="" style="display:block" readonly></td>
+              <td colspan="2"><input id="showtestsuite_id" name="showtestsuite_id" value="" style="display:block" readonly></td>
             </tr>
             <tr>
               <td><label for="showsut_name">所属系统</label></td>
-              <td><input id="showsut_name" name="sut_name" value="<%=sut_name%>" readonly></td>
+              <td><input id="showsut_name" name="showsut_name" value="<%=sut_name%>" readonly></td>
             </tr>
             <tr>
               <td>起始版本</td>
@@ -841,7 +877,7 @@ function validateac(){
             </tr>
             <tr>
               <td>描述</td>
-              <td><textarea  rows="4" name="testsuite_description" class="input-xlarge" readonly id="showtestsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
+              <td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge" readonly id="showtestsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
             </tr>
             <tr>
               <td><button type="button" class="btn btn-default" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite" style="display:block">更新</button></td>
@@ -850,18 +886,18 @@ function validateac(){
           </table>
         </form></td>
       <!--展示更新testcase-->
-      <td width="75%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm">
+      <td width="75%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm" name="showTestCaseForm">
           <table width="100%">
             <tr>
               <td><label for="showtestcase_name">TestCaseName</label></td>
-              <td><input id="showtestcase_name" name="testcase_name" value="" readonly></td>
+              <td><input id="showtestcase_name" name="showtestcase_name" value="" readonly></td>
             </tr>
             <tr>
-              <td colspan="2"><input id="showtestcase_id" name="testcase_id" value="" style="display:block" readonly></td>
+              <td colspan="2"><input id="showtestcase_id" name="showtestcase_id" value="" style="display:block" readonly></td>
             </tr>
             <tr>
               <td>所属TestSuite</td>
-              <td><input id="showcasetestsuite_name" name="testsuite_name" value="" maxlength="15" readonly></td>
+              <td><input id="showcasetestsuite_name" name="showcasetestsuite_name" value="" maxlength="15" readonly></td>
             </tr>
             <tr>
               <td>优先级</td>
@@ -903,11 +939,11 @@ function validateac(){
             </tr>
             <tr>
               <td>描述</td>
-              <td><textarea  rows="4" name="description" class="input-xlarge" id="showcasedescription" style="max-height:50px; max-width:200px; width:200px; height:50px;" readonly></textarea></td>
+              <td><textarea  rows="4" name="showcasedescription" class="input-xlarge" id="showcasedescription" style="max-height:50px; max-width:200px; width:200px; height:50px;" readonly></textarea></td>
             </tr>
             <tr>
               <td>步骤</td>
-              <td><textarea  rows="4" name="casesteps" class="input-xlarge" id="showcasesteps" style="max-height:150px; max-width:200px; width:200px; height:150px;" readonly></textarea></td>
+              <td><textarea  rows="4" name="showcasesteps" class="input-xlarge" id="showcasesteps" style="max-height:150px; max-width:200px; width:200px; height:150px;" readonly></textarea></td>
             </tr>
             <tr>
               <td><button type="button" class="btn btn-default" onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" style="display:block">更新</button></td>
