@@ -205,10 +205,13 @@
 			<result name="success">/test.jsp</result>
 		</action>
 		<action name="createVersion" method="createVersion" class="com.paftp.action.VersionAction">
-			<result name="success">/iniversion.jsp</result>
+			<result name="success">/inidata.jsp</result>
 		</action>
 		<action name="queryVersion" method="queryVersion" class="com.paftp.action.VersionAction">
 			<result name="success">/sutcase.jsp</result>
+		</action>
+		<action name="createTestcaseproject" method="createTestcaseproject" class="com.paftp.action.TestcaseprojectAction">
+			<result name="success">/inidata.jsp</result>
 		</action>
 
 	</package>

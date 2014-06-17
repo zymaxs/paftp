@@ -113,7 +113,7 @@
                 <li><a href="rolemanagement.jsp">用户权限</a></li>
                 <li><a href="casemanagement.jsp">case管理</a></li>
                 <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
-                <li><a href="iniversion.jsp">隐藏创建版本for Admin</a></li>
+                <li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
               </ul>
             </div>
           </div>
