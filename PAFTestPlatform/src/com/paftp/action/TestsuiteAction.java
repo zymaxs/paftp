@@ -80,7 +80,6 @@ public class TestsuiteAction extends ActionSupport {
 	private String casesteps;
 	private Date createtime;
 	private Date updatetime;
-	private Integer project_id;
 	private String project_name;
 	private Integer testcase_id;
 	private String testcase_approval;
@@ -135,7 +134,7 @@ public class TestsuiteAction extends ActionSupport {
 				createtime.getTime());
 		testcase.setCreateTime(createdatetime);
 		testcase.setTestsuite(testsuite);
-		TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectById(this.getProject_id());
+		TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
 		testcase.setTestcaseproject(testcaseproject);
 		
 		testcaseService.saveTestcase(testcase);
@@ -296,12 +295,14 @@ public class TestsuiteAction extends ActionSupport {
 		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
 				this.getTestsuite_name(), sut.getId());
 
+		TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
+		
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("status", this.getStatus());
 		conditions.put("priority", this.getPriority());
 		conditions.put("casetype", this.getCasetype());
 		conditions.put("testcase_approval", this.getTestcase_approval());
-		conditions.put("testcaseproject.id", this.getProject_id());
+		conditions.put("testcaseproject.id", testcaseproject.getId());
 		conditions.put("testsuite.id", testsuite.getId());
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
@@ -410,12 +411,14 @@ public class TestsuiteAction extends ActionSupport {
 		for(int i=0; i<testsuites.size(); i++){
 			
 		Testsuite testsuite = testsuites.get(i);
+		TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
+		
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("status", this.getStatus());
 		conditions.put("priority", this.getPriority());
 		conditions.put("casetype", this.getCasetype());
 		conditions.put("testcase_approval", this.getTestcase_approval());
-		conditions.put("testcaseproject.id", this.getProject_id());
+		conditions.put("testcaseproject.id", testcaseproject.getId());
 		conditions.put("testsuite.id", testsuite.getId());
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
@@ -482,11 +485,12 @@ public class TestsuiteAction extends ActionSupport {
 			JSONArray parentNode00 = new JSONArray();
 			for (int j = 0; j < testsuites.size(); j++) {
 				HashMap<String, Object> conditions = new HashMap<String, Object>();
+				TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
 				conditions.put("status", this.getStatus());
 				conditions.put("priority", this.getPriority());
 				conditions.put("casetype", this.getCasetype());
 				conditions.put("testcase_approval", this.getTestcase_approval());
-				conditions.put("testcaseproject.id", this.getProject_id());
+				conditions.put("testcaseproject.id", testcaseproject.getId());
 				conditions.put("testsuite.id", testsuites.get(j).getId());
 				List<Testcase> testcases = testcaseService
 						.findAllCaseByMultiConditions(conditions);
@@ -821,13 +825,6 @@ public class TestsuiteAction extends ActionSupport {
 		this.isdiscard = isdiscard;
 	}
 
-	public Integer getProject_id() {
-		return project_id;
-	}
-
-	public void setProject_id(Integer project_id) {
-		this.project_id = project_id;
-	}
 	public String getProject_name() {
 		return project_name;
 	}
