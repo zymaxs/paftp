@@ -176,6 +176,10 @@ else { isCurrentRole = "n";};
 var interfacetestsuite = "";
 var interfacetestcase = "";
 function demo_create() {
+	if('<%=session.getAttribute("user")%>' == 'null'){
+		alert("请登录后再进行操作！");
+	}
+	else{
 	  var ref = $('#jstree').jstree(true);
 	  var	sel = ref.get_selected();
 	  if(!sel.length) { return false; }
@@ -202,7 +206,7 @@ function demo_create() {
 				  }
 		  }
 	  }
-  
+	}
   };
   /*function demo_rename() {
 	  var ref = $('#jstree').jstree(true);
@@ -222,6 +226,7 @@ function demo_create() {
 
   };*/
  var datadata = "test"; 
+ var isSelf = "";
  
  // 创建TestSuite
   function newTestSuiteac(){
@@ -259,6 +264,10 @@ function demo_create() {
 
 //更新并且保存TestSuite
 function updateTestSuiteac(){
+	if('<%=session.getAttribute("user")%>' == 'null'){
+		alert("请登录后再进行操作！");
+	}
+	else{
 	document.getElementById('showtestsuite_name').readOnly = false;
 	document.getElementById('showtestsuite_description').readOnly = false;
 	document.getElementById('showversion').readOnly = false;
@@ -268,7 +277,7 @@ function updateTestSuiteac(){
 	document.getElementById('showversionoption').style.display = "block";	
 	document.getElementById('upTestSuite').style.display = "none";
 	document.getElementById('saveTestSuite').style.display = "block";
-	
+	}
 	};
 
 function saveTestSuiteac(){
@@ -363,7 +372,10 @@ function newTestCaseac(){
 //更新并且保存TestCase
 
 function updateTestCaseac(){
-		
+	if('<%=session.getAttribute("user")%>' == 'null'){
+		alert("请登录后再进行操作！");
+	}
+	else{
 	document.getElementById('showtestcase_name').readOnly = false;
 	document.getElementById('showcaseprioritytd').style.display = "none";
 	document.getElementById('showcasepriorityoption').style.display = "block";
@@ -373,12 +385,11 @@ function updateTestCaseac(){
 	document.getElementById('showcasetypeoption').style.display = "block";
 	document.getElementById('showprojecttd').style.display = "none";
 	document.getElementById('showprojectoption').style.display = "block";
-	document.getElementById('showapprovaltd').style.display = "none";
-	document.getElementById('showaprovaloption').style.display = "block";
 	document.getElementById('showcasedescription').readOnly = false;
 	document.getElementById('showcasesteps').readOnly = false;	
 	document.getElementById('upTestCase').style.display = "none";
 	document.getElementById('saveTestCase').style.display = "block";
+	}
 	}
 
 function saveTestCaseac(){
@@ -404,13 +415,13 @@ function saveTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
-	  var approval_value;
-	  approval_radio = document.getElementsByName('updateapproval');
+	  var approval_value = document.getElementById('showapproval').value;
+	  /*approval_radio = document.getElementsByName('updateapproval');
 	  for(i=0;i<approval_radio.length;i++){  
 	  	if(approval_radio[i].checked){
 	    	approval_value = approval_radio[i].value;
 	  	}
-	  };
+	  };*/
 	  var sut_name = '<%=sut_name%>';
 	  var tsparams = {testcase_name:$("#showtestcase_name").val(),sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val()};
 	  $.ajax({
@@ -434,8 +445,6 @@ function saveTestCaseac(){
 				  document.getElementById('showcasestatusoption').style.display = "none";
 				  document.getElementById('showcasetypetd').style.display = "block";
 				  document.getElementById('showcasetypeoption').style.display = "none";
-				  document.getElementById('showapprovaltd').style.display = "block";
-				  document.getElementById('showaprovaloption').style.display = "none";
 	  			  document.getElementById('showcasedescription').readOnly = true;
 			   	  document.getElementById('showcasesteps').readOnly = true;	
 				  document.getElementById('upTestCase').style.display = "block";
@@ -501,6 +510,7 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				  isSelf =  root.isSelf;
 				  document.getElementById('showtestcase_id').value = root.testcase.id;
 				  document.getElementById('showcasepriority').value = root.testcase.priority;
 				  document.getElementById('showcasestatus').value = root.testcase.status;
@@ -521,6 +531,10 @@ function testtest(){
 	    document.getElementById('iniTd').style.display = "none";
 		document.getElementById('showTestSuiteTd').style.display = "none";
 		document.getElementById('showTestCaseTd').style.display = "block";
+		}
+		else if (type.type == "interfacetestsuite"){
+		
+		
 		}
 		else {
 		document.getElementById('iniTd').style.display = "block";
@@ -644,6 +658,58 @@ function queryinterfaceac(){
 		  });
 	
 };
+
+function updateapprovalac(){
+	if('<%=session.getAttribute("user")%>' == 'null'){
+		alert("请登录后再进行操作！");
+	}
+	else if (isSelf == "true"){
+		alert("本人无法进行评审，请邀请他人进行评审！");
+	}
+	else if (isSelf == "false"){
+	document.getElementById('showapprovalupdatetd').style.display = "none";
+	document.getElementById('showapprovalsavetd').style.display = "block";
+	}
+		
+}
+
+function saveapprovalac(){
+	var approval_value;
+	  approval_radio = document.getElementsByName('updateapproval');
+	  for(i=0;i<approval_radio.length;i++){  
+	  	if(approval_radio[i].checked){
+	    	approval_value = approval_radio[i].value;
+	  	}
+	  };
+	var sut_name = '<%=sut_name%>';
+	var tsparams = {testcase_name:$("#showtestcase_name").val(),sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:$("#showcasepriority").val(),status:$("#showcasestatus").val(),casetype:$("#showcasetype").val(),casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val()};
+	  $.ajax({
+			  type : "POST",
+			  url : "updateTestcase.action",
+			  cache : false,
+			  data : tsparams,
+			  dataType : "json",
+			  success : function(root) {
+				  $('#jstree').jstree(true).destroy();
+				  initree();  
+			document.getElementById('showapprovalupdatetd').style.display = "block";
+			document.getElementById('showapprovalsavetd').style.display = "none";
+				  
+			  },
+
+			  error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  alert(XMLHttpRequest.status);
+				  alert(XMLHttpRequest.readyState);
+				  alert(textStatus);
+			  }
+		  });
+	  
+	  
+	  
+	  
+}
+
+
 
 
   $(document).ready( function(){
@@ -803,6 +869,7 @@ function queryinterfaceac(){
           <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
         </div></td>
       <td width="75" id="iniTd" style="display:block;" ><!--查询-->
+        
         <table border="1">
           <tr>
             <td colspan="5" style="text-align:center">查询条件</td>
@@ -842,8 +909,7 @@ function queryinterfaceac(){
           </tr>
         </table>
         <table id="resulttable">
-        </table>
-        </td>
+        </table></td>
       <!--展示、更新testsuite-->
       <td width="75%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm">
           <table width="100%">
@@ -896,7 +962,10 @@ function queryinterfaceac(){
         </form></td>
       <!--展示更新testcase-->
       <td width="75%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm" name="showTestCaseForm">
-          <table width="100%">
+          <table width="100%" border="1" id="showcaseinfo">
+            <tr>
+              <td colspan="2" style="text-align:center">用例详情</td>
+            </tr>
             <tr>
               <td><label for="showtestcase_name">TestCaseName</label></td>
               <td><input id="showtestcase_name" name="showtestcase_name" value="" readonly></td>
@@ -909,22 +978,22 @@ function queryinterfaceac(){
               <td><input id="showcasetestsuite_name" name="showcasetestsuite_name" value="" maxlength="15" readonly></td>
             </tr>
             <tr>
-            	<td>所属Project</td>
-                <td id="showprojecttd" style="display:block"><input id="showproject" value="" readonly></td>
-                <td id="showprojectoption" style="display:none"><div id="updateprojectgroup" class="selectbox">
-              <div class="cartes">
-                <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="updateproject" name="updateproject" class="listTxt" readonly />
-                <div class="listBtn"><b></b></div>
-                <input type="hidden" value="" class="listVal" />
-              </div>
-              <div class="lists">
-                <ul class="list">
-                  <% for (int i =0; i<testcaseprojects.size(); i++){%>
-                  <li id=<%=i%>><%=testcaseprojects.get(i).getName()%></li>
-                  <%}%>
-                </ul>
-              </div>
-            </div></td>
+              <td>所属Project</td>
+              <td id="showprojecttd" style="display:block"><input id="showproject" value="" readonly></td>
+              <td id="showprojectoption" style="display:none"><div id="updateprojectgroup" class="selectbox">
+                  <div class="cartes">
+                    <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="updateproject" name="updateproject" class="listTxt" readonly />
+                    <div class="listBtn"><b></b></div>
+                    <input type="hidden" value="" class="listVal" />
+                  </div>
+                  <div class="lists">
+                    <ul class="list">
+                      <% for (int i =0; i<testcaseprojects.size(); i++){%>
+                      <li id=<%=i%>><%=testcaseprojects.get(i).getName()%></li>
+                      <%}%>
+                    </ul>
+                  </div>
+                </div></td>
             </tr>
             <tr>
               <td>优先级</td>
@@ -955,16 +1024,6 @@ function queryinterfaceac(){
                 反例</td>
             </tr>
             <tr>
-              <td>用例评审</td>
-              <td id="showapprovaltd" style="display:block"><input id="showapproval" value="" readonly></td>
-              <td id="showaprovaloption" style="display:none"><input type="radio" name="updateapproval" value="待评审" checked>
-                待评审&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateapproval" value="通过">
-                通过&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateapproval" value="未通过">
-                未通过&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            </tr>
-            <tr>
               <td>描述</td>
               <td><textarea  rows="4" name="showcasedescription" class="input-xlarge" id="showcasedescription" style="max-height:50px; max-width:200px; width:200px; height:50px;" readonly></textarea></td>
             </tr>
@@ -975,6 +1034,22 @@ function queryinterfaceac(){
             <tr>
               <td><button type="button" class="btn btn-default" onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" style="display:block">更新</button></td>
               <td><button type="button" class="btn btn-default" onClick="saveTestCaseac()" id="saveTestCase" name="saveTestCase" style="display:none">保存</button></td>
+            </tr>
+          </table>
+          <table id="showcasestatus" width="100%" border="1">
+            <tr>
+              <td>用例评审</td>
+              <td id="showapprovaltd" style="display:block"><input id="showapproval" value="" readonly></td>
+              <td id="showaprovaloption" style="display:none"><input type="radio" name="updateapproval" value="待评审" checked>
+                待评审&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updateapproval" value="通过">
+                通过&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updateapproval" value="未通过">
+                未通过&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+            <tr id="showaprovalbtntd">
+              <td colspan="2" id="showapprovalupdatetd" style="display:block"><input type="button" value="开始评审" onClick="updateapprovalac()"></td>
+              <td colspan="2" id="showapprovalsavetd" style="display:none"><input type="button" value="确认评审" onClick="saveapprovalac()"></td>
             </tr>
           </table>
         </form></td>
@@ -1034,8 +1109,8 @@ function queryinterfaceac(){
           <td><input id="casetestsuite_name" name="testsuite_name" value="" maxlength="15" readonly></td>
         </tr>
         <tr>
-        	<td>所属Project</td>
-            <td><div id="projectgroup" class="selectbox">
+          <td>所属Project</td>
+          <td><div id="projectgroup" class="selectbox">
               <div class="cartes">
                 <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="project" name="project" class="listTxt" readonly />
                 <div class="listBtn"><b></b></div>
