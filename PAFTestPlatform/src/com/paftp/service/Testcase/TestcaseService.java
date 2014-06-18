@@ -27,7 +27,14 @@ public interface TestcaseService {
 	public List<Testcase> findAllList();
 	
 	public List<TestcaseCountDto> queryCountByColumn(String name);
+	
+	public List<TestcaseCountDto> queryCountByPriorityAndTestsuiteid(Integer id);
+	
+	public List<TestcaseCountDto> queryCountByStatusAndTestsuiteid(Integer id);
+	
+	public List<TestcaseCountDto> queryCountByCasetypeAndTestsuiteid(Integer id);
 
+	public List<TestcaseCountDto> queryCountByApprovalAndTestsuiteid(Integer id);
 	//public User findUserByNameAndPassword(String username, String password);
 
 }

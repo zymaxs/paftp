@@ -95,7 +95,7 @@ public class TestsuiteAction extends ActionSupport {
 	private Testsuite testsuite;
 	private HashMap<String, Integer> testcase_count;
 	private HashMap<String, List<TestcaseCountDto>> condtestcase_quantity;
-	
+
 	private Util util = new Util();
 
 	public String createTestcase() {
@@ -377,55 +377,89 @@ public class TestsuiteAction extends ActionSupport {
 	// return "success";
 	// }
 
-	public String queryTestsuiteQuantity() {
+	public String queryQuantitys() {
 
-		Sut sut = sutService.findSutByName(this.getSut_name());
-		Version version = versionService.findVersionByVersionNum(this
-				.getVersion());
-		HashMap<String, Object> conditions = new HashMap<String, Object>();
-		conditions.put("status", this.getStatus());
-		conditions.put("version_id", version.getId());
-		conditions.put("sut_id", sut.getId());
-		List<Testsuite> testsuites = testsuiteService
-				.findAllSuiteByMultiConditions(conditions);
-		
-		Integer testsuite_quantity = 0;
-		Integer testcase_quantity = 0;
-		if (testsuites != null) {
-			testsuite_quantity = testsuites.size();
-		}
-		testcase_count = new HashMap<String, Integer>();
-		for (int i = 0; i < testsuites.size(); i++) {
-			List<Testcase> testcases = testsuites.get(i).getTestcases();
-			if (testcases != null) {
-				testcase_count.put(testsuites.get(i).getName(),
-						testcases.size());
-				testcase_quantity += testcases.size();
+		if (this.getTestsuite_id() != null) {
+			Sut sut = sutService.findSutByName(this.getSut_name());
+			Version version = versionService.findVersionByVersionNum(this
+					.getVersion());
+			HashMap<String, Object> conditions = new HashMap<String, Object>();
+			conditions.put("status", this.getStatus());
+			conditions.put("version_id", version.getId());
+			conditions.put("sut_id", sut.getId());
+			List<Testsuite> testsuites = testsuiteService
+					.findAllSuiteByMultiConditions(conditions);
+
+			Integer testsuite_quantity = 0;
+			Integer testcase_quantity = 0;
+			if (testsuites != null) {
+				testsuite_quantity = testsuites.size();
+			}
+			testcase_count = new HashMap<String, Integer>();
+			for (int i = 0; i < testsuites.size(); i++) {
+				List<Testcase> testcases = testsuites.get(i).getTestcases();
+				if (testcases != null) {
+					testcase_count.put(testsuites.get(i).getName(),
+							testcases.size());
+					testcase_quantity += testcases.size();
+				}
+
 			}
 
+			this.setTestsuite_quantity(testsuites.size());
+			this.setTestcase_quantity(testcase_quantity);
+			this.setTestcase_count(testcase_count); // The quantity for every
+													// case
+
+			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
+			List<TestcaseCountDto> condstatus = testcaseService
+					.queryCountByColumn("status");
+			condtestcase_quantity.put("status", condstatus);
+			List<TestcaseCountDto> condpriority = testcaseService
+					.queryCountByColumn("priority");
+			condtestcase_quantity.put("priority", condpriority);
+			List<TestcaseCountDto> condcasetype = testcaseService
+					.queryCountByColumn("casetype");
+			condtestcase_quantity.put("casetype", condcasetype);
+			List<TestcaseCountDto> condtestcase_approval = testcaseService
+					.queryCountByColumn("testcase_approval");
+			condtestcase_quantity.put("testcase_approval",
+					condtestcase_approval);
+		} else {
+
+			Testsuite testsuite = testsuiteService.findTestsuiteById(this
+					.getTestsuite_id());
+			Integer testcase_quantity = 0;
+			if (testsuite != null && testsuite.getTestcases() != null) {
+				testcase_quantity = testsuite.getTestcases().size();
+			}
+			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
+			List<TestcaseCountDto> condstatus = testcaseService
+					.queryCountByStatusAndTestsuiteid(this.testsuite_id);
+			condtestcase_quantity.put("status", condstatus);
+			List<TestcaseCountDto> condpriority = testcaseService
+					.queryCountByPriorityAndTestsuiteid(this.testsuite_id);
+			condtestcase_quantity.put("priority", condpriority);
+			List<TestcaseCountDto> condcasetype = testcaseService
+					.queryCountByCasetypeAndTestsuiteid(this.testsuite_id);
+			condtestcase_quantity.put("casetype", condcasetype);
+			List<TestcaseCountDto> condtestcase_approval = testcaseService
+					.queryCountByApprovalAndTestsuiteid(this.testsuite_id);
+			condtestcase_quantity.put("testcase_approval",
+					condtestcase_approval);
+
+			this.setTestcase_quantity(testcase_quantity);
 		}
 
-		condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
-		List<TestcaseCountDto> condstatus = testcaseService
-				.queryCountByColumn("status");
-		condtestcase_quantity.put("status", condstatus);
-		List<TestcaseCountDto> condpriority = testcaseService
-				.queryCountByColumn("priority");
-		condtestcase_quantity.put("priority", condpriority);
-		List<TestcaseCountDto> condcasetype = testcaseService
-				.queryCountByColumn("casetype");
-		condtestcase_quantity.put("casetype", condcasetype);
-		List<TestcaseCountDto> condtestcase_approval = testcaseService
-				.queryCountByColumn("testcase_approval");
-		condtestcase_quantity.put("testcase_approval", condtestcase_approval);
-
-		this.setTestsuite_quantity(testsuites.size());
-		this.setTestcase_quantity(testcase_quantity);
 		this.setCondtestcase_quantity(condtestcase_quantity);
-		this.setTestcase_count(testcase_count);
 
 		return "success";
 
+	}
+
+	public String queryQuantityUnderTestsuite() {
+
+		return "success";
 	}
 
 	public String queryCombineConditions() {
@@ -874,7 +908,7 @@ public class TestsuiteAction extends ActionSupport {
 	public void setProject_name(String project_name) {
 		this.project_name = project_name;
 	}
-	
+
 	public HashMap<String, Integer> getTestcase_count() {
 		return testcase_count;
 	}
@@ -891,6 +925,5 @@ public class TestsuiteAction extends ActionSupport {
 			HashMap<String, List<TestcaseCountDto>> condtestcase_quantity) {
 		this.condtestcase_quantity = condtestcase_quantity;
 	}
-
 
 }
