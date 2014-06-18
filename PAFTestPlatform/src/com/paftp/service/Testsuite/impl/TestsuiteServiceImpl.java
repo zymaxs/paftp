@@ -70,7 +70,7 @@ public class TestsuiteServiceImpl implements TestsuiteService {
 public TestsuiteDto getTestsuiteDto(Testsuite testsuite){
 		
 	TestsuiteDto testsuitedto = new TestsuiteDto();
-	
+	testsuitedto.setId(testsuite.getId());
 	testsuitedto.setName(testsuite.getName());
 	testsuitedto.setDescription(testsuite.getDescription());
 	testsuitedto.setStatus(testsuite.getStatus());

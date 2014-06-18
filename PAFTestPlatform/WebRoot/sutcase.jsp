@@ -480,11 +480,15 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
-				  alert(root.condtestcase_quantity);
-				  document.getElementById('showtestsuite_id').value = root.testsuite.id;
-				  document.getElementById('showtestsuite_description').value = root.testsuite.description;
-				  document.getElementById('showversion').value = root.testsuite.version.versionNum;
-				  document.getElementById('showisdiscard').value = root.testsuite.status;
+				  alert(root.condtestcase_quantity.casetype);
+				  alert(root.testsuitedto.status);
+				  //alert(root.testsuitedto.sut[0].id);
+				  alert(root.testsuitedto.version);
+				  //alert(root.testsuite.testsuitedto.version.versionNum);
+				  document.getElementById('showtestsuite_id').value = root.testsuitedto.id;
+				  document.getElementById('showtestsuite_description').value = root.testsuitedto.description;
+				  document.getElementById('showisdiscard').value = root.testsuitedto.status;
+				  document.getElementById('showversion').value = root.testsuite.testsuitedto.version.versionNum;
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
