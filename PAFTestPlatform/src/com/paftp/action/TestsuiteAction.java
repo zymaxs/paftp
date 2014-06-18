@@ -314,9 +314,9 @@ public class TestsuiteAction extends ActionSupport {
 		Integer testcasenum = testcases.size();
 
 		this.setTestcase_quantity(testcasenum);
-		
+
 		TestsuiteDto testsuitedto = testsuiteService.getTestsuiteDto(testsuite);
-		
+
 		this.setTestsuitedto(testsuitedto);
 
 		this.queryQuantitys(testsuite);
@@ -441,14 +441,14 @@ public class TestsuiteAction extends ActionSupport {
 		return "success";
 
 	}
-	
-	public String querySutQuantitys(){
-		
+
+	public String querySutQuantitys() {
+
 		this.queryQuantitys(null);
-		
+
 		return "success";
 	}
-	
+
 	private void queryQuantitys(Testsuite testsuite) {
 
 		if (testsuite == null) {
@@ -457,8 +457,10 @@ public class TestsuiteAction extends ActionSupport {
 					.getVersion());
 			HashMap<String, Object> conditions = new HashMap<String, Object>();
 			conditions.put("status", this.getStatus());
-			conditions.put("version_id", version.getId());
-			conditions.put("sut_id", sut.getId());
+			if (version != null) {
+				conditions.put("version_id", version.getId());
+			}
+			conditions.put("sut.id", sut.getId());
 			List<Testsuite> testsuites = testsuiteService
 					.findAllSuiteByMultiConditions(conditions);
 
@@ -518,8 +520,8 @@ public class TestsuiteAction extends ActionSupport {
 			condtestcase_quantity.put("testcase_approval",
 					condtestcase_approval);
 
-			//condtestcase_quantity.get("status");
-			
+			// condtestcase_quantity.get("status");
+
 			this.setTestcase_quantity(testcase_quantity);
 		}
 

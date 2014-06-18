@@ -475,6 +475,7 @@ function testtest(){
 	   var tsparams;
 	   var sut_name = '<%=sut_name%>';
 	   if ( type.type == "interfacetestcase"){
+		initype();
 		interfacetestsuite = ref.get_node(sel).text;
 		document.getElementById('showtestsuite_name').value = interfacetestsuite;
 		tsparams = {testsuite_name:interfacetestsuite,sut_name:sut_name};
@@ -582,6 +583,7 @@ function testtest(){
 		document.getElementById('showTestCaseTd').style.display = "none";
 		}
 		else if (type.type == "testcase"){
+		initype();
 		interfacetestcase = ref.get_node(sel).text;
 		document.getElementById('showtestcase_name').value = interfacetestcase;
 		document.getElementById('showcasetestsuite_name').value = ref.get_node(ref.get_parent(sel)).text;
@@ -616,6 +618,7 @@ function testtest(){
 		document.getElementById('showTestCaseTd').style.display = "block";
 		}
 		else if (type.type == "interfacetestsuite"){
+		initype();
 		document.getElementById('sutCaseInfoTd').style.display = "none";
 		document.getElementById('interfacesearchTd').style.display = "block";
 		document.getElementById('showTestSuiteTd').style.display = "none";
@@ -623,24 +626,12 @@ function testtest(){
 		
 		}
 		else {
-		$.ajax({
-			  type : "POST",
-			  url : "querySutQuantitys.action",
-			  cache : false,
-			  data : {sut_name:sut_name},
-			  dataType : "json",
-			  success : function(root) {
-				  
-				  
-				  
-			  },
-
-			  error: function(XMLHttpRequest, textStatus, errorThrown) {
-				  alert(XMLHttpRequest.status);
-				  alert(XMLHttpRequest.readyState);
-				  alert(textStatus);
-			  }
-		  });
+		initype();
+		document.getElementById('sutCaseInfoTd').style.display = "block";
+		document.getElementById('interfacesearchTd').style.display = "none";
+		document.getElementById('showTestSuiteTd').style.display = "none";
+		document.getElementById('showTestCaseTd').style.display = "none";
+		querySutCaseInfo();
 			}
 	   
 	   var i, j, r = [];
@@ -732,8 +723,141 @@ function initree(){
 			  }
 		  });
 	};
+	
 
+function initype(){
+	$("#sutCaseInfoDiv").html("");
+	$("#testsuiteInfoDiv").html("");
+	document.getElementById('showtestsuite_name').readOnly = true;
+	document.getElementById('showtestsuite_description').readOnly = true;
+	document.getElementById('showversion').readOnly = true;
+	document.getElementById('showisdiscardtd').style.display = "block";
+	document.getElementById('showisdiscardoption').style.display = "none";
+	document.getElementById('showversiontd').style.display = "block";
+	document.getElementById('showversionoption').style.display = "none";	
+	document.getElementById('upTestSuite').style.display = "block";
+	document.getElementById('saveTestSuite').style.display = "none";
+	document.getElementById('showtestcase_name').readOnly = true;
+	document.getElementById('showcaseprioritytd').style.display = "block";
+	document.getElementById('showcasepriorityoption').style.display = "none";
+	document.getElementById('showcasestatustd').style.display = "block";
+	document.getElementById('showcasestatusoption').style.display = "none";
+	document.getElementById('showcasetypetd').style.display = "block";
+	document.getElementById('showcasetypeoption').style.display = "none";
+	document.getElementById('showprojecttd').style.display = "block";
+	document.getElementById('showprojectoption').style.display = "none";
+	document.getElementById('showcasedescription').readOnly = true;
+	document.getElementById('showcasesteps').readOnly = true;	
+	document.getElementById('upTestCase').style.display = "block";
+	document.getElementById('saveTestCase').style.display = "none";
+	};
+
+
+
+function querySutCaseInfo(){
+	$.ajax({
+			  type : "POST",
+			  url : "querySutQuantitys.action",
+			  cache : false,
+			  data : {sut_name:'<%=sut_name%>'},
+			  dataType : "json",
+			  success : function(root) {
+				 var p1 = "0";
+				 var p2 = "0";
+				 var p3 = "0";
+				 for (i=0 ; i< 3 ;i++){
+					if (root.condtestcase_quantity.priority[i] != null){
+						if(root.condtestcase_quantity.priority[i][0] == "P1"){
+						p1 = root.condtestcase_quantity.priority[i][1];
+						} 
+					else if(root.condtestcase_quantity.priority[i][0] == "P2"){
+						p2 = root.condtestcase_quantity.priority[i][1];
+						}  
+					else if(root.condtestcase_quantity.priority[i][0] == "P3"){
+						p3 = root.condtestcase_quantity.priority[i][1];
+						} 
+						}
+					else if (root.condtestcase_quantity.priority[i] == null){
+						break;
+						}
+				  	}
+					
+				 var zhengli = "0";
+				 var fanli = "0";
+				 for (i=0 ; i< 2 ;i++){
+					if (root.condtestcase_quantity.casetype[i] != null){
+						if(root.condtestcase_quantity.casetype[i][0] == "正例"){
+						zhengli = root.condtestcase_quantity.casetype[i][1];
+						} 
+					else if(root.condtestcase_quantity.casetype[i][0] == "反例"){
+						fanli = root.condtestcase_quantity.casetype[i][1];
+						} 
+						}
+					else if (root.condtestcase_quantity.casetype[i] == null){
+						break;
+						}
+				  	}
+					
+				 var zidong = "0";
+				 var shoudong = "0";
+				 var feiqi = "0";
+				 for (i=0 ; i< 3 ;i++){
+					if (root.condtestcase_quantity.status[i] != null){
+						if(root.condtestcase_quantity.status[i][0] == "自动"){
+						zidong = root.condtestcase_quantity.status[i][1];
+						} 
+					else if(root.condtestcase_quantity.status[i][0] == "手动"){
+						shoudong = root.condtestcase_quantity.status[i][1];
+						}  
+					else if(root.condtestcase_quantity.status[i][0] == "废弃"){
+						feiqi = root.condtestcase_quantity.status[i][1];
+						} 
+						}
+					else if (root.condtestcase_quantity.status[i] == null){
+						break;
+						}
+				  	}
+					
+				 var daipingshen = "0";
+				 var tongguo = "0";
+				 var butongguo = "0";
+				  for (i=0 ; i< 3 ;i++){
+					if (root.condtestcase_quantity.testcase_approval[i] != null){
+						if(root.condtestcase_quantity.testcase_approval[i][0] == "待评审"){
+						daipingshen = root.condtestcase_quantity.testcase_approval[i][1];
+						} 
+					else if(root.condtestcase_quantity.testcase_approval[i][0] == "通过"){
+						tongguo = root.condtestcase_quantity.testcase_approval[i][1];
+						}  
+					else if(root.condtestcase_quantity.testcase_approval[i][0] == "不通过"){
+						butongguo = root.condtestcase_quantity.testcase_approval[i][1];
+						} 
+						}
+					else if (root.condtestcase_quantity.testcase_approval[i] == null){
+						break;
+						}
+				  	}
+					
+				  var queryTestSuiteResult = "";
+				  queryTestSuiteResult += "<table border='1' width='100%'><tr><td colspan='5'>接口总数</td><td colspan='6'>"+root.testsuite_quantity+"</td></tr>";
+				  queryTestSuiteResult += "<tr><td colspan='5'>案例总数</td><td colspan='6'>"+root.testcase_quantity+"</td></tr>"
+				  queryTestSuiteResult += "<tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正反例</td></tr>";
+				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td>";
+				  queryTestSuiteResult += "<tr><td>"+ zidong+"</td><td>"+shoudong+"</td><td>"+feiqi+"</td><td>"+p1+"</td><td>"+p2+"</td><td>"+p3+"</td><td>"+daipingshen+"</td><td>"+tongguo+"</td><td>"+butongguo+"</td><td>"+zhengli+"</td><td>"+fanli+"</td></tr></table>";
+				  $("#sutCaseInfoDiv").append(queryTestSuiteResult);
+			  },
+
+			  error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  alert(XMLHttpRequest.status);
+				  alert(XMLHttpRequest.readyState);
+				  alert(textStatus);
+			  }
+		  });
+	};
 function queryinterfaceac(){
+	alert("清除前");
+	$("#testsuiteInfoDiv").html("");
+	alert("清除后");
 	var querystatus = $("#querystatus").val();
 	var querypriority = $("#querypriority").val();
 	var querytype = $("#querytype").val();
@@ -818,6 +942,7 @@ function saveapprovalac(){
 
   $(document).ready( function(){
 	  initree();
+	  querySutCaseInfo();
 	$("#versiongroup").jQSelect({});
 	$("#updateversiongroup").jQSelect({});
 	$("#projectgroup").jQSelect({});
