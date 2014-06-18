@@ -330,7 +330,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		Testsuite testsuite = testsuiteService.findTestsuiteById(this
 				.getTestsuite_id());
-
+		Version version = versionService.findVersionByVersionNum(this.getVersion());
+		
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setStatus(this.getIsdiscard());
