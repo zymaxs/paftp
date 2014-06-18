@@ -136,7 +136,8 @@ public class TestsuiteAction extends ActionSupport {
 				createtime.getTime());
 		testcase.setCreateTime(createdatetime);
 		testcase.setTestsuite(testsuite);
-		TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
+		TestcaseProject testcaseproject = testcaseProjectService
+				.findTestcaseProjectByName(this.getProject_name());
 		testcase.setTestcaseproject(testcaseproject);
 
 		testcaseService.saveTestcase(testcase);
@@ -196,7 +197,8 @@ public class TestsuiteAction extends ActionSupport {
 		Testcase testcase = testcaseService.findTestcaseByName(this
 				.getTestcase_name());
 
-		if (user!= null && user.getAlias().equals(testcase.getCreator().getAlias()) == true) {
+		if (user != null
+				&& user.getAlias().equals(testcase.getCreator().getAlias()) == true) {
 			this.setIsSelf("true");
 
 		} else {
@@ -298,7 +300,6 @@ public class TestsuiteAction extends ActionSupport {
 		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
 				this.getTestsuite_name(), sut.getId());
 
-
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("status", this.getStatus());
 		conditions.put("priority", this.getPriority());
@@ -330,8 +331,9 @@ public class TestsuiteAction extends ActionSupport {
 
 		Testsuite testsuite = testsuiteService.findTestsuiteById(this
 				.getTestsuite_id());
-		Version version = versionService.findVersionByVersionNum(this.getVersion());
-		
+		Version version = versionService.findVersionByVersionNum(this
+				.getVersion());
+
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setStatus(this.getIsdiscard());
@@ -453,11 +455,9 @@ public class TestsuiteAction extends ActionSupport {
 
 	}
 
-
 	public String queryCombineConditions() {
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
-
 
 		List<Testsuite> testsuites = sut.getTestsuites();
 		Integer testcasenum = 0;
@@ -493,8 +493,10 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 
-		request.setAttribute("isCurrentRole",
-				this.isRoleOfSut(user, this.getSut_name()));
+		if (user != null) {
+			request.setAttribute("isCurrentRole",
+					this.isRoleOfSut(user, this.getSut_name()));
+		}
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		request.setAttribute("sut", sut);
 		request.setAttribute("flag", false);
@@ -544,9 +546,10 @@ public class TestsuiteAction extends ActionSupport {
 				conditions.put("status", this.getStatus());
 				conditions.put("priority", this.getPriority());
 				conditions.put("casetype", this.getCasetype());
-				conditions
-						.put("testcase_approval", this.getTestcase_approval());
-				conditions.put("testcaseproject.id", testcaseproject.getId());
+				conditions.put("testcase_approval", this.getTestcase_approval());
+				if (testcaseproject != null) {
+					conditions.put("testcaseproject.id",testcaseproject.getId());
+				}
 				conditions.put("testsuite.id", testsuites.get(j).getId());
 				List<Testcase> testcases = testcaseService
 						.findAllCaseByMultiConditions(conditions);
