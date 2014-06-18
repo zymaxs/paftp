@@ -18,6 +18,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.paftp.dto.TestcaseCountDto;
+import com.paftp.dto.TestsuiteDto;
 import com.paftp.entity.CaseChangeHistory;
 import com.paftp.entity.CaseChangeOperation;
 import com.paftp.entity.Role;
@@ -73,6 +74,7 @@ public class TestsuiteAction extends ActionSupport {
 	private String isdiscard;
 	private Integer testsuite_quantity;
 	private Integer testcase_quantity;
+	private TestsuiteDto testsuitedto;
 
 	private String priority;
 	private String status;
@@ -312,8 +314,11 @@ public class TestsuiteAction extends ActionSupport {
 		Integer testcasenum = testcases.size();
 
 		this.setTestcase_quantity(testcasenum);
-//		this.setTestsuite(testsuite);
 		
+		TestsuiteDto testsuitedto = testsuiteService.getTestsuiteDto(testsuite);
+		
+		this.setTestsuitedto(testsuitedto);
+
 		this.queryQuantitys(testsuite);
 
 		return "success";
@@ -914,6 +919,14 @@ public class TestsuiteAction extends ActionSupport {
 	public void setCondtestcase_quantity(
 			HashMap<String, List<TestcaseCountDto>> condtestcase_quantity) {
 		this.condtestcase_quantity = condtestcase_quantity;
+	}
+
+	public TestsuiteDto getTestsuitedto() {
+		return testsuitedto;
+	}
+
+	public void setTestsuitedto(TestsuiteDto testsuitedto) {
+		this.testsuitedto = testsuitedto;
 	}
 
 }
