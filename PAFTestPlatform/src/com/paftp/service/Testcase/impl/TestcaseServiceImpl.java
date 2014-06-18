@@ -101,7 +101,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 	public List<TestcaseCountDto> queryCountByApprovalAndTestsuiteid(
 			Integer id) {
 		// TODO Auto-generated method stub
-		return baseDAODto.getgroup("select t.approval, count(*) from Testcase t where testsuite_id = ? group by t.approval", new Object[] {id});
+		return baseDAODto.getgroup("select t.testcase_approval, count(*) from Testcase t where testsuite_id = ? group by t.testcase_approval", new Object[] {id});
 		
 	}
 	
