@@ -522,7 +522,6 @@ function testtest(){
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
-				  alert("function error");
 				  alert(XMLHttpRequest.status);
 				  alert(XMLHttpRequest.readyState);
 				  alert(textStatus);
