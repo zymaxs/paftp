@@ -101,7 +101,7 @@ else { isCurrentRole = "n";};
 				  				   datadata = root.jsonArray;
 				 				   testtest();
 								   diag.close();
-								   document.getElementById('iniTd').style.display = "block";
+								   document.getElementById('interfacesearchTd').style.display = "block";
 				  				   document.getElementById('showTestSuiteTd').style.display = "none";
 				                   document.getElementById('showTestCaseTd').style.display = "none";
 			 					   },
@@ -158,7 +158,7 @@ else { isCurrentRole = "n";};
 				  				   datadata = root.jsonArray;
 				 				   testtest();
 								   diag.close();
-								   document.getElementById('iniTd').style.display = "block";
+								   document.getElementById('interfacesearchTd').style.display = "block";
 				  				   document.getElementById('showTestSuiteTd').style.display = "none";
 				                   document.getElementById('showTestCaseTd').style.display = "none";
 			 					   },
@@ -248,7 +248,7 @@ function demo_create() {
 				  $('#jstree').jstree(true).destroy();
 				  datadata = root.jsonArray;
 				  testtest();
-				  document.getElementById('iniTd').style.display = "block";
+				  document.getElementById('interfacesearchTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 			  },
@@ -299,7 +299,7 @@ function saveTestSuiteac(){
 			  success : function(root) {
 				  $('#jstree').jstree(true).destroy();
 				  initree();
-				  document.getElementById('iniTd').style.display = "block";
+				  document.getElementById('interfacesearchTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 				  document.getElementById('showtestsuite_name').readOnly = true;
@@ -355,7 +355,7 @@ function newTestCaseac(){
 			  success : function(root) {
 				  $('#jstree').jstree(true).destroy();
 				  initree();
-				  document.getElementById('iniTd').style.display = "block";
+				  document.getElementById('interfacesearchTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 			  },
@@ -433,7 +433,7 @@ function saveTestCaseac(){
 			  success : function(root) {
 				  $('#jstree').jstree(true).destroy();
 				  initree();
-				  document.getElementById('iniTd').style.display = "block";
+				  document.getElementById('interfacesearchTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 				  document.getElementById('showtestcase_name').readOnly = true;
@@ -494,7 +494,7 @@ function testtest(){
 		  });
 		interfacetestsuite = ref.get_node(sel).text;
 		document.getElementById('showtestsuite_name').value = interfacetestsuite;
-		document.getElementById('iniTd').style.display = "none";
+		document.getElementById('interfacesearchTd').style.display = "none";
 		document.getElementById('showTestSuiteTd').style.display = "block";
 		document.getElementById('showTestCaseTd').style.display = "none";
 		}
@@ -527,7 +527,7 @@ function testtest(){
 				  alert(textStatus);
 			  }
 		  });
-	    document.getElementById('iniTd').style.display = "none";
+	    document.getElementById('interfacesearchTd').style.display = "none";
 		document.getElementById('showTestSuiteTd').style.display = "none";
 		document.getElementById('showTestCaseTd').style.display = "block";
 		}
@@ -536,7 +536,7 @@ function testtest(){
 		
 		}
 		else {
-		document.getElementById('iniTd').style.display = "block";
+		document.getElementById('interfacesearchTd').style.display = "block";
 		document.getElementById('showTestSuiteTd').style.display = "none";
 		document.getElementById('showTestCaseTd').style.display = "none";
 			}
@@ -857,6 +857,7 @@ function saveapprovalac(){
   <!--主体-->
   <table border="1" width="100%">
     <tr>
+    <!--左边Tree-->
       <td width="25%"><div style="height:450px;overflow:scroll;overflow-x:hidden;">
           <div>
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; padding:4px; border-radius:4px; border:1px solid silver;">
@@ -867,7 +868,8 @@ function saveapprovalac(){
           <div id="jstree"></div>
           <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
         </div></td>
-      <td width="75" id="iniTd" style="display:block;" ><!--查询-->
+        <!--Interface Search-->
+      <td width="75" id="interfacesearchTd" style="display:block;" >
         
         <table border="1">
           <tr>
@@ -907,8 +909,9 @@ function saveapprovalac(){
             <td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
           </tr>
         </table>
-        <table id="resulttable">
-        </table></td>
+        <div id="interfaceSearchResultDiv">
+        </div>
+        </td>
       <!--展示、更新testsuite-->
       <td width="75%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm">
           <table width="100%">
