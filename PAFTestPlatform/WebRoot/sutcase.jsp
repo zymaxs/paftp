@@ -101,9 +101,10 @@ else { isCurrentRole = "n";};
 				  				   datadata = root.jsonArray;
 				 				   testtest();
 								   diag.close();
-								   document.getElementById('interfacesearchTd').style.display = "block";
+								   document.getElementById('sutCaseInfoTd').style.display = "block";
+				  				   document.getElementById('interfacesearchTd').style.display = "none";
 				  				   document.getElementById('showTestSuiteTd').style.display = "none";
-				                   document.getElementById('showTestCaseTd').style.display = "none";
+				 				   document.getElementById('showTestCaseTd').style.display = "none";
 			 					   },
 			  			 error: function(XMLHttpRequest, textStatus, errorThrown) {
 				  				alert(XMLHttpRequest.status);
@@ -158,9 +159,10 @@ else { isCurrentRole = "n";};
 				  				   datadata = root.jsonArray;
 				 				   testtest();
 								   diag.close();
-								   document.getElementById('interfacesearchTd').style.display = "block";
-				  				   document.getElementById('showTestSuiteTd').style.display = "none";
-				                   document.getElementById('showTestCaseTd').style.display = "none";
+								   document.getElementById('sutCaseInfoTd').style.display = "block";
+				  				   document.getElementById('interfacesearchTd').style.display = "none";
+				 				   document.getElementById('showTestSuiteTd').style.display = "none";
+				 				   document.getElementById('showTestCaseTd').style.display = "none";
 			 					   },
 			  			 error: function(XMLHttpRequest, textStatus, errorThrown) {
 				  				alert(XMLHttpRequest.status);
@@ -248,7 +250,8 @@ function demo_create() {
 				  $('#jstree').jstree(true).destroy();
 				  datadata = root.jsonArray;
 				  testtest();
-				  document.getElementById('interfacesearchTd').style.display = "block";
+				  document.getElementById('sutCaseInfoTd').style.display = "block";
+				  document.getElementById('interfacesearchTd').style.display = "none";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 			  },
@@ -299,7 +302,8 @@ function saveTestSuiteac(){
 			  success : function(root) {
 				  $('#jstree').jstree(true).destroy();
 				  initree();
-				  document.getElementById('interfacesearchTd').style.display = "block";
+				  document.getElementById('sutCaseInfoTd').style.display = "block";
+				  document.getElementById('interfacesearchTd').style.display = "none";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 				  document.getElementById('showtestsuite_name').readOnly = true;
@@ -355,7 +359,8 @@ function newTestCaseac(){
 			  success : function(root) {
 				  $('#jstree').jstree(true).destroy();
 				  initree();
-				  document.getElementById('interfacesearchTd').style.display = "block";
+				  document.getElementById('sutCaseInfoTd').style.display = "block";
+				  document.getElementById('interfacesearchTd').style.display = "none";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 			  },
@@ -571,6 +576,7 @@ function testtest(){
 		  });
 		interfacetestsuite = ref.get_node(sel).text;
 		document.getElementById('showtestsuite_name').value = interfacetestsuite;
+		document.getElementById('sutCaseInfoTd').style.display = "none";
 		document.getElementById('interfacesearchTd').style.display = "none";
 		document.getElementById('showTestSuiteTd').style.display = "block";
 		document.getElementById('showTestCaseTd').style.display = "none";
@@ -604,11 +610,13 @@ function testtest(){
 				  alert(textStatus);
 			  }
 		  });
+		document.getElementById('sutCaseInfoTd').style.display = "none";
 	    document.getElementById('interfacesearchTd').style.display = "none";
 		document.getElementById('showTestSuiteTd').style.display = "none";
 		document.getElementById('showTestCaseTd').style.display = "block";
 		}
 		else if (type.type == "interfacetestsuite"){
+		document.getElementById('sutCaseInfoTd').style.display = "none";
 		document.getElementById('interfacesearchTd').style.display = "block";
 		document.getElementById('showTestSuiteTd').style.display = "none";
 		document.getElementById('showTestCaseTd').style.display = "none";
