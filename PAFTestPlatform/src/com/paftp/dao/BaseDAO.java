@@ -115,6 +115,8 @@ public interface BaseDAO<T> {
 	 */
 	public T get(String hql, Object[] param);
 
+	public List<T> getgroup(String hql);
+	
 	public List<T> getgroup(String hql, Object[] param);
 	/**
 	 * 获得一个对象

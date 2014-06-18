@@ -480,15 +480,87 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
-				  alert(root.condtestcase_quantity.casetype);
-				  alert(root.testsuitedto.status);
-				  //alert(root.testsuitedto.sut[0].id);
-				  alert(root.testsuitedto.version);
-				  //alert(root.testsuite.testsuitedto.version.versionNum);
+				 var p1 = "0";
+				 var p2 = "0";
+				 var p3 = "0";
+				 for (i=0 ; i< 3 ;i++){
+					if (root.condtestcase_quantity.priority[i] != null){
+						if(root.condtestcase_quantity.priority[i][0] == "P1"){
+						p1 = root.condtestcase_quantity.priority[i][1];
+						} 
+					else if(root.condtestcase_quantity.priority[i][0] == "P2"){
+						p2 = root.condtestcase_quantity.priority[i][1];
+						}  
+					else if(root.condtestcase_quantity.priority[i][0] == "P3"){
+						p3 = root.condtestcase_quantity.priority[i][1];
+						} 
+						}
+					else if (root.condtestcase_quantity.priority[i] == null){
+						break;
+						}
+				  	}
+				 var zhengli = "0";
+				 var fanli = "0";
+				 for (i=0 ; i< 2 ;i++){
+					if (root.condtestcase_quantity.casetype[i] != null){
+						if(root.condtestcase_quantity.casetype[i][0] == "正例"){
+						zhengli = root.condtestcase_quantity.casetype[i][1];
+						} 
+					else if(root.condtestcase_quantity.casetype[i][0] == "反例"){
+						fanli = root.condtestcase_quantity.casetype[i][1];
+						} 
+						}
+					else if (root.condtestcase_quantity.casetype[i] == null){
+						break;
+						}
+				  	}
+				 var zidong = "0";
+				 var shoudong = "0";
+				 var feiqi = "0";
+				 for (i=0 ; i< 3 ;i++){
+					if (root.condtestcase_quantity.status[i] != null){
+						if(root.condtestcase_quantity.status[i][0] == "自动"){
+						zidong = root.condtestcase_quantity.status[i][1];
+						} 
+					else if(root.condtestcase_quantity.status[i][0] == "手动"){
+						shoudong = root.condtestcase_quantity.status[i][1];
+						}  
+					else if(root.condtestcase_quantity.status[i][0] == "废弃"){
+						feiqi = root.condtestcase_quantity.status[i][1];
+						} 
+						}
+					else if (root.condtestcase_quantity.status[i] == null){
+						break;
+						}
+				  	}
+				 var daipingshen = "0";
+				 var tongguo = "0";
+				 var butongguo = "0";
+				  for (i=0 ; i< 3 ;i++){
+					if (root.condtestcase_quantity.testcase_approval[i] != null){
+						if(root.condtestcase_quantity.testcase_approval[i][0] == "待评审"){
+						daipingshen = root.condtestcase_quantity.testcase_approval[i][1];
+						} 
+					else if(root.condtestcase_quantity.testcase_approval[i][0] == "通过"){
+						tongguo = root.condtestcase_quantity.testcase_approval[i][1];
+						}  
+					else if(root.condtestcase_quantity.testcase_approval[i][0] == "不通过"){
+						butongguo = root.condtestcase_quantity.testcase_approval[i][1];
+						} 
+						}
+					else if (root.condtestcase_quantity.testcase_approval[i] == null){
+						break;
+						}
+				  	}
+				  var queryTestSuiteResult = "";
+				  queryTestSuiteResult += "<table border='1' width='100%'><tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正反例</td></tr>";
+				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td>";
+				  queryTestSuiteResult += "<tr><td>"+ zidong+"</td><td>"+shoudong+"</td><td>"+feiqi+"</td><td>"+p1+"</td><td>"+p2+"</td><td>"+p3+"</td><td>"+daipingshen+"</td><td>"+tongguo+"</td><td>"+butongguo+"</td><td>"+zhengli+"</td><td>"+fanli+"</td></tr></table>";
+				  $("#testsuiteInfoDiv").append(queryTestSuiteResult);
 				  document.getElementById('showtestsuite_id').value = root.testsuitedto.id;
 				  document.getElementById('showtestsuite_description').value = root.testsuitedto.description;
 				  document.getElementById('showisdiscard').value = root.testsuitedto.status;
-				  document.getElementById('showversion').value = root.testsuite.testsuitedto.version.versionNum;
+				  document.getElementById('showversion').value = root.testsuitedto.version.versionNum;
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -543,9 +615,24 @@ function testtest(){
 		
 		}
 		else {
-		document.getElementById('interfacesearchTd').style.display = "block";
-		document.getElementById('showTestSuiteTd').style.display = "none";
-		document.getElementById('showTestCaseTd').style.display = "none";
+		$.ajax({
+			  type : "POST",
+			  url : "querySutQuantitys.action",
+			  cache : false,
+			  data : {sut_name:sut_name},
+			  dataType : "json",
+			  success : function(root) {
+				  
+				  
+				  
+			  },
+
+			  error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  alert(XMLHttpRequest.status);
+				  alert(XMLHttpRequest.readyState);
+				  alert(textStatus);
+			  }
+		  });
 			}
 	   
 	   var i, j, r = [];
@@ -866,8 +953,8 @@ function saveapprovalac(){
   </div>
   <!--主体-->
   <table border="1" width="100%">
-    <tr>
-    <!--左边Tree-->
+    <tr> 
+      <!--左边Tree-->
       <td width="25%"><div style="height:600px;overflow:scroll;overflow-x:hidden;">
           <div>
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; padding:4px; border-radius:4px; border:1px solid silver;">
@@ -878,10 +965,12 @@ function saveapprovalac(){
           <div id="jstree"></div>
           <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
         </div></td>
-        <!--Interface Search-->
-      <td width="100%" id="interfacesearchTd" style="display:block;" >
-        
-        <table border="1">
+      <!--About SUT-->
+      <td width="100%" id="sutCaseInfoTd" style="display:block;">
+      <div id="sutCaseInfoDiv" style="text-align:center"></div>
+      </td>
+      <!--Interface Search-->
+      <td width="100%" id="interfacesearchTd" style="display:none;" ><table border="1">
           <tr>
             <td colspan="5" style="text-align:center">查询条件</td>
           </tr>
@@ -919,9 +1008,7 @@ function saveapprovalac(){
             <td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
           </tr>
         </table>
-        <div id="interfaceSearchResultDiv" style="text-align:center">
-        </div>
-        </td>
+        <div id="interfaceSearchResultDiv" style="text-align:center"> </div></td>
       <!--展示、更新testsuite-->
       <td width="100%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm">
           <table width="100%">
@@ -971,7 +1058,8 @@ function saveapprovalac(){
               <td><button type="button" class="btn btn-default" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite" style="display:none">保存</button></td>
             </tr>
           </table>
-        </form></td>
+        </form>
+        <div id="testsuiteInfoDiv" style="text-align:center"> </div></td></td>
       <!--展示更新testcase-->
       <td width="100%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm" name="showTestCaseForm">
           <table width="100%" border="1" id="showcaseinfo">

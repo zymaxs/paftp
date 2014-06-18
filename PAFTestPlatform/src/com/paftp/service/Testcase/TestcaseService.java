@@ -28,6 +28,14 @@ public interface TestcaseService {
 	
 	public List<TestcaseCountDto> queryCountByColumn(String name);
 	
+	public List<TestcaseCountDto> queryCountByPriority();
+	
+	public List<TestcaseCountDto> queryCountByStatus();
+	
+	public List<TestcaseCountDto> queryCountByCasetype();
+
+	public List<TestcaseCountDto> queryCountByApproval();
+	
 	public List<TestcaseCountDto> queryCountByPriorityAndTestsuiteid(Integer id);
 	
 	public List<TestcaseCountDto> queryCountByStatusAndTestsuiteid(Integer id);

@@ -442,9 +442,16 @@ public class TestsuiteAction extends ActionSupport {
 
 	}
 	
+	public String querySutQuantitys(){
+		
+		this.queryQuantitys(null);
+		
+		return "success";
+	}
+	
 	private void queryQuantitys(Testsuite testsuite) {
 
-		if (this.getTestsuite_id() != null) {
+		if (testsuite == null) {
 			Sut sut = sutService.findSutByName(this.getSut_name());
 			Version version = versionService.findVersionByVersionNum(this
 					.getVersion());
@@ -478,16 +485,16 @@ public class TestsuiteAction extends ActionSupport {
 
 			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
 			List<TestcaseCountDto> condstatus = testcaseService
-					.queryCountByColumn("status");
+					.queryCountByStatus();
 			condtestcase_quantity.put("status", condstatus);
 			List<TestcaseCountDto> condpriority = testcaseService
-					.queryCountByColumn("priority");
+					.queryCountByPriority();
 			condtestcase_quantity.put("priority", condpriority);
 			List<TestcaseCountDto> condcasetype = testcaseService
-					.queryCountByColumn("casetype");
+					.queryCountByCasetype();
 			condtestcase_quantity.put("casetype", condcasetype);
 			List<TestcaseCountDto> condtestcase_approval = testcaseService
-					.queryCountByColumn("testcase_approval");
+					.queryCountByApproval();
 			condtestcase_quantity.put("testcase_approval",
 					condtestcase_approval);
 		} else {

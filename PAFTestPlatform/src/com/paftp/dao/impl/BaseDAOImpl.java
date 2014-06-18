@@ -324,4 +324,15 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		}
 	}
 
+	@Override
+	public List<T> getgroup(String hql) {
+		// TODO Auto-generated method stub
+		List<T> l = this.find(hql);
+		if (l != null && l.size() > 0) {
+			return (List<T>) l;
+		} else {
+			return null;
+		}
+	}
+
 }
