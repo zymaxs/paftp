@@ -454,11 +454,6 @@ public class TestsuiteAction extends ActionSupport {
 	}
 
 
-	public String queryQuantityUnderTestsuite() {
-
-		return "success";
-	}
-
 	public String queryCombineConditions() {
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
