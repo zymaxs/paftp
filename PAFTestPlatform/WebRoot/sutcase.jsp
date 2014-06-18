@@ -480,6 +480,7 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				  alert(root.testcase_quantity);
 				  document.getElementById('showtestsuite_id').value = root.testsuite.id;
 				  document.getElementById('showtestsuite_description').value = root.testsuite.description;
 				  document.getElementById('showversion').value = root.testsuite.version.versionNum;
@@ -532,7 +533,9 @@ function testtest(){
 		document.getElementById('showTestCaseTd').style.display = "block";
 		}
 		else if (type.type == "interfacetestsuite"){
-		
+		document.getElementById('interfacesearchTd').style.display = "block";
+		document.getElementById('showTestSuiteTd').style.display = "none";
+		document.getElementById('showTestCaseTd').style.display = "none";
 		
 		}
 		else {
@@ -643,6 +646,9 @@ function queryinterfaceac(){
 			  data : queryparams,
 			  dataType : "json",
 			  success : function(root) {
+				  var searchresultdata;
+				  searchresultdata = "<h1>此次搜索共匹配"+ root.testcase_quantity +"条记录</h1>";
+				  $("#interfaceSearchResultDiv").append(searchresultdata);
 				  $('#jstree').jstree(true).destroy();
 				  datadata = root.jsonArray;
 				  testtest();
@@ -858,7 +864,7 @@ function saveapprovalac(){
   <table border="1" width="100%">
     <tr>
     <!--左边Tree-->
-      <td width="25%"><div style="height:450px;overflow:scroll;overflow-x:hidden;">
+      <td width="25%"><div style="height:600px;overflow:scroll;overflow-x:hidden;">
           <div>
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; padding:4px; border-radius:4px; border:1px solid silver;">
           </div>
@@ -869,7 +875,7 @@ function saveapprovalac(){
           <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
         </div></td>
         <!--Interface Search-->
-      <td width="75" id="interfacesearchTd" style="display:block;" >
+      <td width="100%" id="interfacesearchTd" style="display:block;" >
         
         <table border="1">
           <tr>
@@ -909,11 +915,11 @@ function saveapprovalac(){
             <td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
           </tr>
         </table>
-        <div id="interfaceSearchResultDiv">
+        <div id="interfaceSearchResultDiv" style="text-align:center">
         </div>
         </td>
       <!--展示、更新testsuite-->
-      <td width="75%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm">
+      <td width="100%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm">
           <table width="100%">
             <tr>
               <td><label for="showtestsuite_name">TestSuiteName</label></td>
@@ -963,7 +969,7 @@ function saveapprovalac(){
           </table>
         </form></td>
       <!--展示更新testcase-->
-      <td width="75%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm" name="showTestCaseForm">
+      <td width="100%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm" name="showTestCaseForm">
           <table width="100%" border="1" id="showcaseinfo">
             <tr>
               <td colspan="2" style="text-align:center">用例详情</td>
