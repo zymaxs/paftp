@@ -480,10 +480,8 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
-				  alert(root.condtestcase_quantity.casetype);
 				  alert(root.testsuitedto.status);
-				  //alert(root.testsuitedto.sut[0].id);
-				  alert(root.testsuitedto.version);
+				  var version = root.testsuitedto.version;
 				  //alert(root.testsuite.testsuitedto.version.versionNum);
 				  document.getElementById('showtestsuite_id').value = root.testsuitedto.id;
 				  document.getElementById('showtestsuite_description').value = root.testsuitedto.description;

@@ -38,7 +38,15 @@
 		<filter-name>UrlRewriteFilter</filter-name>
 		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
 	</filter>
-
+	<filter>
+    <filter-name>StaticContentCacheHeaderFilter</filter-name>
+    <filter-class>com.paftp.util.StaticContentCacheHeaderFilter</filter-class>
+	</filter>
+	<filter-mapping>
+    <filter-name>StaticContentCacheHeaderFilter</filter-name>
+    <url-pattern>/img/*</url-pattern>
+    <url-pattern>/css/*</url-pattern>
+	</filter-mapping>
 	<filter-mapping>
 		<filter-name>openSessionInViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
