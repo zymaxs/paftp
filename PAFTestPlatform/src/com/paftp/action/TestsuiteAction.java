@@ -313,6 +313,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		this.setTestcase_quantity(testcasenum);
 		this.setTestsuite(testsuite);
+		
+		this.queryQuantitys(testsuite);
 
 		return "success";
 
@@ -375,7 +377,67 @@ public class TestsuiteAction extends ActionSupport {
 	// return "success";
 	// }
 
-	public String queryQuantitys() {
+	public String queryCombineConditions() {
+
+		Sut sut = sutService.findSutByName(this.getSut_name());
+
+		List<Testsuite> testsuites = sut.getTestsuites();
+		Integer testcasenum = 0;
+
+		for (int i = 0; i < testsuites.size(); i++) {
+
+			Testsuite testsuite = testsuites.get(i);
+			TestcaseProject testcaseproject = testcaseProjectService
+					.findTestcaseProjectByName(this.getProject_name());
+
+			HashMap<String, Object> conditions = new HashMap<String, Object>();
+			conditions.put("status", this.getStatus());
+			conditions.put("priority", this.getPriority());
+			conditions.put("casetype", this.getCasetype());
+			conditions.put("testcase_approval", this.getTestcase_approval());
+			if (testcaseproject != null) {
+				conditions.put("testcaseproject.id", testcaseproject.getId());
+			}
+			conditions.put("testsuite.id", testsuite.getId());
+			List<Testcase> testcases = testcaseService
+					.findAllCaseByMultiConditions(conditions);
+
+			testcasenum += testcases.size();
+		}
+
+		this.setTestcase_quantity(testcasenum);
+		this.setJsonArray(this.getRootNode(this.getSut_name()));
+
+		return "success";
+	}
+
+	public String initialParameters() {
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		user = getSessionUser();
+
+		if (user != null) {
+			request.setAttribute("isCurrentRole",
+					this.isRoleOfSut(user, this.getSut_name()));
+		}
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		request.setAttribute("sut", sut);
+		request.setAttribute("flag", false);
+
+		return "success";
+
+	}
+
+	public String initialTestsuites() throws ServletException, IOException {
+
+		this.setJsonArray(this.getRootNode(this.getSut_name()));
+
+		return "success";
+
+	}
+	
+	private void queryQuantitys(Testsuite testsuite) {
 
 		if (this.getTestsuite_id() != null) {
 			Sut sut = sutService.findSutByName(this.getSut_name());
@@ -425,8 +487,6 @@ public class TestsuiteAction extends ActionSupport {
 					condtestcase_approval);
 		} else {
 
-			Testsuite testsuite = testsuiteService.findTestsuiteById(this
-					.getTestsuite_id());
 			Integer testcase_quantity = 0;
 			if (testsuite != null && testsuite.getTestcases() != null) {
 				testcase_quantity = testsuite.getTestcases().size();
@@ -450,66 +510,6 @@ public class TestsuiteAction extends ActionSupport {
 		}
 
 		this.setCondtestcase_quantity(condtestcase_quantity);
-
-		return "success";
-
-	}
-
-	public String queryCombineConditions() {
-
-		Sut sut = sutService.findSutByName(this.getSut_name());
-
-		List<Testsuite> testsuites = sut.getTestsuites();
-		Integer testcasenum = 0;
-
-		for (int i = 0; i < testsuites.size(); i++) {
-
-			Testsuite testsuite = testsuites.get(i);
-			TestcaseProject testcaseproject = testcaseProjectService
-					.findTestcaseProjectByName(this.getProject_name());
-
-			HashMap<String, Object> conditions = new HashMap<String, Object>();
-			conditions.put("status", this.getStatus());
-			conditions.put("priority", this.getPriority());
-			conditions.put("casetype", this.getCasetype());
-			conditions.put("testcase_approval", this.getTestcase_approval());
-			conditions.put("testcaseproject.id", testcaseproject.getId());
-			conditions.put("testsuite.id", testsuite.getId());
-			List<Testcase> testcases = testcaseService
-					.findAllCaseByMultiConditions(conditions);
-
-			testcasenum += testcases.size();
-		}
-
-		this.setTestcase_quantity(testcasenum);
-		this.setJsonArray(this.getRootNode(this.getSut_name()));
-
-		return "success";
-	}
-
-	public String initialParameters() {
-
-		HttpServletRequest request = ServletActionContext.getRequest();
-
-		user = getSessionUser();
-
-		if (user != null) {
-			request.setAttribute("isCurrentRole",
-					this.isRoleOfSut(user, this.getSut_name()));
-		}
-		Sut sut = sutService.findSutByName(this.getSut_name());
-		request.setAttribute("sut", sut);
-		request.setAttribute("flag", false);
-
-		return "success";
-
-	}
-
-	public String initialTestsuites() throws ServletException, IOException {
-
-		this.setJsonArray(this.getRootNode(this.getSut_name()));
-
-		return "success";
 
 	}
 
@@ -546,9 +546,11 @@ public class TestsuiteAction extends ActionSupport {
 				conditions.put("status", this.getStatus());
 				conditions.put("priority", this.getPriority());
 				conditions.put("casetype", this.getCasetype());
-				conditions.put("testcase_approval", this.getTestcase_approval());
+				conditions
+						.put("testcase_approval", this.getTestcase_approval());
 				if (testcaseproject != null) {
-					conditions.put("testcaseproject.id",testcaseproject.getId());
+					conditions.put("testcaseproject.id",
+							testcaseproject.getId());
 				}
 				conditions.put("testsuite.id", testsuites.get(j).getId());
 				List<Testcase> testcases = testcaseService
