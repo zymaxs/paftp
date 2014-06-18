@@ -312,7 +312,7 @@ public class TestsuiteAction extends ActionSupport {
 		Integer testcasenum = testcases.size();
 
 		this.setTestcase_quantity(testcasenum);
-		this.setTestsuite(testsuite);
+//		this.setTestsuite(testsuite);
 		
 		this.queryQuantitys(testsuite);
 
@@ -493,19 +493,21 @@ public class TestsuiteAction extends ActionSupport {
 			}
 			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
 			List<TestcaseCountDto> condstatus = testcaseService
-					.queryCountByStatusAndTestsuiteid(this.testsuite_id);
+					.queryCountByStatusAndTestsuiteid(testsuite.getId());
 			condtestcase_quantity.put("status", condstatus);
 			List<TestcaseCountDto> condpriority = testcaseService
-					.queryCountByPriorityAndTestsuiteid(this.testsuite_id);
+					.queryCountByPriorityAndTestsuiteid(testsuite.getId());
 			condtestcase_quantity.put("priority", condpriority);
 			List<TestcaseCountDto> condcasetype = testcaseService
-					.queryCountByCasetypeAndTestsuiteid(this.testsuite_id);
+					.queryCountByCasetypeAndTestsuiteid(testsuite.getId());
 			condtestcase_quantity.put("casetype", condcasetype);
 			List<TestcaseCountDto> condtestcase_approval = testcaseService
-					.queryCountByApprovalAndTestsuiteid(this.testsuite_id);
+					.queryCountByApprovalAndTestsuiteid(testsuite.getId());
 			condtestcase_quantity.put("testcase_approval",
 					condtestcase_approval);
 
+			//condtestcase_quantity.get("status");
+			
 			this.setTestcase_quantity(testcase_quantity);
 		}
 

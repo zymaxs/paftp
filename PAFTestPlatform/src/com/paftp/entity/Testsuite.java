@@ -57,8 +57,8 @@ public class Testsuite {
 		this.testcases = testcases;
 	}
 	
-
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	@JSON(serialize=false)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "sut_id")
 	public Sut getSut() {
 		return sut;
@@ -86,7 +86,7 @@ public class Testsuite {
 		this.description = description;
 	}
 
-
+	@JSON(serialize=false)
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "version_id")
 	public Version getVersion() {

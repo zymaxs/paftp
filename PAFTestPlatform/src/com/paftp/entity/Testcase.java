@@ -93,7 +93,7 @@ public class Testcase {
 	}
 
 	@JSON(serialize=false)
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "creator_id")
 	public User getCreator() {
 		return creator;
@@ -124,7 +124,7 @@ public class Testcase {
 	}
 
 	@JSON(serialize=false)
-	@ManyToOne(cascade = CascadeType.REFRESH)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "testsuite_id")
 	public Testsuite getTestsuite() {
 		return testsuite;
@@ -181,7 +181,7 @@ public class Testcase {
 	}
 
 
-	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_id")
 	public TestcaseProject getTestcaseproject() {
 		return testcaseproject;

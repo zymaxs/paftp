@@ -318,9 +318,10 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		// TODO Auto-generated method stub
 		List<T> l = this.find(hql, param);
 		if (l != null && l.size() > 0) {
-			return (List<T>) l.get(0);
+			return (List<T>) l;
 		} else {
 			return null;
 		}
 	}
+
 }
