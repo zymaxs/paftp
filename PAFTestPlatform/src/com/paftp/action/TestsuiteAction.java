@@ -95,7 +95,7 @@ public class TestsuiteAction extends ActionSupport {
 	private Testsuite testsuite;
 	private HashMap<String, Integer> testcase_count;
 	private HashMap<String, List<TestcaseCountDto>> condtestcase_quantity;
-	
+
 	private Util util = new Util();
 
 	public String createTestcase() {
@@ -138,7 +138,7 @@ public class TestsuiteAction extends ActionSupport {
 		testcase.setTestsuite(testsuite);
 		TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
 		testcase.setTestcaseproject(testcaseproject);
-		
+
 		testcaseService.saveTestcase(testcase);
 
 		return "success";
@@ -190,7 +190,7 @@ public class TestsuiteAction extends ActionSupport {
 	}
 
 	public String queryTestcase() {
-		
+
 		user = this.getSessionUser();
 
 		Testcase testcase = testcaseService.findTestcaseByName(this
@@ -202,7 +202,7 @@ public class TestsuiteAction extends ActionSupport {
 		} else {
 			this.setIsSelf("false");
 		}
-		
+
 		this.setTestcase(testcase);
 
 		return "success";
@@ -298,7 +298,7 @@ public class TestsuiteAction extends ActionSupport {
 		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
 				this.getTestsuite_name(), sut.getId());
 
-		
+
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("status", this.getStatus());
 		conditions.put("priority", this.getPriority());
@@ -309,7 +309,7 @@ public class TestsuiteAction extends ActionSupport {
 				.findAllCaseByMultiConditions(conditions);
 
 		Integer testcasenum = testcases.size();
-		
+
 		this.setTestcase_quantity(testcasenum);
 		this.setTestsuite(testsuite);
 
@@ -372,56 +372,93 @@ public class TestsuiteAction extends ActionSupport {
 	// return "success";
 	// }
 
-	public String queryTestsuiteQuantity() {
+	public String queryQuantitys() {
 
-		Sut sut = sutService.findSutByName(this.getSut_name());
-		Version version = versionService.findVersionByVersionNum(this
-				.getVersion());
-		HashMap<String, Object> conditions = new HashMap<String, Object>();
-		conditions.put("status", this.getStatus());
-		conditions.put("version_id", version.getId());
-		conditions.put("sut_id", sut.getId());
-		List<Testsuite> testsuites = testsuiteService
-				.findAllSuiteByMultiConditions(conditions);
-		
-		Integer testsuite_quantity = 0;
-		Integer testcase_quantity = 0;
-		if (testsuites != null) {
-			testsuite_quantity = testsuites.size();
-		}
-		testcase_count = new HashMap<String, Integer>();
-		for (int i = 0; i < testsuites.size(); i++) {
-			List<Testcase> testcases = testsuites.get(i).getTestcases();
-			if (testcases != null) {
-				testcase_count.put(testsuites.get(i).getName(),
-						testcases.size());
-				testcase_quantity += testcases.size();
+		if (this.getTestsuite_id() != null) {
+			Sut sut = sutService.findSutByName(this.getSut_name());
+			Version version = versionService.findVersionByVersionNum(this
+					.getVersion());
+			HashMap<String, Object> conditions = new HashMap<String, Object>();
+			conditions.put("status", this.getStatus());
+			conditions.put("version_id", version.getId());
+			conditions.put("sut_id", sut.getId());
+			List<Testsuite> testsuites = testsuiteService
+					.findAllSuiteByMultiConditions(conditions);
+
+			Integer testsuite_quantity = 0;
+			Integer testcase_quantity = 0;
+			if (testsuites != null) {
+				testsuite_quantity = testsuites.size();
+			}
+			testcase_count = new HashMap<String, Integer>();
+			for (int i = 0; i < testsuites.size(); i++) {
+				List<Testcase> testcases = testsuites.get(i).getTestcases();
+				if (testcases != null) {
+					testcase_count.put(testsuites.get(i).getName(),
+							testcases.size());
+					testcase_quantity += testcases.size();
+				}
+
 			}
 
+			this.setTestsuite_quantity(testsuites.size());
+			this.setTestcase_quantity(testcase_quantity);
+			this.setTestcase_count(testcase_count); // The quantity for every
+													// case
+
+			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
+			List<TestcaseCountDto> condstatus = testcaseService
+					.queryCountByColumn("status");
+			condtestcase_quantity.put("status", condstatus);
+			List<TestcaseCountDto> condpriority = testcaseService
+					.queryCountByColumn("priority");
+			condtestcase_quantity.put("priority", condpriority);
+			List<TestcaseCountDto> condcasetype = testcaseService
+					.queryCountByColumn("casetype");
+			condtestcase_quantity.put("casetype", condcasetype);
+			List<TestcaseCountDto> condtestcase_approval = testcaseService
+					.queryCountByColumn("testcase_approval");
+			condtestcase_quantity.put("testcase_approval",
+					condtestcase_approval);
+		} else {
+
+			Testsuite testsuite = testsuiteService.findTestsuiteById(this
+					.getTestsuite_id());
+			Integer testcase_quantity = 0;
+			if (testsuite != null && testsuite.getTestcases() != null) {
+				testcase_quantity = testsuite.getTestcases().size();
+			}
+			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
+			List<TestcaseCountDto> condstatus = testcaseService
+					.queryCountByStatusAndTestsuiteid(this.testsuite_id);
+			condtestcase_quantity.put("status", condstatus);
+			List<TestcaseCountDto> condpriority = testcaseService
+					.queryCountByPriorityAndTestsuiteid(this.testsuite_id);
+			condtestcase_quantity.put("priority", condpriority);
+			List<TestcaseCountDto> condcasetype = testcaseService
+					.queryCountByCasetypeAndTestsuiteid(this.testsuite_id);
+			condtestcase_quantity.put("casetype", condcasetype);
+			List<TestcaseCountDto> condtestcase_approval = testcaseService
+					.queryCountByApprovalAndTestsuiteid(this.testsuite_id);
+			condtestcase_quantity.put("testcase_approval",
+					condtestcase_approval);
+
+			this.setTestcase_quantity(testcase_quantity);
 		}
 
-		condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
-		List<TestcaseCountDto> condstatus = testcaseService
-				.queryCountByColumn("status");
-		condtestcase_quantity.put("status", condstatus);
-		List<TestcaseCountDto> condpriority = testcaseService
-				.queryCountByColumn("priority");
-		condtestcase_quantity.put("priority", condpriority);
-		List<TestcaseCountDto> condcasetype = testcaseService
-				.queryCountByColumn("casetype");
-		condtestcase_quantity.put("casetype", condcasetype);
-		List<TestcaseCountDto> condtestcase_approval = testcaseService
-				.queryCountByColumn("testcase_approval");
-		condtestcase_quantity.put("testcase_approval", condtestcase_approval);
-
-		this.setTestsuite_quantity(testsuites.size());
-		this.setTestcase_quantity(testcase_quantity);
 		this.setCondtestcase_quantity(condtestcase_quantity);
-		this.setTestcase_count(testcase_count);
 
 		return "success";
 
 	}
+
+
+	public String queryQuantityUnderTestsuite() {
+
+		return "success";
+	}
+
+	public String queryCombineConditions() {
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
 
@@ -445,12 +482,12 @@ public class TestsuiteAction extends ActionSupport {
 			List<Testcase> testcases = testcaseService
 					.findAllCaseByMultiConditions(conditions);
 
-		testcasenum += testcases.size();
+			testcasenum += testcases.size();
 		}
-		
+
 		this.setTestcase_quantity(testcasenum);
 		this.setJsonArray(this.getRootNode(this.getSut_name()));
-		
+
 		return "success";
 	}
 
@@ -460,10 +497,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 
-		if (user != null) {
-			request.setAttribute("isCurrentRole",
-					this.isRoleOfSut(user, this.getSut_name()));
-		}
+		request.setAttribute("isCurrentRole",
+				this.isRoleOfSut(user, this.getSut_name()));
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		request.setAttribute("sut", sut);
 		request.setAttribute("flag", false);
@@ -508,11 +543,14 @@ public class TestsuiteAction extends ActionSupport {
 			JSONArray parentNode00 = new JSONArray();
 			for (int j = 0; j < testsuites.size(); j++) {
 				HashMap<String, Object> conditions = new HashMap<String, Object>();
-				TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
+				TestcaseProject testcaseproject = testcaseProjectService
+						.findTestcaseProjectByName(this.getProject_name());
 				conditions.put("status", this.getStatus());
 				conditions.put("priority", this.getPriority());
 				conditions.put("casetype", this.getCasetype());
-		
+				conditions
+						.put("testcase_approval", this.getTestcase_approval());
+				conditions.put("testcaseproject.id", testcaseproject.getId());
 				conditions.put("testsuite.id", testsuites.get(j).getId());
 				List<Testcase> testcases = testcaseService
 						.findAllCaseByMultiConditions(conditions);
@@ -528,7 +566,7 @@ public class TestsuiteAction extends ActionSupport {
 				JSONObject childNode00 = util.childNode(testsuites.get(j)
 						.getName(), util.nodeType("0"), parentNode0);
 				parentNode00.add(childNode00);
-	
+
 			}
 			JSONObject childNode000 = util.childNode("接口案例",
 					"interfacetestsuite", parentNode00);
@@ -615,7 +653,8 @@ public class TestsuiteAction extends ActionSupport {
 			if (user.getAlias().equals(testcase.getCreator().getAlias()) == false) {
 				CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 				casechangeoperation.setCaseChangeHistory(casechangehistory);
-
+				casechangeoperation
+						.setOldValue(testcase.getTestcase_approval());
 				casechangeoperation.setNewValue(this.getTestcase_approval());
 				casechangeoperation.setField("approval");
 				casechangeoperations.add(casechangeoperation);
@@ -624,9 +663,12 @@ public class TestsuiteAction extends ActionSupport {
 			}
 		}
 
+		if (testcase.getTestcaseproject().getName()
+				.equals(this.getProject_name()) == false) {
 			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
-
+			casechangeoperation.setOldValue(testcase.getTestcaseproject()
+					.getName());
 			casechangeoperation.setNewValue(this.getProject_name());
 			casechangeoperation.setField("project_name");
 			casechangeoperations.add(casechangeoperation);
@@ -637,7 +679,7 @@ public class TestsuiteAction extends ActionSupport {
 		for (int j = 0; j < i; j++) {
 			casechangeoperationService
 					.saveCaseChangeOperation(casechangeoperations.get(j));
-
+		}
 		testcaseService.updateTestcase(testcase);
 	}
 
@@ -829,7 +871,7 @@ public class TestsuiteAction extends ActionSupport {
 	public void setTestsuite_quantity(Integer testsuite_quantity) {
 		this.testsuite_quantity = testsuite_quantity;
 	}
-	
+
 	public String getIsSelf() {
 		return isSelf;
 	}
@@ -853,7 +895,7 @@ public class TestsuiteAction extends ActionSupport {
 	public void setProject_name(String project_name) {
 		this.project_name = project_name;
 	}
-	
+
 	public HashMap<String, Integer> getTestcase_count() {
 		return testcase_count;
 	}
@@ -870,6 +912,5 @@ public class TestsuiteAction extends ActionSupport {
 			HashMap<String, List<TestcaseCountDto>> condtestcase_quantity) {
 		this.condtestcase_quantity = condtestcase_quantity;
 	}
-
 
 }

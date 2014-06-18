@@ -76,6 +76,35 @@ public class TestcaseServiceImpl implements TestcaseService {
 		return baseDAODto.getgroup("select t.'+?+', count(*) from Testcase t group by t.'+?+'", new Object[] {name});
 	}
 
+	@Override
+	public List<TestcaseCountDto> queryCountByPriorityAndTestsuiteid(Integer id) {
+		return baseDAODto.getgroup("select t.priority, count(*) from Testcase t where testsuite_id = ? group by t.priority", new Object[] {id});
+		
+	}
+
+	@Override
+	public List<TestcaseCountDto> queryCountByStatusAndTestsuiteid(Integer id) {
+		// TODO Auto-generated method stub
+		return baseDAODto.getgroup("select t.status, count(*) from Testcase t where status = ? group by t.priority", new Object[] {id});
+		
+	}
+
+	@Override
+	public List<TestcaseCountDto> queryCountByCasetypeAndTestsuiteid(
+			Integer id) {
+		// TODO Auto-generated method stub
+		return baseDAODto.getgroup("select t.casetype, count(*) from Testcase t where casetype = ? group by t.priority", new Object[] {id});
+		
+	}
+
+	@Override
+	public List<TestcaseCountDto> queryCountByApprovalAndTestsuiteid(
+			Integer id) {
+		// TODO Auto-generated method stub
+		return baseDAODto.getgroup("select t.approval, count(*) from Testcase t where testsuite_id = ? group by t.approval", new Object[] {id});
+		
+	}
+	
 //	@Override
 //	public User findUserByNameAndPassword(String username, String password) {
 //		return baseDAO.get(
