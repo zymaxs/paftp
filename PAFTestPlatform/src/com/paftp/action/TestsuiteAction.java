@@ -136,8 +136,7 @@ public class TestsuiteAction extends ActionSupport {
 				createtime.getTime());
 		testcase.setCreateTime(createdatetime);
 		testcase.setTestsuite(testsuite);
-		TestcaseProject testcaseproject = testcaseProjectService
-				.findTestcaseProjectByName(this.getProject_name());
+		TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
 		testcase.setTestcaseproject(testcaseproject);
 
 		testcaseService.saveTestcase(testcase);
@@ -197,8 +196,9 @@ public class TestsuiteAction extends ActionSupport {
 		Testcase testcase = testcaseService.findTestcaseByName(this
 				.getTestcase_name());
 
-		if (user.getAlias().equals(testcase.getCreator().getAlias()) == true) {
+		if (user!= null && user.getAlias().equals(testcase.getCreator().getAlias()) == true) {
 			this.setIsSelf("true");
+
 		} else {
 			this.setIsSelf("false");
 		}
@@ -298,15 +298,12 @@ public class TestsuiteAction extends ActionSupport {
 		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
 				this.getTestsuite_name(), sut.getId());
 
-		TestcaseProject testcaseproject = testcaseProjectService
-				.findTestcaseProjectByName(this.getProject_name());
 
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		conditions.put("status", this.getStatus());
 		conditions.put("priority", this.getPriority());
 		conditions.put("casetype", this.getCasetype());
 		conditions.put("testcase_approval", this.getTestcase_approval());
-		conditions.put("testcaseproject.id", testcaseproject.getId());
 		conditions.put("testsuite.id", testsuite.getId());
 		List<Testcase> testcases = testcaseService
 				.findAllCaseByMultiConditions(conditions);
@@ -338,8 +335,6 @@ public class TestsuiteAction extends ActionSupport {
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setStatus(this.getIsdiscard());
 
-		Version version = versionService.findVersionByVersionNum(this
-				.getVersion());
 		testsuite.setVersion(version);
 
 		if (this.getIsdiscard().equals("discard")) {
@@ -457,6 +452,7 @@ public class TestsuiteAction extends ActionSupport {
 
 	}
 
+
 	public String queryQuantityUnderTestsuite() {
 
 		return "success";
@@ -466,14 +462,6 @@ public class TestsuiteAction extends ActionSupport {
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
 
-		// Version version = versionService.findVersionByVersionNum(this
-		// .getVersion());
-		// HashMap<String, Object> conditions = new HashMap<String, Object>();
-		// conditions.put("status", this.getStatus());
-		// conditions.put("version_id", version.getId());
-		// conditions.put("sut_id", sut.getId());
-		// List<Testsuite> testsuites = testsuiteService
-		// .findAllSuiteByMultiConditions(conditions);
 
 		List<Testsuite> testsuites = sut.getTestsuites();
 		Integer testcasenum = 0;
@@ -495,7 +483,6 @@ public class TestsuiteAction extends ActionSupport {
 					.findAllCaseByMultiConditions(conditions);
 
 			testcasenum += testcases.size();
-
 		}
 
 		this.setTestcase_quantity(testcasenum);
