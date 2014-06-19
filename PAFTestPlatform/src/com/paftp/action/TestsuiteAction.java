@@ -77,7 +77,7 @@ public class TestsuiteAction extends ActionSupport {
 	private Integer testcase_quantity;
 	private TestsuiteDto testsuitedto;
 	private TestcaseDto testcasedto;
-	
+
 	private String priority;
 	private String status;
 	private String description;
@@ -209,30 +209,22 @@ public class TestsuiteAction extends ActionSupport {
 			this.setIsSelf("false");
 		}
 
-		this.setTestcasedto(testsuiteService.getTestcaseDto(testcase));
+		if (testcase != null) {
+			this.setTestcasedto(testsuiteService.getTestcaseDto(testcase));
+		}
 
 		return "success";
 	}
 
-	public String queryTestcaseChangehistory() {
-		HttpServletRequest request = ServletActionContext.getRequest();
+	private List<CaseChangeHistory> queryTestcaseChangehistory(String testcasename) {
 
-		user = getSessionUser();
-
-		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
-		}
-
-		Testcase testcase = testcaseService.findTestcaseByName(this
-				.getTestcase_name());
+		Testcase testcase = testcaseService.findTestcaseByName(testcasename);
 
 		List<CaseChangeHistory> casechangehistorys = testcase
 				.getCaseChangeHistorys();
 
-		request.setAttribute("casechangehistorys", casechangehistorys);
 
-		return "true";
+		return casechangehistorys;
 	}
 
 	// public String deleteTestcase() {
