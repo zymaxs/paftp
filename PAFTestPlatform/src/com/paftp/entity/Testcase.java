@@ -92,7 +92,6 @@ public class Testcase {
 		this.createTime = createTime;
 	}
 
-	@JSON(serialize=false)
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "creator_id")
 	public User getCreator() {
@@ -103,7 +102,6 @@ public class Testcase {
 		this.creator = creator;
 	}
 
-	@JSON(serialize=false)
 	@OneToMany(mappedBy = "testcase",cascade = CascadeType.ALL)
 	public List<TestcaseStep> getTestcaseSteps() {
 		return testcaseSteps;
@@ -113,7 +111,6 @@ public class Testcase {
 		this.testcaseSteps = testcaseSteps;
 	}
 
-	@JSON(serialize=false)
 	@OneToMany(mappedBy = "testcase",cascade = CascadeType.ALL)
 	public List<CaseChangeHistory> getCaseChangeHistorys() {
 		return caseChangeHistorys;
@@ -123,7 +120,6 @@ public class Testcase {
 		this.caseChangeHistorys = caseChangeHistorys;
 	}
 
-	@JSON(serialize=false)
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "testsuite_id")
 	public Testsuite getTestsuite() {
@@ -134,7 +130,6 @@ public class Testcase {
 		this.testsuite = testsuite;
 	}
 	
-	@JSON(serialize=false)
 	@OneToMany(mappedBy = "testcase")
 	public List<TestcaseResult> getTestcase_results() {
 		return testcase_results;
@@ -180,8 +175,7 @@ public class Testcase {
 		this.testcase_approval = testcase_approval;
 	}
 
-
-	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id")
 	public TestcaseProject getTestcaseproject() {
 		return testcaseproject;

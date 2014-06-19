@@ -105,6 +105,7 @@ else { isCurrentRole = "n";};
 				  				   document.getElementById('interfacesearchTd').style.display = "none";
 				  				   document.getElementById('showTestSuiteTd').style.display = "none";
 				 				   document.getElementById('showTestCaseTd').style.display = "none";
+								   querySutCaseInfo();
 			 					   },
 			  			 error: function(XMLHttpRequest, textStatus, errorThrown) {
 				  				alert(XMLHttpRequest.status);
@@ -163,6 +164,7 @@ else { isCurrentRole = "n";};
 				  				   document.getElementById('interfacesearchTd').style.display = "none";
 				 				   document.getElementById('showTestSuiteTd').style.display = "none";
 				 				   document.getElementById('showTestCaseTd').style.display = "none";
+								   querySutCaseInfo();
 			 					   },
 			  			 error: function(XMLHttpRequest, textStatus, errorThrown) {
 				  				alert(XMLHttpRequest.status);
@@ -203,6 +205,7 @@ function demo_create() {
 			  else if(ref.get_node(sel).type == "testcase"){
 				  interfacetestcase = ref.get_node(sel).text;
 				  document.getElementById('testcase_name').value = interfacetestcase;
+				  document.getElementById('pre_stname').value = ref.get_node(ref.get_parent(sel)).text +"_";
 				  document.getElementById('casetestsuite_name').value = ref.get_node(ref.get_parent(sel)).text; 
 				  createTestCase();
 				  }
@@ -239,7 +242,9 @@ function demo_create() {
 	    	isdiscard_value = isdiacard_radio[i].value;
 	  	}
 	  };
-	  var tsparams = {testsuite_name:$("#testsuite_name").val(),sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:"alive",version:$("#version").val()};
+	  var testsuite_name;
+	  testsuite_name = "Ts_" + $("#testsuite_name").val();
+	  var tsparams = {testsuite_name:testsuite_name,sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:"alive",version:$("#version").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestsuite.action",
@@ -254,6 +259,7 @@ function demo_create() {
 				  document.getElementById('interfacesearchTd').style.display = "none";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
+				  querySutCaseInfo();
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -349,7 +355,9 @@ function newTestCaseac(){
 	    	type_value = type_radio[i].value;
 	  	}
 	  };
-	  var tsparams = {testcase_name:$("#testcase_name").val(),sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待评审",project_name:$("#project").val()};
+	  var testcase_name;
+	  testcase_name = $("#pre_stname").val() + $("#testcase_name").val();
+	  var tsparams = {testcase_name:testcase_name,sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待评审",project_name:$("#project").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestcase.action",
@@ -363,6 +371,7 @@ function newTestCaseac(){
 				  document.getElementById('interfacesearchTd').style.display = "none";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
+				  querySutCaseInfo();
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -486,9 +495,22 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				 document.getElementById('showtestsuite_id').value = root.testsuitedto.id;
+				 document.getElementById('showtestsuite_description').value = root.testsuitedto.description;
+				 document.getElementById('showisdiscard').value = root.testsuitedto.status;
+				 document.getElementById('showversion').value = root.testsuitedto.version.versionNum;
 				 var p1 = "0";
 				 var p2 = "0";
 				 var p3 = "0";
+				 var zhengli = "0";
+				 var fanli = "0";
+				 var zidong = "0";
+				 var shoudong = "0";
+				 var feiqi = "0";
+				 var daipingshen = "0";
+				 var tongguo = "0";
+				 var butongguo = "0";
+				 if (root.condtestcase_quantity.priority != null){
 				 for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.priority[i] != null){
 						if(root.condtestcase_quantity.priority[i][0] == "P1"){
@@ -505,8 +527,8 @@ function testtest(){
 						break;
 						}
 				  	}
-				 var zhengli = "0";
-				 var fanli = "0";
+				 }
+				 if (root.condtestcase_quantity.casetype != null){
 				 for (i=0 ; i< 2 ;i++){
 					if (root.condtestcase_quantity.casetype[i] != null){
 						if(root.condtestcase_quantity.casetype[i][0] == "正例"){
@@ -520,9 +542,8 @@ function testtest(){
 						break;
 						}
 				  	}
-				 var zidong = "0";
-				 var shoudong = "0";
-				 var feiqi = "0";
+				 }
+				 if (root.condtestcase_quantity.status != null){
 				 for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.status[i] != null){
 						if(root.condtestcase_quantity.status[i][0] == "自动"){
@@ -539,9 +560,8 @@ function testtest(){
 						break;
 						}
 				  	}
-				 var daipingshen = "0";
-				 var tongguo = "0";
-				 var butongguo = "0";
+				 }
+				 if (root.condtestcase_quantity.status != null){
 				  for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.testcase_approval[i] != null){
 						if(root.condtestcase_quantity.testcase_approval[i][0] == "待评审"){
@@ -558,15 +578,12 @@ function testtest(){
 						break;
 						}
 				  	}
+				 }
 				  var queryTestSuiteResult = "";
 				  queryTestSuiteResult += "<table border='1' width='100%'><tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td>";
 				  queryTestSuiteResult += "<tr><td>"+ zidong+"</td><td>"+shoudong+"</td><td>"+feiqi+"</td><td>"+p1+"</td><td>"+p2+"</td><td>"+p3+"</td><td>"+daipingshen+"</td><td>"+tongguo+"</td><td>"+butongguo+"</td><td>"+zhengli+"</td><td>"+fanli+"</td></tr></table>";
 				  $("#testsuiteInfoDiv").append(queryTestSuiteResult);
-				  document.getElementById('showtestsuite_id').value = root.testsuitedto.id;
-				  document.getElementById('showtestsuite_description').value = root.testsuitedto.description;
-				  document.getElementById('showisdiscard').value = root.testsuitedto.status;
-				  document.getElementById('showversion').value = root.testsuitedto.version.versionNum;
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -596,14 +613,14 @@ function testtest(){
 			  dataType : "json",
 			  success : function(root) {
 				  isSelf =  root.isSelf;
-				  document.getElementById('showtestcase_id').value = root.testcase.id;
-				  document.getElementById('showcasepriority').value = root.testcase.priority;
-				  document.getElementById('showcasestatus').value = root.testcase.status;
-				  document.getElementById('showcasetype').value = root.testcase.casetype;
-				  document.getElementById('showcasedescription').value = root.testcase.description;
-				  document.getElementById('showcasesteps').value = root.testcase.casesteps;
-				  document.getElementById('showapproval').value = root.testcase.testcase_approval;
-				  document.getElementById('showproject').value = root.testcase.testcaseproject.name;
+				  document.getElementById('showtestcase_id').value = root.testcasedto.id;
+				  document.getElementById('showcasepriority').value = root.testcasedto.priority;
+				  document.getElementById('showcasestatus').value = root.testcasedto.status;
+				  document.getElementById('showcasetype').value = root.testcasedto.casetype;
+				  document.getElementById('showcasedescription').value = root.testcasedto.description;
+				  document.getElementById('showcasesteps').value = root.testcasedto.casesteps;
+				  document.getElementById('showapproval').value = root.testcasedto.testcase_approval;
+				  document.getElementById('showproject').value = root.testcasedto.testcaseproject.name;
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -728,6 +745,7 @@ function initree(){
 function initype(){
 	$("#sutCaseInfoDiv").html("");
 	$("#testsuiteInfoDiv").html("");
+	$("#interfaceSearchResultDiv").html("");
 	document.getElementById('showtestsuite_name').readOnly = true;
 	document.getElementById('showtestsuite_description').readOnly = true;
 	document.getElementById('showversion').readOnly = true;
@@ -750,6 +768,10 @@ function initype(){
 	document.getElementById('showcasesteps').readOnly = true;	
 	document.getElementById('upTestCase').style.display = "block";
 	document.getElementById('saveTestCase').style.display = "none";
+	document.getElementById('showapprovaltd').style.display = "block";
+	document.getElementById('showaprovaloption').style.display = "none";
+	document.getElementById('showapprovalupdatetd').style.display = "block";
+	document.getElementById('showapprovalsavetd').style.display = "none";
 	};
 
 
@@ -765,6 +787,7 @@ function querySutCaseInfo(){
 				 var p1 = "0";
 				 var p2 = "0";
 				 var p3 = "0";
+				 if (root.condtestcase_quantity.priority != null){
 				 for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.priority[i] != null){
 						if(root.condtestcase_quantity.priority[i][0] == "P1"){
@@ -781,9 +804,11 @@ function querySutCaseInfo(){
 						break;
 						}
 				  	}
+				 }
 					
 				 var zhengli = "0";
 				 var fanli = "0";
+				 if (root.condtestcase_quantity.casetype != null){
 				 for (i=0 ; i< 2 ;i++){
 					if (root.condtestcase_quantity.casetype[i] != null){
 						if(root.condtestcase_quantity.casetype[i][0] == "正例"){
@@ -797,10 +822,12 @@ function querySutCaseInfo(){
 						break;
 						}
 				  	}
+				 }
 					
 				 var zidong = "0";
 				 var shoudong = "0";
 				 var feiqi = "0";
+				 if (root.condtestcase_quantity.status != null){
 				 for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.status[i] != null){
 						if(root.condtestcase_quantity.status[i][0] == "自动"){
@@ -817,10 +844,12 @@ function querySutCaseInfo(){
 						break;
 						}
 				  	}
+				 }
 					
 				 var daipingshen = "0";
 				 var tongguo = "0";
 				 var butongguo = "0";
+				 if (root.condtestcase_quantity.testcase_approval != null){
 				  for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.testcase_approval[i] != null){
 						if(root.condtestcase_quantity.testcase_approval[i][0] == "待评审"){
@@ -837,6 +866,7 @@ function querySutCaseInfo(){
 						break;
 						}
 				  	}
+				 }
 					
 				  var queryTestSuiteResult = "";
 				  queryTestSuiteResult += "<table border='1' width='100%'><tr><td colspan='5'>接口总数</td><td colspan='6'>"+root.testsuite_quantity+"</td></tr>";
@@ -855,9 +885,7 @@ function querySutCaseInfo(){
 		  });
 	};
 function queryinterfaceac(){
-	alert("清除前");
-	$("#testsuiteInfoDiv").html("");
-	alert("清除后");
+	initype();
 	var querystatus = $("#querystatus").val();
 	var querypriority = $("#querypriority").val();
 	var querytype = $("#querytype").val();
@@ -895,6 +923,8 @@ function updateapprovalac(){
 		alert("本人无法进行评审，请邀请他人进行评审！");
 	}
 	else if (isSelf == "false"){
+	document.getElementById('showapprovaltd').style.display = "none";
+	document.getElementById('showaprovaloption').style.display = "block";
 	document.getElementById('showapprovalupdatetd').style.display = "none";
 	document.getElementById('showapprovalsavetd').style.display = "block";
 	}
@@ -920,8 +950,12 @@ function saveapprovalac(){
 			  success : function(root) {
 				  $('#jstree').jstree(true).destroy();
 				  initree();  
-			document.getElementById('showapprovalupdatetd').style.display = "block";
-			document.getElementById('showapprovalsavetd').style.display = "none";
+				  initype();
+				  document.getElementById('sutCaseInfoTd').style.display = "block";
+				  document.getElementById('interfacesearchTd').style.display = "none";
+				  document.getElementById('showTestSuiteTd').style.display = "none";
+				  document.getElementById('showTestCaseTd').style.display = "none";
+				  querySutCaseInfo();
 				  
 			  },
 
@@ -1294,7 +1328,7 @@ function saveapprovalac(){
       <table width="500" height="150" style="background:#FFF">
         <tr>
           <td><label for="testsuite_name">TestSuiteName</label></td>
-          <td><input id="testsuite_name" name="testsuite_name" value=""></td>
+          <td><input value="Ts_" size="3" readonly style="text-align:right; width:20px"><input id="testsuite_name" name="testsuite_name" value=""></td>
         </tr>
         <tr>
           <td colspan="2"><input id="sut_name" name="sut_name" style="display:none" value="<%=sut_name%>" readonly></td>
@@ -1332,7 +1366,7 @@ function saveapprovalac(){
       <table width="600" height="500" style="background:#FFF">
         <tr>
           <td>TestCase</td>
-          <td><input id="testcase_name" name="testcase_name" value="" maxlength="15"></td>
+          <td><input id="pre_stname" name="pre_stname" value="" style="text-align:right" readonly><input id="testcase_name" name="testcase_name" value="" maxlength="15"></td>
         </tr>
         <tr>
           <td colspan="2"><input id="casesut_name" style="display:none" name="sut_name" value="<%=sut_name%>"></td>

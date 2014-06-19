@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.dto.ApplySutDto;
+import com.paftp.dto.TestcaseDto;
 import com.paftp.dto.TestsuiteDto;
 import com.paftp.entity.ApplySut;
 import com.paftp.entity.Sut;
 import com.paftp.entity.Testcase;
+import com.paftp.entity.TestcaseProject;
 import com.paftp.entity.Testsuite;
 import com.paftp.entity.User;
 import com.paftp.entity.Version;
@@ -82,6 +84,27 @@ public TestsuiteDto getTestsuiteDto(Testsuite testsuite){
 	testsuitedto.setSut(testsuitedto_sut);
 	
 	return testsuitedto;
+}
+
+public TestcaseDto getTestcaseDto(Testcase testcase){
+	
+	TestcaseDto testcasedto = new TestcaseDto();
+	testcasedto.setCaseName(testcase.getCaseName());
+	testcasedto.setPriority(testcase.getPriority());
+	testcasedto.setCasesteps(testcase.getCasesteps());
+	testcasedto.setCasetype(testcase.getCasetype());
+	testcasedto.setCreateTime(testcase.getCreateTime());
+	testcasedto.setDescription(testcase.getDescription());
+	testcasedto.setId(testcase.getId());
+	testcasedto.setStatus(testcase.getStatus());
+	testcasedto.setTestcase_approval(testcase.getTestcase_approval());
+	TestcaseProject testcaseproject = new TestcaseProject();
+	if(testcase.getTestcaseproject() != null){
+		testcaseproject.setName(testcase.getTestcaseproject().getName());
+		testcasedto.setTestcaseproject(testcaseproject);
+	}
+	
+	return testcasedto;
 }
 
 }
