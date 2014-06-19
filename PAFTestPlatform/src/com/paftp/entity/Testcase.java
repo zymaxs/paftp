@@ -92,7 +92,7 @@ public class Testcase {
 		this.createTime = createTime;
 	}
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "creator_id")
 	public User getCreator() {
 		return creator;

@@ -13,6 +13,8 @@ import com.paftp.dto.ApplySutDto;
 import com.paftp.dto.TestcaseDto;
 import com.paftp.dto.TestsuiteDto;
 import com.paftp.entity.ApplySut;
+import com.paftp.entity.CaseChangeHistory;
+import com.paftp.entity.CaseChangeOperation;
 import com.paftp.entity.Sut;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.TestcaseProject;
@@ -103,6 +105,25 @@ public TestcaseDto getTestcaseDto(Testcase testcase){
 		testcaseproject.setName(testcase.getTestcaseproject().getName());
 		testcasedto.setTestcaseproject(testcaseproject);
 	}
+	
+	List<CaseChangeHistory> casechangehistories = new ArrayList<CaseChangeHistory>();
+	List<CaseChangeHistory> casechangehistories_source = testcase.getCaseChangeHistorys();
+	for (int i=0; i< casechangehistories_source.size(); i++){
+		List<CaseChangeOperation> casechangeoperations_source = casechangehistories_source.get(i).getCaseChangeOperations();
+		List<CaseChangeOperation> casechangeoperations = new ArrayList<CaseChangeOperation>();
+		for (int j=0; j < casechangeoperations_source.size(); j++){
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setId(casechangeoperations_source.get(j).getId());
+			casechangeoperation.setField(casechangeoperations_source.get(j).getField());
+			casechangeoperation.setNewValue(casechangeoperations_source.get(j).getNewValue());
+			casechangeoperation.setOldValue(casechangeoperations_source.get(j).getOldValue());
+			casechangeoperations.add(casechangeoperation);
+		}
+		CaseChangeHistory casechangehistory = new CaseChangeHistory();
+		casechangehistory.setCaseChangeOperations(casechangeoperations);	
+		casechangehistories.add(casechangehistory);
+	}
+	testcasedto.setCaseChangeHistorys(casechangehistories);
 	
 	return testcasedto;
 }
