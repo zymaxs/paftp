@@ -1133,9 +1133,7 @@ function saveapprovalac(){
           <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
         </div></td>
       <!--About SUT-->
-      <td width="100%" id="sutCaseInfoTd" style="display:block;">
-      <div id="sutCaseInfoDiv" style="text-align:center"></div>
-      </td>
+      <td width="100%" id="sutCaseInfoTd" style="display:block;"><div id="sutCaseInfoDiv" style="text-align:center"></div></td>
       <!--Interface Search-->
       <td width="100%" id="interfacesearchTd" style="display:none;" ><table border="1">
           <tr>
@@ -1226,7 +1224,8 @@ function saveapprovalac(){
             </tr>
           </table>
         </form>
-        <div id="testsuiteInfoDiv" style="text-align:center"> </div></td></td>
+        <div id="testsuiteInfoDiv" style="text-align:center"> </div></td>
+        </td>
       <!--展示更新testcase-->
       <td width="100%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm" name="showTestCaseForm">
           <table width="100%" border="1" id="showcaseinfo">
@@ -1320,6 +1319,33 @@ function saveapprovalac(){
             </tr>
           </table>
         </form></td>
+      <!--showcasechangehistory-->
+      <td style="width:300px;"><div class="panel-group" id="accordion">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title"> <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> Collapsible Group Item #1 </a> </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+              <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title"> <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> Collapsible Group Item #2 </a> </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title"> <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> Collapsible Group Item #3 </a> </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+              <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+            </div>
+          </div>
+        </div></td>
     </tr>
   </table>
   <!--隐藏表单创建testsuite-->
@@ -1328,7 +1354,8 @@ function saveapprovalac(){
       <table width="500" height="150" style="background:#FFF">
         <tr>
           <td><label for="testsuite_name">TestSuiteName</label></td>
-          <td><input value="Ts_" size="3" readonly style="text-align:right; width:20px"><input id="testsuite_name" name="testsuite_name" value=""></td>
+          <td><input value="Ts_" size="3" readonly style="text-align:right; width:20px">
+            <input id="testsuite_name" name="testsuite_name" value=""></td>
         </tr>
         <tr>
           <td colspan="2"><input id="sut_name" name="sut_name" style="display:none" value="<%=sut_name%>" readonly></td>
@@ -1366,7 +1393,8 @@ function saveapprovalac(){
       <table width="600" height="500" style="background:#FFF">
         <tr>
           <td>TestCase</td>
-          <td><input id="pre_stname" name="pre_stname" value="" style="text-align:right" readonly><input id="testcase_name" name="testcase_name" value="" maxlength="15"></td>
+          <td><input id="pre_stname" name="pre_stname" value="" style="text-align:right" readonly>
+            <input id="testcase_name" name="testcase_name" value="" maxlength="15"></td>
         </tr>
         <tr>
           <td colspan="2"><input id="casesut_name" style="display:none" name="sut_name" value="<%=sut_name%>"></td>
