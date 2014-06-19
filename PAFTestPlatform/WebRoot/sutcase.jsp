@@ -581,7 +581,7 @@ function testtest(){
 				 }
 				  var queryTestSuiteResult = "";
 				  queryTestSuiteResult += "<table border='1' width='100%'><tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正反例</td></tr>";
-				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td>";
+				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>"+ zidong+"</td><td>"+shoudong+"</td><td>"+feiqi+"</td><td>"+p1+"</td><td>"+p2+"</td><td>"+p3+"</td><td>"+daipingshen+"</td><td>"+tongguo+"</td><td>"+butongguo+"</td><td>"+zhengli+"</td><td>"+fanli+"</td></tr></table>";
 				  $("#testsuiteInfoDiv").append(queryTestSuiteResult);
 			  },
@@ -612,7 +612,7 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
-				  alert(root.testcasedto.caseChangeHistorys.length);
+				  document.getElementById('showCaseChangeHistoryTd').style.display = "block";
 				  isSelf =  root.isSelf;
 				  document.getElementById('showtestcase_id').value = root.testcasedto.id;
 				  document.getElementById('showcasepriority').value = root.testcasedto.priority;
@@ -623,15 +623,21 @@ function testtest(){
 				  document.getElementById('showapproval').value = root.testcasedto.testcase_approval;
 				  document.getElementById('showproject').value = root.testcasedto.testcaseproject.name;
 				  //显示History
-				  var caseChangeHistory;
-				  for (i=0,i < root.testcasedto.caseChangeHistorys.length,i++ ){
-				  caseChangeHistory += "<p><a href='#casechange"+ i +"' data-toggle='collapse'>" +  +"</a></p>";
-				  caseChangeHistory += "<div id='casechange"+ i +"' class='collapse'>"
-					  
+				  var caseChangeHistory="";
+				  var historylength = root.testcasedto.caseChangeHistorys.length;
+				  for (i=0 ; i< historylength ;i++){
+					  caseChangeHistory += "<p><a href='#casechange"+ i +"' data-toggle='collapse'>" + root.testcasedto.caseChangeHistorys[i].update_time +"</a></p>";
+				 	  caseChangeHistory += "<div id='casechange"+ i +"' class='collapse'>";
+					  caseChangeHistory += "<table border='1'><tr><td>修改项</td><td>Old Value</td><td>New Value</td></tr>"
+					  var operationlength = root.testcasedto.caseChangeHistorys[i].caseChangeOperations.length;
+					  for (j=0 ; j< operationlength ; j++){
+						  caseChangeHistory += "<tr><td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].field + "</td>";
+						  caseChangeHistory += "<td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].oldValue + "</td>";
+						  caseChangeHistory += "<td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].newValue + "</td></tr>"
+						  }
+					  caseChangeHistory += "</table></div>";
 					  }
-				  
-				  
-				  
+					$("#showCaseChangeHistoryDiv").append(caseChangeHistory);
 				  
 				  
 			  },
@@ -759,6 +765,7 @@ function initype(){
 	$("#sutCaseInfoDiv").html("");
 	$("#testsuiteInfoDiv").html("");
 	$("#interfaceSearchResultDiv").html("");
+	$("#showCaseChangeHistoryDiv").html("");
 	document.getElementById('showtestsuite_name').readOnly = true;
 	document.getElementById('showtestsuite_description').readOnly = true;
 	document.getElementById('showversion').readOnly = true;
@@ -785,6 +792,7 @@ function initype(){
 	document.getElementById('showaprovaloption').style.display = "none";
 	document.getElementById('showapprovalupdatetd').style.display = "block";
 	document.getElementById('showapprovalsavetd').style.display = "none";
+	document.getElementById('showCaseChangeHistoryTd').style.display = "block";
 	};
 
 
@@ -885,7 +893,7 @@ function querySutCaseInfo(){
 				  queryTestSuiteResult += "<table border='1' width='100%'><tr><td colspan='5'>接口总数</td><td colspan='6'>"+root.testsuite_quantity+"</td></tr>";
 				  queryTestSuiteResult += "<tr><td colspan='5'>案例总数</td><td colspan='6'>"+root.testcase_quantity+"</td></tr>"
 				  queryTestSuiteResult += "<tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正反例</td></tr>";
-				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td>";
+				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>"+ zidong+"</td><td>"+shoudong+"</td><td>"+feiqi+"</td><td>"+p1+"</td><td>"+p2+"</td><td>"+p3+"</td><td>"+daipingshen+"</td><td>"+tongguo+"</td><td>"+butongguo+"</td><td>"+zhengli+"</td><td>"+fanli+"</td></tr></table>";
 				  $("#sutCaseInfoDiv").append(queryTestSuiteResult);
 			  },
@@ -1238,7 +1246,6 @@ function saveapprovalac(){
           </table>
         </form>
         <div id="testsuiteInfoDiv" style="text-align:center"> </div></td>
-        </td>
       <!--展示更新testcase-->
       <td width="100%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm" name="showTestCaseForm">
           <table width="100%" border="1" id="showcaseinfo">
@@ -1333,7 +1340,10 @@ function saveapprovalac(){
           </table>
         </form></td>
       <!--showcasechangehistory-->
-      <td style="width:300px; display:none"></td>
+      <td id="showCaseChangeHistoryTd" style="width:300px; display:none">
+      <div id="showCaseChangeHistoryDiv">
+      </div>
+      </td>
     </tr>
   </table>
   <!--隐藏表单创建testsuite-->
