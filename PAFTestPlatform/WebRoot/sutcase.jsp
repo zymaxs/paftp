@@ -612,6 +612,7 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				  alert(root.testcasedto.caseChangeHistorys.length);
 				  isSelf =  root.isSelf;
 				  document.getElementById('showtestcase_id').value = root.testcasedto.id;
 				  document.getElementById('showcasepriority').value = root.testcasedto.priority;
@@ -621,6 +622,18 @@ function testtest(){
 				  document.getElementById('showcasesteps').value = root.testcasedto.casesteps;
 				  document.getElementById('showapproval').value = root.testcasedto.testcase_approval;
 				  document.getElementById('showproject').value = root.testcasedto.testcaseproject.name;
+				  //显示History
+				  var caseChangeHistory;
+				  for (i=0,i < root.testcasedto.caseChangeHistorys.length,i++ ){
+				  caseChangeHistory += "<p><a href='#casechange"+ i +"' data-toggle='collapse'>" +  +"</a></p>";
+				  caseChangeHistory += "<div id='casechange"+ i +"' class='collapse'>"
+					  
+					  }
+				  
+				  
+				  
+				  
+				  
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -1320,32 +1333,7 @@ function saveapprovalac(){
           </table>
         </form></td>
       <!--showcasechangehistory-->
-      <td style="width:300px;"><div class="panel-group" id="accordion">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title"> <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> Collapsible Group Item #1 </a> </h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse in">
-              <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
-            </div>
-          </div>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title"> <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> Collapsible Group Item #2 </a> </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse">
-              <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
-            </div>
-          </div>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title"> <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> Collapsible Group Item #3 </a> </h4>
-            </div>
-            <div id="collapseThree" class="panel-collapse collapse">
-              <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
-            </div>
-          </div>
-        </div></td>
+      <td style="width:300px; display:none"></td>
     </tr>
   </table>
   <!--隐藏表单创建testsuite-->
