@@ -3,6 +3,7 @@ package com.paftp.service.Testsuite;
 import java.util.HashMap;
 import java.util.List;
 
+import com.paftp.dto.TestcaseDto;
 import com.paftp.dto.TestsuiteDto;
 import com.paftp.entity.Testcase;
 import com.paftp.entity.Testsuite;
@@ -25,5 +26,7 @@ public interface TestsuiteService {
 	public List<Testsuite> findAllSuiteByMultiConditions(HashMap<String, Object> conditions);
 
 	public TestsuiteDto getTestsuiteDto(Testsuite testsuite);
+	
+	public TestcaseDto getTestcaseDto(Testcase testcase);
 
 }
