@@ -122,7 +122,6 @@
 		</action>
 		<action name="getuserinfo" method="getUserInfo"
 			class="com.paftp.action.UserProfileAction">
-			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/userinfo.jsp</result>
 		</action>
 		<action name="applySut" method="applySut"
