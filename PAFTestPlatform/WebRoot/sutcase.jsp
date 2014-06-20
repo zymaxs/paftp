@@ -1247,7 +1247,7 @@ function saveapprovalac(){
         </form>
         <div id="testsuiteInfoDiv" style="text-align:center"> </div></td>
       <!--展示更新testcase-->
-      <td width="100%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm" name="showTestCaseForm">
+      <td width="100%" style="display:none; width:500px;" id="showTestCaseTd"><form id="showTestCaseForm" name="showTestCaseForm">
           <table width="100%" border="1" id="showcaseinfo">
             <tr>
               <td colspan="2" style="text-align:center">用例详情</td>
@@ -1378,9 +1378,6 @@ function saveapprovalac(){
         <tr>
           <td>描述</td>
           <td><textarea  rows="4" name="testsuite_description" class="input-xlarge" id="testsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
-        </tr>
-        <tr>
-          <td></td>
         </tr>
       </table>
     </form>
