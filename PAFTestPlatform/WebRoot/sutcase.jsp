@@ -612,7 +612,6 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
-				  document.getElementById('showCaseChangeHistoryTd').style.display = "block";
 				  isSelf =  root.isSelf;
 				  document.getElementById('showtestcase_id').value = root.testcasedto.id;
 				  document.getElementById('showcasepriority').value = root.testcasedto.priority;
@@ -792,7 +791,6 @@ function initype(){
 	document.getElementById('showaprovaloption').style.display = "none";
 	document.getElementById('showapprovalupdatetd').style.display = "block";
 	document.getElementById('showapprovalsavetd').style.display = "none";
-	document.getElementById('showCaseChangeHistoryTd').style.display = "block";
 	};
 
 
@@ -1140,211 +1138,243 @@ function saveapprovalac(){
     </div>
   </div>
   <!--主体-->
-  <table border="1" width="100%">
-    <tr> 
-      <!--左边Tree-->
-      <td width="25%"><div style="height:600px;overflow:scroll;overflow-x:hidden;">
-          <div>
+  <table id="maintable" border="1" width="100%">
+  	<tr>
+    	<!--左边Tree-->
+    	<td style="width:300px;">
+    		<div style=" min-height:570px;overflow:scroll;overflow-x:hidden;">
+            <div id="searchDiv">
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; padding:4px; border-radius:4px; border:1px solid silver;">
-          </div>
-          <div>
+            </div>
+            <div id="createbtn">
             <button type="button" class="btn btn-success btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i>Create</button>
-          </div>
-          <div id="jstree"></div>
-          <div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
-        </div></td>
-      <!--About SUT-->
-      <td width="100%" id="sutCaseInfoTd" style="display:block;"><div id="sutCaseInfoDiv" style="text-align:center"></div></td>
-      <!--Interface Search-->
-      <td width="100%" id="interfacesearchTd" style="display:none;" ><table border="1">
-          <tr>
-            <td colspan="5" style="text-align:center">查询条件</td>
-          </tr>
-          <tr>
-            <td>TestCase</td>
-            <td>自动化
-              <select id="querystatus">
-                <option value="All" selected>All</option>
-                <option value="自动">自动</option>
-                <option value="手动">手动</option>
-                <option value="废弃">废弃</option>
-              </select></td>
-            <td>优先级
-              <select id="querypriority">
-                <option value="All" selected>All</option>
-                <option value="P1">P1</option>
-                <option value="P2">P2</option>
-                <option value="P3">P3</option>
-              </select></td>
-            <td>正反例
-              <select id="querytype">
-                <option value="All" selected>All</option>
-                <option value="正例">正例</option>
-                <option value="反例">反例</option>
-              </select></td>
-            <td>用例评审
-              <select id="queryapproval">
-                <option value="All" selected>All</option>
-                <option value="待评审">待评审</option>
-                <option value="通过">通过</option>
-                <option value="未通过">未通过</option>
-              </select></td>
-          </tr>
-          <tr>
-            <td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
-          </tr>
-        </table>
-        <div id="interfaceSearchResultDiv" style="text-align:center"> </div></td>
-      <!--展示、更新testsuite-->
-      <td width="100%" style="display:none" id="showTestSuiteTd"><form id="showTestSuiteForm" name="showTestSuiteForm">
-          <table width="100%">
-            <tr>
-              <td><label for="showtestsuite_name">TestSuiteName</label></td>
-              <td><input id="showtestsuite_name" name="showtestsuite_name" value="" readonly></td>
-            </tr>
-            <tr>
-              <td colspan="2"><input id="showtestsuite_id" name="showtestsuite_id" value="" style="display:block" readonly></td>
-            </tr>
-            <tr>
-              <td><label for="showsut_name">所属系统</label></td>
-              <td><input id="showsut_name" name="showsut_name" value="<%=sut_name%>" readonly></td>
-            </tr>
-            <tr>
-              <td>起始版本</td>
-              <td id="showversiontd" style="display:block"><input id="showversion" value="" readonly></td>
-              <td id="showversionoption" style="display:none"><div id="updateversiongroup" class="selectbox">
-                  <div class="cartes">
-                    <input type="text" value="<%=versions.get(0).getVersionNum()%>" id="updateversion" name="version" class="listTxt" readonly />
-                    <div class="listBtn"><b></b></div>
-                    <input type="hidden" value="" class="listVal" />
-                  </div>
-                  <div class="lists">
-                    <ul class="list">
-                      <% for (int i =0; i<versions.size(); i++){%>
-                      <li id=<%=i%>><%=versions.get(i).getVersionNum()%></li>
-                      <%}%>
-                    </ul>
-                  </div>
-                </div></td>
-            </tr>
-            <tr>
-              <td>是否废弃</td>
-              <td id="showisdiscardtd" style="display:block"><input id="showisdiscard" value="" readonly></td>
-              <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="alive" checked>
-                Alive&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateisdiscard" value="discard">
-                Discard&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            </tr>
-            <tr>
-              <td>描述</td>
-              <td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge" readonly id="showtestsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
-            </tr>
-            <tr>
-              <td><button type="button" class="btn btn-default" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite" style="display:block">更新</button></td>
-              <td><button type="button" class="btn btn-default" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite" style="display:none">保存</button></td>
-            </tr>
-          </table>
-        </form>
-        <div id="testsuiteInfoDiv" style="text-align:center"> </div></td>
-      <!--展示更新testcase-->
-      <td width="100%" style="display:none; width:500px;" id="showTestCaseTd"><form id="showTestCaseForm" name="showTestCaseForm">
-          <table width="100%" border="1" id="showcaseinfo">
-            <tr>
-              <td colspan="2" style="text-align:center">用例详情</td>
-            </tr>
-            <tr>
-              <td><label for="showtestcase_name">TestCaseName</label></td>
-              <td><input id="showtestcase_name" name="showtestcase_name" value="" readonly></td>
-            </tr>
-            <tr>
-              <td colspan="2"><input id="showtestcase_id" name="showtestcase_id" value="" style="display:block" readonly></td>
-            </tr>
-            <tr>
-              <td>所属TestSuite</td>
-              <td><input id="showcasetestsuite_name" name="showcasetestsuite_name" value="" maxlength="15" readonly></td>
-            </tr>
-            <tr>
-              <td>所属Project</td>
-              <td id="showprojecttd" style="display:block"><input id="showproject" value="" readonly></td>
-              <td id="showprojectoption" style="display:none"><div id="updateprojectgroup" class="selectbox">
-                  <div class="cartes">
-                    <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="updateproject" name="updateproject" class="listTxt" readonly />
-                    <div class="listBtn"><b></b></div>
-                    <input type="hidden" value="" class="listVal" />
-                  </div>
-                  <div class="lists">
-                    <ul class="list">
-                      <% for (int i =0; i<testcaseprojects.size(); i++){%>
-                      <li id=<%=i%>><%=testcaseprojects.get(i).getName()%></li>
-                      <%}%>
-                    </ul>
-                  </div>
-                </div></td>
-            </tr>
-            <tr>
-              <td>优先级</td>
-              <td id="showcaseprioritytd" style="display:block"><input id="showcasepriority" value="" readonly></td>
-              <td id="showcasepriorityoption" style="display:none"><input type="radio" name="updatepriority" id="p1" value="P1" checked>
-                P1&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updatepriority" id="p2" value="P2">
-                P2&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updatepriority" id="p3" value="P3">
-                P3</td>
-            </tr>
-            <tr>
-              <td>状态</td>
-              <td id="showcasestatustd" style="display:block"><input id="showcasestatus" value="" readonly></td>
-              <td id="showcasestatusoption" style="display:none"><input type="radio" name="updatestatus" id="manul" value="手动" checked>
-                手动&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updatestatus" id="auto" value="自动">
-                自动&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updatestatus" value="废弃" id="discard">
-                废弃</td>
-            </tr>
-            <tr>
-              <td>正例 or 反例</td>
-              <td id="showcasetypetd" style="display:block"><input id="showcasetype" value="" readonly></td>
-              <td id="showcasetypeoption" style="display:none"><input type="radio" name="updatetype" id="zhengli" value="正例" checked>
-                正例&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" id="fanli" name="updatetype" value="反例" >
-                反例</td>
-            </tr>
-            <tr>
-              <td>描述</td>
-              <td><textarea  rows="4" name="showcasedescription" class="input-xlarge" id="showcasedescription" style="max-height:50px; max-width:200px; width:200px; height:50px;" readonly></textarea></td>
-            </tr>
-            <tr>
-              <td>步骤</td>
-              <td><textarea  rows="4" name="showcasesteps" class="input-xlarge" id="showcasesteps" style="max-height:150px; max-width:200px; width:200px; height:150px;" readonly></textarea></td>
-            </tr>
-            <tr>
-              <td><button type="button" class="btn btn-default" onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" style="display:block">更新</button></td>
-              <td><button type="button" class="btn btn-default" onClick="saveTestCaseac()" id="saveTestCase" name="saveTestCase" style="display:none">保存</button></td>
-            </tr>
-          </table>
-          <table id="showcasestatus" width="100%" border="1">
-            <tr>
-              <td>用例评审</td>
-              <td id="showapprovaltd" style="display:block"><input id="showapproval" value="" readonly></td>
-              <td id="showaprovaloption" style="display:none"><input type="radio" name="updateapproval" value="待评审" checked>
-                待评审&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateapproval" value="通过">
-                通过&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateapproval" value="未通过">
-                未通过&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            </tr>
-            <tr id="showaprovalbtntd">
-              <td colspan="2" id="showapprovalupdatetd" style="display:block"><input type="button" value="开始评审" onClick="updateapprovalac()"></td>
-              <td colspan="2" id="showapprovalsavetd" style="display:none"><input type="button" value="确认评审" onClick="saveapprovalac()"></td>
-            </tr>
-          </table>
-        </form></td>
-      <!--showcasechangehistory-->
-      <td id="showCaseChangeHistoryTd" style="width:300px; display:none">
-      <div id="showCaseChangeHistoryDiv">
-      </div>
-      </td>
-    </tr>
+          	</div>
+            <div id="jstree"></div>
+          	<div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>
+        	</div>
+    	</td>
+        
+        <!--About SUT-->
+      	<td width="100%" id="sutCaseInfoTd" style="display:block" >
+        	<div id="sutCaseInfoDiv" style="text-align:center">
+            </div>
+        </td>
+        
+        <!--Interface Search-->
+        <td width="100%" id="interfacesearchTd" style="display:none;">
+        	<table id="interfaceSearchTable">
+            	<tr>
+            		<td colspan="5" style="text-align:center">查询条件</td>
+          		</tr>
+                <tr>
+                	<td>TestCase</td>
+                    <td>自动化
+              			<select id="querystatus">
+                		<option value="All" selected>All</option>
+                		<option value="自动">自动</option>
+               		    <option value="手动">手动</option>
+                		<option value="废弃">废弃</option>
+              			</select>
+                    </td>
+                    <td>优先级
+              			<select id="querypriority">
+                		<option value="All" selected>All</option>
+                		<option value="P1">P1</option>
+                		<option value="P2">P2</option>
+                		<option value="P3">P3</option>
+              			</select>
+                    </td>
+                    <td>正反例
+              			<select id="querytype">
+                		<option value="All" selected>All</option>
+                		<option value="正例">正例</option>
+                		<option value="反例">反例</option>
+              			</select>
+                    </td>
+                    <td>用例评审
+              			<select id="queryapproval">
+                		<option value="All" selected>All</option>
+                		<option value="待评审">待评审</option>
+                		<option value="通过">通过</option>
+                		<option value="未通过">未通过</option>
+              			</select>
+                    </td>
+                </tr>
+                <tr>
+            		<td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
+          		</tr>
+            </table>
+            <div id="interfaceSearchResultDiv" style="text-align:center"></div>
+        </td>
+        
+        <!--展示、更新testsuite-->
+        <td width="100%" style="display:none" id="showTestSuiteTd">
+        	<form id="showTestSuiteForm" name="showTestSuiteForm">
+            <table width="100%" height="100%" id="showTestSuiteTable">
+            	<tr>
+                	<td><label for="showtestsuite_name">TestSuiteName</label></td>
+              		<td><input id="showtestsuite_name" name="showtestsuite_name" value="" readonly></td>
+                </tr>
+                <tr>
+                	<td colspan="2"><input id="showtestsuite_id" name="showtestsuite_id" value="" style="display:block" readonly></td>
+                </tr>
+                <tr>
+                	<td><label for="showsut_name">所属系统</label></td>
+              		<td><input id="showsut_name" name="showsut_name" value="<%=sut_name%>" readonly></td>
+                </tr>
+                <tr>
+                	<td>起始版本</td>
+              		<td id="showversiontd" style="display:block">
+                    	<input id="showversion" value="" readonly>
+                    </td>
+              		<td id="showversionoption" style="display:none">
+                    	<div id="updateversiongroup" class="selectbox">
+                  		<div class="cartes">
+                    	<input type="text" value="<%=versions.get(0).getVersionNum()%>" id="updateversion" name="version" class="listTxt" readonly>
+                    	<div class="listBtn"><b></b></div>
+                    	<input type="hidden" value="" class="listVal" >
+                  		</div>
+                  		<div class="lists">
+                    	<ul class="list">
+                      	<% for (int i =0; i<versions.size(); i++){%>
+                      	<li id=<%=i%>><%=versions.get(i).getVersionNum()%></li>
+                      	<%}%>
+                    	</ul>
+                  		</div>
+                		</div>
+                    </td>
+                </tr>
+                <tr>
+                	<td>是否废弃</td>
+              		<td id="showisdiscardtd" style="display:block"><input id="showisdiscard" value="" readonly></td>
+              		<td id="showisdiscardoption" style="display:none">
+                    	<input type="radio" name="updateisdiscard" value="alive" checked>Alive&nbsp;&nbsp;&nbsp;&nbsp;
+                		<input type="radio" name="updateisdiscard" value="discard">Discard&nbsp;&nbsp;&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                	<td>描述</td>
+              		<td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge" readonly id="showtestsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
+                </tr>
+                <tr>
+                	<td><button type="button" class="btn btn-default" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite" style="display:block">更新</button></td>
+              		<td><button type="button" class="btn btn-default" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite" style="display:none">保存</button></td>
+                </tr>
+            </table>
+            </form>
+            <div id="testsuiteInfoDiv" style="text-align:center"> </div>
+        </td>
+        
+        <!--展示更新testcase-->
+        <td width="100%" style="display:none" id="showTestCaseTd">
+        		<form id="showTestCaseForm">
+            	<table width="100%" border="1" id="showcaseinfo">
+                	<tr>
+              			<td colspan="2" style="text-align:center">用例详情</td>
+                        <td style="text-align:center; width:300px">历史修改记录</td> 
+            		</tr>
+                    <tr>
+                    	<td>TestCaseName</td>
+              			<td><input id="showtestcase_name" name="showtestcase_name" value="" readonly></td>
+                        <td rowspan="12" style="vertical-align:top">
+                        	<div id="showCaseChangeHistoryDiv">
+      						</div>
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td colspan="2"><input id="showtestcase_id" name="showtestcase_id" value="" style="display:block" readonly></td>
+                    </tr>
+                    <tr>
+                    	<td>所属TestSuite</td>
+              			<td><input id="showcasetestsuite_name" name="showcasetestsuite_name" value="" maxlength="15" readonly></td>
+                    </tr>
+                    <tr>
+                    	<td>所属Project</td>
+              			<td id="showprojecttd" style="display:block">
+                        	<input id="showproject" value="" readonly>
+                        </td>
+              			<td id="showprojectoption" style="display:none">
+                        	<div id="updateprojectgroup" class="selectbox">
+                  			<div class="cartes">
+                    		<input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="updateproject" name="updateproject" class="listTxt" readonly>
+                    		<div class="listBtn"><b></b></div>
+                    		<input type="hidden" value="" class="listVal" />
+                  			</div>
+                  			<div class="lists">
+                    		<ul class="list">
+                      		<% for (int i =0; i<testcaseprojects.size(); i++){%>
+                      		<li id=<%=i%>><%=testcaseprojects.get(i).getName()%></li>
+                      		<%}%>
+                    		</ul>
+                  			</div>
+                			</div>
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td>优先级</td>
+              			<td id="showcaseprioritytd" style="display:block">
+                        	<input id="showcasepriority" value="" readonly>
+                        </td>
+              			<td id="showcasepriorityoption" style="display:none">
+                        	<input type="radio" name="updatepriority" id="p1" value="P1" checked>P1&nbsp;&nbsp;&nbsp;&nbsp;
+                			<input type="radio" name="updatepriority" id="p2" value="P2">P2&nbsp;&nbsp;&nbsp;&nbsp;
+                			<input type="radio" name="updatepriority" id="p3" value="P3">P3
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td>状态</td>
+              			<td id="showcasestatustd" style="display:block">
+                        	<input id="showcasestatus" value="" readonly>
+                        </td>
+              			<td id="showcasestatusoption" style="display:none">
+                        	<input type="radio" name="updatestatus" id="manul" value="手动" checked>手动&nbsp;&nbsp;&nbsp;&nbsp;
+                			<input type="radio" name="updatestatus" id="auto" value="自动">自动&nbsp;&nbsp;&nbsp;&nbsp;
+                			<input type="radio" name="updatestatus" value="废弃" id="discard">废弃
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td>正例 or 反例</td>
+              			<td id="showcasetypetd" style="display:block">
+                        	<input id="showcasetype" value="" readonly>
+                        </td>
+              			<td id="showcasetypeoption" style="display:none">
+                        	<input type="radio" name="updatetype" id="zhengli" value="正例" checked>正例&nbsp;&nbsp;&nbsp;&nbsp;
+                			<input type="radio" id="fanli" name="updatetype" value="反例" >反例
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td>描述</td>
+              			<td><textarea  rows="4" name="showcasedescription" class="input-xlarge" id="showcasedescription" style="max-height:50px; max-width:200px; width:200px; height:50px;" readonly></textarea></td>
+                    </tr>
+                    <tr>
+                    	<td>步骤</td>
+              			<td><textarea  rows="4" name="showcasesteps" class="input-xlarge" id="showcasesteps" style="max-height:150px; max-width:200px; width:200px; height:150px;" readonly></textarea></td>
+                    </tr>
+                    <tr>
+                    	<td><button type="button" class="btn btn-default" onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" style="display:block">更新</button></td>
+              			<td><button type="button" class="btn btn-default" onClick="saveTestCaseac()" id="saveTestCase" name="saveTestCase" style="display:none">保存</button></td>
+                    </tr>
+                    <tr>
+              			<td>用例评审</td>
+              			<td id="showapprovaltd" style="display:block"><input id="showapproval" value="" readonly></td>
+              			<td id="showaprovaloption" style="display:none">
+                        	<input type="radio" name="updateapproval" value="待评审" checked>待评审&nbsp;&nbsp;&nbsp;&nbsp;
+                			<input type="radio" name="updateapproval" value="通过">通过&nbsp;&nbsp;&nbsp;&nbsp;
+                			<input type="radio" name="updateapproval" value="未通过">未通过&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>
+            		</tr>
+                    <tr id="showaprovalbtntd">
+              			<td colspan="2" id="showapprovalupdatetd" style="display:block;">
+                        	<input type="button" value="开始评审" onClick="updateapprovalac()">
+                        </td>
+              			<td colspan="2" id="showapprovalsavetd" style="display:none;">
+                        	<input type="button" value="确认评审" onClick="saveapprovalac()">
+                        </td>
+            		</tr>
+                    </form>
+                </table>
+        </td>
+  	</tr>
   </table>
   <!--隐藏表单创建testsuite-->
   <div id="createTestSuite" style="display:none">
