@@ -18,38 +18,33 @@ public class DBWriter {
 
 	public void insertTestpass(Testpass testpass) {
 		this.getConnection();
-		String sutname = testpass.getSut();
-		ResultSet resultset = this.execute("select * from sut where code = '"
-				+ sutname + "';");
-		String sutid = this.getResult(resultset, "id");
-		String version_num = testpass.getVersion();
+		String sut_name = testpass.getSut_name();
+		ResultSet resultset = this.execute("select * from sut where name = '"
+				+ sut_name + "';");
+		String sut_id = this.getResult(resultset, "id");
+		String version_num = testpass.getVersion_name();
 		resultset = this.execute("select * from version where version_num = '"
 				+ version_num + "';");
-		String versionid = this.getResult(resultset, "id");
-		//Date date = new Date();
-		
-		java.util.Date date = new java.util.Date();  
-	    java.sql.Date e = new java.sql.Date(date.getTime());
+		String version_id = this.getResult(resultset, "id");
+		Date date = new Date();
+		java.sql.Timestamp createtime = new java.sql.Timestamp(date.getTime());
 		String testset = testpass.getTestset();
-		String sql = "INSERT INTO testpass(createtime,testset,sut_id,version_id) VALUES (?,?,?,?);";
+		String name = createtime.toString();
+		String sql = "INSERT INTO testpass(createtime,testset,sut_id,version_id,name) VALUES (?,?,?,?,?);";
 		
 		PreparedStatement st;
 		try {
 			st = dbConn.prepareStatement(sql);
-	        st.setDate(1,e); 
+	        st.setTimestamp(1, createtime);
 	        st.setString(2, testset);
-	        st.setInt(3, Integer.parseInt(sutid));
-	        st.setInt(4, Integer.parseInt(version_num));
+	        st.setInt(3, Integer.parseInt(sut_id));
+	        st.setInt(4, Integer.parseInt(version_id));
+	        st.setString(5, name);
 	        st.executeUpdate();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-       
-
-		//this.execute(sql);
-
 
 
 	}

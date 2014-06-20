@@ -26,73 +26,80 @@ import com.paftp.bean.*;
 public class ResultParser {
 
 	public Testpass getTestpass(String path) {
+
 		Testpass testpass = new Testpass();
+
 		Properties p = this.getProperties(path + "\\testpass.properties");
-		testpass.setSut(p.getProperty("sut"));
+		testpass.setSut_name(p.getProperty("sut"));
+		testpass.setVersion_name(p.getProperty("version"));
 		testpass.setTestset(p.getProperty("testset"));
-		testpass.setVersion(p.getProperty("version"));
 		File[] files = this.getFiles(path + "\\result\\");
-		List<Testsuite> testsuites = new ArrayList<Testsuite>();
+		List<TestsuiteResult> testsuite_results = new ArrayList<TestsuiteResult>();
 		for (int i = 0; i < files.length; i++) {
-			Testsuite testsuite = this.getTestsuite(path + "\\result\\"
-					+ files[i].getName());
-			testsuites.add(testsuite);
+			TestsuiteResult testsuite_result = this.getTestsuiteResult(path
+					+ "\\result\\" + files[i].getName());
+			testsuite_results.add(testsuite_result);
 		}
-		testpass.setTestsuites(testsuites);
+		testpass.setTestsuite_results(testsuite_results);
 		return testpass;
 	}
 
-	public Testsuite getTestsuite(String path) {
-		Testsuite testsuite = new Testsuite();
-		String testsuitename = this.getFileName(path);
-		testsuite.setSuitename(testsuitename);
+	public TestsuiteResult getTestsuiteResult(String path) {
+		TestsuiteResult testsuite_result = new TestsuiteResult();
+		String testsuiteresult_name = this.getFileName(path);
+		testsuite_result.setSuitename(testsuiteresult_name);
 		Document xmlDoc = this.getXmlFile(path);
 		Element root = xmlDoc.getDocumentElement();
 		NodeList list = root.getChildNodes();
-		List<Testcase> testcases = new ArrayList<Testcase>();
+		List<TestcaseResult> testcase_results = new ArrayList<TestcaseResult>();
 		for (int i = 0; i < list.getLength(); i++) {
 			if (list.item(i) instanceof Element) {
 				Element testcaseNode = (Element) list.item(i);
-				Testcase testcase = this.getTestcase(testcaseNode);
-				testcases.add(testcase);
+				TestcaseResult testcase_result = this
+						.getTestcaseResult(testcaseNode);
+				testcase_results.add(testcase_result);
 			}
 		}
-		testsuite.setTestcases(testcases);
-		return testsuite;
+		testsuite_result.setTestcase_results(testcase_results);
+		return testsuite_result;
 	}
 
-	public Testcase getTestcase(Element testcaseElement) {
-		Testcase testcase = new Testcase();
-		testcase.setCasename(testcaseElement.getAttribute("name"));
-		testcase.setResult(testcaseElement.getAttribute("result"));
+	public TestcaseResult getTestcaseResult(Element testcaseElement) {
+		TestcaseResult testcase_result = new TestcaseResult();
+		testcase_result.setCasename(testcaseElement.getAttribute("name"));
+		if (testcaseElement.getAttribute("result").equals("0")) {
+			testcase_result.setIspass(true);
+		} else {
+			testcase_result.setIspass(false);
+		}
 
 		NodeList list = testcaseElement.getChildNodes();
-		List<Testcasecontent> testcasecontents = new ArrayList<Testcasecontent>();
+		List<TestcaseResultContent> testcaseresult_contents = new ArrayList<TestcaseResultContent>();
 		for (int i = 0; i < list.getLength(); i++) {
 			if (list.item(i) instanceof Element) {
 				Element testcasecontentNode = (Element) list.item(i);
-				Testcasecontent testcasecontent = this
-						.getTestcasecontent(testcasecontentNode);
-				testcasecontents.add(testcasecontent);
+				TestcaseResultContent testcaseresult_content = this.getTestcaseresultContent(testcasecontentNode);
+				testcaseresult_contents.add(testcaseresult_content);
 			}
 		}
-		testcase.setTestcasecontents(testcasecontents);
+		testcase_result.setTestcaseresult_contents(testcaseresult_contents);
 
-		return testcase;
+		return testcase_result;
 	}
 
-	public Testcasecontent getTestcasecontent(Element testcasecontentElemet) {
-		Testcasecontent testcasecontent = new Testcasecontent();
+	public TestcaseResultContent getTestcaseresultContent(Element testcasecontentElemet) {
+		TestcaseResultContent testcaseresult_content = new TestcaseResultContent();
 		if (testcasecontentElemet.getNodeName().equals("Comment")) {
-			testcasecontent.setType("Comment");
+			testcaseresult_content.setType("Comment");
 		} else if (testcasecontentElemet.getNodeName().equals("Checkpoint")) {
-			testcasecontent.setType("Checkpoint");
-			testcasecontent.setResult(testcasecontentElemet.getAttribute("result"));
+			testcaseresult_content.setType("Checkpoint");
+			testcaseresult_content.setResult(testcasecontentElemet
+					.getAttribute("result"));
 		} else {
-			testcasecontent.setType(testcasecontentElemet.getNodeName());
+			testcaseresult_content.setType(testcasecontentElemet.getNodeName());
 		}
-		testcasecontent.setValue(testcasecontentElemet.getTextContent());
-		return testcasecontent;
+		testcaseresult_content.setValue(testcasecontentElemet.getTextContent());
+		return testcaseresult_content;
 	}
 
 	private Document getXmlFile(String path) {
