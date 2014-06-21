@@ -46,7 +46,9 @@ public class ResultParser {
 
 	public TestsuiteResult getTestsuiteResult(String path) {
 		TestsuiteResult testsuite_result = new TestsuiteResult();
-		String testsuiteresult_name = this.getFileName(path);
+		String filename = this.getFileName(path);
+		String testsuiteresult_names[] = filename.split("\\.");
+		String testsuiteresult_name = testsuiteresult_names[0];
 		testsuite_result.setSuitename(testsuiteresult_name);
 		Document xmlDoc = this.getXmlFile(path);
 		Element root = xmlDoc.getDocumentElement();

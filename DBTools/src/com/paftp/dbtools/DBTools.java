@@ -1,11 +1,13 @@
 package com.paftp.dbtools;
 
+import java.sql.SQLException;
+
 import com.paftp.bean.Testpass;
 import com.paftp.bean.TestsuiteResult;
 
 public class DBTools {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
 		ResultParser rp = new ResultParser();
 		DBWriter dbw = new DBWriter();
