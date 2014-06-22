@@ -205,7 +205,9 @@ function demo_create() {
 			  else if(ref.get_node(sel).type == "testcase"){
 				  interfacetestcase = ref.get_node(sel).text;
 				  document.getElementById('testcase_name').value = interfacetestcase;
-				  document.getElementById('pre_stname').value = ref.get_node(ref.get_parent(sel)).text +"_";
+				  var stname = ref.get_node(ref.get_parent(sel)).text;
+				  var pre_stname = stname.replace("Ts","Tc")
+				  document.getElementById('pre_stname').value = pre_stname +"_";
 				  document.getElementById('casetestsuite_name').value = ref.get_node(ref.get_parent(sel)).text; 
 				  createTestCase();
 				  }
@@ -602,9 +604,17 @@ function testtest(){
 		else if (type.type == "testcase"){
 		initype();
 		interfacetestcase = ref.get_node(sel).text;
-		document.getElementById('showtestcase_name').value = interfacetestcase;
+		var strArray =  interfacetestcase.split( "_" );
+		var caseprefixname = "Tc_" + strArray[1] + "_";
+		document.getElementById('pre_casename').value = caseprefixname;
+		var casepostfixname = "";
+		for (i=2;i< strArray.length ; i++){
+			casepostfixname += strArray[i];
+			}
+		document.getElementById('showtestcase_name').value = casepostfixname;
 		document.getElementById('showcasetestsuite_name').value = ref.get_node(ref.get_parent(sel)).text;
-		tsparams = {testcase_name:interfacetestcase,sut_name:sut_name};
+		var testcase_name = caseprefixname + casepostfixname;
+		tsparams = {testcase_name:testcase_name,sut_name:sut_name};
 		$.ajax({
 			  type : "POST",
 			  url : "queryTestcase.action",
@@ -615,8 +625,30 @@ function testtest(){
 				  isSelf =  root.isSelf;
 				  document.getElementById('showtestcase_id').value = root.testcasedto.id;
 				  document.getElementById('showcasepriority').value = root.testcasedto.priority;
+				  var obj_priority = document.getElementsByName('updatepriority');
+				  for (i=0 ; i < obj_priority.length ; i++){
+					  if(obj_priority[i].value == root.testcasedto.priority){
+						  obj_priority[i].checked = true;
+						  }
+					  
+					  };
+				  
 				  document.getElementById('showcasestatus').value = root.testcasedto.status;
+				  var obj_status = document.getElementsByName('updatestatus');
+				  for (i=0 ; i < obj_status.length ; i++){
+					  if(obj_status[i].value == root.testcasedto.status){
+						  obj_status[i].checked = true;
+						  }
+					  
+					  };
 				  document.getElementById('showcasetype').value = root.testcasedto.casetype;
+				  var obj_type = document.getElementsByName('updatetype');
+				  for (i=0 ; i < obj_status.length ; i++){
+					  if(obj_type[i].value == root.testcasedto.casetype){
+						  obj_type[i].checked = true;
+						  }
+					  
+					  };
 				  document.getElementById('showcasedescription').value = root.testcasedto.description;
 				  document.getElementById('showcasesteps').value = root.testcasedto.casesteps;
 				  document.getElementById('showapproval').value = root.testcasedto.testcase_approval;
@@ -1275,7 +1307,7 @@ function saveapprovalac(){
             		</tr>
                     <tr>
                     	<td>TestCaseName</td>
-              			<td><input id="showtestcase_name" name="showtestcase_name" value="" readonly></td>
+              			<td><input id="pre_casename" name="pre_casename" value="" readonly><input id="showtestcase_name" name="showtestcase_name" value="" readonly></td>
                         <td rowspan="12" style="vertical-align:top">
                         	<div id="showCaseChangeHistoryDiv">
       						</div>
