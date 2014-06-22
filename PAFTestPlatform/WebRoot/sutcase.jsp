@@ -128,7 +128,7 @@ else { isCurrentRole = "n";};
 					if (topWin.$id("testcase_name").value == ""){
 					Dialog.alert("用例名称不能为空");
 						}
-					else if ( topWin.$id('testcase_name').value.length > 15){
+					else if ( topWin.$id('testcase_name').value.length > 50){
 					Dialog.alert("用例名称不能超过15个字符");
 						}
 					else if (topWin.$id('description').value == ""){
@@ -205,7 +205,9 @@ function demo_create() {
 			  else if(ref.get_node(sel).type == "testcase"){
 				  interfacetestcase = ref.get_node(sel).text;
 				  document.getElementById('testcase_name').value = interfacetestcase;
-				  document.getElementById('pre_stname').value = ref.get_node(ref.get_parent(sel)).text +"_";
+				  var stname = ref.get_node(ref.get_parent(sel)).text;
+				  var pre_stname = stname.replace("Ts","Tc")
+				  document.getElementById('pre_stname').value = pre_stname +"_";
 				  document.getElementById('casetestsuite_name').value = ref.get_node(ref.get_parent(sel)).text; 
 				  createTestCase();
 				  }
@@ -298,7 +300,8 @@ function saveTestSuiteac(){
 	    	isdiscard_value = isdiacard_radio[i].value;
 	  	}
 	  };
-	var tsparams = {testsuite_name:$("#showtestsuite_name").val(),sut_name:$("#showsut_name").val(),testsuite_id:$("#showtestsuite_id").val(),testsuite_description:$("#showtestsuite_description").val(),isdiscard:isdiscard_value,version:$("#updateversion").val()};
+	var testsuite_name = "Ts_" + $("#showtestsuite_name").val();
+	var tsparams = {testsuite_name:testsuite_name,sut_name:$("#showsut_name").val(),testsuite_id:$("#showtestsuite_id").val(),testsuite_description:$("#showtestsuite_description").val(),isdiscard:isdiscard_value,version:$("#updateversion").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "updateTestsuite.action",
@@ -437,7 +440,8 @@ function saveTestCaseac(){
 	  	}
 	  };*/
 	  var sut_name = '<%=sut_name%>';
-	  var tsparams = {testcase_name:$("#showtestcase_name").val(),sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val()};
+	  var testcase_name = $("#pre_casename").val() + $("#showtestcase_name").val();
+	  var tsparams = {testcase_name:testcase_name,sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "updateTestcase.action",
@@ -486,8 +490,20 @@ function testtest(){
 	   if ( type.type == "interfacetestcase"){
 		initype();
 		interfacetestsuite = ref.get_node(sel).text;
-		document.getElementById('showtestsuite_name').value = interfacetestsuite;
-		tsparams = {testsuite_name:interfacetestsuite,sut_name:sut_name};
+		var stnameArray =  interfacetestsuite.split( "_" );
+		var stprefixname = "Ts_";
+		var stpostfixname = "";
+		for (i=1;i< stnameArray.length ; i++){
+			if ( i >=1 && i < (stnameArray.length-1) ){
+			stpostfixname += stnameArray[i] + "_";
+			}
+			else {
+			stpostfixname += stnameArray[i];
+			}
+			}
+		document.getElementById('showtestsuite_name').value = stpostfixname;
+		var testsuite_name = stprefixname + stpostfixname;
+		tsparams = {testsuite_name:testsuite_name,sut_name:sut_name};
 		$.ajax({
 			  type : "POST",
 			  url : "queryTestsuite.action",
@@ -592,8 +608,6 @@ function testtest(){
 				  alert(textStatus);
 			  }
 		  });
-		interfacetestsuite = ref.get_node(sel).text;
-		document.getElementById('showtestsuite_name').value = interfacetestsuite;
 		document.getElementById('sutCaseInfoTd').style.display = "none";
 		document.getElementById('interfacesearchTd').style.display = "none";
 		document.getElementById('showTestSuiteTd').style.display = "block";
@@ -602,9 +616,22 @@ function testtest(){
 		else if (type.type == "testcase"){
 		initype();
 		interfacetestcase = ref.get_node(sel).text;
-		document.getElementById('showtestcase_name').value = interfacetestcase;
+		var strArray =  interfacetestcase.split( "_" );
+		var caseprefixname = "Tc_" + strArray[1] + "_";
+		document.getElementById('pre_casename').value = caseprefixname;
+		var casepostfixname = "";
+		for (i=2;i< strArray.length ; i++){
+			if ( i >=1 && i < (strArray.length-1) ){
+			casepostfixname += strArray[i] + "_";
+			}
+			else {
+			casepostfixname += strArray[i];
+			}
+			}
+		document.getElementById('showtestcase_name').value = casepostfixname;
 		document.getElementById('showcasetestsuite_name').value = ref.get_node(ref.get_parent(sel)).text;
-		tsparams = {testcase_name:interfacetestcase,sut_name:sut_name};
+		var testcase_name = caseprefixname + casepostfixname;
+		tsparams = {testcase_name:testcase_name,sut_name:sut_name};
 		$.ajax({
 			  type : "POST",
 			  url : "queryTestcase.action",
@@ -615,8 +642,30 @@ function testtest(){
 				  isSelf =  root.isSelf;
 				  document.getElementById('showtestcase_id').value = root.testcasedto.id;
 				  document.getElementById('showcasepriority').value = root.testcasedto.priority;
+				  var obj_priority = document.getElementsByName('updatepriority');
+				  for (i=0 ; i < obj_priority.length ; i++){
+					  if(obj_priority[i].value == root.testcasedto.priority){
+						  obj_priority[i].checked = true;
+						  }
+					  
+					  };
+				  
 				  document.getElementById('showcasestatus').value = root.testcasedto.status;
+				  var obj_status = document.getElementsByName('updatestatus');
+				  for (i=0 ; i < obj_status.length ; i++){
+					  if(obj_status[i].value == root.testcasedto.status){
+						  obj_status[i].checked = true;
+						  }
+					  
+					  };
 				  document.getElementById('showcasetype').value = root.testcasedto.casetype;
+				  var obj_type = document.getElementsByName('updatetype');
+				  for (i=0 ; i < obj_type.length ; i++){
+					  if(obj_type[i].value == root.testcasedto.casetype){
+						  obj_type[i].checked = true;
+						  }
+					  
+					  };
 				  document.getElementById('showcasedescription').value = root.testcasedto.description;
 				  document.getElementById('showcasesteps').value = root.testcasedto.casesteps;
 				  document.getElementById('showapproval').value = root.testcasedto.testcase_approval;
@@ -625,7 +674,7 @@ function testtest(){
 				  var caseChangeHistory="";
 				  var historylength = root.testcasedto.caseChangeHistorys.length;
 				  for (i=0 ; i< historylength ;i++){
-					  caseChangeHistory += "<p><a href='#casechange"+ i +"' data-toggle='collapse'>" + root.testcasedto.caseChangeHistorys[i].update_time +"</a></p>";
+					  caseChangeHistory += "<p><a href='#casechange"+ i +"' data-toggle='collapse'>" + root.testcasedto.caseChangeHistorys[i].update_time +"</a>&nbsp;&nbsp;By&nbsp;&nbsp;<a href='getuserinfo.action?userid="+ root.testcasedto.caseChangeHistorys[i].updator.id+"'>"+root.testcasedto.caseChangeHistorys[i].updator.displayName+"</a></p>";
 				 	  caseChangeHistory += "<div id='casechange"+ i +"' class='collapse'>";
 					  caseChangeHistory += "<table border='1'><tr><td>修改项</td><td>Old Value</td><td>New Value</td></tr>"
 					  var operationlength = root.testcasedto.caseChangeHistorys[i].caseChangeOperations.length;
@@ -909,7 +958,8 @@ function queryinterfaceac(){
 	var querypriority = $("#querypriority").val();
 	var querytype = $("#querytype").val();
 	var queryapproval = $("#queryapproval").val();
-	var queryparams = {status:querystatus,priority:querypriority,casetype:querytype,testcase_approval:queryapproval,sut_name:'<%=sut_name%>'};
+	var queryproject = $("#queryproject").val();
+	var queryparams = {status:querystatus,priority:querypriority,casetype:querytype,testcase_approval:queryapproval,project_name:queryproject,sut_name:'<%=sut_name%>'};
 	$.ajax({
 			  type : "POST",
 			  url : "queryCombineConditions.action",
@@ -1161,22 +1211,28 @@ function saveapprovalac(){
         </td>
         
         <!--Interface Search-->
-        <td width="100%" id="interfacesearchTd" style="display:none;">
-        	<table id="interfaceSearchTable">
+        <td id="interfacesearchTd" style="display:none;">
+        	<table id="interfaceSearchTable" style="width:500px;">
             	<tr>
             		<td colspan="5" style="text-align:center">查询条件</td>
           		</tr>
+                <tr style="text-align:center">
+                <td>自动化</td>
+                <td>优先级</td>
+                <td>正反例</td>
+                <td>用例评审</td>
+                <td>所属项目</td>
+                </tr>
                 <tr>
-                	<td>TestCase</td>
-                    <td>自动化
-              			<select id="querystatus">
+                    <td style=" width:100px">
+              			<select id="querystatus" class="input-medium">
                 		<option value="All" selected>All</option>
                 		<option value="自动">自动</option>
                		    <option value="手动">手动</option>
                 		<option value="废弃">废弃</option>
               			</select>
                     </td>
-                    <td>优先级
+                    <td style=" width:100px">
               			<select id="querypriority">
                 		<option value="All" selected>All</option>
                 		<option value="P1">P1</option>
@@ -1184,20 +1240,28 @@ function saveapprovalac(){
                 		<option value="P3">P3</option>
               			</select>
                     </td>
-                    <td>正反例
+                    <td style=" width:100px">
               			<select id="querytype">
                 		<option value="All" selected>All</option>
                 		<option value="正例">正例</option>
                 		<option value="反例">反例</option>
               			</select>
                     </td>
-                    <td>用例评审
+                    <td style=" width:100px">
               			<select id="queryapproval">
                 		<option value="All" selected>All</option>
                 		<option value="待评审">待评审</option>
                 		<option value="通过">通过</option>
                 		<option value="未通过">未通过</option>
               			</select>
+                    </td>
+                    <td style=" width:100px;">
+                    <select id="queryproject">
+                    <option value="All" selected>All</option>
+                    <% for (int i =0; i< testcaseprojects.size();i++ ){%>
+                    <option value="<%=testcaseprojects.get(i).getName()%>"><%=testcaseprojects.get(i).getName()%></option>
+                    <%}%>
+                    </select>
                     </td>
                 </tr>
                 <tr>
@@ -1213,7 +1277,7 @@ function saveapprovalac(){
             <table width="100%" height="100%" id="showTestSuiteTable">
             	<tr>
                 	<td><label for="showtestsuite_name">TestSuiteName</label></td>
-              		<td><input id="showtestsuite_name" name="showtestsuite_name" value="" readonly></td>
+              		<td><input value="Ts_" size="3" readonly style="text-align:right; width:20px"><input id="showtestsuite_name" name="showtestsuite_name" value="" readonly></td>
                 </tr>
                 <tr>
                 	<td colspan="2"><input id="showtestsuite_id" name="showtestsuite_id" value="" style="display:block" readonly></td>
@@ -1275,7 +1339,7 @@ function saveapprovalac(){
             		</tr>
                     <tr>
                     	<td>TestCaseName</td>
-              			<td><input id="showtestcase_name" name="showtestcase_name" value="" readonly></td>
+              			<td><input id="pre_casename" name="pre_casename" value="" readonly><input id="showtestcase_name" name="showtestcase_name" value="" readonly></td>
                         <td rowspan="12" style="vertical-align:top">
                         	<div id="showCaseChangeHistoryDiv">
       						</div>
@@ -1419,7 +1483,7 @@ function saveapprovalac(){
         <tr>
           <td>TestCase</td>
           <td><input id="pre_stname" name="pre_stname" value="" style="text-align:right" readonly>
-            <input id="testcase_name" name="testcase_name" value="" maxlength="15"></td>
+            <input id="testcase_name" name="testcase_name" value=""></td>
         </tr>
         <tr>
           <td colspan="2"><input id="casesut_name" style="display:none" name="sut_name" value="<%=sut_name%>"></td>
