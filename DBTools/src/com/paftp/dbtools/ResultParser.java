@@ -16,8 +16,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -129,7 +127,7 @@ public class ResultParser {
 		return xmlDoc;
 	}
 
-	private Properties getProperties(String path) {
+	public Properties getProperties(String path) {
 		InputStream in = null;
 		Properties p = new Properties();
 		try {

@@ -1,8 +1,14 @@
 package com.paftp.dbtools;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import com.paftp.bean.TestcaseResult;
 import com.paftp.bean.TestcaseResultContent;
@@ -12,16 +18,18 @@ import com.paftp.bean.TestsuiteResult;
 public class DBWriter {
 
 	private String driverName = "com.mysql.jdbc.Driver";
-	private String dbURL = "jdbc:mysql://localhost:3306/paftp";
-	private String userName = "root";
-	private String userPwd = "Paic#234";
 
 	private Connection dbConn = null;
 	private Statement stmt = null;
 	private ResultSet rs = null;
+	
+	private String dbURL;
+	private String userName;
+	private String userPwd;
 
-	public void insertTestpass(Testpass testpass) throws SQLException {
-		this.getConnection();
+	public void insertTestpass(Testpass testpass, String path) throws SQLException {
+		this.setDBParameters(path);
+		this.getConnection(this.getDbURL(), this.getUserName(), this.getUserPwd());
 		String sut_name = testpass.getSut_name();
 		ResultSet resultset = this.execute("select * from sut where name = '"
 				+ sut_name + "';");
@@ -167,11 +175,11 @@ public class DBWriter {
 
 	}
 
-	private Connection getConnection() {
+	private Connection getConnection(String dbUrl, String userName, String userPwd) {
 
 		try {
 			Class.forName(driverName);
-			dbConn = DriverManager.getConnection(dbURL, userName, userPwd);
+			dbConn = DriverManager.getConnection(dbUrl, userName, userPwd);
 			System.out.println("Connection Successful!");
 		} catch (Exception e) {
 			// e.printStackTrace();
@@ -217,5 +225,57 @@ public class DBWriter {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	private void setDBParameters(String path){
+		Properties p = this.getProperties(path + "\\db.properties");
+		
+		this.setDbURL(p.getProperty("dbUrl"));
+		this.setUserName(p.getProperty("userName"));
+		this.setUserPwd(p.getProperty("userPwd"));
+	}
+	
+	public String getDbURL() {
+		return dbURL;
+	}
+
+	public void setDbURL(String dbURL) {
+		this.dbURL = dbURL;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserPwd() {
+		return userPwd;
+	}
+
+	public void setUserPwd(String userPwd) {
+		this.userPwd = userPwd;
+	}
+
+	
+	private Properties getProperties(String path) {
+		InputStream in = null;
+		Properties p = new Properties();
+		try {
+			in = new BufferedInputStream(new FileInputStream(path));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			p.load(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return p;
 	}
 }
