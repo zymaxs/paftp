@@ -346,7 +346,7 @@ public class TestsuiteAction extends ActionSupport {
 			List<Testcase> testcases = testsuite.getTestcases();
 
 			for (int i = 0; i < testcases.size(); i++) {
-				testcases.get(i).setStatus("discard");
+				testcases.get(i).setStatus("废弃");
 			}
 		}
 
