@@ -188,7 +188,7 @@ public class TestsuiteAction extends ActionSupport {
 				updatetime.getTime());
 		casechangehistory.setUpdate_time(updatedatetime);
 		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
-
+		
 		this.updateTestcaseHistory(user, testcase, casechangehistory);
 
 		return "success";
@@ -688,6 +688,9 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 
+		if (i == 0){
+			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
+		}
 		for (int j = 0; j < i; j++) {
 			casechangeoperationService
 					.saveCaseChangeOperation(casechangeoperations.get(j));
