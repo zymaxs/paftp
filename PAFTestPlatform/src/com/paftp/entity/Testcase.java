@@ -175,7 +175,7 @@ public class Testcase {
 		this.testcase_approval = testcase_approval;
 	}
 
-	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id")
 	public TestcaseProject getTestcaseproject() {
 		return testcaseproject;
