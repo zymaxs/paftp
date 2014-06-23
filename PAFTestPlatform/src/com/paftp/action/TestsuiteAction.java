@@ -334,7 +334,11 @@ public class TestsuiteAction extends ActionSupport {
 				.getTestsuite_id());
 		Version version = versionService.findVersionByVersionNum(this
 				.getVersion());
-
+		String sourceName = testsuite.getName();
+		String targetName = this.getTestsuite_name();
+		sourceName = sourceName.replaceAll("Ts", "Tc");
+		targetName = targetName.replaceAll("Ts", "Tc");
+		
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setStatus(this.getIsdiscard());
@@ -349,7 +353,17 @@ public class TestsuiteAction extends ActionSupport {
 				testcases.get(i).setStatus("废弃");
 			}
 		}
-
+		
+		String caseName;
+		List<Testcase> testcases = testsuite.getTestcases();
+		if (testcases != null){
+		for(int i=0; i<testcases.size(); i++){
+			Testcase testcase = testcases.get(i);
+			caseName = testcase.getCaseName().replaceAll(sourceName, targetName);
+			testcases.get(i).setCaseName(caseName);
+		}
+		}
+		
 		testsuiteService.updateTestsuite(testsuite);
 
 		request.setAttribute("testsuite", testsuite);
