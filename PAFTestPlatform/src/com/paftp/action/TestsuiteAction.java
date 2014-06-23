@@ -683,7 +683,8 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setNewValue(this.getProject_name());
 			casechangeoperation.setField("project_name");
 			casechangeoperations.add(casechangeoperation);
-			testcase.getTestcaseproject().setName(this.getProject_name());
+			TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
+			testcase.setTestcaseproject(testcaseproject);
 			i++;
 		}
 
