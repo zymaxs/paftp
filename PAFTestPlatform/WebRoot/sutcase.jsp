@@ -198,11 +198,13 @@ function demo_create() {
 		  if(sel) {
 			  //alert(ref.get_node(sel).type);
 			  if(ref.get_node(sel).type == "interfacetestcase"){
+				  initype
 				  interfacetestsuite = ref.get_node(sel).text;
 				  document.getElementById('testsuite_name').value = interfacetestsuite;
 				  createTestSuite();
 				  }
 			  else if(ref.get_node(sel).type == "testcase"){
+				  initype
 				  interfacetestcase = ref.get_node(sel).text;
 				  document.getElementById('testcase_name').value = interfacetestcase;
 				  var stname = ref.get_node(ref.get_parent(sel)).text;
@@ -670,6 +672,7 @@ function testtest(){
 				  document.getElementById('showcasesteps').value = root.testcasedto.casesteps;
 				  document.getElementById('showapproval').value = root.testcasedto.testcase_approval;
 				  document.getElementById('showproject').value = root.testcasedto.testcaseproject.name;
+				  document.getElementById('updateproject').value = root.testcasedto.testcaseproject.name;
 				  //显示History
 				  var caseChangeHistory="";
 				  var historylength = root.testcasedto.caseChangeHistorys.length;
@@ -840,6 +843,9 @@ function initype(){
 	document.getElementById('showaprovaloption').style.display = "none";
 	document.getElementById('showapprovalupdatetd').style.display = "block";
 	document.getElementById('showapprovalsavetd').style.display = "none";
+	document.getElementsByName('priority')[0].checked = true;
+	document.getElementsByName('status')[0].checked = true;
+	document.getElementsByName('type')[0].checked = true;
 	};
 
 
