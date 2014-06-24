@@ -262,8 +262,8 @@ public class TestsuiteAction extends ActionSupport {
 		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
 				this.getTestsuite_name(), sut.getId());
 		if (testsuite != null) {
-			request.setAttribute("error", "The testsuite already exist!");
-			return "error";
+			this.setPrompt("The testsuite already exist!");
+			return "success";
 		}
 
 		testsuite = new Testsuite();
