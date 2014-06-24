@@ -32,6 +32,7 @@
 			class="com.paftp.action.TestsuiteAction">
 			<result type="json">
 			</result>
+			<result name="error">/opr_error.jsp</result>
 		</action>
 		<action name="updateTestsuite" method="updateTestsuite"
 			class="com.paftp.action.TestsuiteAction">
@@ -42,6 +43,7 @@
 			class="com.paftp.action.TestsuiteAction">
 			<result type="json">
 			</result>
+			<result name="error">/opr_error.jsp</result>
 		</action>
 		<action name="updateTestcase" method="updateTestcase"
 			class="com.paftp.action.TestsuiteAction">
@@ -140,50 +142,61 @@
 		<action name="initialSuts" method="initialSuts"
 			class="com.paftp.action.ApplySutAction">
 			<result name="success">/sutindex.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="initialSut" method="initialSut"
 			class="com.paftp.action.ApplySutAction">
 			<result name="success">/applysutinfo.jsp</result>
 			<result name="login">/login.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="updateSut" method="updateSut"
 			class="com.paftp.action.ApplySutAction">
 			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/sutindex.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="reguserinfo" method="userinfo"
 			class="com.paftp.action.StaticAction">
 			<result name="success">/register.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="upuserinfo" method="userinfo"
 			class="com.paftp.action.StaticAction">
 			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/updateuserinfo.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="applysutgroup" method="sutgroup"
 			class="com.paftp.action.StaticAction">
 			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/applysut.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="showsutgroup" method="sutgroup"
 			class="com.paftp.action.StaticAction">
 			<result name="success">/applysutinfo.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="casequeryGroups" method="queryGroups"
 			class="com.paftp.action.ApplySutAction">
 			<result name="success">/casemanagement.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="rolequeryGroups" method="queryGroups"
 			class="com.paftp.action.ApplySutAction">
 			<result name="success">/rolemanagement.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="initialroles" method="initialRoles"
 			class="com.paftp.action.RoleAction">
 			<result name="success">/roleindex.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="sutinitialAddRelationship" method="initialAddRelationship"
 			class="com.paftp.action.RoleAction">
 			<result name="success">/sutroleuser.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="iniinitialAddRelationship" method="initialAddRelationship"
 			class="com.paftp.action.RoleAction">
@@ -199,26 +212,33 @@
 		<action name="iniaddRelationship" method="addRelationship"
 			class="com.paftp.action.RoleAction">
 			<result name="success">/inimanager.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="initialParameters" method="initialParameters"
 			class="com.paftp.action.TestsuiteAction">
 			<result name="success">/sutcase.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="testDelete" method="testDelete" class="com.paftp.action.TestAction">
 			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/test.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="createVersion" method="createVersion" class="com.paftp.action.VersionAction">
 			<result name="success">/inidata.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="queryVersion" method="queryVersion" class="com.paftp.action.VersionAction">
 			<result name="success">/sutcase.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="createTestcaseproject" method="createTestcaseproject" class="com.paftp.action.TestcaseprojectAction">
 			<result name="success">/inidata.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="queryTestcaseproject" method="queryTestcaseproject" class="com.paftp.action.TestcaseprojectAction">
 			<result name="success">/sutcase.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 
 	</package>
