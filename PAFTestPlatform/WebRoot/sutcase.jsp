@@ -256,6 +256,12 @@ function demo_create() {
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				  if ( root.prompt != null){
+					  alert(root.prompt);
+					  $('#jstree').jstree(true).destroy();
+					  initree();
+					  }
+					else {
 				  $('#jstree').jstree(true).destroy();
 				  datadata = root.jsonArray;
 				  testtest();
@@ -264,6 +270,7 @@ function demo_create() {
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 				  querySutCaseInfo();
+					}
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -370,6 +377,12 @@ function newTestCaseac(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				  if ( root.prompt != null){
+					  alert(root.prompt);
+					  $('#jstree').jstree(true).destroy();
+					  initree();
+					  }
+					else {
 				  $('#jstree').jstree(true).destroy();
 				  initree();
 				  document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -377,6 +390,7 @@ function newTestCaseac(){
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 				  querySutCaseInfo();
+					}
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {

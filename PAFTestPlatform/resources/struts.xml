@@ -32,7 +32,6 @@
 			class="com.paftp.action.TestsuiteAction">
 			<result type="json">
 			</result>
-			<result name="error">/opr_error.jsp</result>
 		</action>
 		<action name="updateTestsuite" method="updateTestsuite"
 			class="com.paftp.action.TestsuiteAction">
@@ -43,7 +42,6 @@
 			class="com.paftp.action.TestsuiteAction">
 			<result type="json">
 			</result>
-			<result name="error">/opr_error.jsp</result>
 		</action>
 		<action name="updateTestcase" method="updateTestcase"
 			class="com.paftp.action.TestsuiteAction">
