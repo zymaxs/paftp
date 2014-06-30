@@ -1212,7 +1212,7 @@ function saveapprovalac(){
   	<tr>
     	<!--左边Tree-->
     	<td style="width:300px;vertical-align:top">
-    		<div style=" min-height:570px;overflow:scroll;overflow-x:hidden">
+    		<div style="min-height:570px;overflow:scroll;">
             <div id="searchDiv">
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; padding:4px; border-radius:4px; border:1px solid silver;">
             </div>
