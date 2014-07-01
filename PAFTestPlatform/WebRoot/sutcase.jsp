@@ -658,6 +658,8 @@ function testtest(){
 				  isSelf =  root.isSelf;
 				  document.getElementById('showtestcase_id').value = root.testcasedto.id;
 				  document.getElementById('showcasepriority').value = root.testcasedto.priority;
+				  document.getElementById('showtestcasecreator').value = root.testcasedto.creator.displayName;
+				  document.getElementById('showtestcasecreattime').value = root.testcasedto.createTime;
 				  var obj_priority = document.getElementsByName('updatepriority');
 				  for (i=0 ; i < obj_priority.length ; i++){
 					  if(obj_priority[i].value == root.testcasedto.priority){
@@ -1367,7 +1369,15 @@ function saveapprovalac(){
                         </td>
                     </tr>
                     <tr>
-                    	<td colspan="2"><input id="showtestcase_id" name="showtestcase_id" value="" style="display:block" readonly></td>
+                    	<td colspan="2"><input id="showtestcase_id" name="showtestcase_id" value="" style="display:none" readonly></td>
+                    </tr>
+                    <tr>
+                    	<td>创建者</td>
+                        <td><input id="showtestcasecreator" value="" readonly></td>
+                    </tr>
+                    <tr>
+                    	<td>创建时间</td>
+                        <td><input id="showtestcasecreattime" value="" readonly></td>
                     </tr>
                     <tr>
                     	<td>所属TestSuite</td>
