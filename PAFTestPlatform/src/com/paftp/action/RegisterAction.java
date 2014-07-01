@@ -2,6 +2,7 @@ package com.paftp.action;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
+import com.paftp.entity.Role;
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
 import com.paftp.entity.Department;
@@ -107,7 +109,11 @@ public class RegisterAction extends ActionSupport {
 			success = sshClient.connect("192.168.21.172", "wls81", "Paic#234");
 			
 			if (success) {
-				sshClient.execute("sh /wls/wls81/email-confirm/register.sh " + user.getAlias() + " " + this.getPassword());
+				if (this.isAdmin(user.getAlias())) {
+					sshClient.execute("sh /wls/wls81/email-confirm/register.sh " + "duanjuding4512" + " " + this.getPassword());
+				} else{
+					sshClient.execute("sh /wls/wls81/email-confirm/register.sh " + user.getAlias() + " " + this.getPassword());
+				}
 				return true;
 			}
 		} catch (IOException e) {
@@ -115,6 +121,17 @@ public class RegisterAction extends ActionSupport {
 			e.printStackTrace();
 		}
 
+		return false;
+	}
+	
+	private Boolean isAdmin(String alias) {
+		User user = userService.findUserByAlias(alias);
+		List<Role> roles = user.getRoles();
+		for (int i = 0; i < roles.size(); i++) {
+			if (roles.get(i).getName().equals("administrator")) {
+				return true;
+			}
+		}
 		return false;
 	}
 

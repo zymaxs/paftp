@@ -9,6 +9,8 @@ public class TestsuiteResult {
 	private Integer testsuite_id;
 	private String setupstatus;
 	private String setupdescription;
+	private String cleanupstatus;
+	private String cleanupdescription;
 	private List<TestcaseResult> testcase_results;
 
 	public String getSuitename() {
@@ -57,6 +59,22 @@ public class TestsuiteResult {
 
 	public void setTestcase_results(List<TestcaseResult> testcase_results) {
 		this.testcase_results = testcase_results;
+	}
+
+	public String getCleanupstatus() {
+		return cleanupstatus;
+	}
+
+	public void setCleanupstatus(String cleanupstatus) {
+		this.cleanupstatus = cleanupstatus;
+	}
+
+	public String getCleanupdescription() {
+		return cleanupdescription;
+	}
+
+	public void setCleanupdescription(String cleanupdescription) {
+		this.cleanupdescription = cleanupdescription;
 	}
 
 }

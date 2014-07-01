@@ -20,7 +20,9 @@ public class TestsuiteResult {
 	private Integer id;
 	private String suitename;
 	private Integer setupstatus;
-	private Integer setupdescription;
+	private String setupdescription;
+	private Integer cleanupstatus;
+	private String cleanupdescription;
 	private Testpass testpass;
 	private Testsuite testsuite;
 	private List<TestcaseResult> testcase_results;
@@ -85,12 +87,30 @@ public class TestsuiteResult {
 	}
 
 	@Column(name = "setupdescription", length = 200)  
-	public Integer getSetupdescription() {
+	public String getSetupdescription() {
 		return setupdescription;
 	}
 
-	public void setSetupdescription(Integer setupdescription) {
+	public void setSetupdescription(String setupdescription) {
 		this.setupdescription = setupdescription;
+	}
+
+	@Column(name = "cleanupstatus", length = 11)
+	public Integer getCleanupstatus() {
+		return cleanupstatus;
+	}
+
+	public void setCleanupstatus(Integer cleanupstatus) {
+		this.cleanupstatus = cleanupstatus;
+	}
+
+	@Column(name = "cleanupdescription", length = 200)  
+	public String getCleanupdescription() {
+		return cleanupdescription;
+	}
+
+	public void setCleanupdescription(String cleanupdescription) {
+		this.cleanupdescription = cleanupdescription;
 	}
 
 
