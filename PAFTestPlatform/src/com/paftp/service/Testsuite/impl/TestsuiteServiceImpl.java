@@ -99,11 +99,18 @@ public TestcaseDto getTestcaseDto(Testcase testcase){
 	testcasedto.setDescription(testcase.getDescription());
 	testcasedto.setId(testcase.getId());
 	testcasedto.setStatus(testcase.getStatus());
+	testcasedto.setCreateTime(testcase.getCreateTime());
 	testcasedto.setTestcase_approval(testcase.getTestcase_approval());
 	TestcaseProject testcaseproject = new TestcaseProject();
 	if(testcase.getTestcaseproject() != null){
 		testcaseproject.setName(testcase.getTestcaseproject().getName());
 		testcasedto.setTestcaseproject(testcaseproject);
+	}
+	User user = new User();
+	if(testcase.getCreator()!=null){
+		user.setAlias(testcase.getCreator().getAlias());
+		user.setDisplayName(testcase.getCreator().getDisplayName());
+		testcasedto.setCreator(user);
 	}
 	
 	List<CaseChangeHistory> casechangehistories = new ArrayList<CaseChangeHistory>();

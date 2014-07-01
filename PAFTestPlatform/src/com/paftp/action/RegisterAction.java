@@ -66,7 +66,7 @@ public class RegisterAction extends ActionSupport {
 
 		userService.saveUser(user);
 
-		// this.sendMail(user);
+		//this.sendMail(user);
 
 		request.setAttribute("alias", user.getAlias());
 
