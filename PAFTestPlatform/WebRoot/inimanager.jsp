@@ -182,9 +182,16 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
                 <li><a href="index_1.jsp">主页</a></li>
-                <li><a href="sutindex.jsp">SUT</a></li>
+                <li><a href="casemanagement.jsp">用例管理</a></li>
+                <li><a href="#">结果管理</a></li>
+                <li><a href="sutindex.jsp">接入申请</a></li>
                 <li><a href="rolemanagement.jsp">用户权限</a></li>
+                <%if (session.getAttribute("isAdmin") != null){
+                	String userisAdmin = String.valueOf(session.getAttribute("isAdmin"));
+                	if (userisAdmin == "true"){%>
                 <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
+                <li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
+                <%}}%>
               </ul>
             </div>
           </div>
