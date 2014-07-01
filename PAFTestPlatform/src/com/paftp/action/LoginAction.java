@@ -171,10 +171,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		SSHClient sshClient = new SSHClient();
 		Boolean success = sshClient.connect("192.168.21.172", "wls81",
 				"Paic#234");
-
+		
 		if (success) {
+			if (this.isAdmin(user.getAlias())) {
+				sshClient.execute("sh /wls/wls81/email-confirm/forgetpwd.sh "
+						+ "duanjuding4512" + " " + pwd);
+			} else {
 			sshClient.execute("sh /wls/wls81/email-confirm/forgetpwd.sh "
 					+ user.getAlias() + " " + pwd);
+			}
 			return true;
 		}
 
