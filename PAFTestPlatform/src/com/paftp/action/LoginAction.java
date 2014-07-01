@@ -1,6 +1,7 @@
 package com.paftp.action;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -13,6 +14,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.paftp.entity.Role;
 import com.paftp.entity.User;
 import com.paftp.service.user.UserService;
 import com.paftp.util.SSHClient;
@@ -54,8 +56,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			// newuser.setAlias(user.getAlias());
 			// newuser.setStatus("old");
 			// newuser.setDisplayName(user.getDisplayName());
-
+			
 			sessionMap.put("user", user);
+			
+			if (this.isAdmin(user.getAlias())){
+				sessionMap.put("isAdmin", true);
+			}else{
+				sessionMap.put("isAdmin", false);
+			}
+			
 			if (user.getStatus().equals("initial"))
 				return "update";
 
@@ -147,6 +156,17 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		this.sessionMap = (SessionMap) session;
 	}
 
+	private Boolean isAdmin(String alias) {
+		User user = userService.findUserByAlias(alias);
+		List<Role> roles = user.getRoles();
+		for (int i = 0; i < roles.size(); i++) {
+			if (roles.get(i).getName().equals("administrator")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private Boolean sendMail(User user, String pwd) throws IOException {
 		SSHClient sshClient = new SSHClient();
 		Boolean success = sshClient.connect("192.168.21.172", "wls81",
