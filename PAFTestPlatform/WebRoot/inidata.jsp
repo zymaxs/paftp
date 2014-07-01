@@ -148,10 +148,10 @@
 </form>
 </div>
 <div id="createSutGroupDiv">
-<form id="cratesutgroupForm" name="cratesutgroupForm" method="post" action="${pageContext.request.contextPath}/createTestcaseproject.action">
+<form id="cratesutgroupForm" name="cratesutgroupForm" method="post" action="${pageContext.request.contextPath}/createSutGroup.action">
 <table>
 <tr>
-<td>创建项目<input type="text" id="createsutgroup" name="name"></td>
+<td>创建平台<input type="text" id="createsutgroup" name="name"></td>
 <td><input type="submit" id="createsutgroupbtn" value="创建项目"></td>
 </tr>
 </table>
