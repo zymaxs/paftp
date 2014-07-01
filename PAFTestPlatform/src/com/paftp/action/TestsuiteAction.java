@@ -501,7 +501,7 @@ public class TestsuiteAction extends ActionSupport {
 					.queryCountByApprovalAndTestsuiteid(testsuites.get(i).getId());
 			for (int j=0; j<tempStatus.size(); j++){
 				for (int k=0; k<condstatus.size(); k++){
-					if (tempStatus.get(j).getValue().equals(condstatus.get(k).getValue())){
+					if (tempStatus.get(j).getValue().equals(condpriority.get(k).getValue())){
 						condstatus.get(k).setValue(condstatus.get(k).getValue() + tempStatus.get(j).getValue());
 					}
 				}
