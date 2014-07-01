@@ -147,6 +147,16 @@
 </table>
 </form>
 </div>
+<div id="createSutGroupDiv">
+<form id="cratesutgroupForm" name="cratesutgroupForm" method="post" action="${pageContext.request.contextPath}/createSutGroup.action">
+<table>
+<tr>
+<td>创建平台<input type="text" id="createsutgroup" name="name"></td>
+<td><input type="submit" id="createsutgroupbtn" value="创建项目"></td>
+</tr>
+</table>
+</form>
+</div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

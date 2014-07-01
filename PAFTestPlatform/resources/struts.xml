@@ -238,6 +238,10 @@
 			<result name="success">/sutcase.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
+		<action name="createSutGroup" method="createSutGroup" class="com.paftp.action.SutGroupAction">
+			<result name="success">/inidata.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
 
 	</package>
 
