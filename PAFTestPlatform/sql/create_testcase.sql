@@ -1,5 +1,5 @@
 
-CREATE TABLE `testcase` (
+CREATE TABLE `Testcase` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `testsuite_id` int(11) DEFAULT NULL,
     `casename` varchar(100) DEFAULT NULL,
@@ -14,15 +14,15 @@ CREATE TABLE `testcase` (
     `project_id` int(11) DEFAULT NULL,
     INDEX testsuite_ind (testsuite_id),
     FOREIGN KEY (testsuite_id)
-        REFERENCES testsuite (id)
+        REFERENCES Testsuite (id)
         ON DELETE set null,
     INDEX creator_ind (creator_id),
     FOREIGN KEY (creator_id)
-        REFERENCES user (id)
+        REFERENCES User (id)
         ON DELETE set null,
     INDEX project_ind (project_id),
     FOREIGN KEY (project_id)
-        REFERENCES testcaseproject (id)
+        REFERENCES TestcaseProject (id)
         ON DELETE no action,
         PRIMARY KEY (`id`)
 )  ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;

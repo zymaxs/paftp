@@ -1,5 +1,5 @@
 
-CREATE TABLE `testsuite` (
+CREATE TABLE `Testsuite` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(50) DEFAULT NULL,
     `code` varchar(50) DEFAULT NULL,
@@ -9,11 +9,11 @@ CREATE TABLE `testsuite` (
     `sut_id` int(11) DEFAULT NULL,
     INDEX sut_ind (sut_id),
     FOREIGN KEY (sut_id)
-        REFERENCES sut (id)
+        REFERENCES Sut (id)
         ON DELETE cascade,
     INDEX version_ind (version_id),
     FOREIGN KEY (version_id)
-    	REFERENCES version (id)
+    	REFERENCES Version (id)
     	ON DELETE cascade,
     PRIMARY KEY (`id`)
 )  ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;

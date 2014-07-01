@@ -1,5 +1,5 @@
 
-CREATE TABLE `scene` (
+CREATE TABLE `Scene` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `scenename` varchar(30) DEFAULT NULL,
  `code` varchar(30) DEFAULT NULL,

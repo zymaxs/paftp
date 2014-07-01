@@ -1,4 +1,4 @@
-CREATE TABLE `testpass`(
+CREATE TABLE `Testpass`(
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`name` varchar(100) DEFAULT NULL,
 	`createtime` datetime DEFAULT NULL,
@@ -7,8 +7,8 @@ CREATE TABLE `testpass`(
 	`sut_id` int(11) DEFAULT NULL,
 	`version_id` int(11) DEFAULT NULL,
 	INDEX sut_ind (sut_id), 
-	FOREIGN KEY (sut_id) REFERENCES sut(id) ON DELETE SET NULL,
+	FOREIGN KEY (sut_id) REFERENCES Sut(id) ON DELETE SET NULL,
 	INDEX version_ind (version_id),
-	FOREIGN KEY (version_id) REFERENCES version(id) ON DELETE SET NULL,
+	FOREIGN KEY (version_id) REFERENCES Version(id) ON DELETE SET NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

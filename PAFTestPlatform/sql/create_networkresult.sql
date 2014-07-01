@@ -1,9 +1,9 @@
 
-CREATE TABLE `networkresult` (
+CREATE TABLE `NetworkResult` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `stress_result_id` int(11) DEFAULT NULL,
  INDEX stress_result_ind (stress_result_id), 
- FOREIGN KEY (stress_result_id) REFERENCES stressresult(id) ON DELETE set null,
+ FOREIGN KEY (stress_result_id) REFERENCES StressResult(id) ON DELETE set null,
  `timestamp` varchar(20) DEFAULT NULL,
  `network_read` varchar(8) DEFAULT NULL,
  `network_write` varchar(8) DEFAULT NULL,

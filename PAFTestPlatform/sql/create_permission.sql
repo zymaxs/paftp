@@ -1,4 +1,4 @@
-CREATE TABLE `permission` (
+CREATE TABLE `Permission` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `scope` varchar(20) not NULL UNIQUE,
     `operation` varchar(20) not NULL,

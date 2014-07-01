@@ -1,4 +1,4 @@
-CREATE TABLE `analysecommentcontent` (
+CREATE TABLE `AnalyseCommentContent` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `createtime` datetime DEFAULT NULL,
     `status` varchar(10) DEFAULT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE `analysecommentcontent` (
     `analysecommenthistory_id` int(11) DEFAULT NULL,
     INDEX analysecommenthistory_ind (analysecommenthistory_id),
     FOREIGN KEY (analysecommenthistory_id)
-        REFERENCES analysecommenthistory (id)
+        REFERENCES AnalyseCommentHistory (id)
         ON DELETE cascade,
     PRIMARY KEY (`id`)
 )  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

@@ -1,4 +1,4 @@
-CREATE TABLE `department` (
+CREATE TABLE `Department` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(50) not null UNIQUE,
     `description` varchar(200) not null,

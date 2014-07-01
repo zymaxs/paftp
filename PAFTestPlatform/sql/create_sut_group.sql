@@ -1,5 +1,5 @@
 
-CREATE TABLE `sutgroup` (
+CREATE TABLE `SutGroup` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(100) not NULL UNIQUE,
     `description` varchar(200) DEFAULT NULL,
