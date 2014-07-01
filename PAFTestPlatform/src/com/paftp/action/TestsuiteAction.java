@@ -486,19 +486,19 @@ public class TestsuiteAction extends ActionSupport {
 													// case
 
 			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
-			List<TestcaseCountDto> condstatus = testcaseService.queryCountByStatusAndTestsuiteid(testsuites.get(0).getId());  
-			List<TestcaseCountDto> condpriority = testcaseService.queryCountByPriorityAndTestsuiteid(testsuites.get(0).getId());
-			List<TestcaseCountDto> condcasetype = testcaseService.queryCountByCasetypeAndTestsuiteid(testsuites.get(0).getId());
-			List<TestcaseCountDto> condtestcase_approval = testcaseService.queryCountByApprovalAndTestsuiteid(testsuites.get(0).getId());
+			List<TestcaseCountDto> condstatus = this.transferFromDBObject(testcaseService.queryCountByStatusAndTestsuiteid(testsuites.get(0).getId()));  
+			List<TestcaseCountDto> condpriority = this.transferFromDBObject(testcaseService.queryCountByPriorityAndTestsuiteid(testsuites.get(0).getId()));
+			List<TestcaseCountDto> condcasetype = this.transferFromDBObject(testcaseService.queryCountByCasetypeAndTestsuiteid(testsuites.get(0).getId()));
+			List<TestcaseCountDto> condtestcase_approval = this.transferFromDBObject(testcaseService.queryCountByApprovalAndTestsuiteid(testsuites.get(0).getId()));
 			for (int i = 1; i < testsuites.size(); i++) {
-			List<TestcaseCountDto> tempStatus = testcaseService
-					.queryCountByStatusAndTestsuiteid(testsuites.get(i).getId());
-			List<TestcaseCountDto> tempPriority = testcaseService
-					.queryCountByPriorityAndTestsuiteid(testsuites.get(i).getId());
-			List<TestcaseCountDto> tempCasetype = testcaseService
-					.queryCountByCasetypeAndTestsuiteid(testsuites.get(i).getId());
-			List<TestcaseCountDto> tempTestcase_approval = testcaseService
-					.queryCountByApprovalAndTestsuiteid(testsuites.get(i).getId());
+			List<TestcaseCountDto> tempStatus = this.transferFromDBObject(testcaseService
+					.queryCountByStatusAndTestsuiteid(testsuites.get(i).getId()));
+			List<TestcaseCountDto> tempPriority = this.transferFromDBObject(testcaseService
+					.queryCountByPriorityAndTestsuiteid(testsuites.get(i).getId()));
+			List<TestcaseCountDto> tempCasetype = this.transferFromDBObject(testcaseService
+					.queryCountByCasetypeAndTestsuiteid(testsuites.get(i).getId()));
+			List<TestcaseCountDto> tempTestcase_approval = this.transferFromDBObject(testcaseService
+					.queryCountByApprovalAndTestsuiteid(testsuites.get(i).getId()));
 			for (int j=0; j<tempStatus.size(); j++){
 				for (int k=0; k<condstatus.size(); k++){
 					if (tempStatus.get(j).getValue().equals(condstatus.get(k).getValue())){
@@ -565,6 +565,21 @@ public class TestsuiteAction extends ActionSupport {
 
 	}
 
+	private List<TestcaseCountDto> transferFromDBObject(List list){
+		
+		List<TestcaseCountDto> lists = new ArrayList<TestcaseCountDto>();
+		
+		for (int i=0; i< list.size(); i++){
+			 Object[] obj = (Object[]) list.get(i);
+			 TestcaseCountDto testcaseCountDto = new TestcaseCountDto();
+			 testcaseCountDto.setCount((Integer) obj[0]);
+			 testcaseCountDto.setValue(obj[1].toString());
+			 lists.add(testcaseCountDto);
+		}
+		
+		return lists;
+	}
+	
 	private Boolean isRoleOfSut(User user, String sut_name) {
 		User currentuser = userService.findUserByAlias(user.getAlias());
 		List<Role> roles = currentuser.getRoles();
