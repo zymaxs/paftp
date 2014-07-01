@@ -129,19 +129,19 @@ else { isCurrentRole = "n";};
 					Dialog.alert("用例名称不能为空");
 						}
 					else if ( topWin.$id('testcase_name').value.length > 50){
-					Dialog.alert("用例名称不能超过15个字符");
+					Dialog.alert("用例名称不能超过50个字符");
 						}
 					else if (topWin.$id('description').value == ""){
 					Dialog.alert("用例描述描述不能为空");	
 						}
-					else if ( topWin.$id('description').value.length > 50){
-					Dialog.alert("用例描述不能超过50个字符");
+					else if ( topWin.$id('description').value.length > 150){
+					Dialog.alert("用例描述不能超过150个字符");
 						}
 					else if (topWin.$id('casesteps').value == ""){
 					Dialog.alert("用例步骤不能为空");	
 						}
-					else if (topWin.$id('casesteps').value.length > 150 ){
-					Dialog.alert("用例步骤不能超过150个字符");
+					else if (topWin.$id('casesteps').value.length > 300 ){
+					Dialog.alert("用例步骤不能超过300个字符");
 						}
 					else{
 						newTestCaseac();
@@ -834,6 +834,7 @@ function initree(){
 function initype(){
 	$("#sutCaseInfoDiv").html("");
 	$("#testsuiteInfoDiv").html("");
+	$("#showtestcasecreator").html("");
 	$("#interfaceSearchResultDiv").html("");
 	$("#showCaseChangeHistoryDiv").html("");
 	document.getElementById('showtestsuite_name').readOnly = true;
@@ -1080,7 +1081,7 @@ function saveapprovalac(){
 			rules : {
 				"showtestsuite_name" : {
 					required : true,
-					maxlength : 15
+					maxlength : 50
 				},
 				"showtestsuite_description" : {
 					required : true,
@@ -1102,15 +1103,15 @@ function saveapprovalac(){
 			rules : {
 				"showtestcase_name" : {
 					required : true,
-					maxlength : 15
+					maxlength : 50
 				},
 				"showcasedescription" : {
 					required : true,
-					maxlength : 50
+					maxlength : 150
 				},
 				"showcasesteps" : {
 					required : true,
-					maxlength : 150
+					maxlength : 300
 				},
 			},
 			messages : {
@@ -1202,10 +1203,16 @@ function saveapprovalac(){
             <div class="nav-collapse collapse navbar-responsive-collapse">
               <ul class="nav">
                 <li><a href="index_1.jsp">主页</a></li>
-                <li><a href="sutindex.jsp">SUT</a></li>
+                <li><a href="casemanagement.jsp">用例管理</a></li>
+                <li><a href="#">结果管理</a></li>
+                <li><a href="sutindex.jsp">接入申请</a></li>
                 <li><a href="rolemanagement.jsp">用户权限</a></li>
-                <li><a href="casemanagement.jsp">case管理</a></li>
+                <%if (session.getAttribute("isAdmin") != null){
+                	String isAdmin = String.valueOf(session.getAttribute("isAdmin"));
+                	if (isAdmin == "true"){%>
                 <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
+                <li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
+                <%}}%>
               </ul>
             </div>
           </div>
