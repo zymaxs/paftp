@@ -152,7 +152,7 @@
 <table>
 <tr>
 <td>创建平台<input type="text" id="createsutgroup" name="name"></td>
-<td><input type="submit" id="createsutgroupbtn" value="创建项目"></td>
+<td><input type="submit" id="createsutgroupbtn" value="创建平台"></td>
 </tr>
 </table>
 </form>
