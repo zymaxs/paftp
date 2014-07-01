@@ -228,7 +228,7 @@ function inidata(){
   </div>
   <!--主体-->
   <form id="queryForm" name="queryForm" action="" style="width:100%">
-    <table width="900px">
+    <table width="80%" align="center">
       <tr>
         <td>系统名</td>
         <td><input type="text" id="sutname" name="sutname"></td>
@@ -243,15 +243,15 @@ function inidata(){
         <td><input class="easyui-datetimebox"  id="endtime" name="endtime"></td>
       </tr>
       <tr>
-          <td colspan="2" align="center" align="center">
-        <input type="button" id="querysut" name="querysut" value="搜索">
+          <td colspan="4" style="text-align:center">
+        <input type="button" id="querysut" class="btn btn-primary" name="querysut" value="搜索">
           </td>
       </tr>
     </table>
   </form>
   
   <!--TABLE展示-->
-  <table id="sutForm" border="1" width="100%">
+  <table id="sutForm" border="1" width="80%" align="center" style="text-align:center">
     <thead>
       <tr>
         <td>系统序列号</td>
@@ -264,13 +264,14 @@ function inidata(){
     <tbody id="sutFormTab">
     </tbody>
   </table>
+  <div align="center">
   <div class="pagination"> <a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
 			class="previous" data-action="previous">&lsaquo;</a>
     <input
 			type="text" readonly="readonly"/>
     <a href="#"
 			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
-			data-action="last">&raquo;</a> </div>
+			data-action="last">&raquo;</a> </div></div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
