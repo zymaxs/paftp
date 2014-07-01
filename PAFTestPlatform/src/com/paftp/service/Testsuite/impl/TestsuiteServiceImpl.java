@@ -131,6 +131,7 @@ public TestcaseDto getTestcaseDto(Testcase testcase){
 		casechangehistory.setId(casechangehistories_source.get(i).getId());
 		casechangehistory.setUpdate_time(casechangehistories_source.get(i).getUpdate_time());
 		User updator = new User();
+		updator.setId(casechangehistories_source.get(i).getUpdator().getId());
 		updator.setAlias(casechangehistories_source.get(i).getUpdator().getAlias());
 		updator.setDisplayName(casechangehistories_source.get(i).getUpdator().getDisplayName());
 		casechangehistory.setUpdator(updator);
