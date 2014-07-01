@@ -658,6 +658,11 @@ function testtest(){
 				  isSelf =  root.isSelf;
 				  document.getElementById('showtestcase_id').value = root.testcasedto.id;
 				  document.getElementById('showcasepriority').value = root.testcasedto.priority;
+				  document.getElementById('showtestcasecreattime').value = root.testcasedto.createTime;
+				  var creator_name = "<a href='getuserinfo.action?userid="+root.testcasedto.creator.id+"'>"+root.testcasedto.creator.displayName+"</a>";
+				  $("#showtestcasecreator").append(creator_name);
+				  
+				  
 				  var obj_priority = document.getElementsByName('updatepriority');
 				  for (i=0 ; i < obj_priority.length ; i++){
 					  if(obj_priority[i].value == root.testcasedto.priority){
@@ -1213,7 +1218,7 @@ function saveapprovalac(){
   	<tr>
     	<!--左边Tree-->
     	<td style="width:300px;vertical-align:top">
-    		<div style="min-height:570px;overflow:scroll;">
+    		<div style=" height:604px;overflow:scroll;">
             <div id="searchDiv">
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; padding:4px; border-radius:4px; border:1px solid silver;">
             </div>
@@ -1351,8 +1356,8 @@ function saveapprovalac(){
         </td>
         
         <!--展示更新testcase-->
-        <td width="100%" style="display:none" id="showTestCaseTd">
-        		<form id="showTestCaseForm">
+        <td width="100%" height="100%" style="display:none" id="showTestCaseTd">
+        		<form id="showTestCaseForm" style="margin:0 0 0 0;">
             	<table width="100%" border="1" id="showcaseinfo">
                 	<tr>
               			<td colspan="2" style="text-align:center">用例详情</td>
@@ -1367,7 +1372,15 @@ function saveapprovalac(){
                         </td>
                     </tr>
                     <tr>
-                    	<td colspan="2"><input id="showtestcase_id" name="showtestcase_id" value="" style="display:block" readonly></td>
+                    	<td colspan="2"><input id="showtestcase_id" name="showtestcase_id" value="" style="display:none" readonly></td>
+                    </tr>
+                    <tr>
+                    	<td>创建者</td>
+                        <td><div id="showtestcasecreator"></div></td>
+                    </tr>
+                    <tr>
+                    	<td>创建时间</td>
+                        <td><input id="showtestcasecreattime" value="" readonly></td>
                     </tr>
                     <tr>
                     	<td>所属TestSuite</td>
