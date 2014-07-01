@@ -3,6 +3,8 @@ CREATE TABLE `TestsuiteResult`(
 	`suitename` varchar(50) DEFAULT NULL,
 	`setupstatus` int(11) DEFAULT NULL,
 	`setupdescription` varchar(200) DEFAULT NULL,
+	`cleanupstatus` int(11) DEFAULT NULL,
+	`cleanupdescription` varchar(200) DEFAULT NULL,
 	`testpass_id` int(11) DEFAULT NULL,
 	`testsuite_id` int(11) DEFAULT NULL,
 	INDEX testsuite_ind (testsuite_id),

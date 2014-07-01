@@ -54,10 +54,18 @@ public class ResultParser {
 		List<TestcaseResult> testcase_results = new ArrayList<TestcaseResult>();
 		for (int i = 0; i < list.getLength(); i++) {
 			if (list.item(i) instanceof Element) {
-				Element testcaseNode = (Element) list.item(i);
-				TestcaseResult testcase_result = this
-						.getTestcaseResult(testcaseNode);
-				testcase_results.add(testcase_result);
+				Element element = (Element) list.item(i);
+				if (list.item(i).getNodeName().equals("Setup")) {
+					testsuite_result.setSetupstatus(element.getAttribute("result"));
+					testsuite_result.setSetupdescription(element.getTextContent());
+				} else if (list.item(i).getNodeName().equals("Cleanup")) {
+					testsuite_result.setCleanupstatus(element.getAttribute("result"));
+					testsuite_result.setCleanupdescription(element.getTextContent());
+				} else {
+					TestcaseResult testcase_result = this
+							.getTestcaseResult(element);
+					testcase_results.add(testcase_result);
+				}
 			}
 		}
 		testsuite_result.setTestcase_results(testcase_results);
@@ -78,7 +86,8 @@ public class ResultParser {
 		for (int i = 0; i < list.getLength(); i++) {
 			if (list.item(i) instanceof Element) {
 				Element testcasecontentNode = (Element) list.item(i);
-				TestcaseResultContent testcaseresult_content = this.getTestcaseresultContent(testcasecontentNode);
+				TestcaseResultContent testcaseresult_content = this
+						.getTestcaseresultContent(testcasecontentNode);
 				testcaseresult_contents.add(testcaseresult_content);
 			}
 		}
@@ -87,7 +96,8 @@ public class ResultParser {
 		return testcase_result;
 	}
 
-	public TestcaseResultContent getTestcaseresultContent(Element testcasecontentElemet) {
+	public TestcaseResultContent getTestcaseresultContent(
+			Element testcasecontentElemet) {
 		TestcaseResultContent testcaseresult_content = new TestcaseResultContent();
 		if (testcasecontentElemet.getNodeName().equals("Comment")) {
 			testcaseresult_content.setType("Comment");
