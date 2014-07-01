@@ -36,13 +36,13 @@ public interface TestcaseService {
 
 	public List<TestcaseCountDto> queryCountByApproval();
 	
-	public List<TestcaseCountDto> queryCountByPriorityAndTestsuiteid(Integer id);
+	public List queryCountByPriorityAndTestsuiteid(Integer id);
 	
-	public List<TestcaseCountDto> queryCountByStatusAndTestsuiteid(Integer id);
+	public List queryCountByStatusAndTestsuiteid(Integer id);
 	
-	public List<TestcaseCountDto> queryCountByCasetypeAndTestsuiteid(Integer id);
+	public List queryCountByCasetypeAndTestsuiteid(Integer id);
 
-	public List<TestcaseCountDto> queryCountByApprovalAndTestsuiteid(Integer id);
+	public List queryCountByApprovalAndTestsuiteid(Integer id);
 	//public User findUserByNameAndPassword(String username, String password);
 
 }
