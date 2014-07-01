@@ -198,8 +198,11 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = this.getSessionUser();
 
-		Testcase testcase = testcaseService.findTestcaseByName(this
-				.getTestcase_name());
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		
+		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(this.getTestsuite_name(), sut.getId());
+		
+		Testcase testcase = testcaseService.findTestcaseByNameAndTestsuiteid(this.getTestcase_name(), testsuite.getId());
 
 		if (user != null
 				&& user.getAlias().equals(testcase.getCreator().getAlias()) == true) {
