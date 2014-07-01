@@ -77,19 +77,19 @@ public class TestcaseServiceImpl implements TestcaseService {
 	}
 
 	@Override
-	public List<TestcaseCountDto> queryCountByPriorityAndTestsuiteid(Integer id) {
+	public List queryCountByPriorityAndTestsuiteid(Integer id) {
 		return baseDAODto.getgroup("select t.priority, count(*) from Testcase t where testsuite.id = ? group by t.priority", new Object[] {id});
 		
 	}
 
 	@Override
-	public List<TestcaseCountDto> queryCountByStatusAndTestsuiteid(Integer id) {
+	public List queryCountByStatusAndTestsuiteid(Integer id) {
 		// TODO Auto-generated method stub
 		return baseDAODto.getgroup("select t.status, count(*) from Testcase t where testsuite.id = ? group by t.status ", new Object[] {id});
 	}
 
 	@Override
-	public List<TestcaseCountDto> queryCountByCasetypeAndTestsuiteid(
+	public List queryCountByCasetypeAndTestsuiteid(
 			Integer id) {
 		// TODO Auto-generated method stub
 		return baseDAODto.getgroup("select t.casetype, count(*) from Testcase t where testsuite.id = ? group by t.casetype", new Object[] {id});
@@ -97,7 +97,7 @@ public class TestcaseServiceImpl implements TestcaseService {
 	}
 
 	@Override
-	public List<TestcaseCountDto> queryCountByApprovalAndTestsuiteid(
+	public List queryCountByApprovalAndTestsuiteid(
 			Integer id) {
 		// TODO Auto-generated method stub
 		return baseDAODto.getgroup("select t.testcase_approval, count(*) from Testcase t where testsuite.id = ? group by t.testcase_approval", new Object[] {id});
