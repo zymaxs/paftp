@@ -6,11 +6,11 @@ CREATE TABLE `Testcase` (
     `priority` varchar(8) DEFAULT NULL,
     `status` varchar(20) DEFAULT NULL,
     `approval` varchar(20) DEFAULT NULL,
-    `description` varchar(150) DEFAULT NULL,
+    `description` varchar(512) DEFAULT NULL,
     `creator_id` int(11) DEFAULT NULL,
     `create_time` datetime DEFAULT NULL,
 	`casetype` varchar(10) DEFAULT NULL,
-    `casesteps` varchar(500) DEFAULT NULL,
+    `casesteps` varchar(1024) DEFAULT NULL,
     `project_id` int(11) DEFAULT NULL,
     INDEX testsuite_ind (testsuite_id),
     FOREIGN KEY (testsuite_id)
