@@ -129,19 +129,19 @@ else { isCurrentRole = "n";};
 					Dialog.alert("用例名称不能为空");
 						}
 					else if ( topWin.$id('testcase_name').value.length > 50){
-					Dialog.alert("用例名称不能超过15个字符");
+					Dialog.alert("用例名称不能超过50个字符");
 						}
 					else if (topWin.$id('description').value == ""){
 					Dialog.alert("用例描述描述不能为空");	
 						}
-					else if ( topWin.$id('description').value.length > 50){
-					Dialog.alert("用例描述不能超过50个字符");
+					else if ( topWin.$id('description').value.length > 150){
+					Dialog.alert("用例描述不能超过150个字符");
 						}
 					else if (topWin.$id('casesteps').value == ""){
 					Dialog.alert("用例步骤不能为空");	
 						}
-					else if (topWin.$id('casesteps').value.length > 150 ){
-					Dialog.alert("用例步骤不能超过150个字符");
+					else if (topWin.$id('casesteps').value.length > 300 ){
+					Dialog.alert("用例步骤不能超过300个字符");
 						}
 					else{
 						newTestCaseac();
@@ -834,6 +834,7 @@ function initree(){
 function initype(){
 	$("#sutCaseInfoDiv").html("");
 	$("#testsuiteInfoDiv").html("");
+	$("#showtestcasecreator").html("");
 	$("#interfaceSearchResultDiv").html("");
 	$("#showCaseChangeHistoryDiv").html("");
 	document.getElementById('showtestsuite_name').readOnly = true;
@@ -1080,7 +1081,7 @@ function saveapprovalac(){
 			rules : {
 				"showtestsuite_name" : {
 					required : true,
-					maxlength : 15
+					maxlength : 50
 				},
 				"showtestsuite_description" : {
 					required : true,
@@ -1102,15 +1103,15 @@ function saveapprovalac(){
 			rules : {
 				"showtestcase_name" : {
 					required : true,
-					maxlength : 15
+					maxlength : 50
 				},
 				"showcasedescription" : {
 					required : true,
-					maxlength : 50
+					maxlength : 150
 				},
 				"showcasesteps" : {
 					required : true,
-					maxlength : 150
+					maxlength : 300
 				},
 			},
 			messages : {
