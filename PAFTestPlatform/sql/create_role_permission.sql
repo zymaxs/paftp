@@ -1,4 +1,4 @@
-CREATE TABLE `Role_Permission` (
+CREATE TABLE `role_permission` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `role_id` int(11) not NULL,
     `permission_id` int(11) not NULL,

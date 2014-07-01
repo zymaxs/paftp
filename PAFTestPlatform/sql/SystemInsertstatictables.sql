@@ -6,10 +6,6 @@ insert into Department values("1","科技中心","科技中心");
 insert into Department values("2","运营中心","运营中心");
 insert into Department values("3","产品中心","产品中心");
 
-insert into SutGroup values("1", "会员平台", "会员平台");
-insert into SutGroup values("2", "风控平台", "风控平台");
-insert into SutGroup values("3", "测试平台", "测试平台");
-
 insert into ApplySutStatus values("1", "Pending", "待审批");
 insert into ApplySutStatus values("3", "Pass", "通过");
 insert into ApplySutStatus values("2", "Reject", "拒绝");
