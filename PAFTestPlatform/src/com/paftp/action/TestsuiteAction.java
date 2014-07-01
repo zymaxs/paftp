@@ -542,19 +542,14 @@ public class TestsuiteAction extends ActionSupport {
 				testcase_quantity = testsuite.getTestcases().size();
 			}
 			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
-			List<TestcaseCountDto> condstatus = testcaseService
-					.queryCountByStatusAndTestsuiteid(testsuite.getId());
+			List<TestcaseCountDto> condstatus = this.transferFromDBObject(testcaseService.queryCountByStatusAndTestsuiteid(testsuite.getId()));
 			condtestcase_quantity.put("status", condstatus);
-			List<TestcaseCountDto> condpriority = testcaseService
-					.queryCountByPriorityAndTestsuiteid(testsuite.getId());
+			List<TestcaseCountDto> condpriority = this.transferFromDBObject(testcaseService.queryCountByPriorityAndTestsuiteid(testsuite.getId()));
 			condtestcase_quantity.put("priority", condpriority);
-			List<TestcaseCountDto> condcasetype = testcaseService
-					.queryCountByCasetypeAndTestsuiteid(testsuite.getId());
+			List<TestcaseCountDto> condcasetype = this.transferFromDBObject(testcaseService.queryCountByCasetypeAndTestsuiteid(testsuite.getId()));
 			condtestcase_quantity.put("casetype", condcasetype);
-			List<TestcaseCountDto> condtestcase_approval = testcaseService
-					.queryCountByApprovalAndTestsuiteid(testsuite.getId());
-			condtestcase_quantity.put("testcase_approval",
-					condtestcase_approval);
+			List<TestcaseCountDto> condtestcase_approval = this.transferFromDBObject(testcaseService.queryCountByApprovalAndTestsuiteid(testsuite.getId()));
+			condtestcase_quantity.put("testcase_approval",condtestcase_approval);
 
 			// condtestcase_quantity.get("status");
 
@@ -572,8 +567,8 @@ public class TestsuiteAction extends ActionSupport {
 		for (int i=0; i< list.size(); i++){
 			 Object[] obj = (Object[]) list.get(i);
 			 TestcaseCountDto testcaseCountDto = new TestcaseCountDto();
-			 testcaseCountDto.setCount((Integer) obj[0]);
-			 testcaseCountDto.setValue(obj[1].toString());
+			 testcaseCountDto.setValue(obj[0].toString());
+			 testcaseCountDto.setCount(Integer.parseInt(obj[1]+""));
 			 lists.add(testcaseCountDto);
 		}
 		
