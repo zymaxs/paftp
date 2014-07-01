@@ -36,26 +36,27 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	public String login() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
+
 		User user = null;
 
-		if (this.getAlias() == null || this.getPassword() == null){
-			request.setAttribute("error", "Username or Password cannot be empty!");
+		if (this.getAlias() == null || this.getPassword() == null) {
+			request.setAttribute("error",
+					"Username or Password cannot be empty!");
 			return "error";
 		}
-			
+
 		String password_md5 = util.md5Encryption(this.password);
 		user = userService.findUserByAliasAndPassword(alias, password_md5);
-		
+
 		if (user != null) {
-			
-//			User newuser = new User();
-//			newuser.setAlias(user.getAlias());
-//			newuser.setStatus("old");
-//			newuser.setDisplayName(user.getDisplayName());
-			
+
+			// User newuser = new User();
+			// newuser.setAlias(user.getAlias());
+			// newuser.setStatus("old");
+			// newuser.setDisplayName(user.getDisplayName());
+
 			sessionMap.put("user", user);
-			if(user.getStatus().equals("initial"))
+			if (user.getStatus().equals("initial"))
 				return "update";
 
 			return "logsuccess";
@@ -91,70 +92,87 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			return "error";
 		}
 
-		String newpwd = "test2";
-		//String newpwd = RandomString(12);
-		//request.setAttribute("newpassword", newpwd);
-		//this.sendMail(user);
+		String newpwd = this.getRandomString(12);
+		// String newpwd = RandomString(12);
+		// request.setAttribute("newpassword", newpwd);
 		String password_md5 = util.md5Encryption(newpwd);
-		
+
 		user.setPassword(password_md5);
-		
+
 		userService.updateUser(user);
-		
+
+		this.sendMail(user, newpwd);
+
 		request.setAttribute("alias", this.getAlias());
-		
+
 		return "success";
 	}
 
-	public String changepwd(){
-		
+	public String changepwd() {
+
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
-		if (this.getAlias() == null || this.getPassword() == null || this.getOriginpassword() == null) {
-			request.setAttribute("error", "Your account or password can't be empty!");
+
+		if (this.getAlias() == null || this.getPassword() == null
+				|| this.getOriginpassword() == null) {
+			request.setAttribute("error",
+					"Your account or password can't be empty!");
 			return "error";
 		}
-		
+
 		String orignpassword_md5 = util.md5Encryption(this.getOriginpassword());
-		User dbUser = userService.findUserByAliasAndPassword(this.getAlias(), orignpassword_md5);
-		
-		if(dbUser == null){
+		User dbUser = userService.findUserByAliasAndPassword(this.getAlias(),
+				orignpassword_md5);
+
+		if (dbUser == null) {
 			request.setAttribute("error", "User cannot be empty!");
 			return "error";
 		}
-		
-		if(dbUser.getStatus().equals("initial"))
+
+		if (dbUser.getStatus().equals("initial"))
 			dbUser.setStatus("old");
-		
+
 		String password_md5 = util.md5Encryption(this.password);
 		dbUser.setPassword(password_md5);
-				
+
 		userService.updateUser(dbUser);
-		
+
 		sessionMap.put("user", dbUser);
 
 		return "success";
 	}
-	
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub
 		this.sessionMap = (SessionMap) session;
 	}
 
-	@SuppressWarnings("unused")
-	private Boolean sendMail(User user) throws IOException{
+	private Boolean sendMail(User user, String pwd) throws IOException {
 		SSHClient sshClient = new SSHClient();
-		Boolean success = sshClient.connect("127.0.0.1", "test", "test");
-		
-		if(success){
-			sshClient.execute("");
+		Boolean success = sshClient.connect("192.168.21.172", "wls81",
+				"Paic#234");
+
+		if (success) {
+			sshClient.execute("sh /wls/wls81/email-confirm/forgetpwd.sh "
+					+ user.getAlias() + " " + pwd);
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
+	private String getRandomString(int length) {
+		String str = "abcdefghigklmnopkrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789";
+		Random random = new Random();
+		StringBuffer sf = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			int number = random.nextInt(62);// 0~61
+			sf.append(str.charAt(number));
+
+		}
+		return sf.toString();
+	}
+
 	public String getAlias() {
 		return alias;
 	}
@@ -170,7 +188,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getOriginpassword() {
 		return originpassword;
 	}

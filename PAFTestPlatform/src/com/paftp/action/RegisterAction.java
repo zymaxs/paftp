@@ -66,7 +66,7 @@ public class RegisterAction extends ActionSupport {
 
 		userService.saveUser(user);
 
-		//this.sendMail(user);
+		this.sendMail(user);
 
 		request.setAttribute("alias", user.getAlias());
 
@@ -77,14 +77,14 @@ public class RegisterAction extends ActionSupport {
 	private void setRegisterInfor(User user) {
 
 		this.createtime = new Date();
-		this.password = util.md5Encryption("test"); /*
+		String md5Password= util.md5Encryption(this.getPassword()); /*
 													 * Temp password and send it
 													 * to SMTP in future!
 													 */
 		user.setAlias(this.getAlias());
 		user.setDisplayName(this.getDisplayname());
 		user.setCreateTime(this.getCreatetime());
-		user.setPassword(this.getPassword());
+		user.setPassword(md5Password);
 		user.setStatus("initial");
 
 		UserInfo userInfo = new UserInfo();
@@ -100,14 +100,19 @@ public class RegisterAction extends ActionSupport {
 
 	}
 
-	@SuppressWarnings("unused")
-	private Boolean sendMail(User user) throws IOException {
+	private Boolean sendMail(User user) {
 		SSHClient sshClient = new SSHClient();
-		Boolean success = sshClient.connect("127.0.0.1", "test", "test");
-
-		if (success) {
-			sshClient.execute("");
-			return true;
+		Boolean success;
+		try {
+			success = sshClient.connect("192.168.21.172", "wls81", "Paic#234");
+			
+			if (success) {
+				sshClient.execute("sh /wls/wls81/email-confirm/register.sh " + user.getAlias() + " " + this.getPassword());
+				return true;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		return false;
