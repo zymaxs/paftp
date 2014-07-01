@@ -108,6 +108,7 @@ public TestcaseDto getTestcaseDto(Testcase testcase){
 	}
 	User user = new User();
 	if(testcase.getCreator()!=null){
+		user.setId(testcase.getCreator().getId());
 		user.setAlias(testcase.getCreator().getAlias());
 		user.setDisplayName(testcase.getCreator().getDisplayName());
 		testcasedto.setCreator(user);
