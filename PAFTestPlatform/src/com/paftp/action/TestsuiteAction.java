@@ -350,7 +350,26 @@ public class TestsuiteAction extends ActionSupport {
 			List<Testcase> testcases = testsuite.getTestcases();
 
 			for (int i = 0; i < testcases.size(); i++) {
+				
+				CaseChangeHistory casechangehistory = new CaseChangeHistory();
+				casechangehistory.setUpdator(user);
+				casechangehistory.setTestcase(testcases.get(i));
+				this.updatetime = new Date();
+				java.sql.Timestamp updatedatetime = new java.sql.Timestamp(
+						updatetime.getTime());
+				casechangehistory.setUpdate_time(updatedatetime);
+				casechangehistoryService.saveCaseChangeHistory(casechangehistory);
+				
+				CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+				casechangeoperation.setCaseChangeHistory(casechangehistory);
+				casechangeoperation.setOldValue(testcases.get(i).getStatus());
+				casechangeoperation.setNewValue("废弃");
+				casechangeoperation.setField("status");
 				testcases.get(i).setStatus("废弃");
+				
+				casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
+				testcaseService.updateTestcase(testcases.get(i));
+
 			}
 		}
 		
@@ -359,7 +378,26 @@ public class TestsuiteAction extends ActionSupport {
 		if (testcases != null){
 		for(int i=0; i<testcases.size(); i++){
 			Testcase testcase = testcases.get(i);
+			
+			CaseChangeHistory casechangehistory = new CaseChangeHistory();
+			casechangehistory.setUpdator(user);
+			casechangehistory.setTestcase(testcases.get(i));
+			this.updatetime = new Date();
+			java.sql.Timestamp updatedatetime = new java.sql.Timestamp(
+					updatetime.getTime());
+			casechangehistory.setUpdate_time(updatedatetime);
+			casechangehistoryService.saveCaseChangeHistory(casechangehistory);
+			
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcases.get(i).getCaseName());
 			caseName = testcase.getCaseName().replaceAll(sourceName, targetName);
+			casechangeoperation.setNewValue(caseName);
+			casechangeoperation.setField("name");
+			
+			casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
+			testcaseService.updateTestcase(testcases.get(i));
+			
 			testcases.get(i).setCaseName(caseName);
 		}
 		}
