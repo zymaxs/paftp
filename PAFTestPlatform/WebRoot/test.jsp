@@ -118,7 +118,7 @@
     </div>
   </div>
   <!--主体-->
-  <div align="center"> Hello World! </div>
+  
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

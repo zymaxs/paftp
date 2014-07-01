@@ -701,9 +701,18 @@ function testtest(){
 					  caseChangeHistory += "<table border='1'><tr><td>修改项</td><td>Old Value</td><td>New Value</td></tr>"
 					  var operationlength = root.testcasedto.caseChangeHistorys[i].caseChangeOperations.length;
 					  for (j=0 ; j< operationlength ; j++){
-						  caseChangeHistory += "<tr><td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].field + "</td>";
-						  caseChangeHistory += "<td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].oldValue + "</td>";
-						  caseChangeHistory += "<td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].newValue + "</td></tr>"
+						  var oldValue = root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].oldValue;
+						  var newValue = root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].newValue;
+						  if (oldValue.length > 5 || newValue.length > 5){
+							  caseChangeHistory += "<tr><td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].field + "</td>";
+							  caseChangeHistory += "<td><a href='#' title='"+oldValue+"'>"+oldValue.substring(0,3)+"...</a></td>";
+							  caseChangeHistory += "<td><a href='#' title='"+newValue+"'>"+newValue.substring(0,3)+"...</a></td></tr>";
+							  
+							  }
+						  else{
+							caseChangeHistory += "<tr><td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].field + "</td>";
+						    caseChangeHistory += "<td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].oldValue + "</td>";
+						    caseChangeHistory += "<td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].newValue + "</td></tr>"}
 						  }
 					  caseChangeHistory += "</table></div>";
 					  }
@@ -1134,6 +1143,8 @@ function saveapprovalac(){
 });
 
 </script>
+//tool-tip
+
 </head>
 
 <body>
@@ -1221,11 +1232,11 @@ function saveapprovalac(){
     </div>
   </div>
   <!--主体-->
-  <table id="maintable" border="1" width="100%">
+  <table id="maintable" border="1" width="80%" align="center">
   	<tr>
     	<!--左边Tree-->
     	<td style="width:300px;vertical-align:top">
-    		<div style=" height:604px;overflow:scroll;">
+    		<div style="height:604px;overflow:scroll;">
             <div id="searchDiv">
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; padding:4px; border-radius:4px; border:1px solid silver;">
             </div>
@@ -1238,13 +1249,13 @@ function saveapprovalac(){
     	</td>
         
         <!--About SUT-->
-      	<td width="100%" id="sutCaseInfoTd" style="display:block" >
+      	<td width="100%" height="604px" id="sutCaseInfoTd" style="display:block" >
         	<div id="sutCaseInfoDiv" style="text-align:center">
             </div>
         </td>
         
         <!--Interface Search-->
-        <td id="interfacesearchTd" style="display:none;">
+        <td id="interfacesearchTd" style="display:none;" height="604px">
         	<table id="interfaceSearchTable" style="width:500px;">
             	<tr>
             		<td colspan="5" style="text-align:center">查询条件</td>
@@ -1305,7 +1316,7 @@ function saveapprovalac(){
         </td>
         
         <!--展示、更新testsuite-->
-        <td width="100%" style="display:none" id="showTestSuiteTd">
+        <td width="100%" style="display:none" id="showTestSuiteTd" height="604px">
         	<form id="showTestSuiteForm" name="showTestSuiteForm">
             <table width="100%" height="100%" id="showTestSuiteTable">
             	<tr>
@@ -1363,7 +1374,7 @@ function saveapprovalac(){
         </td>
         
         <!--展示更新testcase-->
-        <td width="100%" height="100%" style="display:none" id="showTestCaseTd">
+        <td width="100%" style="display:none" id="showTestCaseTd">
         		<form id="showTestCaseForm" style="margin:0 0 0 0;">
             	<table width="100%" border="1" id="showcaseinfo">
                 	<tr>
@@ -1373,8 +1384,8 @@ function saveapprovalac(){
                     <tr>
                     	<td>TestCaseName</td>
               			<td><input id="pre_casename" name="pre_casename" value="" readonly><input id="showtestcase_name" name="showtestcase_name" value="" readonly></td>
-                        <td rowspan="12" style="vertical-align:top">
-                        	<div id="showCaseChangeHistoryDiv">
+                        <td rowspan="14" style="vertical-align:top">
+                        	<div id="showCaseChangeHistoryDiv" style="height:604px;overflow:scroll;">
       						</div>
                         </td>
                     </tr>
@@ -1476,8 +1487,8 @@ function saveapprovalac(){
                         	<input type="button" value="确认评审" onClick="saveapprovalac()">
                         </td>
             		</tr>
+                    </table>
                     </form>
-                </table>
         </td>
   	</tr>
   </table>
