@@ -3,10 +3,7 @@ package com.paftp.service.Testcase;
 import java.util.HashMap;
 import java.util.List;
 
-import com.paftp.dto.TestcaseCountDto;
-import com.paftp.entity.ApplySut;
 import com.paftp.entity.Testcase;
-import com.paftp.entity.User;
 
 public interface TestcaseService {
 
@@ -26,23 +23,21 @@ public interface TestcaseService {
 
 	public List<Testcase> findAllList();
 	
-	public List<TestcaseCountDto> queryCountByColumn(String name);
+	public List<Object[]> queryCountByPriority();
 	
-	public List<TestcaseCountDto> queryCountByPriority();
+	public List<Object[]> queryCountByStatus();
 	
-	public List<TestcaseCountDto> queryCountByStatus();
-	
-	public List<TestcaseCountDto> queryCountByCasetype();
+	public List<Object[]> queryCountByCasetype();
 
-	public List<TestcaseCountDto> queryCountByApproval();
+	public List<Object[]> queryCountByApproval();
 	
-	public List queryCountByPriorityAndTestsuiteid(Integer id);
+	public List<Object[]> queryCountByPriorityAndTestsuiteid(Integer id);
 	
-	public List queryCountByStatusAndTestsuiteid(Integer id);
+	public List<Object[]> queryCountByStatusAndTestsuiteid(Integer id);
 	
-	public List queryCountByCasetypeAndTestsuiteid(Integer id);
+	public List<Object[]> queryCountByCasetypeAndTestsuiteid(Integer id);
 
-	public List queryCountByApprovalAndTestsuiteid(Integer id);
+	public List<Object[]> queryCountByApprovalAndTestsuiteid(Integer id);
 	//public User findUserByNameAndPassword(String username, String password);
 
 }
