@@ -202,7 +202,8 @@ public class TestsuiteAction extends ActionSupport {
 		
 		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(this.getTestsuite_name(), sut.getId());
 		
-		Testcase testcase = testcaseService.findTestcaseByNameAndTestsuiteid(this.getTestcase_name(), testsuite.getId());
+		if (testsuite != null){
+			Testcase testcase = testcaseService.findTestcaseByNameAndTestsuiteid(this.getTestcase_name(), testsuite.getId());
 
 		if (user != null
 				&& user.getAlias().equals(testcase.getCreator().getAlias()) == true) {
@@ -212,6 +213,7 @@ public class TestsuiteAction extends ActionSupport {
 			this.setIsSelf("false");
 		}
 
+		}
 		if (testcase != null) {
 			this.setTestcasedto(testsuiteService.getTestcaseDto(testcase));
 		}
