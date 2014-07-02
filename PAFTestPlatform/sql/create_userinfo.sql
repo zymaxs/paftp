@@ -1,8 +1,8 @@
 
 CREATE TABLE `UserInfo` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `department_id` int(11) not null,
-    `position_id` int(11) not null,
+    `department_id` int(11) default null,
+    `position_id` int(11) default null,
     `mobile` varchar(20) default null,
     `telephone` varchar(20) default null,
     `othermail` varchar(50) default null,

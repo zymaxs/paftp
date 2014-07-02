@@ -3,6 +3,7 @@ package com.paftp.action;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -83,7 +84,9 @@ public class RegisterAction extends ActionSupport {
 	private void setRegisterInfor(User user) {
 
 		this.createtime = new Date();
-		String md5Password= util.md5Encryption(this.getPassword()); /*
+		
+		String newpwd = this.getRandomString(12);
+		String md5Password= util.md5Encryption(newpwd); /*
 													 * Temp password and send it
 													 * to SMTP in future!
 													 */
@@ -137,6 +140,18 @@ public class RegisterAction extends ActionSupport {
 			}
 		}
 		return false;
+	}
+	
+	private String getRandomString(int length) {
+		String str = "abcdefghigklmnopkrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789";
+		Random random = new Random();
+		StringBuffer sf = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			int number = random.nextInt(62);// 0~61
+			sf.append(str.charAt(number));
+
+		}
+		return sf.toString();
 	}
 
 	public String getAlias() {
