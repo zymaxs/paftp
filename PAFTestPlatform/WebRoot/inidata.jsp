@@ -157,6 +157,29 @@
 </table>
 </form>
 </div>
+<div id="createPositionDiv">
+<form id="cratepositionForm" name="cratepositionForm" method="post" action="${pageContext.request.contextPath}/createSutGroup.action">
+<table>
+<tr>
+<td>创建职位<input type="text" id="createpositionname" name="name"></td>
+<td>职位描述<input type="text" id="createpositiondes" name="description"></td>
+<td><input type="submit" id="createpositionbtn" value="创建职位"></td>
+</tr>
+</table>
+</form>
+</div>
+<div id="createDepartmentDiv">
+<form id="cratedepartmentForm" name="cratedepartmentForm" method="post" action="${pageContext.request.contextPath}/createSutGroup.action">
+<table>
+<tr>
+<td>创建部门<input type="text" id="createdepartmentname" name="name"></td>
+<td>部门描述<input type="text" id="createdepartmentdes" name="description"></td>
+<td><input type="submit" id="createdepartmentbtn" value="创建部门"></td>
+</tr>
+</table>
+</form>
+</div>
+
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
