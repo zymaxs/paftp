@@ -161,8 +161,8 @@
 <form id="cratepositionForm" name="cratepositionForm" method="post" action="${pageContext.request.contextPath}/createPosition.action">
 <table>
 <tr>
-<td>创建职位<input type="text" id="createpositionname" name="name"></td>
-<td>职位描述<input type="text" id="createpositiondes" name="description"></td>
+<td>创建职位<input type="text" id="createpositionname" name="position"></td>
+<td>职位描述<input type="text" id="createpositiondes" name="positionDesc"></td>
 <td><input type="submit" id="createpositionbtn" value="创建职位"></td>
 </tr>
 </table>
@@ -172,8 +172,8 @@
 <form id="cratedepartmentForm" name="cratedepartmentForm" method="post" action="${pageContext.request.contextPath}/createDepartment.action">
 <table>
 <tr>
-<td>创建部门<input type="text" id="createdepartmentname" name="name"></td>
-<td>部门描述<input type="text" id="createdepartmentdes" name="description"></td>
+<td>创建部门<input type="text" id="createdepartmentname" name="department"></td>
+<td>部门描述<input type="text" id="createdepartmentdes" name="departmentDesc"></td>
 <td><input type="submit" id="createdepartmentbtn" value="创建部门"></td>
 </tr>
 </table>
