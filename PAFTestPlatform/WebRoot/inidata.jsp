@@ -158,7 +158,7 @@
 </form>
 </div>
 <div id="createPositionDiv">
-<form id="cratepositionForm" name="cratepositionForm" method="post" action="${pageContext.request.contextPath}/createSutGroup.action">
+<form id="cratepositionForm" name="cratepositionForm" method="post" action="${pageContext.request.contextPath}/createPosition.action">
 <table>
 <tr>
 <td>创建职位<input type="text" id="createpositionname" name="name"></td>
@@ -169,7 +169,7 @@
 </form>
 </div>
 <div id="createDepartmentDiv">
-<form id="cratedepartmentForm" name="cratedepartmentForm" method="post" action="${pageContext.request.contextPath}/createSutGroup.action">
+<form id="cratedepartmentForm" name="cratedepartmentForm" method="post" action="${pageContext.request.contextPath}/createDepartment.action">
 <table>
 <tr>
 <td>创建部门<input type="text" id="createdepartmentname" name="name"></td>
