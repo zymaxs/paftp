@@ -136,10 +136,12 @@ public class RegisterAction extends ActionSupport {
 	private Boolean isAdmin(String alias) {
 		User user = userService.findUserByAlias(alias);
 		List<Role> roles = user.getRoles();
+		if (roles != null && roles.size() > 0){
 		for (int i = 0; i < roles.size(); i++) {
 			if (roles.get(i).getName().equals("administrator")) {
 				return true;
 			}
+		}
 		}
 		return false;
 	}
