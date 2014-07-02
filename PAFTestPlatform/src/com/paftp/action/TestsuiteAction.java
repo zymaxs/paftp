@@ -488,10 +488,15 @@ public class TestsuiteAction extends ActionSupport {
 													// case
 
 			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
-			List<TestcaseCountDto> condstatus = this.transferFromDBObject(testcaseService.queryCountByStatusAndTestsuiteid(testsuites.get(0).getId()));  
-			List<TestcaseCountDto> condpriority = this.transferFromDBObject(testcaseService.queryCountByPriorityAndTestsuiteid(testsuites.get(0).getId()));
-			List<TestcaseCountDto> condcasetype = this.transferFromDBObject(testcaseService.queryCountByCasetypeAndTestsuiteid(testsuites.get(0).getId()));
-			List<TestcaseCountDto> condtestcase_approval = this.transferFromDBObject(testcaseService.queryCountByApprovalAndTestsuiteid(testsuites.get(0).getId()));
+			List<TestcaseCountDto> condstatus = new ArrayList<TestcaseCountDto>();
+			List<TestcaseCountDto> condpriority = new ArrayList<TestcaseCountDto>();
+			List<TestcaseCountDto> condcasetype = new ArrayList<TestcaseCountDto>();
+			List<TestcaseCountDto> condtestcase_approval = new ArrayList<TestcaseCountDto>();
+			if (testsuites.size() > 0){
+			condstatus = this.transferFromDBObject(testcaseService.queryCountByStatusAndTestsuiteid(testsuites.get(0).getId()));  
+			condpriority = this.transferFromDBObject(testcaseService.queryCountByPriorityAndTestsuiteid(testsuites.get(0).getId()));
+			condcasetype = this.transferFromDBObject(testcaseService.queryCountByCasetypeAndTestsuiteid(testsuites.get(0).getId()));
+			condtestcase_approval = this.transferFromDBObject(testcaseService.queryCountByApprovalAndTestsuiteid(testsuites.get(0).getId()));
 			for (int i = 1; i < testsuites.size(); i++) {
 			List<TestcaseCountDto> tempStatus = this.transferFromDBObject(testcaseService
 					.queryCountByStatusAndTestsuiteid(testsuites.get(i).getId()));
@@ -502,34 +507,58 @@ public class TestsuiteAction extends ActionSupport {
 			List<TestcaseCountDto> tempTestcase_approval = this.transferFromDBObject(testcaseService
 					.queryCountByApprovalAndTestsuiteid(testsuites.get(i).getId()));
 			for (int j=0; j<tempStatus.size(); j++){
-				for (int k=0; k<condstatus.size(); k++){
+				int k ;
+				for (k = 0; k<condstatus.size(); k++){
 					if (tempStatus.get(j).getValue().equals(condpriority.get(k).getValue())){
 						condstatus.get(k).setCount(condstatus.get(k).getCount() + tempStatus.get(j).getCount());
+						break;
 					}
+				}
+				if (k == condstatus.size()){
+					condstatus.get(k).setValue(tempStatus.get(j).getValue());					
+					condstatus.get(k).setCount(condstatus.get(k).getCount() + tempStatus.get(j).getCount());
 				}
 			}
 			
 			for (int j=0; j<tempPriority.size(); j++){
-				for (int k=0; k<condpriority.size(); k++){
+				int k ;
+				for (k=0; k<condpriority.size(); k++){
 					if (tempPriority.get(j).getValue().equals(condpriority.get(k).getValue())){
 						condpriority.get(k).setCount(condpriority.get(k).getCount() + tempPriority.get(j).getCount());
+						break;
 					}
+				}
+				if (k == condpriority.size()){
+					condpriority.get(k).setValue(tempPriority.get(j).getValue());					
+					condpriority.get(k).setCount(condpriority.get(k).getCount() + tempPriority.get(j).getCount());
 				}
 			}
 			
 			for (int j=0; j<tempCasetype.size(); j++){
-				for (int k=0; k<condcasetype.size(); k++){
+				int k ;
+				for (k=0; k<condcasetype.size(); k++){
 					if (tempCasetype.get(j).getValue().equals(condcasetype.get(k).getValue())){
 						condcasetype.get(k).setCount(condcasetype.get(k).getCount() + tempCasetype.get(j).getCount());
+						break;
 					}
+				}
+				if (k == condcasetype.size()){
+					condcasetype.get(k).setValue(tempCasetype.get(j).getValue());					
+					condcasetype.get(k).setCount(condcasetype.get(k).getCount() + tempCasetype.get(j).getCount());
 				}
 			}
 			
 			for (int j=0; j<tempTestcase_approval.size(); j++){
-				for (int k=0; k<condtestcase_approval.size(); k++){
+				int k ;
+				for (k=0; k<condtestcase_approval.size(); k++){
 					if (tempTestcase_approval.get(j).getValue().equals(condtestcase_approval.get(k).getValue())){
 						condtestcase_approval.get(k).setCount(condtestcase_approval.get(k).getCount() + tempTestcase_approval.get(j).getCount());
+						break;
 					}
+				}
+				if (k == condtestcase_approval.size()){
+					condtestcase_approval.get(k).setValue(tempTestcase_approval.get(j).getValue());					
+					condtestcase_approval.get(k).setCount(condtestcase_approval.get(k).getCount() + tempTestcase_approval.get(j).getCount());
 				}
 			}
 			}
@@ -537,6 +566,7 @@ public class TestsuiteAction extends ActionSupport {
 			condtestcase_quantity.put("priority", condpriority);
 			condtestcase_quantity.put("casetype", condcasetype);
 			condtestcase_quantity.put("testcase_approval",condtestcase_approval);
+			}
 		} else {
 
 			Integer testcase_quantity = 0;
