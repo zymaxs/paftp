@@ -65,11 +65,13 @@ public class RegisterAction extends ActionSupport {
 
 		user = new User();
 
-		setRegisterInfor(user);
+		String newpwd = this.getRandomString(12);
+		
+		setRegisterInfor(user, newpwd);
 
 		userService.saveUser(user);
-
-		Boolean mailResult = this.sendMail(user);
+		
+		Boolean mailResult = this.sendMail(user, newpwd);
 
 		if (mailResult) {
 			request.setAttribute("error", "Fail to send password to your E-Mail!");
@@ -81,11 +83,11 @@ public class RegisterAction extends ActionSupport {
 
 	}
 
-	private void setRegisterInfor(User user) {
+	private void setRegisterInfor(User user, String newpwd) {
 
 		this.createtime = new Date();
 		
-		String newpwd = this.getRandomString(12);
+
 		String md5Password= util.md5Encryption(newpwd); /*
 													 * Temp password and send it
 													 * to SMTP in future!
@@ -109,7 +111,7 @@ public class RegisterAction extends ActionSupport {
 
 	}
 
-	private Boolean sendMail(User user) {
+	private Boolean sendMail(User user, String newpwd) {
 		SSHClient sshClient = new SSHClient();
 		Boolean success;
 		try {
@@ -117,9 +119,9 @@ public class RegisterAction extends ActionSupport {
 			
 			if (success) {
 				if (this.isAdmin(user.getAlias())) {
-					sshClient.execute("sh /wls/wls81/email-confirm/register.sh " + "duanjuding4512" + " " + this.getPassword());
+					sshClient.execute("sh /wls/wls81/email-confirm/register.sh " + "duanjuding4512" + " " + newpwd);
 				} else{
-					sshClient.execute("sh /wls/wls81/email-confirm/register.sh " + user.getAlias() + " " + this.getPassword());
+					sshClient.execute("sh /wls/wls81/email-confirm/register.sh " + user.getAlias() + " " + newpwd);
 				}
 				return true;
 			}
