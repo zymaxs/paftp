@@ -564,6 +564,10 @@ public class TestsuiteAction extends ActionSupport {
 		
 		List<TestcaseCountDto> lists = new ArrayList<TestcaseCountDto>();
 		
+		if (list == null){
+			return lists;
+		}
+		
 		for (int i=0; i< list.size(); i++){
 			 Object[] obj = (Object[]) list.get(i);
 			 TestcaseCountDto testcaseCountDto = new TestcaseCountDto();

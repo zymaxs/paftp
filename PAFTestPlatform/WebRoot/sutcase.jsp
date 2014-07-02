@@ -1143,7 +1143,6 @@ function saveapprovalac(){
 });
 
 </script>
-//tool-tip
 
 </head>
 
