@@ -97,12 +97,12 @@
 		</action>
 		<action name="getbakpwd" method="getbakpwd" class="com.paftp.action.LoginAction">
 			<result name="success">/changeinipwd.jsp</result>
-			<result name="error" type="redirect">/opr_error.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="register" method="register"
 			class="com.paftp.action.RegisterAction">
 			<result name="success">/changeinipwd.jsp</result>
-			<result name="error">/register.jsp</result>
+			<result name="error">/error.jsp</result>
 			<result name="exist">/error.jsp</result>
 		</action>
 		<action name="index" method="index" class="com.paftp.action.IndexAction">
@@ -239,6 +239,14 @@
 			<result name="error">/error.jsp</result>
 		</action>
 		<action name="createSutGroup" method="createSutGroup" class="com.paftp.action.SutGroupAction">
+			<result name="success">/inidata.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="createDepartment" method="createDepartment" class="com.paftp.action.UserProfileAction">
+			<result name="success">/inidata.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="createPosition" method="createPosition" class="com.paftp.action.UserProfileAction">
 			<result name="success">/inidata.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
