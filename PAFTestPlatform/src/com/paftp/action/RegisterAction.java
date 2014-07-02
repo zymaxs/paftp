@@ -68,8 +68,12 @@ public class RegisterAction extends ActionSupport {
 
 		userService.saveUser(user);
 
-		this.sendMail(user);
+		Boolean mailResult = this.sendMail(user);
 
+		if (mailResult) {
+			request.setAttribute("error", "Fail to send password to your E-Mail!");
+		}
+		
 		request.setAttribute("alias", user.getAlias());
 
 		return "success";
