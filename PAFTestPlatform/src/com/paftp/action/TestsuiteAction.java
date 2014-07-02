@@ -502,7 +502,7 @@ public class TestsuiteAction extends ActionSupport {
 			for (int j=0; j<tempStatus.size(); j++){
 				for (int k=0; k<condstatus.size(); k++){
 					if (tempStatus.get(j).getValue().equals(condpriority.get(k).getValue())){
-						condstatus.get(k).setValue(condstatus.get(k).getValue() + tempStatus.get(j).getValue());
+						condstatus.get(k).setCount(condstatus.get(k).getCount() + tempStatus.get(j).getCount());
 					}
 				}
 			}
@@ -510,7 +510,7 @@ public class TestsuiteAction extends ActionSupport {
 			for (int j=0; j<tempPriority.size(); j++){
 				for (int k=0; k<condpriority.size(); k++){
 					if (tempPriority.get(j).getValue().equals(condpriority.get(k).getValue())){
-						condpriority.get(k).setValue(condpriority.get(k).getValue() + tempPriority.get(j).getValue());
+						condpriority.get(k).setCount(condpriority.get(k).getCount() + tempPriority.get(j).getCount());
 					}
 				}
 			}
@@ -518,7 +518,7 @@ public class TestsuiteAction extends ActionSupport {
 			for (int j=0; j<tempCasetype.size(); j++){
 				for (int k=0; k<condcasetype.size(); k++){
 					if (tempCasetype.get(j).getValue().equals(condcasetype.get(k).getValue())){
-						condcasetype.get(k).setValue(condcasetype.get(k).getValue() + tempCasetype.get(j).getValue());
+						condcasetype.get(k).setCount(condcasetype.get(k).getCount() + tempCasetype.get(j).getCount());
 					}
 				}
 			}
@@ -526,7 +526,7 @@ public class TestsuiteAction extends ActionSupport {
 			for (int j=0; j<tempTestcase_approval.size(); j++){
 				for (int k=0; k<condtestcase_approval.size(); k++){
 					if (tempTestcase_approval.get(j).getValue().equals(condtestcase_approval.get(k).getValue())){
-						condtestcase_approval.get(k).setValue(condtestcase_approval.get(k).getValue() + tempTestcase_approval.get(j).getValue());
+						condtestcase_approval.get(k).setCount(condtestcase_approval.get(k).getCount() + tempTestcase_approval.get(j).getCount());
 					}
 				}
 			}
