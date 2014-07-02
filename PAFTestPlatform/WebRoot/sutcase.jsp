@@ -545,14 +545,14 @@ function testtest(){
 				 if (root.condtestcase_quantity.priority != null){
 				 for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.priority[i] != null){
-						if(root.condtestcase_quantity.priority[i][0] == "P1"){
-						p1 = root.condtestcase_quantity.priority[i][1];
+						if(root.condtestcase_quantity.priority[i].value == "P1"){
+						p1 = root.condtestcase_quantity.priority[i].count;
 						} 
-					else if(root.condtestcase_quantity.priority[i][0] == "P2"){
-						p2 = root.condtestcase_quantity.priority[i][1];
+					else if(root.condtestcase_quantity.priority[i].value == "P2"){
+						p2 = root.condtestcase_quantity.priority[i].count;
 						}  
-					else if(root.condtestcase_quantity.priority[i][0] == "P3"){
-						p3 = root.condtestcase_quantity.priority[i][1];
+					else if(root.condtestcase_quantity.priority[i].value == "P3"){
+						p3 = root.condtestcase_quantity.priority[i].count;
 						} 
 						}
 					else if (root.condtestcase_quantity.priority[i] == null){
@@ -563,11 +563,11 @@ function testtest(){
 				 if (root.condtestcase_quantity.casetype != null){
 				 for (i=0 ; i< 2 ;i++){
 					if (root.condtestcase_quantity.casetype[i] != null){
-						if(root.condtestcase_quantity.casetype[i][0] == "正例"){
-						zhengli = root.condtestcase_quantity.casetype[i][1];
+						if(root.condtestcase_quantity.casetype[i].value == "正例"){
+						zhengli = root.condtestcase_quantity.casetype[i].count;
 						} 
-					else if(root.condtestcase_quantity.casetype[i][0] == "反例"){
-						fanli = root.condtestcase_quantity.casetype[i][1];
+					else if(root.condtestcase_quantity.casetype[i].value == "反例"){
+						fanli = root.condtestcase_quantity.casetype[i].count;
 						} 
 						}
 					else if (root.condtestcase_quantity.casetype[i] == null){
@@ -578,14 +578,14 @@ function testtest(){
 				 if (root.condtestcase_quantity.status != null){
 				 for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.status[i] != null){
-						if(root.condtestcase_quantity.status[i][0] == "自动"){
-						zidong = root.condtestcase_quantity.status[i][1];
+						if(root.condtestcase_quantity.status[i].value == "自动"){
+						zidong = root.condtestcase_quantity.status[i].count;
 						} 
-					else if(root.condtestcase_quantity.status[i][0] == "手动"){
-						shoudong = root.condtestcase_quantity.status[i][1];
+					else if(root.condtestcase_quantity.status[i].value == "手动"){
+						shoudong = root.condtestcase_quantity.status[i].count;
 						}  
-					else if(root.condtestcase_quantity.status[i][0] == "废弃"){
-						feiqi = root.condtestcase_quantity.status[i][1];
+					else if(root.condtestcase_quantity.status[i].value == "废弃"){
+						feiqi = root.condtestcase_quantity.status[i].count;
 						} 
 						}
 					else if (root.condtestcase_quantity.status[i] == null){
@@ -596,14 +596,14 @@ function testtest(){
 				 if (root.condtestcase_quantity.status != null){
 				  for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.testcase_approval[i] != null){
-						if(root.condtestcase_quantity.testcase_approval[i][0] == "待评审"){
-						daipingshen = root.condtestcase_quantity.testcase_approval[i][1];
+						if(root.condtestcase_quantity.testcase_approval[i].value == "待评审"){
+						daipingshen = root.condtestcase_quantity.testcase_approval[i].count;
 						} 
-					else if(root.condtestcase_quantity.testcase_approval[i][0] == "通过"){
-						tongguo = root.condtestcase_quantity.testcase_approval[i][1];
+					else if(root.condtestcase_quantity.testcase_approval[i].value == "通过"){
+						tongguo = root.condtestcase_quantity.testcase_approval[i].count;
 						}  
-					else if(root.condtestcase_quantity.testcase_approval[i][0] == "不通过"){
-						butongguo = root.condtestcase_quantity.testcase_approval[i][1];
+					else if(root.condtestcase_quantity.testcase_approval[i].value == "不通过"){
+						butongguo = root.condtestcase_quantity.testcase_approval[i].count;
 						} 
 						}
 					else if (root.condtestcase_quantity.testcase_approval[i] == null){
@@ -647,7 +647,7 @@ function testtest(){
 		document.getElementById('showtestcase_name').value = casepostfixname;
 		document.getElementById('showcasetestsuite_name').value = ref.get_node(ref.get_parent(sel)).text;
 		var testcase_name = caseprefixname + casepostfixname;
-		tsparams = {testcase_name:testcase_name,sut_name:sut_name};
+		tsparams = {testcase_name:testcase_name,sut_name:sut_name,testsuite_name:$("#showcasetestsuite_name").val()};
 		$.ajax({
 			  type : "POST",
 			  url : "queryTestcase.action",
@@ -893,14 +893,14 @@ function querySutCaseInfo(){
 				 if (root.condtestcase_quantity.priority != null){
 				 for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.priority[i] != null){
-						if(root.condtestcase_quantity.priority[i][0] == "P1"){
-						p1 = root.condtestcase_quantity.priority[i][1];
+						if(root.condtestcase_quantity.priority[i].value == "P1"){
+						p1 = root.condtestcase_quantity.priority[i].count;
 						} 
-					else if(root.condtestcase_quantity.priority[i][0] == "P2"){
-						p2 = root.condtestcase_quantity.priority[i][1];
+					else if(root.condtestcase_quantity.priority[i].value == "P2"){
+						p2 = root.condtestcase_quantity.priority[i].count;
 						}  
-					else if(root.condtestcase_quantity.priority[i][0] == "P3"){
-						p3 = root.condtestcase_quantity.priority[i][1];
+					else if(root.condtestcase_quantity.priority[i].value == "P3"){
+						p3 = root.condtestcase_quantity.priority[i].count;
 						} 
 						}
 					else if (root.condtestcase_quantity.priority[i] == null){
@@ -914,11 +914,11 @@ function querySutCaseInfo(){
 				 if (root.condtestcase_quantity.casetype != null){
 				 for (i=0 ; i< 2 ;i++){
 					if (root.condtestcase_quantity.casetype[i] != null){
-						if(root.condtestcase_quantity.casetype[i][0] == "正例"){
-						zhengli = root.condtestcase_quantity.casetype[i][1];
+						if(root.condtestcase_quantity.casetype[i].value == "正例"){
+						zhengli = root.condtestcase_quantity.casetype[i].count;
 						} 
-					else if(root.condtestcase_quantity.casetype[i][0] == "反例"){
-						fanli = root.condtestcase_quantity.casetype[i][1];
+					else if(root.condtestcase_quantity.casetype[i].value == "反例"){
+						fanli = root.condtestcase_quantity.casetype[i].count;
 						} 
 						}
 					else if (root.condtestcase_quantity.casetype[i] == null){
@@ -933,14 +933,14 @@ function querySutCaseInfo(){
 				 if (root.condtestcase_quantity.status != null){
 				 for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.status[i] != null){
-						if(root.condtestcase_quantity.status[i][0] == "自动"){
-						zidong = root.condtestcase_quantity.status[i][1];
+						if(root.condtestcase_quantity.status[i].value == "自动"){
+						zidong = root.condtestcase_quantity.status[i].count;
 						} 
-					else if(root.condtestcase_quantity.status[i][0] == "手动"){
-						shoudong = root.condtestcase_quantity.status[i][1];
+					else if(root.condtestcase_quantity.status[i].value == "手动"){
+						shoudong = root.condtestcase_quantity.status[i].count;
 						}  
-					else if(root.condtestcase_quantity.status[i][0] == "废弃"){
-						feiqi = root.condtestcase_quantity.status[i][1];
+					else if(root.condtestcase_quantity.status[i].value == "废弃"){
+						feiqi = root.condtestcase_quantity.status[i].count;
 						} 
 						}
 					else if (root.condtestcase_quantity.status[i] == null){
@@ -955,14 +955,14 @@ function querySutCaseInfo(){
 				 if (root.condtestcase_quantity.testcase_approval != null){
 				  for (i=0 ; i< 3 ;i++){
 					if (root.condtestcase_quantity.testcase_approval[i] != null){
-						if(root.condtestcase_quantity.testcase_approval[i][0] == "待评审"){
-						daipingshen = root.condtestcase_quantity.testcase_approval[i][1];
+						if(root.condtestcase_quantity.testcase_approval[i].value == "待评审"){
+						daipingshen = root.condtestcase_quantity.testcase_approval[i].count;
 						} 
-					else if(root.condtestcase_quantity.testcase_approval[i][0] == "通过"){
-						tongguo = root.condtestcase_quantity.testcase_approval[i][1];
+					else if(root.condtestcase_quantity.testcase_approval[i].value == "通过"){
+						tongguo = root.condtestcase_quantity.testcase_approval[i].count;
 						}  
-					else if(root.condtestcase_quantity.testcase_approval[i][0] == "不通过"){
-						butongguo = root.condtestcase_quantity.testcase_approval[i][1];
+					else if(root.condtestcase_quantity.testcase_approval[i].value == "不通过"){
+						butongguo = root.condtestcase_quantity.testcase_approval[i].count;
 						} 
 						}
 					else if (root.condtestcase_quantity.testcase_approval[i] == null){
@@ -1143,7 +1143,6 @@ function saveapprovalac(){
 });
 
 </script>
-//tool-tip
 
 </head>
 
@@ -1232,7 +1231,7 @@ function saveapprovalac(){
     </div>
   </div>
   <!--主体-->
-  <table id="maintable" border="1" width="80%" align="center">
+  <table id="maintable" width="100%" border="1">
   	<tr>
     	<!--左边Tree-->
     	<td style="width:300px;vertical-align:top">
