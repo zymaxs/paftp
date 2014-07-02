@@ -110,7 +110,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 		userService.updateUser(user);
 
-		this.sendMail(user, newpwd);
+		Boolean mailResult = this.sendMail(user, newpwd);
+
+		if (mailResult) {
+			request.setAttribute("error", "Fail to send password to your E-Mail!");
+		}
 
 		request.setAttribute("alias", this.getAlias());
 
