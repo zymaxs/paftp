@@ -511,14 +511,13 @@ public class TestsuiteAction extends ActionSupport {
 			for (int j=0; j<tempStatus.size(); j++){
 				int k ;
 				for (k = 0; k<condstatus.size(); k++){
-					if (tempStatus.get(j).getValue().equals(condpriority.get(k).getValue())){
+					if (tempStatus.get(j).getValue().equals(condstatus.get(k).getValue())){
 						condstatus.get(k).setCount(condstatus.get(k).getCount() + tempStatus.get(j).getCount());
 						break;
 					}
 				}
 				if (k == condstatus.size()){
-					condstatus.get(k).setValue(tempStatus.get(j).getValue());					
-					condstatus.get(k).setCount(condstatus.get(k).getCount() + tempStatus.get(j).getCount());
+					condstatus.add(tempStatus.get(j));
 				}
 			}
 			
@@ -531,8 +530,7 @@ public class TestsuiteAction extends ActionSupport {
 					}
 				}
 				if (k == condpriority.size()){
-					condpriority.get(k).setValue(tempPriority.get(j).getValue());					
-					condpriority.get(k).setCount(condpriority.get(k).getCount() + tempPriority.get(j).getCount());
+					condpriority.add(tempPriority.get(j));
 				}
 			}
 			
@@ -545,8 +543,7 @@ public class TestsuiteAction extends ActionSupport {
 					}
 				}
 				if (k == condcasetype.size()){
-					condcasetype.get(k).setValue(tempCasetype.get(j).getValue());					
-					condcasetype.get(k).setCount(condcasetype.get(k).getCount() + tempCasetype.get(j).getCount());
+					condcasetype.add(tempCasetype.get(j));
 				}
 			}
 			
@@ -559,8 +556,7 @@ public class TestsuiteAction extends ActionSupport {
 					}
 				}
 				if (k == condtestcase_approval.size()){
-					condtestcase_approval.get(k).setValue(tempTestcase_approval.get(j).getValue());					
-					condtestcase_approval.get(k).setCount(condtestcase_approval.get(k).getCount() + tempTestcase_approval.get(j).getCount());
+					condtestcase_approval.add(tempTestcase_approval.get(j));
 				}
 			}
 			}
