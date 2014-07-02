@@ -11,9 +11,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.paftp.entity.ApplySut;
 import com.paftp.entity.Role;
-import com.paftp.entity.Sut;
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
 import com.paftp.entity.Department;
@@ -52,6 +50,8 @@ public class UserProfileAction extends ActionSupport {
 	private String othermail;
 	private String otherinfo;
 	private Integer userid;
+	private String departmentDesc;
+	private String positionDesc;
 
 	private String alias;
 
@@ -164,6 +164,59 @@ public class UserProfileAction extends ActionSupport {
 		return "success";
 
 	}
+	
+	public String createDepartment(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		user = this.getSessionUser();
+		
+		if (user.getAlias().equals("admin") == false){
+			request.setAttribute("error", "You has not the authority to do this!");
+			return "error";
+		}
+		
+		Department department = departmentService.findDepartmentByName(this.getDepartment());
+		if (department != null){
+			request.setAttribute("error", "The department has been exist!");
+			return "error";
+		}
+		
+		department = new Department();
+		department.setName(this.getDepartment());
+		department.setDescription(this.getDepartmentDesc());
+		
+		departmentService.saveDepartment(department);
+
+		return "success";
+	}
+	
+	public String createPosition(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		user = this.getSessionUser();
+		
+		if (user.getAlias().equals("admin") == false){
+			request.setAttribute("error", "You has not the authority to do this!");
+			return "error";
+		}
+		
+		Position position = positionService.findPositionByName(this.getPosition());
+		if (position != null){
+			request.setAttribute("error", "The position has been exist!");
+			return "error";
+		}
+		
+		position = new Position();
+		position.setName(this.getPosition());
+		position.setDescription(this.getPositionDesc());
+		
+		positionService.savePosition(position);
+
+		return "success";
+	}
+
 
 	private User setUserInfo(User user) {
 
@@ -329,6 +382,22 @@ public class UserProfileAction extends ActionSupport {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getDepartmentDesc() {
+		return departmentDesc;
+	}
+
+	public void setDepartmentDesc(String departmentDesc) {
+		this.departmentDesc = departmentDesc;
+	}
+
+	public String getPositionDesc() {
+		return positionDesc;
+	}
+
+	public void setPositionDesc(String positionDesc) {
+		this.positionDesc = positionDesc;
 	}
 
 }
