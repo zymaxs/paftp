@@ -238,8 +238,7 @@ function inidata(){
   </form>
   
   <!--TABLE展示-->
-  <div style="width:80%" align="center">
-  <table id="sutForm" class="table table-striped" style="text-align:center">
+  <table id="sutForm" class="table table-striped" style="text-align:center; width:80%" align="center">
     <thead>
       <tr>
         <td>系统序列号</td>
@@ -252,7 +251,6 @@ function inidata(){
     <tbody id="sutFormTab">
     </tbody>
   </table>
-  </div>
   <div align="center">
   <div class="pagination"> <a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
 			class="previous" data-action="previous">&lsaquo;</a>
