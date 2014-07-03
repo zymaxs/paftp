@@ -253,9 +253,9 @@ public class RoleAction extends ActionSupport {
 			if (i < roles.size()) {
 				role = roleService.findRoleById(roles.get(i).getId());
 				if (role.getName().equals(this.getSut_name() + "Manager")){
-					role.setName("Manager");
+					role.setName("管理员");
 				}else if (role.getName().equals(this.getSut_name() + "Sdet")){
-					role.setName("Sdet");
+					role.setName("成员");
 				}
 				currentPageRoles.add(role);
 			} else {
@@ -294,10 +294,12 @@ public class RoleAction extends ActionSupport {
 		Role conditionrole = null;
 		if (this.getRole_name() != null
 				&& this.getRole_name().equals("") == false) {
-			if (this.getRole_name().equals("Manager")
-					|| this.getRole_name().equals("Sdet")) {
-				conditionrole = roleService.findRoleByName(this.getSut_name() + this.getRole_name());
-			} else {
+			if (this.getRole_name().equals("管理员")) {
+				conditionrole = roleService.findRoleByName(this.getSut_name() + "Manager");
+			} else if (this.getRole_name().equals("成员")){
+				conditionrole = roleService.findRoleByName(this.getSut_name() + "Sdet");
+			}
+			else {
 				conditionrole = roleService.findRoleByName(this.getSut_name() + this.getRole_name());
 			}
 		}
@@ -317,9 +319,9 @@ public class RoleAction extends ActionSupport {
 						// Role seniorrole = roleService
 						// .findRoleByName("seniormanager");
 						if (role.getName().equals(this.getSut_name() + "Manager")){
-							role.setName("Manager");
+							role.setName("管理员");
 						}else if (role.getName().equals(this.getSut_name() + "Sdet")){
-							role.setName("Sdet");
+							role.setName("成员");
 						}
 						List<Role> currentroles = new ArrayList<Role>();
 						currentroles.add(role);
