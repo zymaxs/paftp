@@ -289,6 +289,10 @@ public class ApplySutAction extends ActionSupport {
 
 		if (status == null) {
 			status = "待审批";
+		} else if (status.equals("Pass")) {
+			status = "通过";
+		} else if (status.equals("Reject")) {
+			status = "拒绝";
 		}
 
 		ApplySutStatus applySutStatus = applySutStatusService
