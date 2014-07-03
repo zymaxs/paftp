@@ -358,7 +358,7 @@ public class TestsuiteAction extends ActionSupport {
 
 			for (int i = 0; i < testcases.size(); i++) {
 				
-				this.updateTestcaseHistory(testcases.get(i), testcases.get(i).getStatus(), "废弃", "status");
+				this.updateTestcaseHistory(testcases.get(i), testcases.get(i).getStatus(), "废弃", "状态");
 				
 				testcases.get(i).setStatus("废弃");
 				testcaseService.updateTestcase(testcases.get(i));
