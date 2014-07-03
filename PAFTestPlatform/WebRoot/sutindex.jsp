@@ -143,7 +143,6 @@ function inidata(){
 <style>
 /*导航默认样式，可根据实际情况修改*/
 * {
-	margin:0;
 	padding:0
 }
 .daohang {
