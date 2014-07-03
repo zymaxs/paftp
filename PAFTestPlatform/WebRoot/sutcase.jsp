@@ -1228,10 +1228,11 @@ function saveapprovalac(){
   <table id="maintable" width="100%" class="table table-bordered">
     <tr> 
       <!--左边Tree-->
-      <td style="width:300px;vertical-align:top"><div style="height:624px;overflow:scroll;">
+      <td style="vertical-align:top;"><div style="width:283px;height:624px;overflow:scroll;">
           <div id="searchDiv">
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; padding:4px; border-radius:4px; border:1px solid silver;">
           </div>
+          <br>
           <div id="createbtn">
             <button type="button" class="btn btn-success btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i>Create</button>
           </div>
@@ -1240,10 +1241,10 @@ function saveapprovalac(){
         </div></td>
       
       <!--About SUT-->
-      <td width="100%" height="604px" id="sutCaseInfoTd" style="display:block" ><div id="sutCaseInfoDiv" style="text-align:center"> </div></td>
+      <td height="604px" id="sutCaseInfoTd" style="display:block; width:1018px" ><div id="sutCaseInfoDiv" style="text-align:center"> </div></td>
       
       <!--Interface Search-->
-      <td id="interfacesearchTd" style="display:none;" height="604px"><table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
+      <td id="interfacesearchTd" style="display:none; width:1018px" height="604px"><table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
           <tr style="text-align:center">
             <td width="20%">自动化</td>
             <td width="20%">优先级</td>
@@ -1289,7 +1290,7 @@ function saveapprovalac(){
         <div id="interfaceSearchResultDiv" style="text-align:center"></div></td>
       
       <!--展示、更新testsuite-->
-      <td width="100%" style="display:none" id="showTestSuiteTd" height="604px"><form id="showTestSuiteForm" name="showTestSuiteForm">
+      <td style="display:none; width:1018px" id="showTestSuiteTd" height="604px"><form id="showTestSuiteForm" name="showTestSuiteForm">
           <table width="100%" height="100%" id="showTestSuiteTable">
           	<tr>
             <td colspan="2">&nbsp;</td>
@@ -1372,7 +1373,7 @@ function saveapprovalac(){
         <div id="testsuiteInfoDiv" style="text-align:center"> </div></td>
       
       <!--展示更新testcase-->
-      <td width="100%" style="display:none" id="showTestCaseTd"><form id="showTestCaseForm" style="margin:0 0 0 0;">
+      <td style="display:none; width:1018px" id="showTestCaseTd"><form id="showTestCaseForm" style="margin:0 0 0 0;">
           <table width="100%" id="showcaseinfo">
             <tr>
               <td colspan="2" style="text-align:center">用例详情</td>
