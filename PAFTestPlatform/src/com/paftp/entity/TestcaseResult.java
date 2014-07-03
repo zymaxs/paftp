@@ -19,6 +19,7 @@ public class TestcaseResult {
 
 	private Integer id;
 	private String casename;
+	private String url;
 	private String description;
 	private Boolean ispass;
 	private Testcase testcase;
@@ -92,6 +93,15 @@ public class TestcaseResult {
 	public void setTestcaseresult_contents(
 			List<TestcaseResultContent> testcaseresult_contents) {
 		this.testcaseresult_contents = testcaseresult_contents;
+	}
+
+	@Column(name = "url", length = 200)  
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	

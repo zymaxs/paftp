@@ -368,7 +368,7 @@ public class ApplySutAction extends ActionSupport {
 
 		role = new Role();
 		role.setName(sut.getName() + "Manager");
-		role.setDescription(sut.getName() + "Manager");
+		role.setDescription(sut.getName() + "管理员，可以添加及删除该组成员！");
 		permissions = new ArrayList<Permission>();
 		if (permissionService.findPermissionByScope("work") == null) {
 			firstpermission = new Permission();
@@ -399,7 +399,7 @@ public class ApplySutAction extends ActionSupport {
 		List<Permission> permissions2 = null;
 		role2 = new Role();
 		role2.setName(sut.getName() + "Sdet");
-		role2.setDescription("The role is:" + sut.getName());
+		role2.setDescription(sut.getName() + "成员，可以查询该系统下信息！");
 		role2.setSut(sut);
 		permissions2 = new ArrayList<Permission>();
 		permission2 = permissionService.findPermissionByScope("work");

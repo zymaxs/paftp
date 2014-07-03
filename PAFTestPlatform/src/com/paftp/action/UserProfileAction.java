@@ -84,6 +84,11 @@ public class UserProfileAction extends ActionSupport {
 			if (i < roles.size()) {
 				role = roleService.findRoleById(roles.get(i).getId());
 				if (role.getName().equals("seniormanager") == false) {
+					if (this.existSubString(role.getName(), "Manager")){
+						role.setName("管理员");
+					}else{
+						role.setName("成员");
+					}
 					currentPageRoles.add(role);
 				}
 			} else {
@@ -259,6 +264,18 @@ public class UserProfileAction extends ActionSupport {
 		session.removeAttribute(key);
 		session.setAttribute(key, content);
 	}
+	
+	private Boolean existSubString(String source, String substring){
+
+		  int a=source.indexOf(substring);
+
+		  if(a>=0){
+			  return true;
+		  }else{
+			  return false;
+		  }
+
+		 }
 
 	public String getMobile() {
 		return mobile;
