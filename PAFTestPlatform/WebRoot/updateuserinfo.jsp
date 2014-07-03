@@ -148,11 +148,11 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 		displayname = user.getDisplayName();
 	}
 
-	if (userinfo.getDepartment().getName() != null) {
+	if (userinfo.getDepartment() != null && userinfo.getDepartment().getName() != null) {
 		department = userinfo.getDepartment().getName();
 	}
 
-	if (userinfo.getPosition().getName() != null) {
+	if (userinfo.getPosition() != null && userinfo.getPosition().getName() != null) {
 		position = userinfo.getPosition().getName();
 	}
 
