@@ -1459,11 +1459,11 @@ function saveapprovalac(){
                     </tr>
                     <tr>
                     	<td>描述</td>
-              			<td><textarea  rows="4" name="showcasedescription" class="input-xlarge" id="showcasedescription" style="max-height:50px; max-width:200px; width:200px; height:50px;" readonly></textarea></td>
+              			<td><textarea  rows="4" name="showcasedescription" class="input-xlarge" id="showcasedescription" style="max-height:50px; max-width:550px; width:550px; height:50px;" readonly></textarea></td>
                     </tr>
                     <tr>
                     	<td>步骤</td>
-              			<td><textarea  rows="4" name="showcasesteps" class="input-xlarge" id="showcasesteps" style="max-height:150px; max-width:200px; width:200px; height:150px;" readonly></textarea></td>
+              			<td><textarea  rows="4" name="showcasesteps" class="input-xlarge" id="showcasesteps" style="max-height:150px; max-width:550px; width:550px; height:150px;" readonly></textarea></td>
                     </tr>
                     <tr>
                     	<td><button type="button" class="btn btn-default" onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" style="display:block">更新</button></td>
@@ -1587,11 +1587,11 @@ function saveapprovalac(){
         </tr>
         <tr>
           <td>描述</td>
-          <td><textarea  rows="4" name="description" class="input-xlarge" id="description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
+          <td><textarea  rows="4" name="description" class="input-xlarge" id="description" style="max-height:50px; max-width:400px; width:400px; height:50px;"></textarea></td>
         </tr>
         <tr>
           <td>步骤</td>
-          <td><textarea  rows="4" name="casesteps" class="input-xlarge" id="casesteps" style="max-height:150px; max-width:200px; width:200px; height:150px;"></textarea></td>
+          <td><textarea  rows="4" name="casesteps" class="input-xlarge" id="casesteps" style="max-height:150px; max-width:400px; width:400px; height:150px;"></textarea></td>
         </tr>
       </table>
     </form>

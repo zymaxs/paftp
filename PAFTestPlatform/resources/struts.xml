@@ -167,7 +167,6 @@
 		</action>
 		<action name="applysutgroup" method="sutgroup"
 			class="com.paftp.action.StaticAction">
-			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/applysut.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
