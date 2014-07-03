@@ -1,6 +1,10 @@
 package com.paftp.service.ApplySut.impl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -117,6 +121,15 @@ public List<ApplySutDto> getApplySutDto(List<ApplySut> applySuts){
 			
 			applySutDto.setApplysutstatusdto(applySutStatusDto);
 			applySutDto.setApplyer(applySuts.get(i).getName());
+//			DateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			Date d;
+//			try {
+//				d = output.parse(applySuts.get(i).getApplytime().toString());
+//				applySutDto.setApplytime(d);
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			applySutDto.setApplytime(applySuts.get(i).getApplytime());
 			applySutDto.setCode(applySuts.get(i).getCode());
 			applySutDto.setName(applySuts.get(i).getName());
