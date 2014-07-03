@@ -368,7 +368,7 @@ function newTestCaseac(){
 	  	}
 	  };
 	  var testcase_name;
-	  testcase_name = $("#pre_stname").val() + $("#testcase_name").val();
+	  testcase_name = $("#pre_stname").text() + $("#testcase_name").val();
 	  var tsparams = {testcase_name:testcase_name,sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待评审",project_name:$("#project").val()};
 	  $.ajax({
 			  type : "POST",
@@ -456,7 +456,7 @@ function saveTestCaseac(){
 	  	}
 	  };*/
 	  var sut_name = '<%=sut_name%>';
-	  var testcase_name = $("#pre_casename").val() + $("#showtestcase_name").val();
+	  var testcase_name = $('#pre_casename').text() + $("#showtestcase_name").val();
 	  var tsparams = {testcase_name:testcase_name,sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val()};
 	  $.ajax({
 			  type : "POST",
@@ -612,7 +612,7 @@ function testtest(){
 				  	}
 				 }
 				  var queryTestSuiteResult = "";
-				  queryTestSuiteResult += "<table border='1' width='100%'><tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正反例</td></tr>";
+				  queryTestSuiteResult += "<table width='100%' class='table  table-bordered'><tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>"+ zidong+"</td><td>"+shoudong+"</td><td>"+feiqi+"</td><td>"+p1+"</td><td>"+p2+"</td><td>"+p3+"</td><td>"+daipingshen+"</td><td>"+tongguo+"</td><td>"+butongguo+"</td><td>"+zhengli+"</td><td>"+fanli+"</td></tr></table>";
 				  $("#testsuiteInfoDiv").append(queryTestSuiteResult);
@@ -699,7 +699,7 @@ function testtest(){
 				  for (i=0 ; i< historylength ;i++){
 					  caseChangeHistory += "<p><a href='#casechange"+ i +"' data-toggle='collapse'>" + root.testcasedto.caseChangeHistorys[i].update_time +"</a>&nbsp;&nbsp;By&nbsp;&nbsp;<a href='getuserinfo.action?userid="+ root.testcasedto.caseChangeHistorys[i].updator.id+"'>"+root.testcasedto.caseChangeHistorys[i].updator.displayName+"</a></p>";
 				 	  caseChangeHistory += "<div id='casechange"+ i +"' class='collapse'>";
-					  caseChangeHistory += "<table border='1'><tr><td>修改项</td><td>Old Value</td><td>New Value</td></tr>"
+					  caseChangeHistory += "<table class='table table-striped'><tr><td>修改项</td><td>Old Value</td><td>New Value</td></tr>"
 					  var operationlength = root.testcasedto.caseChangeHistorys[i].caseChangeOperations.length;
 					  for (j=0 ; j< operationlength ; j++){
 						  var oldValue = root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].oldValue;
@@ -973,7 +973,7 @@ function querySutCaseInfo(){
 				 }
 					
 				  var queryTestSuiteResult = "";
-				  queryTestSuiteResult += "<table border='1' width='100%'><tr><td colspan='5'>接口总数</td><td colspan='6'>"+root.testsuite_quantity+"</td></tr>";
+				  queryTestSuiteResult += "<table class='table table-bordered' width='100%'><tr><td colspan='5'>接口总数</td><td colspan='6'>"+root.testsuite_quantity+"</td></tr>";
 				  queryTestSuiteResult += "<tr><td colspan='5'>案例总数</td><td colspan='6'>"+root.testcase_quantity+"</td></tr>"
 				  queryTestSuiteResult += "<tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td></tr>";
@@ -1045,7 +1045,7 @@ function saveapprovalac(){
 	  	}
 	  };
 	var sut_name = '<%=sut_name%>';
-	var testcase_name = $("#pre_casename").val() + $("#showtestcase_name").val();
+	var testcase_name = $("#pre_casename").text() + $("#showtestcase_name").val();
 	var tsparams = {testcase_name:testcase_name,sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:$("#showcasepriority").val(),status:$("#showcasestatus").val(),casetype:$("#showcasetype").val(),casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val()};
 	  $.ajax({
 			  type : "POST",
@@ -1225,7 +1225,7 @@ function saveapprovalac(){
     <!-- /.container-fluid --> 
   </nav>
   <!--主体-->
-  <table id="maintable" width="100%" border="1">
+  <table id="maintable" width="100%" class="table table-bordered">
     <tr> 
       <!--左边Tree-->
       <td style="width:300px;vertical-align:top"><div style="height:604px;overflow:scroll;">
@@ -1243,10 +1243,7 @@ function saveapprovalac(){
       <td width="100%" height="604px" id="sutCaseInfoTd" style="display:block" ><div id="sutCaseInfoDiv" style="text-align:center"> </div></td>
       
       <!--Interface Search-->
-      <td id="interfacesearchTd" style="display:none;" height="604px"><table id="interfaceSearchTable" style="width:100%">
-          <tr>
-            <td colspan="5" style="text-align:center">查询条件</td>
-          </tr>
+      <td id="interfacesearchTd" style="display:none;" height="604px"><table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
           <tr style="text-align:center">
             <td width="20%">自动化</td>
             <td width="20%">优先级</td>
