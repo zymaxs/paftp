@@ -171,7 +171,7 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 	}
 	;
 	if (userinfo.getOtherinfo() != null) {
-		othermail = userinfo.getOtherinfo();
+		otherinfo = userinfo.getOtherinfo();
 	}
 	;
 %>
