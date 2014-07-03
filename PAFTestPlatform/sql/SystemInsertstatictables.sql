@@ -1,6 +1,6 @@
-insert into ApplySutStatus values("1", "Pending", "待审批");
-insert into ApplySutStatus values("3", "Pass", "通过");
-insert into ApplySutStatus values("2", "Reject", "拒绝");
+insert into ApplySutStatus values("1", "待审批", "待审批");
+insert into ApplySutStatus values("3", "通过", "通过");
+insert into ApplySutStatus values("2", "拒绝", "拒绝");
 
 insert into Role values("1", "administrator", "The admin role", null);
 insert into Role values("2", "seniormanager", "The senior manager role", null);

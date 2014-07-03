@@ -288,7 +288,7 @@ public class ApplySutAction extends ActionSupport {
 	private ApplySut setApplySut(ApplySut applySut, String status) {
 
 		if (status == null) {
-			status = "Pending";
+			status = "待审批";
 		}
 
 		ApplySutStatus applySutStatus = applySutStatusService
@@ -311,7 +311,7 @@ public class ApplySutAction extends ActionSupport {
 			SutGroup group = sutgroupService.findSutGroupByName(this
 					.getGroupname());
 			applySut.setGroup(group);
-		} else { // status: ͨ����߾ܾ�
+		} else { 
 			this.resolvetime = new Date();
 			java.sql.Timestamp resolvedatetime = new java.sql.Timestamp(resolvetime.getTime());
 			applySut.setApplysutstatus(applySutStatus);
