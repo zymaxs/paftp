@@ -1,6 +1,7 @@
 CREATE TABLE `TestcaseResult`(
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`casename` varchar(50) DEFAULT NULL,
+	`url` varchar(200) DEFAULT NULL,
 	`ispass` tinyint(1) DEFAULT NULL,
 	`description` varchar(150) DEFAULT NULL, 
 	`testsuiteresult_id` int(11) DEFAULT NULL,
