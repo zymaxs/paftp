@@ -96,11 +96,11 @@ var applyer = '<%=applyer%>';
 		document.loginform.submit();
 	}
 	function approveac() {
-		document.sutinfoform.action = "${pageContext.request.contextPath}/approveSut.action?status=通过";
+		document.sutinfoform.action = "${pageContext.request.contextPath}/approveSut.action?status=Pass";
 		document.sutinfoform.submit();
 	}
 	function rejectac() {
-		document.sutinfoform.action = "${pageContext.request.contextPath}/approveSut.action?status=拒绝";
+		document.sutinfoform.action = "${pageContext.request.contextPath}/approveSut.action?status=Reject";
 		document.sutinfoform.submit();
 	}
 	function updateac() {
