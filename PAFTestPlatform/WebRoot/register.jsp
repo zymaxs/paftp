@@ -316,7 +316,7 @@ $(document).ready(function(){
       <legend> 用户注册 <small>(带*号标志为必输项)</small></legend>
       <table border="0">
         <tr>
-          <td style="text-align:right"><label class="control-label" for="alias">* 用户名 :&nbsp;&nbsp;</label></td>
+          <td style="text-align:right">* 用户名 :&nbsp;&nbsp;</td>
           <td colspan="3" style="text-align:left"><input type="text" id="alias" name="alias">@pingan.com.cn</td>
         </tr>
         <tr>
@@ -327,14 +327,14 @@ $(document).ready(function(){
         <td colspan="">&nbsp;</td>
         </tr>
         <tr>
-          <td style="text-align:right"><label for="displayname">* 真实姓名 :&nbsp;&nbsp;</label></td>
+          <td style="text-align:right">* 真实姓名 :&nbsp;&nbsp;</td>
           <td colspan="3" style="text-align:left"><input type="text" id="displayname" name="displayname"></td>
         </tr>
         <tr>
         <td colspan="">&nbsp;</td>
         </tr>
         <tr>
-          <td style="text-align:right"><label  for="department">* 所属部门 :&nbsp;&nbsp;</label></td>
+          <td style="text-align:right">* 所属部门 :&nbsp;&nbsp;</td>
           <td style="text-align:left;">
           <div id="selectDepartment" class="selectbox">
               <div class="cartes">
@@ -351,7 +351,7 @@ $(document).ready(function(){
               </div>
             </div>
             </td>
-          <td style="text-align:right"><label class="control-label" for="position">* 职位 :&nbsp;&nbsp;</label></td>
+          <td style="text-align:right">* 职位 :&nbsp;&nbsp;</td>
           <td style="text-align:left">
           <div id="selectPosition" class="selectbox">
               <div class="cartes">
@@ -373,23 +373,23 @@ $(document).ready(function(){
         <td colspan="">&nbsp;</td>
         </tr>
         <tr>
-          <td style="text-align:right"><label for="telephone">联系电话 :&nbsp;&nbsp;</label></td>
+          <td style="text-align:right">联系电话 :&nbsp;&nbsp;</td>
           <td style="text-align:left"><input type="text" id="telephone" name="telephone"></td>
-          <td style="text-align:right"><label for="mobile">移动电话 :&nbsp;&nbsp;</label></td>
+          <td style="text-align:right">移动电话 :&nbsp;&nbsp;</td>
           <td style="text-align:left"><input type="text" id="mobile" name="mobile"></td>
         </tr>
         <tr>
         <td colspan="">&nbsp;</td>
         </tr>
         <tr>
-          <td style="text-align:right"><label for="othermail">其他邮件 :&nbsp;&nbsp;</label></td>
+          <td style="text-align:right">其他邮件 :&nbsp;&nbsp;</td>
           <td colspan="3" style="text-align:left"><input type="text" id="othermail" name="othermail"></td>
         </tr>
         <tr>
         <td colspan="">&nbsp;</td>
         </tr>
         <tr>
-          <td style="text-align:right"><label for="otherinfo">用户备注 :&nbsp;&nbsp;</label></td>
+          <td style="text-align:right">用户备注 :&nbsp;&nbsp;</td>
           <td colspan="3" style="text-align:left"><textarea  id="otherinfo" name="otherinfo" style="height:100px; max-height:100px; width:300px; max-width:300px" ></textarea></td>
         </tr>
         <tr>
