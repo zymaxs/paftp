@@ -114,6 +114,8 @@ public class RegisterAction extends ActionSupport {
 	private Boolean sendMail(User user, String newpwd) {
 		SSHClient sshClient = new SSHClient();
 		Boolean success;
+		Boolean tag = false;
+		
 		try {
 			success = sshClient.connect("192.168.21.172", "wls81", "Paic#234");
 			
@@ -125,12 +127,16 @@ public class RegisterAction extends ActionSupport {
 				}
 				return true;
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			if (!tag){
+				return false;
+			}
 		}
 
-		return false;
+		return true;
 	}
 	
 	private Boolean isAdmin(String alias) {

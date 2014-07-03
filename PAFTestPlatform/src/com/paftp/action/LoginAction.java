@@ -173,9 +173,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	
 	private Boolean sendMail(User user, String pwd) throws IOException {
 		SSHClient sshClient = new SSHClient();
-		Boolean success = sshClient.connect("192.168.21.172", "wls81",
-				"Paic#234");
+		Boolean tag = false;
 		
+		try {
+		Boolean success = sshClient.connect("192.168.21.172", "wls81",
+					"Paic#234");
 		if (success) {
 			if (this.isAdmin(user.getAlias())) {
 				sshClient.execute("sh /wls/wls81/email-confirm/forgetpwd.sh "
@@ -184,10 +186,18 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			sshClient.execute("sh /wls/wls81/email-confirm/forgetpwd.sh "
 					+ user.getAlias() + " " + pwd);
 			}
-			return true;
+		}
+		tag = true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			if (!tag){
+				return false;
+			}
 		}
 
-		return false;
+		return true;
 	}
 
 	private String getRandomString(int length) {

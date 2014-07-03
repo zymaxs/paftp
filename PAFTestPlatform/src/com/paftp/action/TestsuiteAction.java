@@ -705,7 +705,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getCaseName());
 			casechangeoperation.setNewValue(this.getTestcase_name());
-			casechangeoperation.setField("name");
+			casechangeoperation.setField("用例名");
 			casechangeoperations.add(casechangeoperation);
 			testcase.setCaseName(this.getTestcase_name());
 			i++;
@@ -716,7 +716,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getPriority());
 			casechangeoperation.setNewValue(this.getPriority());
-			casechangeoperation.setField("priority");
+			casechangeoperation.setField("优先级");
 			casechangeoperations.add(casechangeoperation);
 			testcase.setPriority(this.getPriority());
 			i++;
@@ -727,7 +727,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getStatus());
 			casechangeoperation.setNewValue(this.getStatus());
-			casechangeoperation.setField("status");
+			casechangeoperation.setField("状态");
 			casechangeoperations.add(casechangeoperation);
 			testcase.setStatus(this.getStatus());
 			i++;
@@ -738,7 +738,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getDescription());
 			casechangeoperation.setNewValue(this.getDescription());
-			casechangeoperation.setField("description");
+			casechangeoperation.setField("描述");
 			casechangeoperations.add(casechangeoperation);
 			testcase.setDescription(this.getDescription());
 			i++;
@@ -749,7 +749,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getCasetype());
 			casechangeoperation.setNewValue(this.getCasetype());
-			casechangeoperation.setField("casetype");
+			casechangeoperation.setField("用例类型");
 			casechangeoperations.add(casechangeoperation);
 			testcase.setCasetype(this.getCasetype());
 			i++;
@@ -760,7 +760,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getCasesteps());
 			casechangeoperation.setNewValue(this.getCasesteps());
-			casechangeoperation.setField("casesteps");
+			casechangeoperation.setField("用例步骤");
 			casechangeoperations.add(casechangeoperation);
 			testcase.setCasesteps(this.getCasesteps());
 			i++;
@@ -773,7 +773,7 @@ public class TestsuiteAction extends ActionSupport {
 				casechangeoperation
 						.setOldValue(testcase.getTestcase_approval());
 				casechangeoperation.setNewValue(this.getTestcase_approval());
-				casechangeoperation.setField("approval");
+				casechangeoperation.setField("审批状态");
 				casechangeoperations.add(casechangeoperation);
 				testcase.setTestcase_approval(this.getTestcase_approval());
 				i++;
@@ -787,7 +787,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setOldValue(testcase.getTestcaseproject()
 					.getName());
 			casechangeoperation.setNewValue(this.getProject_name());
-			casechangeoperation.setField("project_name");
+			casechangeoperation.setField("所属项目");
 			casechangeoperations.add(casechangeoperation);
 			TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
 			testcase.setTestcaseproject(testcaseproject);
