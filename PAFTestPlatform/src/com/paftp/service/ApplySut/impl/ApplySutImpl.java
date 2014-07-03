@@ -112,7 +112,7 @@ public List<ApplySutDto> getApplySutDto(List<ApplySut> applySuts){
 			
 			ApplySutStatusDto applySutStatusDto = new ApplySutStatusDto();
 			applySutStatusDto.setName(applySuts.get(i).getApplysutstatus().getName());
-			applySutStatusDto.setDescription(applySuts.get(i).getApplysutstatus().getDescrition());
+			applySutStatusDto.setDescription(applySuts.get(i).getApplysutstatus().getDescription());
 			applySutStatusDto.setId(applySuts.get(i).getApplysutstatus().getId());
 			
 			applySutDto.setApplysutstatusdto(applySutStatusDto);

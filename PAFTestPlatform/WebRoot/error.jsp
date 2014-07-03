@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=utf-8" language="java" import="java.util.*"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.util.*,com.paftp.entity.*,com.paftp.dto.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -49,36 +49,40 @@
 <body>
 <div class="container-fluid"> 
   <!--网页头部-->
-  <div style="background:#428bca; color:#ffffff; margin:auto">
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="row-fluid">
-          <div class="span2" style="text-align:left;font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</div>
-          <div class="span7"></div>
-          <div class="span3"></div>
-        </div>
-        <div class="row-fluid">
-          <div class="span2"></div>
-          <div class="span8" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
-          <div class="span2"></div>
-        </div>
-        <div class="row-fluid">
-          <div class="span10"> </div>
-          <div class="span2" style="text-align:right;font-family:Microsoft YaHei;">Version : beta 0.3.0</div>
-        </div>
-      </div>
+  <div style="background:#428bca; color:#ffffff;"> <br>
+    <div class="row">
+      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> 平安付科技中心 </div>
+      <div class="col-md-7"></div>
+      <%if (session.getAttribute("user") == null) {%>
+      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
+      <%} else { User user = (User) session.getAttribute("user");
+                      String name = user.getAlias(); %>
+      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
+      <%}%>
     </div>
+    <div class="row">
+      <div class="col-md-12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
+    </div>
+    <div class="row">
+      <div class="col-md-10"></div>
+      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</div>
+    </div>
+    <br>
   </div>
   <!--登录-->
-  <div id="loginmodal" style="display:none;">
-    <h1>User Login</h1>
-    <form id="loginform" name="loginform" method="post" action="${pageContext.request.contextPath}/login.action">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" class="txtfield" tabindex="1">
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" class="txtfield" tabindex="2">
-      <div class="center">
-        <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Log In" tabindex="3">
+  <div id="loginmodal" style="display:none;" align="center">
+    <div>
+      <p>用户登录</p>
+    </div>
+    <form id="loginform" name="loginform" method="post" action="">
+      <label for="alias" style="Microsoft YaHei; font-size:12px;">Username:</label>
+      <input type="text" name="alias" id="alias" tabindex="1">
+      <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
+      <input type="password" name="password" id="password" tabindex="2">
+      <div>
+      	<br/>
+        <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -88,21 +92,27 @@
 	});
   </script> 
   <!--导航-->
-  <div class="row-fluid">
-    <div class="span12">
-      <div class="navbar">
-        <div class="navbar-inner">
-          <div class="container-fluid">
-            <div class="nav-collapse collapse navbar-responsive-collapse">
-              <ul class="nav">
-                <li class="active"><a href="index_1.jsp">主页</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="index_1.jsp">主页</a></li>
+          <li><a href="casemanagement.jsp">用例管理</a></li>
+          <li><a href="#">结果管理</a></li>
+          <li><a href="sutindex.jsp">接入申请</a></li>
+          <li><a href="rolemanagement.jsp">用户权限</a></li>
+          <%if (session.getAttribute("isAdmin") != null){
+        String UserIsAdmin = String.valueOf(session.getAttribute("isAdmin"));
+        if (UserIsAdmin == "true"){%>
+          <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
+          <li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
+          <%}}%>
+        </ul>
       </div>
+      <!-- /.navbar-collapse --> 
     </div>
-  </div>
+    <!-- /.container-fluid --> 
+  </nav>
   <!--主体-->
   <div align="center" style="height:600px">
     <div>

@@ -11,7 +11,7 @@ public class ApplySutStatus {
 
 	private Integer id;
 	private String name;
-	private String descrition;
+	private String description;
 	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -35,12 +35,12 @@ public class ApplySutStatus {
 	}
 
 	@Column(name = "description", unique = true, length = 200)
-	public String getDescrition() {
-		return descrition;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescrition(String descrition) {
-		this.descrition = descrition;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

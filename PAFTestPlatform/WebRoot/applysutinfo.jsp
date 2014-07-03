@@ -161,43 +161,25 @@ var applyer = '<%=applyer%>';
 <body>
 <div class="container-fluid"> 
   <!--网页头部-->
-  <div style="background:#428bca; color:#ffffff; margin:auto">
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="row-fluid">
-          <div class="span12"></div>
-        </div>
-        <div class="row-fluid">
-          <div class="span2"
-							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</div>
-          <div class="span7"></div>
-          <%
-							if (session.getAttribute("user") == null) {
-						%>
-          <div class="span3 whitelink"
-							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
-          <%
-							} else { User user = (User) session.getAttribute("user");
-						 		 			 String name = user.getAlias();
-						%>
-          <div class="span3 whitelink"
-							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
-          <%
-							}
-						%>
-        </div>
-        <div class="row-fluid">
-          <div class="span12"
-							style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
-        </div>
-        <div class="row-fluid">
-          <div class="span10"></div>
-          <div class="span2"
-							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">Version
-            : beta 0.3.0</div>
-        </div>
-      </div>
+  <div style="background:#428bca; color:#ffffff;"> <br>
+    <div class="row">
+      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> 平安付科技中心 </div>
+      <div class="col-md-7"></div>
+      <%if (session.getAttribute("user") == null) {%>
+      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
+      <%} else { User user = (User) session.getAttribute("user");
+                      String name = user.getAlias(); %>
+      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
+      <%}%>
     </div>
+    <div class="row">
+      <div class="col-md-12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
+    </div>
+    <div class="row">
+      <div class="col-md-10"></div>
+      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</div>
+    </div>
+    <br>
   </div>
   <!--登录-->
   <div id="loginmodal" style="display:none;" align="center">
@@ -210,8 +192,9 @@ var applyer = '<%=applyer%>';
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
       <div>
-        <button type="button" class="btn btn-primary" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
-        <button type="button" class="btn btn-primary" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
+      	<br/>
+        <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -225,31 +208,27 @@ var applyer = '<%=applyer%>';
 			});
 		</script> 
   <!--导航-->
-  <div class="row-fluid">
-    <div class="span12">
-      <div class="navbar">
-        <div class="navbar-inner">
-          <div class="container-fluid">
-            <div class="nav-collapse collapse navbar-responsive-collapse">
-              <ul class="nav">
-                <li><a href="index_1.jsp">主页</a></li>
-                <li><a href="casemanagement.jsp">用例管理</a></li>
-                <li><a href="#">结果管理</a></li>
-                <li><a href="sutindex.jsp">接入申请</a></li>
-                <li><a href="rolemanagement.jsp">用户权限</a></li>
-                <%if (session.getAttribute("isAdmin") != null){
-                	String userisAdmin = String.valueOf(session.getAttribute("isAdmin"));
-                	if (userisAdmin == "true"){%>
-                <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
-                <li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
-                <%}}%>
-              </ul>
-            </div>
-          </div>
-        </div>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="index_1.jsp">主页</a></li>
+          <li><a href="casemanagement.jsp">用例管理</a></li>
+          <li><a href="#">结果管理</a></li>
+          <li><a href="sutindex.jsp">接入申请</a></li>
+          <li><a href="rolemanagement.jsp">用户权限</a></li>
+          <%if (session.getAttribute("isAdmin") != null){
+        String UserIsAdmin = String.valueOf(session.getAttribute("isAdmin"));
+        if (UserIsAdmin == "true"){%>
+          <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
+          <li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
+          <%}}%>
+        </ul>
       </div>
+      <!-- /.navbar-collapse --> 
     </div>
-  </div>
+    <!-- /.container-fluid --> 
+  </nav>
   <!--主体-->
   <form id="sutinfoform" name="sutinfoform" class="form-horizontal"
 			method="post" action="">
@@ -257,18 +236,24 @@ var applyer = '<%=applyer%>';
       <legend> 接入系统申请详情页 <small>(带*号标志为必输项)</small> </legend>
       <table>
         <tr>
-          <td>* 系统名 :</td>
-          <td><input type="text" class="input-xlarge" id="sutname"
+          <td style="text-align:right">* 系统名 :&nbsp;&nbsp;</td>
+          <td><input type="text" class="form-control input-sm" style="width:200px" id="sutname"
 							name="sutname" value="<%=applySut.getName()%>" readonly></td>
         </tr>
         <tr>
-          <td>申请状态</td>
-          <td><input type="text" class="input-xlarge" id="sutstatus"
-							name="sutstatus"
-							value="<%=applySut.getApplysutstatus().getName()%>" disabled></td>
+         <td>&nbsp;</td>
         </tr>
         <tr>
-          <td>* 系统所属平台 :</td>
+          <td style="text-align:right">申请状态 :&nbsp;&nbsp;</td>
+          <td><input type="text"  class="form-control input-sm" style="width:200px" id="sutstatus"
+							name="sutstatus"
+							value="<%=applySut.getApplysutstatus().getDescription()%>" disabled></td>
+        </tr>
+        <tr>
+         <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td style="text-align:right">* 系统所属平台 :&nbsp;&nbsp;</td>
           <td><div id="sutgroup" class="selectbox">
               <div class="cartes">
                 <input type="text" value="<%=applySut.getGroup().getName()%>"
@@ -291,18 +276,24 @@ var applyer = '<%=applyer%>';
             </div></td>
         </tr>
         <tr>
-          <td>* 系统中文名 :</td>
-          <td><input type="text" class="input-xlarge" id="code"
+         <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td style="text-align:right">* 系统中文名 :&nbsp;&nbsp;</td>
+          <td><input type="text"  class="form-control input-sm" style="width:200px" id="code"
 							name="code" value="<%=applySut.getCode()%>" readonly></td>
         </tr>
         <tr>
-          <td>* 系统描述 :</td>
-          <td><textarea rows="4" class="input-xlarge" id="description"
+         <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td style="text-align:right">* 系统描述 :&nbsp;&nbsp;</td>
+          <td><textarea rows="4"  class="form-control" style="width:200px" id="description"
 								name="description" readonly><%=applySut.getDescription()%></textarea></td>
         </tr>
-        <td>
+        <tr>
         <td colspan="2"><input type="text" id="id" name="id" value="<%=id %>" style="display:none"></td>
-        </td>
+        </tr>
         <tr>
           <table>
             <tr>
