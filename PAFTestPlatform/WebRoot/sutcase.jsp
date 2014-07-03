@@ -1497,8 +1497,12 @@ function saveapprovalac(){
       <table width="500" height="150" style="background:#FFF">
         <tr>
           <td><label for="testsuite_name">TestSuiteName</label></td>
-          <td><input value="Ts_" size="3" readonly style="text-align:right; width:20px">
-            <input id="testsuite_name" name="testsuite_name" value=""></td>
+          <td>
+          	<div class="input-group">
+            	<span class="input-group-addon">Ts_</span>
+            	<input id="testsuite_name" class="form-control" name="testsuite_name" value="">
+            </div>
+          </td>
         </tr>
         <tr>
           <td colspan="2"><input id="sut_name" name="sut_name" style="display:none" value="<%=sut_name%>" readonly></td>
