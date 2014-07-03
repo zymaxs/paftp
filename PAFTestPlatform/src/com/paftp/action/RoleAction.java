@@ -294,10 +294,12 @@ public class RoleAction extends ActionSupport {
 		Role conditionrole = null;
 		if (this.getRole_name() != null
 				&& this.getRole_name().equals("") == false) {
-			if (this.getRole_name().equals("管理员")
-					|| this.getRole_name().equals("成员")) {
-				conditionrole = roleService.findRoleByName(this.getSut_name() + this.getRole_name());
-			} else {
+			if (this.getRole_name().equals("管理员")) {
+				conditionrole = roleService.findRoleByName(this.getSut_name() + "Manager");
+			} else if (this.getRole_name().equals("成员")){
+				conditionrole = roleService.findRoleByName(this.getSut_name() + "Sdet");
+			}
+			else {
 				conditionrole = roleService.findRoleByName(this.getSut_name() + this.getRole_name());
 			}
 		}
