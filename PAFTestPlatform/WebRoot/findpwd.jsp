@@ -40,6 +40,12 @@ $().ready(function() {
     });
 
 });
+
+
+function loginac() {
+		document.loginform.action = "${pageContext.request.contextPath}/login.action";
+		document.loginform.submit();
+	}
 </script>
 </head>
 
@@ -115,15 +121,13 @@ $().ready(function() {
     <form id="findpwdForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/getbakpwd.action">
       <fieldset>
         <legend>找回密码</legend>
-        <div class="control-group">
-          <label class="control-label" for="alias">* 用户名 :</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" id="alias" name="alias">
-          </div>
-        </div>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+        <table class="table" style="width:40%" align="left">
+        <tr align="center">
+        <td>* 用户名 :</td>
+        <td><input type="text" id="alias" name="alias" style="width:200px"></td>
+        <td><button type="submit" class="btn btn-primary btn-sm" style="width:80px; text-align:center">确定</button></td>
+        </tr>
+        </table>
       </fieldset>
     </form>
   </div>

@@ -219,7 +219,7 @@ $(document).ready(function(){
           <td>&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="2"><input type="button" class="btn btn-primary" name="apsut" id="apsut" onClick="applysutac()" value="提交申请"></td>
+            <td colspan="2"><input type="button" class="btn btn-primary" style="width:80px; text-align:center" name="apsut" id="apsut" onClick="applysutac()" value="提交申请"></td>
           </tr>
           <tr>
           <td>&nbsp;</td>

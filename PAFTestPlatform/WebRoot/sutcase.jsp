@@ -295,8 +295,8 @@ function updateTestSuiteac(){
 	document.getElementById('showisdiscardoption').style.display = "block";
 	document.getElementById('showversiontd').style.display = "none";
 	document.getElementById('showversionoption').style.display = "block";	
-	document.getElementById('upTestSuite').style.display = "none";
-	document.getElementById('saveTestSuite').style.display = "block";
+	document.getElementById('upTestSuiteTd').style.display = "none";
+	document.getElementById('saveTestSuiteTd').style.display = "block";
 	}
 	};
 
@@ -331,8 +331,8 @@ function saveTestSuiteac(){
 				  document.getElementById('showversionoption').style.display = "none";
 				  document.getElementById('showisdiscardtd').style.display = "block";
 				  document.getElementById('showisdiscardoption').style.display = "none";
-				  document.getElementById('upTestSuite').style.display = "block";
-				  document.getElementById('saveTestSuite').style.display = "none";
+				  document.getElementById('upTestSuiteTd').style.display = "block";
+				  document.getElementById('saveTestSuiteTd').style.display = "none";
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -420,8 +420,8 @@ function updateTestCaseac(){
 	document.getElementById('showprojectoption').style.display = "block";
 	document.getElementById('showcasedescription').readOnly = false;
 	document.getElementById('showcasesteps').readOnly = false;	
-	document.getElementById('upTestCase').style.display = "none";
-	document.getElementById('saveTestCase').style.display = "block";
+	document.getElementById('upTestCaseTd').style.display = "none";
+	document.getElementById('saveTestCaseTd').style.display = "block";
 	}
 	}
 
@@ -481,8 +481,8 @@ function saveTestCaseac(){
 				  document.getElementById('showcasetypeoption').style.display = "none";
 	  			  document.getElementById('showcasedescription').readOnly = true;
 			   	  document.getElementById('showcasesteps').readOnly = true;	
-				  document.getElementById('upTestCase').style.display = "block";
-				  document.getElementById('saveTestCase').style.display = "none";
+				  document.getElementById('upTestCaseTd').style.display = "block";
+				  document.getElementById('saveTestCaseTd').style.display = "none";
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -854,8 +854,8 @@ function initype(){
 	document.getElementById('showisdiscardoption').style.display = "none";
 	document.getElementById('showversiontd').style.display = "block";
 	document.getElementById('showversionoption').style.display = "none";	
-	document.getElementById('upTestSuite').style.display = "block";
-	document.getElementById('saveTestSuite').style.display = "none";
+	document.getElementById('upTestSuiteTd').style.display = "block";
+	document.getElementById('saveTestSuiteTd').style.display = "none";
 	document.getElementById('showtestcase_name').readOnly = true;
 	document.getElementById('showcaseprioritytd').style.display = "block";
 	document.getElementById('showcasepriorityoption').style.display = "none";
@@ -867,8 +867,8 @@ function initype(){
 	document.getElementById('showprojectoption').style.display = "none";
 	document.getElementById('showcasedescription').readOnly = true;
 	document.getElementById('showcasesteps').readOnly = true;	
-	document.getElementById('upTestCase').style.display = "block";
-	document.getElementById('saveTestCase').style.display = "none";
+	document.getElementById('upTestCaseTd').style.display = "block";
+	document.getElementById('saveTestCaseTd').style.display = "none";
 	document.getElementById('showapprovaltd').style.display = "block";
 	document.getElementById('showaprovaloption').style.display = "none";
 	document.getElementById('showapprovalupdatetd').style.display = "block";
@@ -1149,7 +1149,7 @@ function saveapprovalac(){
 <body>
 <div class="container-fluid"> 
   <!--网页头部-->
-  <div style="background:#428bca; color:#ffffff;">
+  <div style="background:#428bca; color:#ffffff; width:1319px;">
 	<br> 
   	<div class="row">
     	<div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">
@@ -1204,7 +1204,7 @@ function saveapprovalac(){
 		</script> 
   <!--导航-->
   <nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
+    <div class="container-fluid" style="width:1319px;">
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a href="index_1.jsp">主页</a></li>
@@ -1228,7 +1228,7 @@ function saveapprovalac(){
   <table id="maintable" width="100%" class="table table-bordered">
     <tr> 
       <!--左边Tree-->
-      <td style="width:300px;vertical-align:top"><div style="height:604px;overflow:scroll;">
+      <td style="width:300px;vertical-align:top"><div style="height:624px;overflow:scroll;">
           <div id="searchDiv">
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; padding:4px; border-radius:4px; border:1px solid silver;">
           </div>
@@ -1283,7 +1283,7 @@ function saveapprovalac(){
               </select></td>
           </tr>
           <tr>
-            <td colspan="5" style="text-align:center"><input type="button" onClick="queryinterfaceac()" value="搜索"></td>
+            <td colspan="5" style="text-align:center"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="queryinterfaceac()" value="搜索"></td>
           </tr>
         </table>
         <div id="interfaceSearchResultDiv" style="text-align:center"></div></td>
@@ -1359,9 +1359,9 @@ function saveapprovalac(){
             <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
-            <tr>
-              <td><button type="button" class="btn btn-default" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite" style="display:block">更新</button></td>
-              <td><button type="button" class="btn btn-default" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite" style="display:none">保存</button></td>
+            <tr align="left">
+              <td colspan="2" id="upTestSuiteTd" style="display:block"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite">更新</button></td>
+              <td colspan="2" id="saveTestSuiteTd" style="display:none"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite" >保存</button></td>
             </tr>
             <tr>
             <td colspan="2">&nbsp;</td>
@@ -1379,7 +1379,7 @@ function saveapprovalac(){
               <td style="text-align:center; width:300px">历史修改记录</td>
             </tr>
             <tr>
-              <td>TestCaseName</td>
+              <td>用例名称</td>
               <td>
               <div class="input-group">
               <span class="input-group-addon" id="pre_casename"></span>
@@ -1456,13 +1456,13 @@ function saveapprovalac(){
               <td>步骤</td>
               <td><textarea  rows="4" name="showcasesteps" class="form-control" id="showcasesteps" style="max-height:150px; max-width:550px; width:550px; height:150px;" readonly></textarea></td>
             </tr>
-            <tr>
-              <td><button type="button" class="btn btn-default" onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" style="display:block">更新</button></td>
-              <td><button type="button" class="btn btn-default" onClick="saveTestCaseac()" id="saveTestCase" name="saveTestCase" style="display:none">保存</button></td>
+            <tr align="left">
+              <td colspan="2" id="upTestCaseTd" style="display:block"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" >更新</button></td>
+              <td colspan="2" id="saveTestCaseTd" style="display:none"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="saveTestCaseac()" id="saveTestCase" name="saveTestCase" >保存</button></td>
             </tr>
             <tr>
               <td>用例评审</td>
-              <td id="showapprovaltd" style="display:block"><input id="showapproval" value="" readonly></td>
+              <td id="showapprovaltd" style="display:block"><input id="showapproval" class="input-sm form-control" style="width:200px" value="" readonly></td>
               <td id="showaprovaloption" style="display:none"><input type="radio" name="updateapproval" value="待评审" checked>
                 待评审&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="updateapproval" value="通过">
@@ -1470,9 +1470,9 @@ function saveapprovalac(){
                 <input type="radio" name="updateapproval" value="未通过">
                 未通过&nbsp;&nbsp;&nbsp;&nbsp; </td>
             </tr>
-            <tr id="showaprovalbtntd">
-              <td colspan="2" id="showapprovalupdatetd" style="display:block;"><input type="button" value="开始评审" onClick="updateapprovalac()"></td>
-              <td colspan="2" id="showapprovalsavetd" style="display:none;"><input type="button" value="确认评审" onClick="saveapprovalac()"></td>
+            <tr id="showaprovalbtntd" align="left">
+              <td colspan="2" id="showapprovalupdatetd" style="display:block;"><input type="button"  class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="开始评审" onClick="updateapprovalac()"></td>
+              <td colspan="2" id="showapprovalsavetd" style="display:none;"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="确认评审" onClick="saveapprovalac()"></td>
             </tr>
           </table>
         </form></td>
@@ -1589,7 +1589,7 @@ function saveapprovalac(){
     </form>
   </div>
   <!--网页底部-->
-  <div style="background:#428bca; color:#ffffff; text-align:center">
+  <div style="background:#428bca; color:#ffffff; text-align:center; width:1319px;">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
       Solution<br />
       Copyright© 2013-2016 平安付科技中心移动研发系统测试</small> </p>

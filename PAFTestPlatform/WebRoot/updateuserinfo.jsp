@@ -163,59 +163,58 @@ $(document).ready(function(){
 <body>
 <div class="container-fluid"> 
   <!--网页头部-->
-  <div style="background:#428bca; color:#ffffff; margin:auto">
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="row-fluid">
-          <div class="span12"></div>
-        </div>
-        <div class="row-fluid">
-          <div class="span2"
-							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</div>
-          <div class="span7"></div>
-          <div class="span3 whitelink"
-							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
-        </div>
-        <div class="row-fluid">
-          <div class="span12"
-							style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
-        </div>
-        <div class="row-fluid">
-          <div class="span10"></div>
-          <div class="span2"
-							style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">Version
-            : beta 0.3.0</div>
-        </div>
-      </div>
+  <div style="background:#428bca; color:#ffffff;"> <br>
+    <div class="row">
+      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> 平安付科技中心 </div>
+      <div class="col-md-7"></div>
+      <%if (session.getAttribute("user") == null) {%>
+      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
+      <%} else {  %>
+      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
+      <%}%>
     </div>
+    <div class="row">
+      <div class="col-md-12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
+    </div>
+    <div class="row">
+      <div class="col-md-10"></div>
+      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</div>
+    </div>
+    <br>
   </div>
   <!--导航-->
-  <div class="row-fluid">
-    <div class="span12">
-      <div class="navbar">
-        <div class="navbar-inner">
-          <div class="container-fluid">
-            <div class="nav-collapse collapse navbar-responsive-collapse">
-              <ul class="nav">
-                <li class="active"><a href="index_1.jsp">主页</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="index_1.jsp">主页</a></li>
+          <li><a href="casemanagement.jsp">用例管理</a></li>
+          <li><a href="#">结果管理</a></li>
+          <li><a href="sutindex.jsp">接入申请</a></li>
+          <li><a href="rolemanagement.jsp">用户权限</a></li>
+          <%if (session.getAttribute("isAdmin") != null){
+        String UserIsAdmin = String.valueOf(session.getAttribute("isAdmin"));
+        if (UserIsAdmin == "true"){%>
+          <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
+          <li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
+          <%}}%>
+        </ul>
       </div>
+      <!-- /.navbar-collapse --> 
     </div>
-  </div>
+    <!-- /.container-fluid --> 
+  </nav>
   <!--主体-->
   <div>
     <form id="updateinfoForm" class="form-horizontal" method="post"
 				action="${pageContext.request.contextPath}/updateuserinfo.action">
       <fieldset>
         <legend> 用户信息更新 <small>(带*号标志为必输项)</small> </legend>
-        <table>
+        <table style="width:40%" align="left" class="table table-striped">
           <tr>
-            <td>* 真实姓名：</td>
-            <td><input type="text" class="input-xlarge" id="displayname"
-								name="displayname" value="<%=displayname%>"></td>
+            <td>* 真实姓名 :</td>
+            <td><input type="text" id="displayname"
+								name="displayname" value="<%=displayname%>" style="width:200px;"></td>
           </tr>
           <tr>
             <td>* 所属部门 :</td>
@@ -233,6 +232,8 @@ $(document).ready(function(){
                   </ul>
                 </div>
               </div></td>
+            </tr>
+            <tr>
             <td>* 所属部门 :</td>
             <td><div id="selectPosition" class="selectbox">
                 <div class="cartes">
@@ -250,20 +251,22 @@ $(document).ready(function(){
               </div></td>
           </tr>
           <tr>
-            <td style="text-align:right">联系电话 :</td>
-            <td style="text-align:right"><input type="text" class="input-xlarge" id="telephone" name="telephone"
-								value="<%=telephone%>"></td>
-            <td style="text-align:right">移动电话 :</td>
-            <td style="text-align:right"><input type="text" class="input-xlarge" id="mobile"
-								name="mobile" value="<%=mobile%>"></td>
+            <td>联系电话 :</td>
+            <td><input type="text" id="telephone" name="telephone"
+								value="<%=telephone%>" style="width:200px;"></td>
+          </tr>
+          <tr>
+            <td>移动电话 :</td>
+            <td><input type="text" id="mobile"
+								name="mobile" value="<%=mobile%>" style="width:200px;"></td>
           </tr>
           <tr>
           	<td>其他邮件 :</td>
-            <td><input type="text" class="input-xlarge" id="othermail"
-								name="othermail" value="<%=othermail%>"></td>
+            <td><input type="text" id="othermail"
+								name="othermail" value="<%=othermail%>" style="width:200px;"></td>
           </tr>
           <tr align="center">
-          	<td colspan="2"><button type="submit" class="btn btn-primary">Submit</button></td>
+          	<td colspan="2"><button type="submit" class="btn btn-primary" style="width:80px; text-align:center">提交</button></td>
           </tr>
         </table>
       </fieldset>
@@ -274,31 +277,26 @@ $(document).ready(function(){
 				action="${pageContext.request.contextPath}/updatepassword.action">
       <fieldset>
         <legend>用户密码修改</legend>
-        <div class="control-group">
-          <label class="control-label" for="orignpassword">* 旧密码 :</label>
-          <div class="controls">
-            <input type="password" class="input-xlarge" id="orignpassword"
-								name="orignpassword">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="password">* 新密码 :</label>
-          <div class="controls">
-            <input type="password" class="input-xlarge" id="password"
-								name="password">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="confirm_password">* 确认密码
-            :</label>
-          <div class="controls">
-            <input type="password" class="input-xlarge" id="confirm_password"
-								name="confirm_password">
-          </div>
-        </div>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+        <table  style="width:40%" align="left" class="table table-striped">
+        <tr>
+        	<td>* 旧密码 :</td>
+            <td><input type="password" id="orignpassword"
+								name="orignpassword" style="width:200px;"></td>
+        </tr>
+        <tr>
+        	<td>* 新密码 :</td>
+            <td><input type="password" id="password"
+								name="password" style="width:200px;"></td>
+        </tr>
+        <tr>
+        	<td>* 确认密码 :</td>
+            <td><input type="password" id="confirm_password"
+								name="confirm_password" style="width:200px;"></td>
+        </tr>
+        <tr align="center">
+        	<td colspan="2"><button type="submit" class="btn btn-primary" style="width:80px; text-align:center">提交</button></td>
+        </tr>
+        </table>
       </fieldset>
     </form>
   </div>

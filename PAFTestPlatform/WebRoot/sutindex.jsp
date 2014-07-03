@@ -214,24 +214,34 @@ function inidata(){
     <!-- /.container-fluid --> 
   </nav>
   <!--主体-->
-  <form id="queryForm" name="queryForm" action="" style="width:100%">
+  <table width="80%" align="center">
+  <tr align="left">
+  <td>
+  	<button type="button" class="btn btn-primary btn-success" style="width:80px;text-align:center" onClick="window.location.href='applysut.jsp'">申请接入</button>
+  </td>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  </tr>
+  </table>
+  <form id="queryForm" name="queryForm" action="">
     <table width="80%" align="center">
       <tr>
-        <td>系统名</td>
-        <td><input type="text" id="sutname" name="sutname"></td>
-        <td>申请人</td>
-        <td><input type="text" id="applyer" name="applyer"></td>
-        <td rowspan="2"><button type="button" class="btn btn-primary" onClick="window.location.href='applysut.jsp'">申请接入</button></td>
-      </tr>
-      <tr>
-        <td>Start Date:</td>
+        <td style="width:50px">系统名</td>
+        <td><input type="text" id="sutname" name="sutname" style="width:100px"></td>
+        <td style="width:50px">申请人</td>
+        <td><input type="text" id="applyer" name="applyer" style="width:100px"></td>
+        <td>起始日期</td>
         <td><input class="easyui-datetimebox"  id="starttime" name="starttime" ></td>
-        <td>End Date:</td>
+        <td>截止日期</td>
         <td><input class="easyui-datetimebox"  id="endtime" name="endtime"></td>
       </tr>
       <tr>
-          <td colspan="4" style="text-align:center">
-        <input type="button" id="querysut" class="btn btn-primary" name="querysut" value="搜索">
+      	<td colspan="8">&nbsp;</td>
+      </tr>
+      <tr align="center">
+          <td colspan="8">
+        <input type="button" id="querysut" class="btn btn-primary btn-sm"  style="width:80px" name="querysut" value="搜索">
           </td>
       </tr>
     </table>

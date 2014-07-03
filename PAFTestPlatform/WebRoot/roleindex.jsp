@@ -228,28 +228,30 @@ function inidata(){
     <!-- /.container-fluid --> 
   </nav>
 <!--主体-->
-<form id="queryForm" name="queryForm" action="" style="width:100%">
-  <table width="900px">
+<table width="80%" align="center">
+<tr align="left">
+<td><button type="button" class="btn btn-primary btn-success" style="width:80px;text-align:center" onClick="applyUserac()">授权用户</button></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+</table>
+<form id="queryForm" name="queryForm" action="">
+  <table width="80%" align="center">
     <tr>
-      <td>账号</td>
-      <td><input type="text" id="rolealias" name="rolealias"></td>
-      <td>角色</td>
-      <td><input type="text" id="role_name" name="role_name"></td>
-      <td><input style="display:none" id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
-      <td rowspan="2"><button type="button" class="btn btn-primary" onClick="applyUserac()">授权用户</button></td>
-    </tr>
-    <tr>
-        <td colspan="2" align="center" align="center">
-      <input type="button" id="queryrole" name="queryrole" value="搜索">
-        </td>
+      <td width="100px">账号</td>
+      <td width="180px"><input type="text" id="rolealias" name="rolealias"></td>
+      <td style="display:none"><input id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
+      <td align="left"><input type="button" id="queryrole" name="queryrole" class="btn btn-primary btn-sm" style="width:80px;text-align:center" value="搜索"></td>
     </tr>
   </table>
 </form>
 <div>
-  <fieldset>
-    <legend> 用户权限</legend>
-    <table id="roleForm" border="1" width="100%">
+    <table id="roleForm" class="table table-hover" style="width:80%" align="center">
       <thead>
+      	<tr style="text-align:center">
+        <td colspan="4"><strong>用户权限</strong></td>
+        </tr>
         <tr>
           <td>账号</td>
           <td>昵称</td>
@@ -262,13 +264,14 @@ function inidata(){
     </table>
   </fieldset>
 </div>
+<div align="center">
 <div class="pagination"> <a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
 			class="previous" data-action="previous">&lsaquo;</a>
   <input
 			type="text" readonly="readonly"/>
   <a href="#"
 			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
-			data-action="last">&raquo;</a> </div>
+			data-action="last">&raquo;</a> </div></div>
 
 <!--网页底部-->
 <div style="background:#428bca; color:#ffffff; text-align:center">

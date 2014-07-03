@@ -184,8 +184,14 @@ $(document).ready(function(){
           <td colspan="3" style="text-align:left"><p class="help-block">请使用自己的域账号进行注册，初始密码将发送至你的平安邮箱。请在首次登录时完成密码修改。</p></td>
         </tr>
         <tr>
+        <td colspan="">&nbsp;</td>
+        </tr>
+        <tr>
           <td style="text-align:right"><label for="displayname">* 真实姓名 :&nbsp;&nbsp;</label></td>
           <td colspan="3" style="text-align:left"><input type="text" id="displayname" name="displayname"></td>
+        </tr>
+        <tr>
+        <td colspan="">&nbsp;</td>
         </tr>
         <tr>
           <td style="text-align:right"><label  for="department">* 所属部门 :&nbsp;&nbsp;</label></td>
@@ -224,17 +230,29 @@ $(document).ready(function(){
             </td>
         </tr>
         <tr>
+        <td colspan="">&nbsp;</td>
+        </tr>
+        <tr>
           <td style="text-align:right"><label for="telephone">联系电话 :&nbsp;&nbsp;</label></td>
           <td style="text-align:left"><input type="text" id="telephone" name="telephone"></td>
           <td style="text-align:right"><label for="mobile">移动电话 :&nbsp;&nbsp;</label></td>
           <td style="text-align:left"><input type="text" class="input-xlarge" id="mobile" name="mobile"></td>
         </tr>
         <tr>
+        <td colspan="">&nbsp;</td>
+        </tr>
+        <tr>
           <td style="text-align:right"><label for="othermail">其他邮件 :&nbsp;&nbsp;</label></td>
           <td colspan="3" style="text-align:left"><input type="text" class="input-xlarge" id="othermail" name="othermail"></td>
         </tr>
         <tr>
-          <td colspan="4" style="text-align:center"><button type="submit" class="btn btn-primary btn-sm">保存</button></td>
+        <td colspan="">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align:center"><button type="submit" class="btn btn-primary" style="width:80px; text-align:center">保存</button></td>
+        </tr>
+        <tr>
+        <td colspan="">&nbsp;</td>
         </tr>
       </table>
     </fieldset>

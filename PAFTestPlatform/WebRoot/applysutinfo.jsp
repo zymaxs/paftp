@@ -69,21 +69,21 @@ var applyer = '<%=applyer%>';
 			alert("inside if");
 			document.getElementById('approvebtn').style.display = "none";
 			document.getElementById('rejectbtn').style.display = "none";
-			document.getElementById('updatebtn').style.display = "none";
+			document.getElementById('updatebtnTd').style.display = "none";
 		} else {
 			if (isAdmin == "y") {
 				document.getElementById('approvebtn').style.display = "block";
 				document.getElementById('rejectbtn').style.display = "block";
-				document.getElementById('updatebtn').style.display = "block";
+				document.getElementById('updatebtnTd').style.display = "block";
 			} else {
 				if (alias == applyer) {
 					document.getElementById('approvebtn').style.display = "none";
 					document.getElementById('rejectbtn').style.display = "none";
-					document.getElementById('updatebtn').style.display = "block";
+					document.getElementById('updatebtnTd').style.display = "block";
 				} else if (alias != applyer) {
 					document.getElementById('approvebtn').style.display = "none";
 					document.getElementById('rejectbtn').style.display = "none";
-					document.getElementById('updatebtn').style.display = "none";
+					document.getElementById('updatebtnTd').style.display = "none";
 				}
 
 			}
@@ -108,9 +108,9 @@ var applyer = '<%=applyer%>';
 		document.getElementById('groupname').readOnly = false;
 		document.getElementById('code').readOnly = false;
 		document.getElementById('description').readOnly = false;
-		document.getElementById('updatebtn').style.display = "none";
+		document.getElementById('updatebtnTd').style.display = "none";
 		document.getElementById('grouplist').style.display = "block";
-		document.getElementById('savebtn').style.display = "block";
+		document.getElementById('savebtnTd').style.display = "block";
 
 	}
 	function saveac() {
@@ -295,18 +295,26 @@ var applyer = '<%=applyer%>';
         <td colspan="2"><input type="text" id="id" name="id" value="<%=id %>" style="display:none"></td>
         </tr>
         <tr>
+        <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+        <td colspan="2">
           <table>
             <tr>
-              <td><input type="button" id="approvebtn" name="approvebtn"
-									value="通过" onClick="approveac()"></td>
-              <td><input type="button" id="rejectbtn" name="rejectbtn"
-									value="拒绝" onClick="rejectac()"></td>
-              <td><input type="button" id="updatebtn" name="uptadebtn"
-									value="修改" onClick="updateac()" style="display:block"></td>
-              <td><input type="button" id="savebtn" name="savebtn"
-									value="更新" onClick="saveac()" style="display:none"></td>
+              <td width="100px"><input type="button" id="approvebtn" name="approvebtn"
+							class="btn btn-primary btn-sm" style="width:80px; text-align:center"		value="通过" onClick="approveac()"></td>
+              <td width="100px"><input type="button" id="rejectbtn" name="rejectbtn"
+							class="btn btn-primary btn-sm" style="width:80px; text-align:center"		value="拒绝" onClick="rejectac()"></td>
+              <td width="100px" id="updatebtnTd" style="display:block"><input type="button" id="updatebtn" name="uptadebtn"
+							class="btn btn-primary btn-sm" style="width:80px; text-align:center;"		value="修改" onClick="updateac()"></td>
+              <td width="100px" id="savebtnTd" style="display:none"><input type="button" id="savebtn" name="savebtn"
+							class="btn btn-primary btn-sm" style="width:80px; text-align:center;"		value="更新" onClick="saveac()"></td>
             </tr>
+            <tr>
+        		<td colspan="2">&nbsp;</td>
+        	</tr>
           </table>
+        </td>
         </tr>
       </table>
     </fieldset>
