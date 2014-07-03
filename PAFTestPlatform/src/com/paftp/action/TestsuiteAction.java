@@ -371,7 +371,7 @@ public class TestsuiteAction extends ActionSupport {
 		if (testcases != null){
 		for(int i=0; i<testcases.size(); i++){
 			
-			caseName = testcase.getCaseName().replaceAll(sourceName, targetName);
+			caseName = testcases.get(i).getCaseName().replaceAll(sourceName, targetName);
 			this.updateTestcaseHistory(testcases.get(i), testcases.get(i).getCaseName(), caseName, "name");
 			testcases.get(i).setCaseName(caseName);
 			testcaseService.updateTestcase(testcases.get(i));
