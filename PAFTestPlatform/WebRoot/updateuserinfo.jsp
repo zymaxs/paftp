@@ -66,7 +66,16 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 				},
 				"othermail" : {
 					email : true
-				}
+				},
+            	"telephone":{
+                	digits:true
+           		},
+            	"mobile":{
+                	digits:true
+            	},
+            	"otherinfo":{
+                	maxlength: 60
+            	}
 			},
 			messages : {
 				"displayname" : {
@@ -75,7 +84,16 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 				},
 				"othermail" : {
 					email : "请输入正确的email地址"
-				}
+				},
+            	"telephone":{
+                	digits: "请输入数字"
+            	},
+            	"moible":{
+                	digits: "请输入数字"
+            	},
+            	"otherinfo":{
+                	maxlength: $.validator.format("用户备注最大输入不超过六十个字符.")
+            	}
 			}
 		});
 		$("#updatepwdForm").validate({
@@ -120,6 +138,7 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 	String mobile = "";
 	String telephone = "";
 	String othermail = "";
+	String otherinfo ="";
 
 	if (user.getAlias() != null) {
 		name = user.getAlias();
@@ -149,6 +168,10 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 
 	if (userinfo.getOthermail() != null) {
 		othermail = userinfo.getOthermail();
+	}
+	;
+	if (userinfo.getOtherinfo() != null) {
+		othermail = userinfo.getOtherinfo();
 	}
 	;
 %>
@@ -265,6 +288,10 @@ $(document).ready(function(){
             <td><input type="text" id="othermail"
 								name="othermail" value="<%=othermail%>" style="width:200px;"></td>
           </tr>
+          <tr>
+          <td>用户备注 :</td>
+          <td><textarea  id="otherinfo" name="otherinfo" style="height:100px; max-height:100px; width:300px; max-width:300px" ><%=otherinfo%></textarea></td>
+        </tr>
           <tr align="center">
           	<td colspan="2"><button type="submit" class="btn btn-primary" style="width:80px; text-align:center">提交</button></td>
           </tr>

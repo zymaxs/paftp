@@ -155,7 +155,8 @@ document.updatepwdform.submit();
             <input type="password" class="input-xlarge" id="confirm_password" name="confirm_password">
           </div>
          </div>
-         <p>初始密码已发送到您的平安邮箱，收到后请修改初始密码，如果三分钟内未收到，请点击下方的重新获取密码！</p>
+         <p>初始密码已发送到您的平安邮箱，收到后请修改初始密码，如果三分钟内未收到，请点击下方的重新获取密码</p>
+         <p>如长时间未收到密码邮件，请在您的垃圾箱邮件中查询，并将<webmaster@papay.com>添加到白名单</p>
         <div class="form-actions">
           <input type="button" id="changepwd" name="changepwd" onClick="changepwdac()" class="btn btn-primary" value="确认">
           <input type="button" id="resendmai" name="resendmai" onClick="resendmailac()" class="btn btn-primary" value="重新获取密码">

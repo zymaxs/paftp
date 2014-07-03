@@ -66,6 +66,9 @@ $(document).ready(function(){
             },
             "mobile":{
                 digits:true
+            },
+            "otherinfo":{
+                maxlength: 60
             }
         },
         messages: {
@@ -82,8 +85,11 @@ $(document).ready(function(){
             "telephone":{
                 digits: "请输入数字"
             },
-            "moible":{
+            "mobile":{
                 digits: "请输入数字"
+            },
+            "otherinfo":{
+                maxlength: $.validator.format("用户备注最大输入不超过六十个字符.")
             }
         }
     });
@@ -236,14 +242,21 @@ $(document).ready(function(){
           <td style="text-align:right"><label for="telephone">联系电话 :&nbsp;&nbsp;</label></td>
           <td style="text-align:left"><input type="text" id="telephone" name="telephone"></td>
           <td style="text-align:right"><label for="mobile">移动电话 :&nbsp;&nbsp;</label></td>
-          <td style="text-align:left"><input type="text" class="input-xlarge" id="mobile" name="mobile"></td>
+          <td style="text-align:left"><input type="text" id="mobile" name="mobile"></td>
         </tr>
         <tr>
         <td colspan="">&nbsp;</td>
         </tr>
         <tr>
           <td style="text-align:right"><label for="othermail">其他邮件 :&nbsp;&nbsp;</label></td>
-          <td colspan="3" style="text-align:left"><input type="text" class="input-xlarge" id="othermail" name="othermail"></td>
+          <td colspan="3" style="text-align:left"><input type="text" id="othermail" name="othermail"></td>
+        </tr>
+        <tr>
+        <td colspan="">&nbsp;</td>
+        </tr>
+        <tr>
+          <td style="text-align:right"><label for="otherinfo">用户备注 :&nbsp;&nbsp;</label></td>
+          <td colspan="3" style="text-align:left"><textarea  id="otherinfo" name="otherinfo" style="height:100px; max-height:100px; width:300px; max-width:300px" ></textarea></td>
         </tr>
         <tr>
         <td colspan="">&nbsp;</td>

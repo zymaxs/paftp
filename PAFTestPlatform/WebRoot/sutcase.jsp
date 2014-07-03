@@ -612,7 +612,7 @@ function testtest(){
 				  	}
 				 }
 				  var queryTestSuiteResult = "";
-				  queryTestSuiteResult += "<table width='100%' class='table  table-bordered'><tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正反例</td></tr>";
+				  queryTestSuiteResult += "<table width='100%' class='table  table-bordered'><tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正/反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>"+ zidong+"</td><td>"+shoudong+"</td><td>"+feiqi+"</td><td>"+p1+"</td><td>"+p2+"</td><td>"+p3+"</td><td>"+daipingshen+"</td><td>"+tongguo+"</td><td>"+butongguo+"</td><td>"+zhengli+"</td><td>"+fanli+"</td></tr></table>";
 				  $("#testsuiteInfoDiv").append(queryTestSuiteResult);
@@ -774,24 +774,27 @@ function testtest(){
 				  "valid_children" : ["sut"]
 				},
 			  "sut" : {
+				 "icon":"glyphicon glyphicon-th",
 				"valid_firstchildren" : ["interfacetestsuite"],
 				"valid_secondchildren" : ["stresstestsuite"]
 			  },
 			  "interfacetestsuite" : {
+				  "icon":"glyphicon glyphicon-th-list",
 				"valid_children" : ["interfacetestcase"]
 			  },
 			  "stresstestsuite" : {
 				  "valid_children" : ["stresstestcase"]
 			  },
 			  "interfacetestcase" : {
+				  "icon":"glyphicon glyphicon-book",
 				  "valid_children": ["testcase"]
 			  },
 			  "stresstestcase" : {
-				  "icon":"xxx",
+				  "icon":"XXX",
 				"valid_children" : []
 			  },
 			  "testcase":{
-				  "icon":"xxx",
+				  "icon":"glyphicon glyphicon-file",
 				  "valid_children":[]
 			  }
 
@@ -975,7 +978,7 @@ function querySutCaseInfo(){
 				  var queryTestSuiteResult = "";
 				  queryTestSuiteResult += "<table class='table table-bordered' width='100%'><tr><td colspan='5'>接口总数</td><td colspan='6'>"+root.testsuite_quantity+"</td></tr>";
 				  queryTestSuiteResult += "<tr><td colspan='5'>案例总数</td><td colspan='6'>"+root.testcase_quantity+"</td></tr>"
-				  queryTestSuiteResult += "<tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正反例</td></tr>";
+				  queryTestSuiteResult += "<tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正/反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>"+ zidong+"</td><td>"+shoudong+"</td><td>"+feiqi+"</td><td>"+p1+"</td><td>"+p2+"</td><td>"+p3+"</td><td>"+daipingshen+"</td><td>"+tongguo+"</td><td>"+butongguo+"</td><td>"+zhengli+"</td><td>"+fanli+"</td></tr></table>";
 				  $("#sutCaseInfoDiv").append(queryTestSuiteResult);
@@ -1234,23 +1237,23 @@ function saveapprovalac(){
           </div>
           <br>
           <div id="createbtn">
-            <button type="button" class="btn btn-success btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i>Create</button>
+            <button type="button" class="btn btn-success" style="width:80px" onclick="demo_create();">新建</button>
           </div>
           <div id="jstree"></div>
           <!--<div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>-->
         </div></td>
       
       <!--About SUT-->
-      <td height="604px" id="sutCaseInfoTd" style="display:block; width:1018px" ><div id="sutCaseInfoDiv" style="text-align:center"> </div></td>
+      <td height="641px" id="sutCaseInfoTd" style="display:block; width:1018px" ><div id="sutCaseInfoDiv" style="text-align:center"> </div></td>
       
       <!--Interface Search-->
-      <td id="interfacesearchTd" style="display:none; width:1018px" height="604px"><table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
+      <td id="interfacesearchTd" style="display:none; width:1018px" height="641px"><table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
           <tr style="text-align:center">
             <td width="20%">自动化</td>
             <td width="20%">优先级</td>
-            <td width="20%">正反例</td>
+            <td width="20%">正/反例</td>
             <td width="20%">用例评审</td>
-            <td width="20%">所属项目</td>
+            <td width="20%">项目</td>
           </tr>
           <tr>
             <td><select id="querystatus" style="width:100%">
@@ -1290,7 +1293,7 @@ function saveapprovalac(){
         <div id="interfaceSearchResultDiv" style="text-align:center"></div></td>
       
       <!--展示、更新testsuite-->
-      <td style="display:none; width:1018px" id="showTestSuiteTd" height="604px"><form id="showTestSuiteForm" name="showTestSuiteForm">
+      <td style="display:none; width:1018px" id="showTestSuiteTd" height="641px"><form id="showTestSuiteForm" name="showTestSuiteForm">
           <table width="100%" height="100%" id="showTestSuiteTable">
           	<tr>
             <td colspan="2">&nbsp;</td>
@@ -1404,7 +1407,7 @@ function saveapprovalac(){
               <td><input id="showcasetestsuite_name" name="showcasetestsuite_name" value="" maxlength="15" readonly></td>
             </tr>
             <tr>
-              <td>所属Project</td>
+              <td>项目</td>
               <td id="showprojecttd" style="display:block"><input id="showproject" class="form-control input-sm" style="width:200px" value="" readonly></td>
               <td id="showprojectoption" style="display:none; vertical-align:middle"><div id="updateprojectgroup" class="selectbox">
                   <div class="cartes">
@@ -1442,7 +1445,7 @@ function saveapprovalac(){
                 废弃 </td>
             </tr>
             <tr>
-              <td>正例 or 反例</td>
+              <td>正/反例</td>
               <td id="showcasetypetd" style="display:block"><input id="showcasetype" class="form-control input-sm" style="width:200px" value="" readonly></td>
               <td id="showcasetypeoption" style="display:none"><input type="radio" name="updatetype" id="zhengli" value="正例" checked>
                 正例&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1484,7 +1487,7 @@ function saveapprovalac(){
     <form>
       <table width="500" height="150" style="background:#FFF">
         <tr>
-          <td><label for="testsuite_name">TestSuiteName</label></td>
+          <td>测试集</td>
           <td><div class="input-group"> <span class="input-group-addon">Ts_</span>
               <input id="testsuite_name" class="form-control input-sm" name="testsuite_name" value="" style="width:200px">
             </div></td>
@@ -1521,7 +1524,7 @@ function saveapprovalac(){
     <form>
       <table width="600" height="500" style="background:#FFF">
         <tr>
-          <td>TestCase</td>
+          <td>用例名称</td>
           <td>
           <!--TODO-->
           <div class="input-group"> 
@@ -1533,11 +1536,11 @@ function saveapprovalac(){
           <td colspan="2"><input id="casesut_name" style="display:none" name="sut_name" value="<%=sut_name%>"></td>
         </tr>
         <tr style="display:none">
-          <td>所属TestSuite</td>
+          <td>测试集</td>
           <td><input id="casetestsuite_name"  class="form-control input-sm"  style="width:200px;" name="testsuite_name" value="" readonly></td>
         </tr>
         <tr>
-          <td>所属Project</td>
+          <td>项目</td>
           <td><div id="projectgroup" class="selectbox">
               <div class="cartes">
                 <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="project" name="project" class="listTxt" readonly />
@@ -1572,7 +1575,7 @@ function saveapprovalac(){
             废弃</td>
         </tr>
         <tr>
-          <td>正例 or 反例</td>
+          <td>正例</td>
           <td><input type="radio" name="type" id="zhengli" value="正例" checked>
             正例&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="radio" id="fanli" name="type" value="反例">

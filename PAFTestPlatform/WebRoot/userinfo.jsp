@@ -54,6 +54,7 @@ String position = "";
 String mobile = "";
 String telephone = "";
 String othermail = "";
+String otherinfo ="";
 
 if(user.getId() != null){
 	id = user.getId();
@@ -86,6 +87,10 @@ if (userinfo.getTelephone() != null) {
 if (userinfo.getOthermail() != null) {
 	othermail = userinfo.getOthermail();
 }
+if (userinfo.getOtherinfo() != null) {
+		othermail = userinfo.getOtherinfo();
+	}
+	;
 %>
 <script type="text/javascript">
 var pagentotal = <%=pagenum%>;
@@ -249,6 +254,10 @@ function inidata(){
         <tr>
           <td >其他邮件 :</td>
           <td ><%=othermail%></td>
+        </tr>
+        <tr>
+          <td>备注信息 :</td>
+          <td><%=otherinfo%></td>
         </tr>
       </table>
     </fieldset>

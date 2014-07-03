@@ -141,7 +141,7 @@ function inidata(){
 		if(currentPageRoles.get(i).getUsers() != null){
 		for (int j=0; j<currentPageRoles.get(i).getUsers().size(); j++){
 		iniinsertdata +="<tr>";
-		iniinsertdata +="<td>"+currentPageRoles.get(i).getUsers().get(j).getAlias()+"</td>";
+		iniinsertdata +="<td><a href='getuserinfo.action?userid="+currentPageRoles.get(i).getUsers().get(j).getId()+"'>" +currentPageRoles.get(i).getUsers().get(j).getAlias()+"</a></td>";
 		iniinsertdata +="<td>"+currentPageRoles.get(i).getUsers().get(j).getDisplayName()+"</td>";
 		iniinsertdata +="<td>"+currentPageRoles.get(i).getName()+"</td>";
 		iniinsertdata +="<td>"+currentPageRoles.get(i).getDescription()+"</td>";

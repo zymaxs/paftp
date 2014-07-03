@@ -251,8 +251,8 @@ function inidata(){
   <table id="sutForm" class="table table-striped" style="text-align:center; width:80%" align="center">
     <thead>
       <tr>
-        <td>系统序列号</td>
-        <td>系统名</td>
+        <td>申请序号</td>
+        <td>系统名称</td>
         <td>申请人</td>
         <td>申请日期</td>
         <td>状态</td>
