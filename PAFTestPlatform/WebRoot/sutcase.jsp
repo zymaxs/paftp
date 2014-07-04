@@ -1608,6 +1608,9 @@ function saveapprovalac(){
                 <input type="radio" name="updateapproval" value="未通过">
                 未通过&nbsp;&nbsp;&nbsp;&nbsp; </td>
             </tr>
+            <tr>
+            <td colspan="2"><input id="" name="" value="请输入拒绝原因！"></td>
+            </tr>
             <tr id="showaprovalbtntd" align="left">
               <td colspan="2" id="showapprovalupdatetd" style="display:block;"><input type="button"  class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="开始评审" onClick="updateapprovalac()"></td>
               <td colspan="2" id="showapprovalsavetd" style="display:none;"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="确认评审" onClick="saveapprovalac()"></td>
