@@ -104,7 +104,7 @@ public class TestsuiteAction extends ActionSupport {
 
 	private Util util = new Util();
 
-	public String createTestsuite() {
+	public synchronized String createTestsuite() {
 
 		user = getSessionUser();
 		if (user == null) {
@@ -218,7 +218,7 @@ public class TestsuiteAction extends ActionSupport {
 		return "success";
 	}
 
-	public String createTestcase() {
+	public synchronized String createTestcase() {
 
 		user = getSessionUser();
 
