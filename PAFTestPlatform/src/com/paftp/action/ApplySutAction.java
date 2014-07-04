@@ -84,12 +84,11 @@ public class ApplySutAction extends ActionSupport {
 
 	private Util util = new Util();
 
-	public String applySut() {
+	public synchronized String applySut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
-
 		if (isSeniorManager(user.getAlias()) == false) {
 			request.setAttribute("error",
 					"The user hasn't authority to do this!");
@@ -102,8 +101,7 @@ public class ApplySutAction extends ActionSupport {
 			return "error";
 		}
 
-		ApplySut existSuts = applySutService.findApplySutByName(this
-				.getSutname());
+		ApplySut existSuts = applySutService.findApplySutByName(this.getSutname());
 		if (existSuts != null) {
 			if (existSuts.getUser().getAlias().equals(user.getAlias())) {
 				request.setAttribute("error",
@@ -118,18 +116,16 @@ public class ApplySutAction extends ActionSupport {
 		ApplySut applySut = new ApplySut();
 		applySut.setUser(user);
 		applySut = setApplySut(applySut, this.getStatus());
-
 		applySutService.saveApplySut(applySut);
 
 		return "success";
 	}
 
-	public String approveSut() {
+	public synchronized String approveSut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
-
 		this.isAdmin = this.isAdmin(user.getAlias());
 
 		if (this.getStatus() == null) {
@@ -142,14 +138,13 @@ public class ApplySutAction extends ActionSupport {
 			request.setAttribute("error", "You are not the admin to do this!");
 			return "error";
 		}
+		
 		ApplySut applySut = applySutService.findApplySutByName(this
 				.getSutname());
-
 		applySut = setApplySut(applySut, this.getStatus());
 		applySutService.updateApplySut(applySut);
 
 		return "success";
-
 	}
 
 	public String initialSuts() throws IOException {
@@ -159,18 +154,15 @@ public class ApplySutAction extends ActionSupport {
 		result = new HashMap<String, Object>();
 
 		row = 10;
-
 		pages = (long) Math.ceil(applySutService.findPages() / (double) row);
 
 		List<ApplySut> applySuts = applySutService
 				.findAllOrderByColumnPagination(1, this.getRow());
-
 		request.setAttribute("pages", pages);
 		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
 
 		// generateAdminAndManager();
-
 		user = getSessionUser();
 		if (user != null && this.isSeniorManager(user.getAlias()) == true)
 			request.setAttribute("isSeniormanager", true);
@@ -192,11 +184,9 @@ public class ApplySutAction extends ActionSupport {
 		}
 
 		ApplySut applySut = applySutService.findApplySutById(this.getId());
-
 		request.setAttribute("applySut", applySut);
 
 		return "success";
-
 	}
 
 	public String querySut() throws ParseException {
@@ -210,7 +200,6 @@ public class ApplySutAction extends ActionSupport {
 			applyer_id = applyer.getId();
 		}
 		
-
 		result = new HashMap<String, Object>();
 
 		String newStartTime = this.getStarttime().replace("/", "-");
@@ -246,7 +235,7 @@ public class ApplySutAction extends ActionSupport {
 		return "success";
 	}
 
-	public String updateSut() {
+	public synchronized String updateSut() {
 
 		ApplySut applySut = applySutService.findApplySutById(this.getId());
 
@@ -285,7 +274,7 @@ public class ApplySutAction extends ActionSupport {
 		return "success";
 	}
 
-	private ApplySut setApplySut(ApplySut applySut, String status) {
+	private synchronized ApplySut setApplySut(ApplySut applySut, String status) {
 
 		if (status == null) {
 			status = "待审批";

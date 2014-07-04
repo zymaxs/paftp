@@ -48,7 +48,7 @@ public class RegisterAction extends ActionSupport {
 	private String otherinfo;
 	private Util util = new Util();
 
-	public String register() {
+	public synchronized String register() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -83,7 +83,7 @@ public class RegisterAction extends ActionSupport {
 
 	}
 
-	private void setRegisterInfor(User user, String newpwd) {
+	private synchronized void setRegisterInfor(User user, String newpwd) {
 
 		this.createtime = new Date();
 		
