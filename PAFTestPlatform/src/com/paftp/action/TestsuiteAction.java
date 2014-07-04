@@ -654,21 +654,21 @@ public class TestsuiteAction extends ActionSupport {
 				JSONArray parentNode0 = new JSONArray();
 				if (testcases != null && testcases.size() > 0) {
 					for (int l = 0; l < testcases.size(); l++) {
-						JSONObject childNode0 = util.childNode(testcases.get(l)
+						JSONObject childNode0 = util.childNode(testcases.get(l).getId(), testcases.get(l)
 								.getCaseName(), util.nodeType("00"), null);
 						parentNode0.add(childNode0);
 
 					}
 				}
-				JSONObject childNode00 = util.childNode(testsuites.get(j)
+				JSONObject childNode00 = util.childNode(testsuites.get(j).getId(), testsuites.get(j)
 						.getName(), util.nodeType("0"), parentNode0);
 				parentNode00.add(childNode00);
 
 			}
-			JSONObject childNode000 = util.childNode("接口案例",
+			JSONObject childNode000 = util.childNode(1, "接口案例",
 					"interfacetestsuite", parentNode00);
 			parentNode000.add(childNode000);
-			JSONObject childNode0000 = util.childNode(suts.get(i).getName(),
+			JSONObject childNode0000 = util.childNode(suts.get(i).getId(), suts.get(i).getName(),
 					"sut", parentNode000);
 			parentNode0000.add(childNode0000);
 		}
