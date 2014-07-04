@@ -1,6 +1,7 @@
 
 CREATE TABLE `Testsuite` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
+    `changetag` int(11) not null,
     `name` varchar(50) DEFAULT NULL,
     `code` varchar(50) DEFAULT NULL,
     `status` varchar(20) DEFAULT NULL,

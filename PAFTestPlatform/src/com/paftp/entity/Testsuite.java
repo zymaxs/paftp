@@ -12,13 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Testsuite {
 
 	private Integer id;
+	private Integer changetag;
 	private String name;
 	private String status;
 	private Sut sut;
@@ -102,5 +102,14 @@ public class Testsuite {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	@Column(name = "changetag", length = 11)
+	public Integer getChangetag() {
+		return changetag;
+	}
+
+	public void setChangetag(Integer changetag) {
+		this.changetag = changetag;
 	}
 }

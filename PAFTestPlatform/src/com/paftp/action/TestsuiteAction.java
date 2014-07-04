@@ -65,6 +65,7 @@ public class TestsuiteAction extends ActionSupport {
 	@Resource
 	private TestcaseProjectService testcaseProjectService;
 
+	private String sut_id;
 	private String sut_name;
 	private String testsuite_name;
 	private String testcase_name;
@@ -88,6 +89,7 @@ public class TestsuiteAction extends ActionSupport {
 	private String project_name;
 	private Integer testcase_id;
 	private String testcase_approval;
+	private String approval_comments;
 
 	private JSONArray jsonArray;
 	private User user;
@@ -102,188 +104,40 @@ public class TestsuiteAction extends ActionSupport {
 
 	private Util util = new Util();
 
-	public String createTestcase() {
-
-		HttpServletRequest request = ServletActionContext.getRequest();
+	public String createTestsuite() {
 
 		user = getSessionUser();
-
 		if (user == null) {
 			this.setPrompt("Please log in firstly!");
 			return "success";
 		}
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
+		if (sut != null) {
 
-		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
-				this.getTestsuite_name(), sut.getId());
-		if (testsuite.getStatus().equals("discard")) {
-			testsuite.setStatus("alive");
-		}
-		Testcase testcase = testcaseService.findTestcaseByNameAndTestsuiteid(
-				this.getTestcase_name(), testsuite.getId());
-		if (testcase != null) {
-			this.setPrompt("The testcase already exist!");
-			return "success";
-		}
-		testcase = new Testcase();
-		testcase.setCaseName(this.getTestcase_name());
-		testcase.setDescription(this.getDescription());
-		testcase.setPriority(this.getPriority());
-		testcase.setStatus(this.getStatus());
-		testcase.setTestcase_approval(this.getTestcase_approval());
-		testcase.setCasetype(this.getCasetype());
-		testcase.setCasesteps(this.getCasesteps());
-		testcase.setCreator(user);
-		this.createtime = new Date();
-		java.sql.Timestamp createdatetime = new java.sql.Timestamp(
-				createtime.getTime());
-		testcase.setCreateTime(createdatetime);
-		testcase.setTestsuite(testsuite);
-		TestcaseProject testcaseproject = testcaseProjectService
-				.findTestcaseProjectByName(this.getProject_name());
-		testcase.setTestcaseproject(testcaseproject);
+			Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
+					this.getTestsuite_name(), sut.getId());
+			if (testsuite != null) {
+				this.setPrompt("The testsuite already exist!");
+				return "success";
+			}
 
-		testcaseService.saveTestcase(testcase);
+			testsuite = new Testsuite();
+			testsuite.setName(this.getTestsuite_name());
+			Version currentversion = versionService
+					.findVersionByVersionNum(this.getVersion());
+			testsuite.setVersion(currentversion);
+			testsuite.setSut(sut);
+			testsuite.setStatus(this.getIsdiscard());
+			testsuite.setDescription(this.getTestsuite_description());
 
-		return "success";
+			testsuiteService.saveTestsuite(testsuite);
 
-	}
-
-	private Boolean existTestcase(Testsuite testsuite, Integer testcase_id) {
-
-		if (testsuite == null)
-			return false;
-		List<Testcase> testcases = testsuite.getTestcases();
-		for (int i = 0; i < testcases.size(); i++) {
-			if (testcases.get(i).getId() == testcase_id)
-				return true;
-		}
-
-		return false;
-	}
-
-	public String updateTestcase() {
-
-		HttpServletRequest request = ServletActionContext.getRequest();
-
-		user = getSessionUser();
-
-		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
-		}
-
-		Testcase testcase = testcaseService.findTestcaseById(this
-				.getTestcase_id());
-
-		if (testcase == null) {
-			testcase = new Testcase();
-		}
-		CaseChangeHistory casechangehistory = new CaseChangeHistory();
-		casechangehistory.setUpdator(user);
-		casechangehistory.setTestcase(testcase);
-		this.updatetime = new Date();
-		java.sql.Timestamp updatedatetime = new java.sql.Timestamp(
-				updatetime.getTime());
-		casechangehistory.setUpdate_time(updatedatetime);
-		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
-		
-		this.updateTestcaseHistorys(user, testcase, casechangehistory);
-
-		return "success";
-	}
-
-	public String queryTestcase() {
-
-		user = this.getSessionUser();
-
-		Sut sut = sutService.findSutByName(this.getSut_name());
-		
-		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(this.getTestsuite_name(), sut.getId());
-		
-		Testcase testcase = null;
-		
-		if (testsuite != null){
-			testcase = testcaseService.findTestcaseByNameAndTestsuiteid(this.getTestcase_name(), testsuite.getId());
-
-		if (user != null
-				&& user.getAlias().equals(testcase.getCreator().getAlias()) == true) {
-			this.setIsSelf("true");
-
+			JSONArray jsonarray = this.getRootNode(this.getSut_name());
+			this.setJsonArray(jsonarray);
 		} else {
-			this.setIsSelf("false");
+			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
 		}
-
-		}
-		if (testcase != null) {
-			this.setTestcasedto(testsuiteService.getTestcaseDto(testcase));
-		}
-
-		return "success";
-	}
-
-	private List<CaseChangeHistory> queryTestcaseChangehistory(String testcasename) {
-
-		Testcase testcase = testcaseService.findTestcaseByName(testcasename);
-
-		List<CaseChangeHistory> casechangehistorys = testcase
-				.getCaseChangeHistorys();
-
-
-		return casechangehistorys;
-	}
-
-	// public String deleteTestcase() {
-	//
-	// HttpServletRequest request = ServletActionContext.getRequest();
-	//
-	// user = getSessionUser();
-	//
-	// if (user == null) {
-	// request.setAttribute("error", "Please log in firstly!");
-	// return "error";
-	// }
-	//
-	// Testcase testcase =
-	// testcaseService.findTestcaseByName(this.getTestcase_name());
-	//
-	// testcaseService.deleteTestcase(testcase);
-	//
-	// return "success";
-	// }
-
-	public String createTestsuite() {
-
-		HttpServletRequest request = ServletActionContext.getRequest();
-
-		user = getSessionUser();
-
-		// if (user == null) {
-		// request.setAttribute("error", "Please log in firstly!");
-		// return "error";
-		// }
-
-		Sut sut = sutService.findSutByName(this.getSut_name());
-
-		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
-				this.getTestsuite_name(), sut.getId());
-		if (testsuite != null) {
-			this.setPrompt("The testsuite already exist!");
-			return "success";
-		}
-
-		testsuite = new Testsuite();
-		testsuite.setName(this.getTestsuite_name());
-		Version currentversion = versionService.findVersionByVersionNum(this
-				.getVersion());
-		testsuite.setVersion(currentversion);
-		testsuite.setSut(sut);
-		testsuite.setStatus(this.getIsdiscard());
-		testsuite.setDescription(this.getTestsuite_description());
-		testsuiteService.saveTestsuite(testsuite);
-		JSONArray jsonarray = this.getRootNode(this.getSut_name());
-		this.setJsonArray(jsonarray);
 
 		return "success";
 
@@ -291,47 +145,45 @@ public class TestsuiteAction extends ActionSupport {
 
 	public String queryTestsuite() {
 
-		// user = getSessionUser();
-		//
-		// if (user == null) {
-		// request.setAttribute("error", "Please log in firstly!");
-		// return "error";
-		// }
-
 		Sut sut = sutService.findSutByName(this.getSut_name());
+		if (sut != null) {
 
-		Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
-				this.getTestsuite_name(), sut.getId());
+			Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
+					this.getTestsuite_name(), sut.getId());
+			if (testsuite != null) {
 
-		HashMap<String, Object> conditions = new HashMap<String, Object>();
-		conditions.put("status", this.getStatus());
-		conditions.put("priority", this.getPriority());
-		conditions.put("casetype", this.getCasetype());
-		conditions.put("testcase_approval", this.getTestcase_approval());
-		conditions.put("testsuite.id", testsuite.getId());
-		List<Testcase> testcases = testcaseService
-				.findAllCaseByMultiConditions(conditions);
+				HashMap<String, Object> conditions = new HashMap<String, Object>();
+				conditions.put("status", this.getStatus());
+				conditions.put("priority", this.getPriority());
+				conditions.put("casetype", this.getCasetype());
+				conditions
+						.put("testcase_approval", this.getTestcase_approval());
+				conditions.put("testsuite.id", testsuite.getId());
+				List<Testcase> testcases = testcaseService
+						.findAllCaseByMultiConditions(conditions);
+				Integer testcasenum = testcases.size();
 
-		Integer testcasenum = testcases.size();
-
-		this.setTestcase_quantity(testcasenum);
-
-		TestsuiteDto testsuitedto = testsuiteService.getTestsuiteDto(testsuite);
-
-		this.setTestsuitedto(testsuitedto);
-
-		this.queryQuantitys(testsuite);
+				this.setTestcase_quantity(testcasenum);
+				TestsuiteDto testsuitedto = testsuiteService
+						.getTestsuiteDto(testsuite);
+				this.setTestsuitedto(testsuitedto);
+				this.queryQuantitys(testsuite);
+			} else {
+				this.setPrompt("The testsuite" + this.getTestsuite_name()
+						+ "is not exist!");
+			}
+		} else {
+			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
+		}
 
 		return "success";
-
 	}
 
-	public String updateTestsuite() {
+	public synchronized String updateTestsuite() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
-
 		if (user == null) {
 			request.setAttribute("error", "Please log in firstly!");
 			return "error";
@@ -345,339 +197,143 @@ public class TestsuiteAction extends ActionSupport {
 		String targetName = this.getTestsuite_name();
 		sourceName = sourceName.replaceAll("Ts", "Tc");
 		targetName = targetName.replaceAll("Ts", "Tc");
-		
+
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setStatus(this.getIsdiscard());
-
 		testsuite.setVersion(version);
 
 		if (this.getIsdiscard().equals("discard")) {
-
-			List<Testcase> testcases = testsuite.getTestcases();
-
-			for (int i = 0; i < testcases.size(); i++) {
-				
-				this.updateTestcaseHistory(testcases.get(i), testcases.get(i).getStatus(), "废弃", "状态");
-				
-				testcases.get(i).setStatus("废弃");
-				testcaseService.updateTestcase(testcases.get(i));
-
-			}
+			this.updateTestcaseSpecial(testsuite, "0", sourceName, targetName);
 		}
-		
-		String caseName;
-		List<Testcase> testcases = testsuite.getTestcases();
-		if (testcases != null){
-		for(int i=0; i<testcases.size(); i++){
-			
-			caseName = testcases.get(i).getCaseName().replaceAll(sourceName, targetName);
-			this.updateTestcaseHistory(testcases.get(i), testcases.get(i).getCaseName(), caseName, "name");
-			testcases.get(i).setCaseName(caseName);
-			testcaseService.updateTestcase(testcases.get(i));
 
+		if (sourceName != null
+				&& sourceName.equals(this.getTestsuite_name()) == false) {
+			this.updateTestcaseSpecial(testsuite, "1", sourceName, targetName);
 		}
-		}
-		
+
 		testsuiteService.updateTestsuite(testsuite);
-
 		request.setAttribute("testsuite", testsuite);
 
 		return "success";
 	}
 
-	public String queryCombineConditions() {
+	public String createTestcase() {
 
-		Sut sut = sutService.findSutByName(this.getSut_name());
+		user = getSessionUser();
 
-		List<Testsuite> testsuites = sut.getTestsuites();
-		Integer testcasenum = 0;
-
-		for (int i = 0; i < testsuites.size(); i++) {
-
-			Testsuite testsuite = testsuites.get(i);
-			TestcaseProject testcaseproject = testcaseProjectService
-					.findTestcaseProjectByName(this.getProject_name());
-
-			HashMap<String, Object> conditions = new HashMap<String, Object>();
-			conditions.put("status", this.getStatus());
-			conditions.put("priority", this.getPriority());
-			conditions.put("casetype", this.getCasetype());
-			conditions.put("testcase_approval", this.getTestcase_approval());
-			if (testcaseproject != null) {
-				conditions.put("testcaseproject.id", testcaseproject.getId());
-			}
-			conditions.put("testsuite.id", testsuite.getId());
-			List<Testcase> testcases = testcaseService
-					.findAllCaseByMultiConditions(conditions);
-
-			testcasenum += testcases.size();
+		if (user == null) {
+			this.setPrompt("Please log in firstly!");
+			return "success";
 		}
 
-		this.setTestcase_quantity(testcasenum);
-		this.setJsonArray(this.getRootNode(this.getSut_name()));
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		if (sut != null) {
+
+			Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
+					this.getTestsuite_name(), sut.getId());
+			if (testsuite != null) {
+
+				if (testsuite.getStatus().equals("discard")) {
+					testsuite.setStatus("alive");
+				}
+
+				Testcase testcase = new Testcase();
+				testcase.setCaseName(this.getTestcase_name());
+				testcase.setDescription(this.getDescription());
+				testcase.setPriority(this.getPriority());
+				testcase.setStatus(this.getStatus());
+				testcase.setTestcase_approval(this.getTestcase_approval());
+				testcase.setApproval_comments(this.getApproval_comments());
+				testcase.setCasetype(this.getCasetype());
+				testcase.setCasesteps(this.getCasesteps());
+				testcase.setCreator(user);
+				this.createtime = new Date();
+				java.sql.Timestamp createdatetime = new java.sql.Timestamp(
+						createtime.getTime());
+				testcase.setCreateTime(createdatetime);
+				testcase.setTestsuite(testsuite);
+				TestcaseProject testcaseproject = testcaseProjectService
+						.findTestcaseProjectByName(this.getProject_name());
+				testcase.setTestcaseproject(testcaseproject);
+
+				Testcase judgetestcase = testcaseService
+						.findTestcaseByNameAndTestsuiteid(
+								this.getTestcase_name(), testsuite.getId());
+				if (judgetestcase != null) {
+					this.setPrompt("The testcase already exist!");
+					return "success";
+				}
+
+				testcaseService.saveTestcase(testcase);
+
+			} else {
+				this.setPrompt("The testsuite" + this.getTestsuite_name()
+						+ "is not exist!");
+			}
+		} else {
+			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
+		}
 
 		return "success";
 	}
 
-	public String initialParameters() {
+	public String queryTestcase() {
+
+		user = this.getSessionUser();
+
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		if (sut != null) {
+
+			Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
+					this.getTestsuite_name(), sut.getId());
+			if (testsuite != null) {
+
+				Testcase testcase = testcaseService
+						.findTestcaseByNameAndTestsuiteid(
+								this.getTestcase_name(), testsuite.getId());
+				if (testcase != null) {
+
+					this.setTestcasedto(testsuiteService
+							.getTestcaseDto(testcase));
+					if (user != null
+							&& user.getAlias().equals(
+									testcase.getCreator().getAlias()) == true) {
+						this.setIsSelf("true");
+					} else {
+						this.setIsSelf("false");
+					}
+				} else {
+					this.setPrompt("The testcase" + this.getTestcase_name()
+							+ "is not exist!");
+				}
+			} else {
+				this.setPrompt("The testsuite" + this.getTestsuite_name()
+						+ "is not exist!");
+			}
+		} else {
+			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
+		}
+
+		return "success";
+	}
+
+	public synchronized String updateTestcase() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = getSessionUser();
-
-		if (user != null) {
-			request.setAttribute("isCurrentRole",
-					this.isRoleOfSut(user, this.getSut_name()));
-		}
-		Sut sut = sutService.findSutByName(this.getSut_name());
-		request.setAttribute("sut", sut);
-		request.setAttribute("flag", false);
-
-		return "success";
-
-	}
-
-	public String initialTestsuites() throws ServletException, IOException {
-
-		this.setJsonArray(this.getRootNode(this.getSut_name()));
-
-		return "success";
-
-	}
-
-	public String querySutQuantitys() {
-
-		this.queryQuantitys(null);
-
-		return "success";
-	}
-
-	private void queryQuantitys(Testsuite testsuite) {
-
-		if (testsuite == null) {
-			Sut sut = sutService.findSutByName(this.getSut_name());
-			Version version = versionService.findVersionByVersionNum(this
-					.getVersion());
-			HashMap<String, Object> conditions = new HashMap<String, Object>();
-			conditions.put("status", this.getStatus());
-			if (version != null) {
-				conditions.put("version_id", version.getId());
-			}
-			conditions.put("sut.id", sut.getId());
-			List<Testsuite> testsuites = testsuiteService
-					.findAllSuiteByMultiConditions(conditions);
-
-			Integer testsuite_quantity = 0;
-			Integer testcase_quantity = 0;
-			if (testsuites != null) {
-				testsuite_quantity = testsuites.size();
-			}
-			testcase_count = new HashMap<String, Integer>();
-			for (int i = 0; i < testsuites.size(); i++) {
-				List<Testcase> testcases = testsuites.get(i).getTestcases();
-				if (testcases != null) {
-					testcase_count.put(testsuites.get(i).getName(),
-							testcases.size());
-					testcase_quantity += testcases.size();
-				}
-
-			}
-
-			this.setTestsuite_quantity(testsuites.size());
-			this.setTestcase_quantity(testcase_quantity);
-			this.setTestcase_count(testcase_count); // The quantity for every
-													// case
-
-			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
-			List<TestcaseCountDto> condstatus = new ArrayList<TestcaseCountDto>();
-			List<TestcaseCountDto> condpriority = new ArrayList<TestcaseCountDto>();
-			List<TestcaseCountDto> condcasetype = new ArrayList<TestcaseCountDto>();
-			List<TestcaseCountDto> condtestcase_approval = new ArrayList<TestcaseCountDto>();
-			if (testsuites.size() > 0){
-			condstatus = this.transferFromDBObject(testcaseService.queryCountByStatusAndTestsuiteid(testsuites.get(0).getId()));  
-			condpriority = this.transferFromDBObject(testcaseService.queryCountByPriorityAndTestsuiteid(testsuites.get(0).getId()));
-			condcasetype = this.transferFromDBObject(testcaseService.queryCountByCasetypeAndTestsuiteid(testsuites.get(0).getId()));
-			condtestcase_approval = this.transferFromDBObject(testcaseService.queryCountByApprovalAndTestsuiteid(testsuites.get(0).getId()));
-			for (int i = 1; i < testsuites.size(); i++) {
-			List<TestcaseCountDto> tempStatus = this.transferFromDBObject(testcaseService
-					.queryCountByStatusAndTestsuiteid(testsuites.get(i).getId()));
-			List<TestcaseCountDto> tempPriority = this.transferFromDBObject(testcaseService
-					.queryCountByPriorityAndTestsuiteid(testsuites.get(i).getId()));
-			List<TestcaseCountDto> tempCasetype = this.transferFromDBObject(testcaseService
-					.queryCountByCasetypeAndTestsuiteid(testsuites.get(i).getId()));
-			List<TestcaseCountDto> tempTestcase_approval = this.transferFromDBObject(testcaseService
-					.queryCountByApprovalAndTestsuiteid(testsuites.get(i).getId()));
-			for (int j=0; j<tempStatus.size(); j++){
-				int k ;
-				for (k = 0; k<condstatus.size(); k++){
-					if (tempStatus.get(j).getValue().equals(condstatus.get(k).getValue())){
-						condstatus.get(k).setCount(condstatus.get(k).getCount() + tempStatus.get(j).getCount());
-						break;
-					}
-				}
-				if (k == condstatus.size()){
-					condstatus.add(tempStatus.get(j));
-				}
-			}
-			
-			for (int j=0; j<tempPriority.size(); j++){
-				int k ;
-				for (k=0; k<condpriority.size(); k++){
-					if (tempPriority.get(j).getValue().equals(condpriority.get(k).getValue())){
-						condpriority.get(k).setCount(condpriority.get(k).getCount() + tempPriority.get(j).getCount());
-						break;
-					}
-				}
-				if (k == condpriority.size()){
-					condpriority.add(tempPriority.get(j));
-				}
-			}
-			
-			for (int j=0; j<tempCasetype.size(); j++){
-				int k ;
-				for (k=0; k<condcasetype.size(); k++){
-					if (tempCasetype.get(j).getValue().equals(condcasetype.get(k).getValue())){
-						condcasetype.get(k).setCount(condcasetype.get(k).getCount() + tempCasetype.get(j).getCount());
-						break;
-					}
-				}
-				if (k == condcasetype.size()){
-					condcasetype.add(tempCasetype.get(j));
-				}
-			}
-			
-			for (int j=0; j<tempTestcase_approval.size(); j++){
-				int k ;
-				for (k=0; k<condtestcase_approval.size(); k++){
-					if (tempTestcase_approval.get(j).getValue().equals(condtestcase_approval.get(k).getValue())){
-						condtestcase_approval.get(k).setCount(condtestcase_approval.get(k).getCount() + tempTestcase_approval.get(j).getCount());
-						break;
-					}
-				}
-				if (k == condtestcase_approval.size()){
-					condtestcase_approval.add(tempTestcase_approval.get(j));
-				}
-			}
-			}
-			condtestcase_quantity.put("status", condstatus);
-			condtestcase_quantity.put("priority", condpriority);
-			condtestcase_quantity.put("casetype", condcasetype);
-			condtestcase_quantity.put("testcase_approval",condtestcase_approval);
-			}
-		} else {
-
-			Integer testcase_quantity = 0;
-			if (testsuite != null && testsuite.getTestcases() != null) {
-				testcase_quantity = testsuite.getTestcases().size();
-			}
-			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
-			List<TestcaseCountDto> condstatus = this.transferFromDBObject(testcaseService.queryCountByStatusAndTestsuiteid(testsuite.getId()));
-			condtestcase_quantity.put("status", condstatus);
-			List<TestcaseCountDto> condpriority = this.transferFromDBObject(testcaseService.queryCountByPriorityAndTestsuiteid(testsuite.getId()));
-			condtestcase_quantity.put("priority", condpriority);
-			List<TestcaseCountDto> condcasetype = this.transferFromDBObject(testcaseService.queryCountByCasetypeAndTestsuiteid(testsuite.getId()));
-			condtestcase_quantity.put("casetype", condcasetype);
-			List<TestcaseCountDto> condtestcase_approval = this.transferFromDBObject(testcaseService.queryCountByApprovalAndTestsuiteid(testsuite.getId()));
-			condtestcase_quantity.put("testcase_approval",condtestcase_approval);
-
-			// condtestcase_quantity.get("status");
-
-			this.setTestcase_quantity(testcase_quantity);
+		if (user == null) {
+			request.setAttribute("error", "Please log in firstly!");
+			return "error";
 		}
 
-		this.setCondtestcase_quantity(condtestcase_quantity);
-
-	}
-
-	private List<TestcaseCountDto> transferFromDBObject(List list){
-		
-		List<TestcaseCountDto> lists = new ArrayList<TestcaseCountDto>();
-		
-		if (list == null){
-			return lists;
-		}
-		
-		for (int i=0; i< list.size(); i++){
-			 Object[] obj = (Object[]) list.get(i);
-			 TestcaseCountDto testcaseCountDto = new TestcaseCountDto();
-			 testcaseCountDto.setValue(obj[0].toString());
-			 testcaseCountDto.setCount(Integer.parseInt(obj[1]+""));
-			 lists.add(testcaseCountDto);
-		}
-		
-		return lists;
-	}
-	
-	private Boolean isRoleOfSut(User user, String sut_name) {
-		User currentuser = userService.findUserByAlias(user.getAlias());
-		List<Role> roles = currentuser.getRoles();
-		for (int i = 0; i < roles.size(); i++) {
-			if (roles.get(i).getSut() != null) {
-				if (roles.get(i).getSut().getName().equals(this.getSut_name())) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	private JSONArray getRootNode(String sut_name) {
-
-		List<Sut> suts = new ArrayList<Sut>();
-
-		Sut sut = sutService.findSutByName(sut_name);
-		suts.add(sut);
-
-		JSONArray parentNode0000 = new JSONArray();
-
-		for (int i = 0; i < suts.size(); i++) {
-			List<Testsuite> testsuites = suts.get(i).getTestsuites();
-			JSONArray parentNode000 = new JSONArray();
-			JSONArray parentNode00 = new JSONArray();
-			for (int j = 0; j < testsuites.size(); j++) {
-				HashMap<String, Object> conditions = new HashMap<String, Object>();
-				TestcaseProject testcaseproject = testcaseProjectService
-						.findTestcaseProjectByName(this.getProject_name());
-				conditions.put("status", this.getStatus());
-				conditions.put("priority", this.getPriority());
-				conditions.put("casetype", this.getCasetype());
-				conditions
-						.put("testcase_approval", this.getTestcase_approval());
-				if (testcaseproject != null) {
-					conditions.put("testcaseproject.id",
-							testcaseproject.getId());
-				}
-				conditions.put("testsuite.id", testsuites.get(j).getId());
-				List<Testcase> testcases = testcaseService
-						.findAllCaseByMultiConditions(conditions);
-				JSONArray parentNode0 = new JSONArray();
-				if (testcases != null && testcases.size() > 0) {
-					for (int l = 0; l < testcases.size(); l++) {
-						JSONObject childNode0 = util.childNode(testcases.get(l).getId(), testcases.get(l)
-								.getCaseName(), util.nodeType("00"), null);
-						parentNode0.add(childNode0);
-
-					}
-				}
-				JSONObject childNode00 = util.childNode(testsuites.get(j).getId(), testsuites.get(j)
-						.getName(), util.nodeType("0"), parentNode0);
-				parentNode00.add(childNode00);
-
-			}
-			JSONObject childNode000 = util.childNode(1, "接口案例",
-					"interfacetestsuite", parentNode00);
-			parentNode000.add(childNode000);
-			JSONObject childNode0000 = util.childNode(suts.get(i).getId(), suts.get(i).getName(),
-					"sut", parentNode000);
-			parentNode0000.add(childNode0000);
+		Testcase testcase = testcaseService.findTestcaseById(this
+				.getTestcase_id());
+		if (testcase == null) {
+			testcase = new Testcase();
 		}
 
-		return parentNode0000;
-	}
-
-	private void updateTestcaseHistory(Testcase testcase, String oldValue, String newValue, String field){
-		
 		CaseChangeHistory casechangehistory = new CaseChangeHistory();
 		casechangehistory.setUpdator(user);
 		casechangehistory.setTestcase(testcase);
@@ -685,19 +341,40 @@ public class TestsuiteAction extends ActionSupport {
 		java.sql.Timestamp updatedatetime = new java.sql.Timestamp(
 				updatetime.getTime());
 		casechangehistory.setUpdate_time(updatedatetime);
-		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
-		
-		CaseChangeOperation casechangeoperation = new CaseChangeOperation();
-		casechangeoperation.setCaseChangeHistory(casechangehistory);
-		casechangeoperation.setOldValue(oldValue);
-		casechangeoperation.setNewValue(newValue);
-		casechangeoperation.setField(field);
-		
-		casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
+
+		this.updateTestcaseHistorys(user, testcase, casechangehistory);
+
+		return "success";
+	}
+
+	private synchronized void updateTestcaseSpecial(Testsuite testsuite, String tag, String sourceName,
+			String targetName) {
+		List<Testcase> testcases = testsuite.getTestcases();
+		if (testcases != null) {
+			if (tag.equals("0")) {
+				for (int i = 0; i < testcases.size(); i++) {
+					this.updateTestcaseHistory(testcases.get(i),
+							testcases.get(i).getStatus(), "废弃", "状态");
+					testcases.get(i).setStatus("废弃");
+					testcaseService.updateTestcase(testcases.get(i));
+				}
+			} else {
+				for (int i = 0; i < testcases.size(); i++) {
+					String caseName = testcases.get(i).getCaseName()
+							.replaceAll(sourceName, targetName);
+					this.updateTestcaseHistory(testcases.get(i),
+							testcases.get(i).getCaseName(), caseName, "name");
+					testcases.get(i).setCaseName(caseName);
+					testcaseService.updateTestcase(testcases.get(i));
+				}
+			}
+		}
 	}
 	
-	private void updateTestcaseHistorys(User user, Testcase testcase,
-			CaseChangeHistory casechangehistory) {
+	private synchronized void updateTestcaseHistorys(User user,
+			Testcase testcase, CaseChangeHistory casechangehistory) {
+
+		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
 		int i = 0;
 		List<CaseChangeOperation> casechangeoperations = new ArrayList<CaseChangeOperation>();
 		if (testcase.getCaseName().equals(this.getTestcase_name()) == false) {
@@ -789,12 +466,13 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setNewValue(this.getProject_name());
 			casechangeoperation.setField("所属项目");
 			casechangeoperations.add(casechangeoperation);
-			TestcaseProject testcaseproject = testcaseProjectService.findTestcaseProjectByName(this.getProject_name());
+			TestcaseProject testcaseproject = testcaseProjectService
+					.findTestcaseProjectByName(this.getProject_name());
 			testcase.setTestcaseproject(testcaseproject);
 			i++;
 		}
 
-		if (i == 0){
+		if (i == 0) {
 			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
 		}
 		for (int j = 0; j < i; j++) {
@@ -802,6 +480,366 @@ public class TestsuiteAction extends ActionSupport {
 					.saveCaseChangeOperation(casechangeoperations.get(j));
 		}
 		testcaseService.updateTestcase(testcase);
+	}
+
+	public String queryCombineConditions() {
+
+		Sut sut = sutService.findSutByName(this.getSut_name());
+
+		List<Testsuite> testsuites = sut.getTestsuites();
+		Integer testcasenum = 0;
+
+		for (int i = 0; i < testsuites.size(); i++) {
+
+			Testsuite testsuite = testsuites.get(i);
+			TestcaseProject testcaseproject = testcaseProjectService
+					.findTestcaseProjectByName(this.getProject_name());
+
+			HashMap<String, Object> conditions = new HashMap<String, Object>();
+			conditions.put("status", this.getStatus());
+			conditions.put("priority", this.getPriority());
+			conditions.put("casetype", this.getCasetype());
+			conditions.put("testcase_approval", this.getTestcase_approval());
+			if (testcaseproject != null) {
+				conditions.put("testcaseproject.id", testcaseproject.getId());
+			}
+			conditions.put("testsuite.id", testsuite.getId());
+			List<Testcase> testcases = testcaseService
+					.findAllCaseByMultiConditions(conditions);
+
+			testcasenum += testcases.size();
+		}
+
+		this.setTestcase_quantity(testcasenum);
+		this.setJsonArray(this.getRootNode(this.getSut_name()));
+
+		return "success";
+	}
+
+	public String initialParameters() {
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		user = getSessionUser();
+		if (user != null) {
+			request.setAttribute("isCurrentRole",this.isRoleOfSut(user));
+		}
+		Sut sut = sutService.findSutByName(this.getSut_name());
+		request.setAttribute("sut", sut);
+		request.setAttribute("flag", false);
+
+		return "success";
+
+	}
+
+	public String initialTestsuites() throws ServletException, IOException {
+
+		this.setJsonArray(this.getRootNode(this.getSut_name()));
+
+		return "success";
+
+	}
+
+	public String querySutQuantitys() {
+
+		this.queryQuantitys(null);
+
+		return "success";
+	}
+
+	private void queryQuantitys(Testsuite testsuite) {
+
+		if (testsuite == null) {
+			Sut sut = sutService.findSutByName(this.getSut_name());
+			Version version = versionService.findVersionByVersionNum(this
+					.getVersion());
+			HashMap<String, Object> conditions = new HashMap<String, Object>();
+			conditions.put("status", this.getStatus());
+			if (version != null) {
+				conditions.put("version_id", version.getId());
+			}
+			conditions.put("sut.id", sut.getId());
+			List<Testsuite> testsuites = testsuiteService
+					.findAllSuiteByMultiConditions(conditions);
+
+			Integer testsuite_quantity = 0;
+			Integer testcase_quantity = 0;
+			if (testsuites != null) {
+				testsuite_quantity = testsuites.size();
+			}
+			testcase_count = new HashMap<String, Integer>();
+			for (int i = 0; i < testsuites.size(); i++) {
+				List<Testcase> testcases = testsuites.get(i).getTestcases();
+				if (testcases != null) {
+					testcase_count.put(testsuites.get(i).getName(),
+							testcases.size());
+					testcase_quantity += testcases.size();
+				}
+
+			}
+
+			this.setTestsuite_quantity(testsuites.size());
+			this.setTestcase_quantity(testcase_quantity);
+			this.setTestcase_count(testcase_count); // The quantity for every
+													// case
+
+			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
+			List<TestcaseCountDto> condstatus = new ArrayList<TestcaseCountDto>();
+			List<TestcaseCountDto> condpriority = new ArrayList<TestcaseCountDto>();
+			List<TestcaseCountDto> condcasetype = new ArrayList<TestcaseCountDto>();
+			List<TestcaseCountDto> condtestcase_approval = new ArrayList<TestcaseCountDto>();
+			if (testsuites.size() > 0) {
+				condstatus = this.transferFromDBObject(testcaseService
+						.queryCountByStatusAndTestsuiteid(testsuites.get(0)
+								.getId()));
+				condpriority = this.transferFromDBObject(testcaseService
+						.queryCountByPriorityAndTestsuiteid(testsuites.get(0)
+								.getId()));
+				condcasetype = this.transferFromDBObject(testcaseService
+						.queryCountByCasetypeAndTestsuiteid(testsuites.get(0)
+								.getId()));
+				condtestcase_approval = this
+						.transferFromDBObject(testcaseService
+								.queryCountByApprovalAndTestsuiteid(testsuites
+										.get(0).getId()));
+				for (int i = 1; i < testsuites.size(); i++) {
+					List<TestcaseCountDto> tempStatus = this
+							.transferFromDBObject(testcaseService
+									.queryCountByStatusAndTestsuiteid(testsuites
+											.get(i).getId()));
+					List<TestcaseCountDto> tempPriority = this
+							.transferFromDBObject(testcaseService
+									.queryCountByPriorityAndTestsuiteid(testsuites
+											.get(i).getId()));
+					List<TestcaseCountDto> tempCasetype = this
+							.transferFromDBObject(testcaseService
+									.queryCountByCasetypeAndTestsuiteid(testsuites
+											.get(i).getId()));
+					List<TestcaseCountDto> tempTestcase_approval = this
+							.transferFromDBObject(testcaseService
+									.queryCountByApprovalAndTestsuiteid(testsuites
+											.get(i).getId()));
+					for (int j = 0; j < tempStatus.size(); j++) {
+						int k;
+						for (k = 0; k < condstatus.size(); k++) {
+							if (tempStatus.get(j).getValue()
+									.equals(condstatus.get(k).getValue())) {
+								condstatus.get(k).setCount(
+										condstatus.get(k).getCount()
+												+ tempStatus.get(j).getCount());
+								break;
+							}
+						}
+						if (k == condstatus.size()) {
+							condstatus.add(tempStatus.get(j));
+						}
+					}
+
+					for (int j = 0; j < tempPriority.size(); j++) {
+						int k;
+						for (k = 0; k < condpriority.size(); k++) {
+							if (tempPriority.get(j).getValue()
+									.equals(condpriority.get(k).getValue())) {
+								condpriority.get(k).setCount(
+										condpriority.get(k).getCount()
+												+ tempPriority.get(j)
+														.getCount());
+								break;
+							}
+						}
+						if (k == condpriority.size()) {
+							condpriority.add(tempPriority.get(j));
+						}
+					}
+
+					for (int j = 0; j < tempCasetype.size(); j++) {
+						int k;
+						for (k = 0; k < condcasetype.size(); k++) {
+							if (tempCasetype.get(j).getValue()
+									.equals(condcasetype.get(k).getValue())) {
+								condcasetype.get(k).setCount(
+										condcasetype.get(k).getCount()
+												+ tempCasetype.get(j)
+														.getCount());
+								break;
+							}
+						}
+						if (k == condcasetype.size()) {
+							condcasetype.add(tempCasetype.get(j));
+						}
+					}
+
+					for (int j = 0; j < tempTestcase_approval.size(); j++) {
+						int k;
+						for (k = 0; k < condtestcase_approval.size(); k++) {
+							if (tempTestcase_approval
+									.get(j)
+									.getValue()
+									.equals(condtestcase_approval.get(k)
+											.getValue())) {
+								condtestcase_approval.get(k).setCount(
+										condtestcase_approval.get(k).getCount()
+												+ tempTestcase_approval.get(j)
+														.getCount());
+								break;
+							}
+						}
+						if (k == condtestcase_approval.size()) {
+							condtestcase_approval.add(tempTestcase_approval
+									.get(j));
+						}
+					}
+				}
+				condtestcase_quantity.put("status", condstatus);
+				condtestcase_quantity.put("priority", condpriority);
+				condtestcase_quantity.put("casetype", condcasetype);
+				condtestcase_quantity.put("testcase_approval",
+						condtestcase_approval);
+			}
+		} else {
+
+			Integer testcase_quantity = 0;
+			if (testsuite != null && testsuite.getTestcases() != null) {
+				testcase_quantity = testsuite.getTestcases().size();
+			}
+			condtestcase_quantity = new HashMap<String, List<TestcaseCountDto>>();
+			List<TestcaseCountDto> condstatus = this
+					.transferFromDBObject(testcaseService
+							.queryCountByStatusAndTestsuiteid(testsuite.getId()));
+			condtestcase_quantity.put("status", condstatus);
+			List<TestcaseCountDto> condpriority = this
+					.transferFromDBObject(testcaseService
+							.queryCountByPriorityAndTestsuiteid(testsuite
+									.getId()));
+			condtestcase_quantity.put("priority", condpriority);
+			List<TestcaseCountDto> condcasetype = this
+					.transferFromDBObject(testcaseService
+							.queryCountByCasetypeAndTestsuiteid(testsuite
+									.getId()));
+			condtestcase_quantity.put("casetype", condcasetype);
+			List<TestcaseCountDto> condtestcase_approval = this
+					.transferFromDBObject(testcaseService
+							.queryCountByApprovalAndTestsuiteid(testsuite
+									.getId()));
+			condtestcase_quantity.put("testcase_approval",
+					condtestcase_approval);
+
+			// condtestcase_quantity.get("status");
+
+			this.setTestcase_quantity(testcase_quantity);
+		}
+
+		this.setCondtestcase_quantity(condtestcase_quantity);
+
+	}
+
+	private List<TestcaseCountDto> transferFromDBObject(List list) {
+
+		List<TestcaseCountDto> lists = new ArrayList<TestcaseCountDto>();
+
+		if (list == null) {
+			return lists;
+		}
+
+		for (int i = 0; i < list.size(); i++) {
+			Object[] obj = (Object[]) list.get(i);
+			TestcaseCountDto testcaseCountDto = new TestcaseCountDto();
+			testcaseCountDto.setValue(obj[0].toString());
+			testcaseCountDto.setCount(Integer.parseInt(obj[1] + ""));
+			lists.add(testcaseCountDto);
+		}
+
+		return lists;
+	}
+
+	private Boolean isRoleOfSut(User user) {
+		User currentuser = userService.findUserByAlias(user.getAlias());
+		List<Role> roles = currentuser.getRoles();
+		for (int i = 0; i < roles.size(); i++) {
+			if (roles.get(i).getSut() != null) {
+				if (roles.get(i).getSut().getName().equals(this.getSut_name())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private JSONArray getRootNode(String sut_name) {
+
+		List<Sut> suts = new ArrayList<Sut>();
+
+		Sut sut = sutService.findSutByName(sut_name);
+		suts.add(sut);
+
+		JSONArray parentNode0000 = new JSONArray();
+
+		for (int i = 0; i < suts.size(); i++) {
+			List<Testsuite> testsuites = suts.get(i).getTestsuites();
+			JSONArray parentNode000 = new JSONArray();
+			JSONArray parentNode00 = new JSONArray();
+			for (int j = 0; j < testsuites.size(); j++) {
+				HashMap<String, Object> conditions = new HashMap<String, Object>();
+				TestcaseProject testcaseproject = testcaseProjectService
+						.findTestcaseProjectByName(this.getProject_name());
+				conditions.put("status", this.getStatus());
+				conditions.put("priority", this.getPriority());
+				conditions.put("casetype", this.getCasetype());
+				conditions
+						.put("testcase_approval", this.getTestcase_approval());
+				if (testcaseproject != null) {
+					conditions.put("testcaseproject.id",
+							testcaseproject.getId());
+				}
+				conditions.put("testsuite.id", testsuites.get(j).getId());
+				List<Testcase> testcases = testcaseService
+						.findAllCaseByMultiConditions(conditions);
+				JSONArray parentNode0 = new JSONArray();
+				if (testcases != null && testcases.size() > 0) {
+					for (int l = 0; l < testcases.size(); l++) {
+						JSONObject childNode0 = util.childNode(testcases.get(l)
+								.getId(), testcases.get(l).getCaseName(), util
+								.nodeType("00"), null);
+						parentNode0.add(childNode0);
+
+					}
+				}
+				JSONObject childNode00 = util.childNode(testsuites.get(j)
+						.getId(), testsuites.get(j).getName(), util
+						.nodeType("0"), parentNode0);
+				parentNode00.add(childNode00);
+
+			}
+			JSONObject childNode000 = util.childNode(1, "接口案例",
+					"interfacetestsuite", parentNode00);
+			parentNode000.add(childNode000);
+			JSONObject childNode0000 = util.childNode(suts.get(i).getId(), suts
+					.get(i).getName(), "sut", parentNode000);
+			parentNode0000.add(childNode0000);
+		}
+
+		return parentNode0000;
+	}
+
+	private void updateTestcaseHistory(Testcase testcase, String oldValue,
+			String newValue, String field) {
+
+		CaseChangeHistory casechangehistory = new CaseChangeHistory();
+		casechangehistory.setUpdator(user);
+		casechangehistory.setTestcase(testcase);
+		this.updatetime = new Date();
+		java.sql.Timestamp updatedatetime = new java.sql.Timestamp(
+				updatetime.getTime());
+		casechangehistory.setUpdate_time(updatedatetime);
+		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
+
+		CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+		casechangeoperation.setCaseChangeHistory(casechangehistory);
+		casechangeoperation.setOldValue(oldValue);
+		casechangeoperation.setNewValue(newValue);
+		casechangeoperation.setField(field);
+
+		casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
 	}
 
 	private User getSessionUser() {
@@ -1048,6 +1086,22 @@ public class TestsuiteAction extends ActionSupport {
 
 	public void setTestcasedto(TestcaseDto testcasedto) {
 		this.testcasedto = testcasedto;
+	}
+
+	public String getApproval_comments() {
+		return approval_comments;
+	}
+
+	public void setApproval_comments(String approval_comments) {
+		this.approval_comments = approval_comments;
+	}
+
+	public String getSut_id() {
+		return sut_id;
+	}
+
+	public void setSut_id(String sut_id) {
+		this.sut_id = sut_id;
 	}
 
 }

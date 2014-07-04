@@ -22,6 +22,7 @@ public class TestcaseDto {
 	private String casesteps;
 	private String casetype;
 	private String testcase_approval;
+	private String approval_comments;
 	private TestcaseProject testcaseproject;
 
 	private Testsuite testsuite;
@@ -150,6 +151,14 @@ public class TestcaseDto {
 
 	public void setTestcase_results(List<TestcaseResult> testcase_results) {
 		this.testcase_results = testcase_results;
+	}
+
+	public String getApproval_comments() {
+		return approval_comments;
+	}
+
+	public void setApproval_comments(String approval_comments) {
+		this.approval_comments = approval_comments;
 	}
 
 }
