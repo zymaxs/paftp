@@ -72,9 +72,10 @@ public class Util {
 		return strings;
 	}
 
-	public JSONObject childNode(String text, String type, JSONArray parent) {
+	public JSONObject childNode(Integer id, String text, String type, JSONArray parent) {
 
 		JSONObject children = new JSONObject();
+		children.put("id", id);
 		children.put("text", text);
 		children.put("type", type);
 
