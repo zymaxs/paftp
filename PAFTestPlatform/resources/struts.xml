@@ -93,7 +93,7 @@
 		</action>
 		<action name="changepwd" method="changepwd" class="com.paftp.action.LoginAction">
 			<result name="success" type="redirect">/index_1.jsp</result>
-			<result name="error">/opr_error.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="getbakpwd" method="getbakpwd" class="com.paftp.action.LoginAction">
 			<result name="success">/changeinipwd.jsp</result>
@@ -118,7 +118,7 @@
 			class="com.paftp.action.UserProfileAction">
 			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/index_1.jsp</result>
-			<result name="error">/opr_error.jsp</result>
+			<result name="error">/error.jsp</result>
 		</action>
 		<action name="getuserinfo" method="getUserInfo"
 			class="com.paftp.action.UserProfileAction">
