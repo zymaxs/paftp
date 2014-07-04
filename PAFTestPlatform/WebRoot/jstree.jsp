@@ -14,7 +14,7 @@
     <ul>
       <li>Root node 1
         <ul>
-          <li id="child_node_1">Child node 1</li>
+          <li id="child_node_1" case_id="zhousicong">Child node 1</li>
           <li id="child_node_2">Child node 2</li>
         </ul>
       </li>
@@ -39,7 +39,7 @@
     $('button').on('click', function () {
       $('#jstree').jstree(true).select_node('child_node_1');
       $('#jstree').jstree('select_node', 'child_node_1');
-      $.jstree.reference('#jstree').select_node('child_node_1');
+      $.jstree.reference('#jstree').select_node('zhousicong');
     });
   });
   </script>
