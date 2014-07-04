@@ -14,11 +14,14 @@
     <ul>
       <li>Root node 1
         <ul>
-          <li id="child_node_1" case_id="zhousicong">Child node 1</li>
+          <li id="child_node_1">Child node 1</li>
           <li id="child_node_2">Child node 2</li>
         </ul>
       </li>
-      <li>Root node 2</li>
+      <li>Root node 2
+      	<li id="child_node_1_1">Child node 1_1</li>
+          <li id="child_node_2_1">Child node 2_2</li>
+      </li>
     </ul>
   </div>
   <button>demo button</button>
@@ -37,9 +40,10 @@
     });
     // 8 interact with the tree - either way is OK
     $('button').on('click', function () {
-      $('#jstree').jstree(true).select_node('child_node_1');
-      $('#jstree').jstree('select_node', 'child_node_1');
-      $.jstree.reference('#jstree').select_node('zhousicong');
+		$("#jstree").jstree("open_all");
+	  //$('#jstree').jstree(true).select_node('child_node_1');
+      //$('#jstree').jstree('select_node', 'child_node_1');
+      //$.jstree.reference('#jstree').select_node('zhousicong');
     });
   });
   </script>

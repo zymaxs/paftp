@@ -85,8 +85,8 @@ else { isCurrentRole = "n";};
 					Dialog.alert("描述不能超过50个字符");
 						}
 					else {
-					newTestSuiteac();
 					diag.close();
+					newTestSuiteac();
 					}
 					};//点击确定后调用的方法
 	diag.CancelEvent = function(){
@@ -179,6 +179,7 @@ else { isCurrentRole = "n";};
 <script type="text/javascript">
 var interfacetestsuite = "";
 var interfacetestcase = "";
+var node_id = "";
 function demo_create() {
 	if('<%=session.getAttribute("user")%>' == 'null'){
 		alert("请登录后再进行操作！");
@@ -191,6 +192,7 @@ function demo_create() {
 	  if (type.type != "sut"){
 		  if(type.valid_children == "interfacetestcase"){
 			  sel = ref.create_node(sel, {"type":type.valid_children[0]});
+			  node_id = sel;
 		  }
 		  else{
 			  sel = ref.create_node(sel, {"type":type.valid_children[0]});
@@ -256,6 +258,7 @@ function demo_create() {
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				  alert("success");
 				  if ( root.prompt != null){
 					  alert(root.prompt);
 					  $('#jstree').jstree(true).destroy();
@@ -833,6 +836,8 @@ function initree(){
 			  success : function(root) {
 				  datadata = root.jsonArray;
 				  testtest();
+				  sleepI(1);
+				  //alert("after select");
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -843,6 +848,15 @@ function initree(){
 		  });
 	};
 	
+ var flag=""
+    function sleepI(n)
+    {
+       flag = window.setInterval("c()",1000*n); 
+    }
+    
+    function c(){sicongzhou();window.clearInterval(flag);}
+
+
 
 function initype(){
 	$("#sutCaseInfoDiv").html("");
@@ -1143,8 +1157,23 @@ function saveapprovalac(){
 			}
 		});
 		
+		$('button').on('click', function () {
+			alert("botton");
+			//$('#jstree').jstree(true).destroy();
+			//initree();
+	  		//$('#jstree').jstree(true).select_node('child_node_1');
+			//$.jstree._focused().select_node("#j1_2");
+      		$('#jstree').jstree('select_node', 'j1_1');
+			$('#jstree').jstree('select_node', 'j1_2');
+      		//$.jstree.reference('#jstree').select_node('zhousicong');
+    		});
   
 });
+
+function sicongzhou(){
+//alert("function");
+$('#jstree').jstree('select_node', 'j1_1');
+}
 
 </script>
 <style>
@@ -1361,6 +1390,8 @@ function saveapprovalac(){
     <li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
     <%}}%>
   </ul>
+  
+  <button>demo button</button>
   <!--主体-->
   <table id="maintable" width="100%" class="table table-bordered">
     <tr> 
