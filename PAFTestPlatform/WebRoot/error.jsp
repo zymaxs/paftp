@@ -212,27 +212,7 @@
     <br>
   </div>
   <!--登录-->
-  <div id="loginmodal" style="display:none;" align="center">
-    <div>
-      <p>用户登录</p>
-    </div>
-    <form id="loginform" name="loginform" method="post" action="">
-      <label for="alias" style="Microsoft YaHei; font-size:12px;">Username:</label>
-      <input type="text" name="alias" id="alias" tabindex="1">
-      <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
-      <input type="password" name="password" id="password" tabindex="2">
-      <div>
-      	<br/>
-        <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
-        <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
-      </div>
-    </form>
-  </div>
-  <script type="text/javascript">
-	$(function(){
-	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
-	});
-  </script> 
+  
   <!--导航-->
   <ul class="daohang" id="navigator">
     <li><a href="index_1.jsp">主页</a></li>
