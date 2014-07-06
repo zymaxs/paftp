@@ -35,7 +35,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	private Util util = new Util();
 	private SessionMap<String, Object> sessionMap;
 
-	public String login() {
+	public synchronized String login() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -83,7 +83,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return "success";
 	}
 
-	public String getbakpwd() throws IOException {
+	public synchronized String getbakpwd() throws IOException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -121,7 +121,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return "success";
 	}
 
-	public String changepwd() {
+	public synchronized String changepwd() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 

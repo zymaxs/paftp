@@ -101,6 +101,8 @@ public TestcaseDto getTestcaseDto(Testcase testcase){
 	testcasedto.setStatus(testcase.getStatus());
 	testcasedto.setCreateTime(testcase.getCreateTime());
 	testcasedto.setTestcase_approval(testcase.getTestcase_approval());
+	testcasedto.setApproval_comments(testcase.getApproval_comments());
+	
 	TestcaseProject testcaseproject = new TestcaseProject();
 	if(testcase.getTestcaseproject() != null){
 		testcaseproject.setName(testcase.getTestcaseproject().getName());

@@ -33,6 +33,8 @@ public class TestpassAction extends ActionSupport{
 
 	private User user;
 	
+	private String prompt;
+	
 	private static final long serialVersionUID = -1539739561518693848L;
 
 	public String initialTestpasses(){
@@ -40,22 +42,26 @@ public class TestpassAction extends ActionSupport{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
 		user = getSessionUser();
-
 		if (user == null) {
 			request.setAttribute("error", "Please log in firstly!");
 			return "error";
 		}
 		
 		Sut sut = sutService.findSutByName(this.getSut_name());
-		
+		if (sut != null) {
+	
 		List<Testpass> testpasses = sut.getTestpasses();
-		
 		request.setAttribute("testpasses", testpasses);
+		
+		} else {
+			request.setAttribute("error", "The sut is not exist!");
+			return "error";
+		}
 		
 		return "success";
 	}
 	
-	public String updateTestpas(){
+	public synchronized String updateTestpass(){
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
@@ -100,6 +106,14 @@ public class TestpassAction extends ActionSupport{
 
 	public void setTestpass_id(Integer testpass_id) {
 		this.testpass_id = testpass_id;
+	}
+
+	public String getPrompt() {
+		return prompt;
+	}
+
+	public void setPrompt(String prompt) {
+		this.prompt = prompt;
 	}
 	
 }

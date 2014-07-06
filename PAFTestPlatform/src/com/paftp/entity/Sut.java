@@ -21,6 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Sut {
 	
 	private Integer id;
+	private Integer changetag;
 	private String code;
 	private String name;
 	private String description;
@@ -107,6 +108,14 @@ public class Sut {
 	}
 	public void setVersions(List<Version> versions) {
 		this.versions = versions;
+	}
+	
+	@Column(name = "changetag", length = 11)
+	public Integer getChangetag() {
+		return changetag;
+	}
+	public void setChangetag(Integer changetag) {
+		this.changetag = changetag;
 	}
 	
 //	@OneToMany(mappedBy = "sut")

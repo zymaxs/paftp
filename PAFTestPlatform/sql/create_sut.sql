@@ -1,6 +1,7 @@
 
 CREATE TABLE `Sut` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
+     `changetag` int(11) not null,
     `code` varchar(20) not NULL,
     `name` varchar(100) not NULL UNIQUE,
     `description` varchar(200) DEFAULT NULL,
