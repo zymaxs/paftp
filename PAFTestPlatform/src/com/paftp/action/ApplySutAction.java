@@ -84,7 +84,7 @@ public class ApplySutAction extends ActionSupport {
 
 	private Util util = new Util();
 
-	public synchronized String applySut() {
+	public String applySut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -101,6 +101,10 @@ public class ApplySutAction extends ActionSupport {
 			return "error";
 		}
 
+		ApplySut applySut = new ApplySut();
+		applySut.setUser(user);
+		applySut = setApplySut(applySut, this.getStatus());
+		
 		ApplySut existSuts = applySutService.findApplySutByName(this.getSutname());
 		if (existSuts != null) {
 			if (existSuts.getUser().getAlias().equals(user.getAlias())) {
@@ -112,16 +116,12 @@ public class ApplySutAction extends ActionSupport {
 			}
 			return "exist";
 		}
-
-		ApplySut applySut = new ApplySut();
-		applySut.setUser(user);
-		applySut = setApplySut(applySut, this.getStatus());
 		applySutService.saveApplySut(applySut);
 
 		return "success";
 	}
 
-	public synchronized String approveSut() {
+	public String approveSut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -235,29 +235,22 @@ public class ApplySutAction extends ActionSupport {
 		return "success";
 	}
 
-	public synchronized String updateSut() {
+	public String updateSut() {
 
-		ApplySut applySut = applySutService.findApplySutById(this.getId());
-
-		User user = userService.findUserByAlias(applySut.getUser().getAlias());
-		applySut.setUser(user);
 		SutGroup sutgroup = sutgroupService.findSutGroupByName(this
 				.getGroupname());
-		applySut.setGroup(sutgroup);
-		ApplySutStatus applySutStatus = applySutStatusService
-				.findApplySutStatusByName(applySut.getApplysutstatus()
-						.getName());
-		applySut.setApplysutstatus(applySutStatus);
+		
+		ApplySut applySut = applySutService.findApplySutById(this.getId());
 
+		applySut.setGroup(sutgroup);
 		applySut.setCode(this.getCode());
 		applySut.setName(this.getSutname());
 		applySut.setComment(this.getComment());
 		applySut.setDescription(this.getDescription());
-
 		this.resolvetime = new Date();
 		applySut.setResolvetime(this.getResolvetime());
 
-		applySutService.saveApplySut(applySut);
+		applySutService.updateApplySut(applySut);
 
 		return "success";
 	}
@@ -274,7 +267,7 @@ public class ApplySutAction extends ActionSupport {
 		return "success";
 	}
 
-	private synchronized ApplySut setApplySut(ApplySut applySut, String status) {
+	private ApplySut setApplySut(ApplySut applySut, String status) {
 
 		if (status == null) {
 			status = "待审批";
