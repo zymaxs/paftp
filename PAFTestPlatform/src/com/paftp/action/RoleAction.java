@@ -120,7 +120,7 @@ public class RoleAction extends ActionSupport {
 						break;
 					}
 				} else if (roles.get(j).getName()
-						.equals(this.getSut_name() + "Worker")) {
+						.equals(this.getSut_name() + "Sdet")) {
 					if (user.getAlias().equals(users.get(i).getAlias())) {
 						freeuser = false;
 						break;
