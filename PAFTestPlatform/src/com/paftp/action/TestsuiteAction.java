@@ -489,11 +489,11 @@ public class TestsuiteAction extends ActionSupport {
 			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
 			return false;
 		} else {
+			testcaseService.updateTestcase(testcase);
 			for (int j = 0; j < i; j++) {
 				casechangeoperationService
 						.saveCaseChangeOperation(casechangeoperations.get(j));
 			}
-			testcaseService.updateTestcase(testcase);
 			return true;
 		}
 	}
