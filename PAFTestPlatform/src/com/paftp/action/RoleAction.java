@@ -70,6 +70,10 @@ public class RoleAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 		user = this.sessionUser();
+		if (user == null){
+			request.setAttribute("error", "Please log in firstly!");
+			return "error";
+		}
 		
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));
@@ -215,7 +219,7 @@ public class RoleAction extends ActionSupport {
 			}
 
 		} else {
-			request.setAttribute("error", "This is not a manager for this!");
+			request.setAttribute("error", "You are not a manager for this!");
 			return "error";
 		}
 
