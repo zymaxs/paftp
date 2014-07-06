@@ -346,6 +346,7 @@ public class ApplySutAction extends ActionSupport {
 			sut.setCode(this.getCode());
 			sut.setName(this.getSutname());
 			sut.setDescription(this.getDescription());
+			sut.setChangetag(0);
 			SutGroup group = sutgroupService.findSutGroupByName(this
 					.getGroupname());
 			sut.setGroup(group);
