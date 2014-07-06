@@ -130,6 +130,7 @@ public class TestsuiteAction extends ActionSupport {
 			testsuite.setSut(sut);
 			testsuite.setStatus(this.getIsdiscard());
 			testsuite.setDescription(this.getTestsuite_description());
+			testsuite.setChangetag(0);
 
 			testsuiteService.saveTestsuite(testsuite);
 
@@ -249,6 +250,7 @@ public class TestsuiteAction extends ActionSupport {
 				testcase.setApproval_comments(this.getApproval_comments());
 				testcase.setCasetype(this.getCasetype());
 				testcase.setCasesteps(this.getCasesteps());
+				testcase.setChangetag(0);
 				testcase.setCreator(user);
 				this.createtime = new Date();
 				java.sql.Timestamp createdatetime = new java.sql.Timestamp(

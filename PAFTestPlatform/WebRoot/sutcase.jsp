@@ -1398,8 +1398,9 @@ $('#jstree').jstree('select_node', 'j1_1');
     <li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
     <%}}%>
   </ul>
-  
+  <!--
   <button>demo button</button>
+  -->
   <!--主体-->
   <table id="maintable" width="100%" class="table table-bordered">
     <tr> 
