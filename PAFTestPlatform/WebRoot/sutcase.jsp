@@ -98,8 +98,7 @@ else { isCurrentRole = "n";};
 			  			 dataType : "json",
 			 			 success : function(root) {
 								   $('#jstree').jstree(true).destroy();
-				  				   datadata = root.jsonArray;
-				 				   testtest();
+				  				   initree();
 								   diag.close();
 								   document.getElementById('sutCaseInfoTd').style.display = "block";
 				  				   document.getElementById('interfacesearchTd').style.display = "none";
@@ -157,8 +156,7 @@ else { isCurrentRole = "n";};
 			  			 dataType : "json",
 			 			 success : function(root) {
 								   $('#jstree').jstree(true).destroy();
-				  				   datadata = root.jsonArray;
-				 				   testtest();
+				  				   initree();
 								   diag.close();
 								   document.getElementById('sutCaseInfoTd').style.display = "block";
 				  				   document.getElementById('interfacesearchTd').style.display = "none";
@@ -273,6 +271,8 @@ function demo_create() {
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
 				  querySutCaseInfo();
+				  //alert("begin selectnode");
+				  //sleepI(1);
 					}
 			  },
 
@@ -837,6 +837,7 @@ function initree(){
 				  datadata = root.jsonArray;
 				  testtest();
 				  sleepI(1);
+				  //rootnode();
 				  //alert("after select");
 			  },
 
@@ -854,7 +855,7 @@ function initree(){
        flag = window.setInterval("c()",1000*n); 
     }
     
-    function c(){sicongzhou();window.clearInterval(flag);}
+    function c(){rootnode();window.clearInterval(flag);}
 
 
 
@@ -905,6 +906,7 @@ function querySutCaseInfo(){
 			  data : {sut_name:'<%=sut_name%>'},
 			  dataType : "json",
 			  success : function(root) {
+				 initype();
 				 var p1 = "0";
 				 var p2 = "0";
 				 var p3 = "0";
@@ -1098,6 +1100,7 @@ function saveapprovalac(){
 
 
   $(document).ready( function(){
+	//$("#jstree").jstree("destroy");
 	  initree();
 	  querySutCaseInfo();
 	$("#versiongroup").jQSelect({});
@@ -1158,20 +1161,25 @@ function saveapprovalac(){
 		});
 		
 		$('button').on('click', function () {
-			alert("botton");
-			//$('#jstree').jstree(true).destroy();
-			//initree();
+			//alert("botton");
+			// $('#jstree').jstree(true).destroy();
+			$("#jstree").jstree("destroy");
+			initree();
+			//sleepI(2);
 	  		//$('#jstree').jstree(true).select_node('child_node_1');
 			//$.jstree._focused().select_node("#j1_2");
-      		$('#jstree').jstree('select_node', 'j1_1');
-			$('#jstree').jstree('select_node', 'j1_2');
+      		//$('#jstree').jstree('select_node', 'j1_1');
+			//$('#jstree').jstree('select_node', 'j1_2');
       		//$.jstree.reference('#jstree').select_node('zhousicong');
     		});
   
 });
 
-function sicongzhou(){
+function rootnode(){
 //alert("function");
+//$('#jstree').jstree(true).destroy();
+//initree();
+//sleepI(1);
 $('#jstree').jstree('select_node', 'j1_1');
 }
 
