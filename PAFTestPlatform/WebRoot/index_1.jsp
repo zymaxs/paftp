@@ -189,24 +189,29 @@
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff;"> <br>
-    <div class="row">
-      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> 平安付科技中心 </div>
-      <div class="col-md-7"></div>
-      <%if (session.getAttribute("user") == null) {%>
-      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
-      <%} else { User user = (User) session.getAttribute("user");
+  <table width="100%">
+  <tr>
+  	<td>&nbsp;&nbsp;</td>
+  	<td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
+    <td colspan="7">&nbsp;</td>
+    <%if (session.getAttribute("user") == null) {%>
+    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </td>
+    <%} else { User user = (User) session.getAttribute("user");
                       String name = user.getAlias(); %>
-      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
-      <%}%>
-    </div>
-    <div class="row">
-      <div class="col-md-12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
-    </div>
-    <div class="row">
-      <div class="col-md-10"></div>
-      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</div>
-    </div>
-    <br>
+    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </td>
+    <%}%>
+    <td>&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+  	<td colspan="12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</td>
+  </tr>
+  <tr>
+  	<td colspan="10">&nbsp;</td>
+    <td style="text-align:right;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</td>
+    <td>&nbsp;&nbsp;</td>
+  </tr>
+  </table>
+  <br>
   </div>
   <!--登录-->
   <div id="loginmodal" style="display:none;" align="center">
