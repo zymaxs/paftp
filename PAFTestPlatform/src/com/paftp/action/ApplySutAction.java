@@ -125,7 +125,8 @@ public class ApplySutAction extends ActionSupport {
 	public String approveSut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-
+		Integer test = this.getSut_id();
+		
 		user = getSessionUser();
 		this.isAdmin = this.isAdmin(user.getAlias());
 
@@ -185,9 +186,12 @@ public class ApplySutAction extends ActionSupport {
 		}
 
 		ApplySut applySut = applySutService.findApplySutById(this.getId());
-		Integer temp_sut_id = sutService.findSutByName(applySut.getName()).getId();
+		Sut temp_sut = sutService.findSutByName(applySut.getName());
+		if (temp_sut != null){
+			Integer temp_sut_id = temp_sut.getId();
+			request.setAttribute("sut_id", temp_sut_id);
+		}
 		request.setAttribute("applySut", applySut);
-		request.setAttribute("sut_id", temp_sut_id);
 
 		return "success";
 	}

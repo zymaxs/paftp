@@ -139,7 +139,6 @@ public class TestsuiteAction extends ActionSupport {
 			this.setJsonArray(jsonarray);
 		} else {
 			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
-			return "success";
 		}
 
 		return "success";
@@ -176,11 +175,9 @@ public class TestsuiteAction extends ActionSupport {
 			} else {
 				this.setPrompt("The testsuite" + this.getTestsuite_name()
 						+ "is not exist!");
-				return "success";
 			}
 		} else {
 			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
-			return "success";
 		}
 
 		return "success";
@@ -289,11 +286,9 @@ public class TestsuiteAction extends ActionSupport {
 			} else {
 				this.setPrompt("The testsuite" + this.getTestsuite_name()
 						+ "is not exist!");
-				return "success";
 			}
 		} else {
 			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
-			return "success";
 		}
 
 		return "success";
@@ -326,17 +321,15 @@ public class TestsuiteAction extends ActionSupport {
 						this.setIsSelf("false");
 					}
 				} else {
-					this.setPrompt("The testcase" + this.getTestcase_name()
-							+ "is not exist!");
+					this.setPrompt("The testcase " + this.getTestcase_name()
+							+ " is not exist!");
 				}
 			} else {
 				this.setPrompt("The testsuite" + this.getTestsuite_name()
 						+ "is not exist!");
-				return "success";
 			}
 		} else {
 			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
-			return "success";
 		}
 
 		return "success";

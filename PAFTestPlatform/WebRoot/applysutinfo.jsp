@@ -14,6 +14,7 @@ List<String> sutgroup = (List<String>)request.getAttribute("sutgroupnames");
 String isLogin = "test";
 String isAdmin = "test";
 String alias = "";
+Integer sut_id = 0;
 if (session.getAttribute("user") != null){
 	 isLogin = "y";
 	 User userinfo = (User) session.getAttribute("user");
@@ -27,7 +28,9 @@ if ((String)request.getAttribute("isAdmin") != null){
 	
 	
 ApplySut applySut = (ApplySut)request.getAttribute("applySut");
-Integer sut_id = (Integer)request.getAttribute("sut_id");
+if (request.getAttribute("sut_id") != null){
+	sut_id = (Integer)request.getAttribute("sut_id");
+}
 String applyer = applySut.getUser().getAlias();
 int id = applySut.getId();
 %>
