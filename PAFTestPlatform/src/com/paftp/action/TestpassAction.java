@@ -61,7 +61,7 @@ public class TestpassAction extends ActionSupport{
 		return "success";
 	}
 	
-	public synchronized String updateTestpass(){
+	public String updateTestpass(){
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		

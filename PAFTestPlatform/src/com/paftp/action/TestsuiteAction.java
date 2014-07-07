@@ -104,7 +104,7 @@ public class TestsuiteAction extends ActionSupport {
 
 	private Util util = new Util();
 
-	public synchronized String createTestsuite() {
+	public String createTestsuite() {
 
 		user = getSessionUser();
 		if (user == null) {
@@ -180,7 +180,7 @@ public class TestsuiteAction extends ActionSupport {
 		return "success";
 	}
 
-	public synchronized String updateTestsuite() {
+	public String updateTestsuite() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -203,6 +203,7 @@ public class TestsuiteAction extends ActionSupport {
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setStatus(this.getIsdiscard());
 		testsuite.setVersion(version);
+		testsuiteService.updateTestsuite(testsuite);
 
 		if (this.getIsdiscard().equals("discard")) {
 			this.updateTestcaseSpecial(testsuite, "0", sourceName, targetName);
@@ -213,13 +214,13 @@ public class TestsuiteAction extends ActionSupport {
 			this.updateTestcaseSpecial(testsuite, "1", sourceName, targetName);
 		}
 
-		testsuiteService.updateTestsuite(testsuite);
 		request.setAttribute("testsuite", testsuite);
 
 		return "success";
+
 	}
 
-	public synchronized String createTestcase() {
+	public String createTestcase() {
 
 		user = getSessionUser();
 
@@ -237,6 +238,7 @@ public class TestsuiteAction extends ActionSupport {
 
 				if (testsuite.getStatus().equals("discard")) {
 					testsuite.setStatus("alive");
+					testsuiteService.updateTestsuite(testsuite);
 				}
 
 				Testcase testcase = new Testcase();
@@ -320,7 +322,7 @@ public class TestsuiteAction extends ActionSupport {
 		return "success";
 	}
 
-	public synchronized String updateTestcase() {
+	public String updateTestcase() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -333,8 +335,10 @@ public class TestsuiteAction extends ActionSupport {
 		Testcase testcase = testcaseService.findTestcaseById(this
 				.getTestcase_id());
 		if (testcase == null) {
-			testcase = new Testcase();
+			this.setPrompt("The testcase is not exist!");
+			return "success";
 		}
+		Integer sourcechangetag = testcase.getChangetag();
 
 		CaseChangeHistory casechangehistory = new CaseChangeHistory();
 		casechangehistory.setUpdator(user);
@@ -344,13 +348,17 @@ public class TestsuiteAction extends ActionSupport {
 				updatetime.getTime());
 		casechangehistory.setUpdate_time(updatedatetime);
 
-		this.updateTestcaseHistorys(user, testcase, casechangehistory);
+		Boolean result = this.updateTestcaseHistorys(user, testcase, casechangehistory,
+				sourcechangetag);
+		if (result == false){
+			this.setPrompt("There is not any change happened on this case or someone has changed this case!");
+		}
 
 		return "success";
 	}
 
-	private synchronized void updateTestcaseSpecial(Testsuite testsuite, String tag, String sourceName,
-			String targetName) {
+	private void updateTestcaseSpecial(Testsuite testsuite, String tag,
+			String sourceName, String targetName) {
 		List<Testcase> testcases = testsuite.getTestcases();
 		if (testcases != null) {
 			if (tag.equals("0")) {
@@ -372,9 +380,9 @@ public class TestsuiteAction extends ActionSupport {
 			}
 		}
 	}
-	
-	private synchronized void updateTestcaseHistorys(User user,
-			Testcase testcase, CaseChangeHistory casechangehistory) {
+
+	private Boolean updateTestcaseHistorys(User user, Testcase testcase,
+			CaseChangeHistory casechangehistory, Integer changetag) {
 
 		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
 		int i = 0;
@@ -474,19 +482,20 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 
-		if(this.getApproval_comments() != null && this.getApproval_comments().equals("") == false){
-			testcase.setApproval_comments(this.getApproval_comments());
-		}
-		
-		if (i == 0) {
+		Testcase checktestcase = testcaseService.findTestcaseById(testcase
+				.getId());
+		Integer targetchangetag = checktestcase.getChangetag();
+		if (i == 0 || changetag != targetchangetag) {
 			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
+			return false;
+		} else {
+			testcaseService.updateTestcase(testcase);
+			for (int j = 0; j < i; j++) {
+				casechangeoperationService
+						.saveCaseChangeOperation(casechangeoperations.get(j));
+			}
+			return true;
 		}
-		for (int j = 0; j < i; j++) {
-			casechangeoperationService
-					.saveCaseChangeOperation(casechangeoperations.get(j));
-		}
-		
-		testcaseService.updateTestcase(testcase);
 	}
 
 	public String queryCombineConditions() {
@@ -529,7 +538,7 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 		if (user != null) {
-			request.setAttribute("isCurrentRole",this.isRoleOfSut(user));
+			request.setAttribute("isCurrentRole", this.isRoleOfSut(user));
 		}
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		request.setAttribute("sut", sut);
