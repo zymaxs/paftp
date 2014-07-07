@@ -248,7 +248,7 @@ function demo_create() {
 	  };
 	  var testsuite_name;
 	  testsuite_name = "Ts_" + $("#testsuite_name").val();
-	  var tsparams = {testsuite_name:testsuite_name,sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:"alive",version:$("#version").val()};
+	  var tsparams = {testsuite_name:testsuite_name,sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:"正在使用",version:$("#version").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestsuite.action",
@@ -849,7 +849,7 @@ function initree(){
 			  success : function(root) {
 				  datadata = root.jsonArray;
 				  testtest();
-				  sleepI(1);
+				  //sleepI(1);
 				  //rootnode();
 				  //alert("after select");
 			  },
@@ -1352,30 +1352,23 @@ $('#jstree').jstree('select_node', 'j1_1');
 <body>
 <div class="container-fluid"> 
   <!--网页头部-->
-  <div style="background:#428bca; color:#ffffff; width:1319px;">
-	<br> 
-  	<div class="row">
-    	<div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">
-    	平安付科技中心
-    	</div>
-    	<div class="col-md-7"></div>
-    	<%if (session.getAttribute("user") == null) {%>
-    	<div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">
-    	<a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> 
-    	</div>
-    	<%} else { User user = (User) session.getAttribute("user");
+  <div style="background:#428bca; color:#ffffff; width:1319px;"> <br>
+    <div class="row">
+      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> 平安付科技中心 </div>
+      <div class="col-md-7"></div>
+      <%if (session.getAttribute("user") == null) {%>
+      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
+      <%} else { User user = (User) session.getAttribute("user");
                       String name = user.getAlias(); %>
-    	<div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">
-    	<a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> 
-    	</div>
-		<%}%>
+      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
+      <%}%>
     </div>
     <div class="row">
-    	<div class="col-md-12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
-  	</div>
+      <div class="col-md-12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
+    </div>
     <div class="row">
-    <div class="col-md-10"></div>
-    <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</div>
+      <div class="col-md-10"></div>
+      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</div>
     </div>
     <br>
   </div>
@@ -1389,8 +1382,7 @@ $('#jstree').jstree('select_node', 'j1_1');
       <input type="text" name="alias" id="alias" tabindex="1">
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
-      <div>
-      <br>
+      <div> <br>
         <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
         <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
@@ -1421,7 +1413,7 @@ $('#jstree').jstree('select_node', 'j1_1');
   </ul>
   <!--
   <button>demo button</button>
-  -->
+  --> 
   <!--主体-->
   <table id="maintable" width="100%" class="table table-bordered">
     <tr> 
@@ -1435,7 +1427,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             <button type="button" class="btn btn-success" style="width:80px" onclick="demo_create();">新建</button>
           </div>
           <div id="jstree"></div>
-          <!--<div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>-->
+          <!--<div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>--> 
         </div></td>
       
       <!--About SUT-->
@@ -1490,20 +1482,18 @@ $('#jstree').jstree('select_node', 'j1_1');
       <!--展示、更新testsuite-->
       <td style="display:none; width:1018px" id="showTestSuiteTd" height="641px"><form id="showTestSuiteForm" name="showTestSuiteForm">
           <table width="100%" height="100%" id="showTestSuiteTable">
-          	<tr>
-            <td colspan="2">&nbsp;</td>
+            <tr>
+              <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
             <tr>
               <td  align="right" width="100px">测试集  :&nbsp;&nbsp;</td>
-              <td>
-              <div class="input-group">
-              <span class="input-group-addon">Ts_</span>
-				<input id="showtestsuite_name" class="form-control input-sm" name="showtestsuite_name" value="" style="width:200px" readonly>
-			  </div>
+              <td><div class="input-group"> <span class="input-group-addon">Ts_</span>
+                  <input id="showtestsuite_name" class="form-control input-sm" name="showtestsuite_name" value="" style="width:200px" readonly>
+                </div>
             </tr>
             <tr>
-            <td colspan="2">&nbsp;</td>
+              <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
               <td colspan="2"><input id="showtestsuite_id" name="showtestsuite_id" value="" class="form-control input-sm" style="display:none" readonly></td>
@@ -1513,7 +1503,7 @@ $('#jstree').jstree('select_node', 'j1_1');
               <td><input id="showsut_name" name="showsut_name" value="<%=sut_name%>" class="form-control input-sm" style="width:200px" readonly></td>
             </tr>
             <tr>
-            <td colspan="2">&nbsp;</td>
+              <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
             <tr>
@@ -1535,19 +1525,19 @@ $('#jstree').jstree('select_node', 'j1_1');
                 </div></td>
             </tr>
             <tr>
-            <td colspan="2">&nbsp;</td>
+              <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
             <tr>
-              <td align="right" width="100px">是否废弃  :&nbsp;&nbsp;</td>
+              <td align="right" width="100px">状态  :&nbsp;&nbsp;</td>
               <td id="showisdiscardtd" style="display:block"><input id="showisdiscard" value="" class="form-control input-sm" style="width:200px" readonly></td>
-              <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="alive" checked>
-                Alive&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateisdiscard" value="discard">
-                Discard&nbsp;&nbsp;&nbsp;&nbsp; </td>
+              <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="正在使用" checked>
+                正在使用&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updateisdiscard" value="已废弃">
+                已废弃&nbsp;&nbsp;&nbsp;&nbsp; </td>
             </tr>
             <tr>
-            <td colspan="2">&nbsp;</td>
+              <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
             <tr>
@@ -1555,7 +1545,7 @@ $('#jstree').jstree('select_node', 'j1_1');
               <td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge form-control" readonly id="showtestsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
             </tr>
             <tr>
-            <td colspan="2">&nbsp;</td>
+              <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
             <tr align="left">
@@ -1563,7 +1553,7 @@ $('#jstree').jstree('select_node', 'j1_1');
               <td colspan="2" id="saveTestSuiteTd" style="display:none"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite" >保存</button></td>
             </tr>
             <tr>
-            <td colspan="2">&nbsp;</td>
+              <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
           </table>
@@ -1572,18 +1562,16 @@ $('#jstree').jstree('select_node', 'j1_1');
       
       <!--展示更新testcase-->
       <td style="display:none; width:1018px" id="showTestCaseTd"><form id="showTestCaseForm" style="margin:0 0 0 0;">
-          <table width="100%" id="showcaseinfo"  border="1">
+          <table width="100%" id="showcaseinfo">
             <tr>
               <td colspan="2" style="text-align:center">用例详情</td>
               <td style="text-align:center; width:300px">历史修改记录</td>
             </tr>
             <tr>
               <td>用例名称</td>
-              <td>
-              <div class="input-group">
-              <span class="input-group-addon" id="pre_casename"></span>
-				<input id="showtestcase_name" class="form-control input-sm" name="showtestcase_name" value="" style="width:200px" readonly>
-			  </div>
+              <td><div class="input-group"> <span class="input-group-addon" id="pre_casename"></span>
+                  <input id="showtestcase_name" class="form-control input-sm" name="showtestcase_name" value="" style="width:200px" readonly>
+                </div>
               <td rowspan="14" style="vertical-align:top"><div id="showCaseChangeHistoryDiv" style="height:604px;overflow:scroll;"> </div></td>
             </tr>
             <tr>
@@ -1669,12 +1657,12 @@ $('#jstree').jstree('select_node', 'j1_1');
                 <input type="radio" name="updateapproval" onClick="document.getElementById('approval_commentsTd').style.display='';document.getElementById('approval_comments').readOnly = false;" value="未通过">
                 未通过&nbsp;&nbsp;&nbsp;&nbsp; </td>
             </tr>
-			<tr id="approval_commentsTd" style="display:none;">
-			  <td>拒绝原因</td>
+            <tr id="approval_commentsTd" style="display:none;">
+              <td>拒绝原因</td>
               <td align="center"><input class="form-control input-sm" style="width:639px;"  id="approval_comments" name="approval_comments" value="请输入拒绝原因！" readonly maxlength="30"></td>
             </tr>
             <tr id="showaprovalbtntd">
-              <td colspan="2" id="showapprovalupdatetd" style="display:"";" align="center"><input type="button"  class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="开始评审" onClick="updateapprovalac()"></td>
+              <td colspan="2" id="showapprovalupdatetd" style="display:;" align="center"><input type="button"  class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="开始评审" onClick="updateapprovalac()"></td>
               <td colspan="2" id="showapprovalsavetd" style="display:none;" align="center"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="确认评审" onClick="saveapprovalac()"></td>
             </tr>
           </table>
@@ -1724,12 +1712,11 @@ $('#jstree').jstree('select_node', 'j1_1');
       <table width="600" height="500" style="background:#FFF">
         <tr>
           <td>用例名称</td>
-          <td>
-          <!--TODO-->
-          <div class="input-group"> 
-          <span class="input-group-addon" id="pre_stname"></span>
-			<input id="testcase_name" class="form-control input-sm" name="testcase_name" value="" style="width:200px">
-		  </div>
+          <td><!--TODO-->
+            
+            <div class="input-group"> <span class="input-group-addon" id="pre_stname"></span>
+              <input id="testcase_name" class="form-control input-sm" name="testcase_name" value="" style="width:200px">
+            </div>
         </tr>
         <tr>
           <td colspan="2"><input id="casesut_name" style="display:none" name="sut_name" value="<%=sut_name%>"></td>
