@@ -96,6 +96,7 @@ public class TestsuiteAction extends ActionSupport {
 
 	private String prompt;
 	private String isSelf;
+	private String changetag;
 
 	private Testcase testcase;
 	private Testsuite testsuite;
@@ -151,8 +152,10 @@ public class TestsuiteAction extends ActionSupport {
 
 			Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
 					this.getTestsuite_name(), sut.getId());
+			
 			if (testsuite != null) {
 
+				this.setChangetag(testsuite.getChangetag().toString());
 				HashMap<String, Object> conditions = new HashMap<String, Object>();
 				conditions.put("status", this.getStatus());
 				conditions.put("priority", this.getPriority());
@@ -192,6 +195,10 @@ public class TestsuiteAction extends ActionSupport {
 
 		Testsuite testsuite = testsuiteService.findTestsuiteById(this
 				.getTestsuite_id());
+		if (testsuite.getChangetag().toString().equals(this.getChangetag()) == false){
+			request.setAttribute("error", "This testsuite has been changed and please refreh before modifying it!");
+			return "error";
+		}
 		Version version = versionService.findVersionByVersionNum(this
 				.getVersion());
 		String sourceName = testsuite.getName();
@@ -298,6 +305,7 @@ public class TestsuiteAction extends ActionSupport {
 								this.getTestcase_name(), testsuite.getId());
 				if (testcase != null) {
 
+					this.setChangetag(testcase.getChangetag().toString());
 					this.setTestcasedto(testsuiteService
 							.getTestcaseDto(testcase));
 					if (user != null
@@ -485,7 +493,7 @@ public class TestsuiteAction extends ActionSupport {
 		Testcase checktestcase = testcaseService.findTestcaseById(testcase
 				.getId());
 		Integer targetchangetag = checktestcase.getChangetag();
-		if (i == 0 || changetag != targetchangetag) {
+		if (i == 0 || changetag != targetchangetag || targetchangetag.toString().equals(this.getChangetag()) == false) {
 			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
 			return false;
 		} else {
@@ -1118,6 +1126,14 @@ public class TestsuiteAction extends ActionSupport {
 
 	public void setSut_id(String sut_id) {
 		this.sut_id = sut_id;
+	}
+
+	public String getChangetag() {
+		return changetag;
+	}
+
+	public void setChangetag(String changetag) {
+		this.changetag = changetag;
 	}
 
 }
