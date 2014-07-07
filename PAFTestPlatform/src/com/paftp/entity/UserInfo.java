@@ -62,7 +62,7 @@ public class UserInfo {
 		this.othermail = othermail;
 	}
 	
-	@Column(name = "otherinfo", length = 20)
+	@Column(name = "otherinfo", length = 200)
 	public String getOtherinfo() {
 		return otherinfo;
 	}

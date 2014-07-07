@@ -6,7 +6,7 @@ CREATE TABLE `UserInfo` (
     `mobile` varchar(20) default null,
     `telephone` varchar(20) default null,
     `othermail` varchar(50) default null,
-    `otherinfo` varchar(50) default null,
+    `otherinfo` varchar(200) default null,
     INDEX department_ind (department_id),
     FOREIGN KEY (department_id)
         REFERENCES Department (id)
