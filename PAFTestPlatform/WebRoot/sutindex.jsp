@@ -353,7 +353,7 @@ function inidata(){
     <%}}%>
   </ul>
   <!--主体-->
-  <table width="80%" align="center">
+  <table>
   <tr align="left">
   <td>
   	<button type="button" class="btn btn-primary btn-success" style="width:80px;text-align:center" onClick="window.location.href='applysut.jsp'">申请接入</button>
@@ -364,7 +364,7 @@ function inidata(){
   </tr>
   </table>
   <form id="queryForm" name="queryForm" action="">
-    <table width="80%" align="center">
+    <table>
       <tr>
         <td style="width:50px">系统名</td>
         <td><input type="text" id="sutname" name="sutname" style="width:100px"></td>

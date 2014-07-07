@@ -363,6 +363,7 @@ function inidata(){
     <%}}%>
   </ul>
 <!--主体-->
+<form id="queryForm" name="queryForm" action="">
 <table width="100%">
 <tr>
 <td colspan="3" style="font-size:30px; text-align:left"><%=sut_name%>系统权限</td>
@@ -382,6 +383,7 @@ function inidata(){
 <td colspan="2">&nbsp;</td>
 </tr>
 </table>
+</form>
 
 <div>
     <table id="roleForm" class="table table-hover" style="text-align:center">
