@@ -386,6 +386,7 @@ public class TestsuiteAction extends ActionSupport {
 					this.updateTestcaseHistory(testcases.get(i),
 							testcases.get(i).getStatus(), "废弃", "状态");
 					testcases.get(i).setStatus("废弃");
+					testcases.get(i).setTestcase_approval("待评审");
 					testcaseService.updateTestcase(testcases.get(i));
 				}
 			} else {
@@ -395,6 +396,7 @@ public class TestsuiteAction extends ActionSupport {
 					this.updateTestcaseHistory(testcases.get(i),
 							testcases.get(i).getCaseName(), caseName, "用例名");
 					testcases.get(i).setCaseName(caseName);
+					testcases.get(i).setTestcase_approval("待评审");
 					testcaseService.updateTestcase(testcases.get(i));
 				}
 			}
@@ -485,6 +487,16 @@ public class TestsuiteAction extends ActionSupport {
 				testcase.setTestcase_approval(this.getTestcase_approval());
 				i++;
 			}
+		} else if (testcase.getTestcase_approval().equals("待审批") == false){
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation
+					.setOldValue(testcase.getTestcase_approval());
+			casechangeoperation.setNewValue("待审批");
+			casechangeoperation.setField("审批状态");
+			casechangeoperations.add(casechangeoperation);
+			testcase.setTestcase_approval("待审批");
+			i++;
 		}
 
 		if (testcase.getTestcaseproject().getName()
@@ -877,10 +889,16 @@ public class TestsuiteAction extends ActionSupport {
 
 		CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 		casechangeoperation.setCaseChangeHistory(casechangehistory);
+		casechangeoperation.setOldValue(testcase.getTestcase_approval());
+		casechangeoperation.setNewValue("待评审");
+		casechangeoperation.setField("审批状态");
+		casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
+		
+		casechangeoperation = new CaseChangeOperation();
+		casechangeoperation.setCaseChangeHistory(casechangehistory);
 		casechangeoperation.setOldValue(oldValue);
 		casechangeoperation.setNewValue(newValue);
 		casechangeoperation.setField(field);
-
 		casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
 	}
 
