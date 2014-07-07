@@ -26,6 +26,7 @@ if (String.valueOf(request.getAttribute("isCurrentRole")) == "true"){
 else { isCurrentRole = "n";};
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -64,9 +65,10 @@ else { isCurrentRole = "n";};
 	}
 	
 	function createTestSuite(){
+	$("#testsuite_description").val('');
 	var diag = new Dialog();
 	diag.Width = 500;
-	diag.Height = 150;
+	diag.Height = 200;
 	diag.Title = "创建TestSuite";
 	diag.InvokeElementId="createTestSuite"
 	diag.OKEvent = function(){
@@ -117,6 +119,8 @@ else { isCurrentRole = "n";};
 	};
 	
 	function createTestCase(){
+	$("#description").val('');
+	$("#casesteps").val('');
 	var diag = new Dialog();
 	diag.Width = 600;
 	diag.Height = 500;
@@ -1403,25 +1407,30 @@ $('#jstree').jstree('select_node', 'j1_1');
 <body>
 <div class="container-fluid"> 
   <!--网页头部-->
-  <div style="background:#428bca; color:#ffffff; width:1319px;"> <br>
-    <div class="row">
-      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> 平安付科技中心 </div>
-      <div class="col-md-7"></div>
-      <%if (session.getAttribute("user") == null) {%>
-      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
-      <%} else { User user = (User) session.getAttribute("user");
+  <div style="background:#428bca; color:#ffffff;"> <br>
+  <table width="100%">
+  <tr>
+  	<td>&nbsp;&nbsp;</td>
+  	<td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
+    <td colspan="7">&nbsp;</td>
+    <%if (session.getAttribute("user") == null) {%>
+    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </td>
+    <%} else { User user = (User) session.getAttribute("user");
                       String name = user.getAlias(); %>
-      <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
-      <%}%>
-    </div>
-    <div class="row">
-      <div class="col-md-12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</div>
-    </div>
-    <div class="row">
-      <div class="col-md-10"></div>
-      <div class="col-md-2" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</div>
-    </div>
-    <br>
+    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </td>
+    <%}%>
+    <td>&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+  	<td colspan="12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</td>
+  </tr>
+  <tr>
+  	<td colspan="10">&nbsp;</td>
+    <td style="text-align:right;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</td>
+    <td>&nbsp;&nbsp;</td>
+  </tr>
+  </table>
+  <br>
   </div>
   <!--登录-->
   <div id="loginmodal" style="display:none;" align="center">
@@ -1466,7 +1475,7 @@ $('#jstree').jstree('select_node', 'j1_1');
   <button>demo button</button>
   --> 
   <!--主体-->
-  <table id="maintable" width="100%" class="table table-bordered">
+  <table id="maintable" width="100%" align="center" class="table table-bordered">
     <tr> 
       <!--左边Tree-->
       <td style="vertical-align:top;"><div style="width:283px;height:624px;overflow:scroll;">
@@ -1482,10 +1491,10 @@ $('#jstree').jstree('select_node', 'j1_1');
         </div></td>
       
       <!--About SUT-->
-      <td height="641px" id="sutCaseInfoTd" style="display:block; width:1018px" ><div id="sutCaseInfoDiv" style="text-align:center"> </div></td>
+      <td height="641px" id="sutCaseInfoTd" style="display:block; width:1000px" ><div id="sutCaseInfoDiv" style="text-align:center"> </div></td>
       
       <!--Interface Search-->
-      <td id="interfacesearchTd" style="display:none; width:1018px" height="641px"><table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
+      <td id="interfacesearchTd" style="display:none; width:1000px" height="641px"><table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
           <tr style="text-align:center">
             <td width="20%">自动化</td>
             <td width="20%">优先级</td>
@@ -1531,7 +1540,7 @@ $('#jstree').jstree('select_node', 'j1_1');
         <div id="interfaceSearchResultDiv" style="text-align:center"></div></td>
       
       <!--展示、更新testsuite-->
-      <td style="display:none; width:1018px" id="showTestSuiteTd" height="641px"><form id="showTestSuiteForm" name="showTestSuiteForm">
+      <td style="display:none; width:1000px" id="showTestSuiteTd" height="641px"><form id="showTestSuiteForm" name="showTestSuiteForm">
           <table width="100%" height="100%" id="showTestSuiteTable">
             <tr>
               <td colspan="2">&nbsp;</td>
@@ -1596,7 +1605,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             <tr>
             <tr>
               <td  align="right" width="100px">描述  :&nbsp;&nbsp;</td>
-              <td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge form-control" readonly id="showtestsuite_description" style="max-height:100px; max-width:200px; width:200px; height:100px;"></textarea></td>
+              <td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge form-control" readonly id="showtestsuite_description" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td>
             </tr>
             <tr>
               <td colspan="2">&nbsp;</td>
@@ -1615,14 +1624,14 @@ $('#jstree').jstree('select_node', 'j1_1');
         <div id="testsuiteInfoDiv" style="text-align:center"> </div></td>
       
       <!--展示更新testcase-->
-      <td style="display:none; width:1018px" id="showTestCaseTd"><form id="showTestCaseForm" style="margin:0 0 0 0;">
+      <td style="display:none; width:1000px" id="showTestCaseTd"><form id="showTestCaseForm" style="margin:0 0 0 0;">
           <table width="100%" id="showcaseinfo">
             <tr>
               <td colspan="2" style="text-align:center">用例详情</td>
               <td style="text-align:center; width:300px">历史修改记录</td>
             </tr>
             <tr>
-              <td>用例名称</td>
+              <td width="100px">用例名称</td>
               <td><div class="input-group"> <span class="input-group-addon" id="pre_casename"></span>
                   <input id="showtestcase_name" class="form-control input-sm" name="showtestcase_name" value="" style="width:200px" readonly>
                 </div>
@@ -1727,9 +1736,9 @@ $('#jstree').jstree('select_node', 'j1_1');
   <!--隐藏表单创建testsuite-->
   <div id="createTestSuite" style="display:none">
     <form>
-      <table width="500" height="150" style="background:#FFF">
+      <table width="500px" height="200px" style="background:#FFF">
         <tr>
-          <td>测试集</td>
+          <td width="100px">测试集</td>
           <td><div class="input-group"> <span class="input-group-addon">Ts_</span>
               <input id="testsuite_name" class="form-control input-sm" name="testsuite_name" value="" style="width:200px">
             </div></td>
@@ -1756,7 +1765,7 @@ $('#jstree').jstree('select_node', 'j1_1');
         </tr>
         <tr>
           <td>描述</td>
-          <td><textarea  rows="4" name="testsuite_description" class="input-xlarge" id="testsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
+          <td><textarea  rows="4" name="testsuite_description" id="testsuite_description" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td> 
         </tr>
       </table>
     </form>
@@ -1764,9 +1773,9 @@ $('#jstree').jstree('select_node', 'j1_1');
   <!--隐藏表单创建testcase-->
   <div id="createTestCase" style="display:none">
     <form>
-      <table width="600" height="500" style="background:#FFF">
+      <table width="600px" height="500px" style="background:#FFF">
         <tr>
-          <td>用例名称</td>
+          <td width="100px">用例名称</td>
           <td><!--TODO-->
             
             <div class="input-group"> <span class="input-group-addon" id="pre_stname"></span>
@@ -1824,11 +1833,11 @@ $('#jstree').jstree('select_node', 'j1_1');
         </tr>
         <tr>
           <td>描述</td>
-          <td><textarea  rows="4" name="description" class="input-xlarge" id="description" style="max-height:50px; max-width:400px; width:400px; height:50px;"></textarea></td>
+          <td><textarea  rows="4" name="description" id="description" style="max-height:50px; max-width:400px; width:400px; height:50px;"></textarea></td>
         </tr>
         <tr>
           <td>步骤</td>
-          <td><textarea  rows="4" name="casesteps" class="input-xlarge" id="casesteps" style="max-height:150px; max-width:400px; width:400px; height:150px;"></textarea></td>
+          <td><textarea  rows="4" name="casesteps" id="casesteps" style="max-height:150px; max-width:400px; width:400px; height:150px;"></textarea></td>
         </tr>
       </table>
     </form>
