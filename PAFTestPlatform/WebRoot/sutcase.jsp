@@ -320,6 +320,18 @@ function saveTestSuiteac(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				  if ( root.prompt != null){
+					  alert(root.prompt);
+					  $('#jstree').jstree(true).destroy();
+					  initree();
+					  initype();
+					  document.getElementById('sutCaseInfoTd').style.display = "block";
+					  document.getElementById('interfacesearchTd').style.display = "none";
+					  document.getElementById('showTestSuiteTd').style.display = "none";
+					  document.getElementById('showTestCaseTd').style.display = "none";
+					  querySutCaseInfo();
+					  }
+					else {
 				  $('#jstree').jstree(true).destroy();
 				  initree();
 				  document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -336,6 +348,7 @@ function saveTestSuiteac(){
 				  document.getElementById('upTestSuiteTd').style.display = "block";
 				  document.getElementById('saveTestSuiteTd').style.display = "none";
 				  querySutCaseInfo();
+				  }
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -472,6 +485,18 @@ function saveTestCaseac(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				  if ( root.prompt != null){
+					  alert(root.prompt);
+					  $('#jstree').jstree(true).destroy();
+					  initree();
+					  initype();
+					  document.getElementById('sutCaseInfoTd').style.display = "block";
+					  document.getElementById('interfacesearchTd').style.display = "none";
+					  document.getElementById('showTestSuiteTd').style.display = "none";
+					  document.getElementById('showTestCaseTd').style.display = "none";
+					  querySutCaseInfo();
+					  }
+					else {
 				  $('#jstree').jstree(true).destroy();
 				  initree();
 				  document.getElementById('interfacesearchTd').style.display = "block";
@@ -490,6 +515,7 @@ function saveTestCaseac(){
 			   	  document.getElementById('showcasesteps').readOnly = true;	
 				  document.getElementById('upTestCaseTd').style.display = "";
 				  document.getElementById('saveTestCaseTd').style.display = "none";
+					}
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -1021,7 +1047,7 @@ function querySutCaseInfo(){
 					else if(root.condtestcase_quantity.testcase_approval[i].value == "通过"){
 						tongguo = root.condtestcase_quantity.testcase_approval[i].count;
 						}  
-					else if(root.condtestcase_quantity.testcase_approval[i].value == "不通过"){
+					else if(root.condtestcase_quantity.testcase_approval[i].value == "未通过"){
 						butongguo = root.condtestcase_quantity.testcase_approval[i].count;
 						} 
 						}
@@ -1517,7 +1543,7 @@ $('#jstree').jstree('select_node', 'j1_1');
                   <input id="showtestsuite_name" class="form-control input-sm" name="showtestsuite_name" value="" style="width:200px" readonly>
                 </div>
             </tr>
-            <tr style="display:block">
+            <tr style="display:none">
               <td><input id="showtestsuite_changetag" name="showtestsuite_changetag" type="text" class="form-control" readonly></td>
             </tr>
             <tr>
