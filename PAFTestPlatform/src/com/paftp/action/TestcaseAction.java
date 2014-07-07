@@ -96,8 +96,6 @@ public class TestcaseAction extends ActionSupport {
 	private HashMap<String, List<TestcaseCountDto>> condtestcase_quantity;
 
 	private Util util = new Util();
-
-	
 	
 	@SuppressWarnings("unused")
 	private List<CaseChangeHistory> queryTestcaseChangehistory(
