@@ -416,7 +416,13 @@ $(function(){
   <form id="userroleForm" name="userroleForm" action="">
     <fieldset>
       <legend>用户权限变更</legend>
-      <table align="center">
+      <div align="center">
+      <table style="text-align:center">
+      <tr>
+      <td>未授权用户</td>
+      <td></td>
+      <td>已授权用户</td>
+      </tr>
         <tr>
           <td id="freeuserselect"><select multiple="multiple"  id="freeuser" style="height:300px; width:200px">
             </select></td>
@@ -445,9 +451,10 @@ $(function(){
           <td><input style="display:none" id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
         </tr>
         <tr style="text-align:center">
-          <td colspan="3"><input type="button" onClick="updateroleac()" value="更新"></td>
+          <td colspan="3"><input type="button" class="btn btn-primary" style="width:80px;" onClick="updateroleac()" value="更新"></td>
         </tr>
       </table>
+      </div>
     </fieldset>
   </form>
   <!--网页底部-->
