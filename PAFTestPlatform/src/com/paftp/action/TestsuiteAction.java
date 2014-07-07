@@ -201,16 +201,16 @@ public class TestsuiteAction extends ActionSupport {
 				.getVersion());
 		String sourceName = testsuite.getName();
 		String targetName = this.getTestsuite_name();
-		sourceName = sourceName.replaceAll("Ts", "Tc");
-		targetName = targetName.replaceAll("Ts", "Tc");
 		Testsuite temp_testsuite = testsuiteService
 				.findTestsuiteByNameAndSutid(targetName, testsuite.getSut()
 						.getId());
 		if (temp_testsuite != null) {
 			this.setPrompt("The testsuite of " + temp_testsuite.getName()
-					+ "has been exist!");
+					+ " has been exist!");
 			return "success";
 		}
+		sourceName = sourceName.replaceAll("Ts", "Tc");
+		targetName = targetName.replaceAll("Ts", "Tc");
 
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getTestsuite_name());
