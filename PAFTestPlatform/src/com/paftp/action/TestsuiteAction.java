@@ -2,6 +2,7 @@ package com.paftp.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +39,7 @@ import com.paftp.service.sut.SutService;
 import com.paftp.service.TestcaseStep.TestcaseStepService;
 import com.paftp.service.user.UserService;
 import com.paftp.service.version.VersionService;
+import com.paftp.util.CompareObjects;
 import com.paftp.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -152,7 +154,7 @@ public class TestsuiteAction extends ActionSupport {
 
 			Testsuite testsuite = testsuiteService.findTestsuiteByNameAndSutid(
 					this.getTestsuite_name(), sut.getId());
-			
+
 			if (testsuite != null) {
 
 				this.setChangetag(testsuite.getChangetag().toString());
@@ -201,9 +203,12 @@ public class TestsuiteAction extends ActionSupport {
 		String targetName = this.getTestsuite_name();
 		sourceName = sourceName.replaceAll("Ts", "Tc");
 		targetName = targetName.replaceAll("Ts", "Tc");
-		Testsuite temp_testsuite = testsuiteService.findTestsuiteByNameAndSutid(targetName, testsuite.getSut().getId());
-		if (temp_testsuite != null){
-			this.setPrompt("The testsuite of " + temp_testsuite.getName() + "has been exist!");
+		Testsuite temp_testsuite = testsuiteService
+				.findTestsuiteByNameAndSutid(targetName, testsuite.getSut()
+						.getId());
+		if (temp_testsuite != null) {
+			this.setPrompt("The testsuite of " + temp_testsuite.getName()
+					+ "has been exist!");
 			return "success";
 		}
 
@@ -211,7 +216,7 @@ public class TestsuiteAction extends ActionSupport {
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setStatus(this.getIsdiscard());
 		testsuite.setVersion(version);
-		if (testsuite.getChangetag().toString().equals(this.getChangetag()) == false){
+		if (testsuite.getChangetag().toString().equals(this.getChangetag()) == false) {
 			this.setPrompt("This testsuite has been changed and please refreh before modifying it!");
 			return "success";
 		}
@@ -351,8 +356,11 @@ public class TestsuiteAction extends ActionSupport {
 			this.setPrompt("The testcase is not exist!");
 			return "success";
 		}
-		Testcase temp_testcase = testcaseService.findTestcaseByNameAndTestsuiteid(this.getTestcase_name(), testcase.getTestsuite().getId());
-		if (testcase.getCaseName().equals(this.getTestcase_name()) == false && temp_testcase != null) {
+		Testcase temp_testcase = testcaseService
+				.findTestcaseByNameAndTestsuiteid(this.getTestcase_name(),
+						testcase.getTestsuite().getId());
+		if (testcase.getCaseName().equals(this.getTestcase_name()) == false
+				&& temp_testcase != null) {
 			this.setPrompt("The new testcase name is already exist!");
 			return "success";
 		}
@@ -365,10 +373,10 @@ public class TestsuiteAction extends ActionSupport {
 		java.sql.Timestamp updatedatetime = new java.sql.Timestamp(
 				updatetime.getTime());
 		casechangehistory.setUpdate_time(updatedatetime);
-		
-		Boolean result = this.updateTestcaseHistorys(user, testcase, casechangehistory,
-				sourcechangetag);
-		if (result == false){
+
+		Boolean result = this.updateTestcaseHistorys(user, testcase,
+				casechangehistory, sourcechangetag);
+		if (result == false) {
 			this.setPrompt("Someone has changed this case!");
 		}
 
@@ -377,9 +385,9 @@ public class TestsuiteAction extends ActionSupport {
 
 	private void updateTestcaseSpecial(Testsuite testsuite, String tag,
 			String sourceName, String targetName) {
-		
+
 		List<Testcase> testcases = testsuite.getTestcases();
-		
+
 		if (testcases != null) {
 			if (tag.equals("0")) {
 				for (int i = 0; i < testcases.size(); i++) {
@@ -487,11 +495,10 @@ public class TestsuiteAction extends ActionSupport {
 				testcase.setTestcase_approval(this.getTestcase_approval());
 				i++;
 			}
-		} else if (testcase.getTestcase_approval().equals("待审批") == false){
+		} else if (testcase.getTestcase_approval().equals("待审批") == false) {
 			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
-			casechangeoperation
-					.setOldValue(testcase.getTestcase_approval());
+			casechangeoperation.setOldValue(testcase.getTestcase_approval());
 			casechangeoperation.setNewValue("待审批");
 			casechangeoperation.setField("审批状态");
 			casechangeoperations.add(casechangeoperation);
@@ -517,11 +524,12 @@ public class TestsuiteAction extends ActionSupport {
 		Testcase checktestcase = testcaseService.findTestcaseById(testcase
 				.getId());
 		Integer targetchangetag = checktestcase.getChangetag();
-		if (i == 0){
+		if (i == 0) {
 			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
 			return true;
 		}
-		if (changetag != targetchangetag || targetchangetag.toString().equals(this.getChangetag()) == false) {
+		if (changetag != targetchangetag
+				|| targetchangetag.toString().equals(this.getChangetag()) == false) {
 			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
 			return false;
 		} else {
@@ -850,6 +858,7 @@ public class TestsuiteAction extends ActionSupport {
 						.findAllCaseByMultiConditions(conditions);
 				JSONArray parentNode0 = new JSONArray();
 				if (testcases != null && testcases.size() > 0) {
+					testcases = this.sort(testcases);
 					for (int l = 0; l < testcases.size(); l++) {
 						JSONObject childNode0 = util.childNode(testcases.get(l)
 								.getId(), testcases.get(l).getCaseName(), util
@@ -874,6 +883,13 @@ public class TestsuiteAction extends ActionSupport {
 
 		return parentNode0000;
 	}
+	
+	private List<Testcase> sort(List<Testcase> testcases){
+		
+		CompareObjects compare = new CompareObjects();
+		Collections.sort(testcases, compare);
+		return testcases;
+	}
 
 	private void updateTestcaseHistory(Testcase testcase, String oldValue,
 			String newValue, String field) {
@@ -893,7 +909,7 @@ public class TestsuiteAction extends ActionSupport {
 		casechangeoperation.setNewValue("待评审");
 		casechangeoperation.setField("审批状态");
 		casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
-		
+
 		casechangeoperation = new CaseChangeOperation();
 		casechangeoperation.setCaseChangeHistory(casechangehistory);
 		casechangeoperation.setOldValue(oldValue);
