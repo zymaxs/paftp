@@ -170,7 +170,8 @@ public class RoleAction extends ActionSupport {
 		setIsAdmin(isAdmin(user.getAlias()));
 		setIsManager(isManager(user.getAlias()));// Verify whether this needs to
 													// be initialed!
-
+		Role sdet_role = new Role();
+		
 		if (isAdmin || isManager) {
 			String[] updateusers = null;
 			if (isAdmin) {
@@ -182,6 +183,7 @@ public class RoleAction extends ActionSupport {
 				} else {
 					this.setRole_name(this.getSut_name() + "Manager");
 					updateusers = util.splitString(this.getManagerstring());
+					sdet_role = roleService.findRoleByName(this.getSut_name() + "Sdet");
 				}
 			} else {
 				this.setRole_name(this.getSut_name() + "Sdet");
@@ -216,6 +218,9 @@ public class RoleAction extends ActionSupport {
 			for (int l = 0; l < managedusers.size(); l++) {
 				User user = managedusers.get(l);
 				user.getRoles().remove(role);
+				if (role.getName().equals(this.getSut_name() + "Manager")){ 
+					user.getRoles().add(sdet_role);
+				}
 				updatedusers.add(user);
 			}
 			if (changenum > 0 || managedusers.size() > 0) {
