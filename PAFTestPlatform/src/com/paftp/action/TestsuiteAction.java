@@ -369,7 +369,7 @@ public class TestsuiteAction extends ActionSupport {
 		Boolean result = this.updateTestcaseHistorys(user, testcase, casechangehistory,
 				sourcechangetag);
 		if (result == false){
-			this.setPrompt("There is not any change happened on this case or someone has changed this case!");
+			this.setPrompt("Someone has changed this case!");
 		}
 
 		return "success";
@@ -505,7 +505,11 @@ public class TestsuiteAction extends ActionSupport {
 		Testcase checktestcase = testcaseService.findTestcaseById(testcase
 				.getId());
 		Integer targetchangetag = checktestcase.getChangetag();
-		if (i == 0 || changetag != targetchangetag || targetchangetag.toString().equals(this.getChangetag()) == false) {
+		if (i == 0){
+			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
+			return true;
+		}
+		if (changetag != targetchangetag || targetchangetag.toString().equals(this.getChangetag()) == false) {
 			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
 			return false;
 		} else {
