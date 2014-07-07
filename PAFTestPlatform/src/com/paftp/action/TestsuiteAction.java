@@ -114,6 +114,10 @@ public class TestsuiteAction extends ActionSupport {
 			this.setPrompt("Please log in firstly!");
 			return "success";
 		}
+		if (this.isRoleOfSut(user) == false) {
+			this.setPrompt("You has not authority to work under this group!");
+			return "success";
+		}
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		if (sut != null) {
@@ -194,6 +198,10 @@ public class TestsuiteAction extends ActionSupport {
 			this.setPrompt("Please log in firstly!");
 			return "success";
 		}
+		if (this.isRoleOfSut(user) == false) {
+			this.setPrompt("You has not authority to work under this group!");
+			return "success";
+		}
 
 		Testsuite testsuite = testsuiteService.findTestsuiteById(this
 				.getTestsuite_id());
@@ -204,7 +212,8 @@ public class TestsuiteAction extends ActionSupport {
 		Testsuite temp_testsuite = testsuiteService
 				.findTestsuiteByNameAndSutid(targetName, testsuite.getSut()
 						.getId());
-		if (temp_testsuite != null) {
+		if (temp_testsuite != null
+				&& testsuite.getId() != temp_testsuite.getId()) {
 			this.setPrompt("The testsuite of " + temp_testsuite.getName()
 					+ " has been exist!");
 			return "success";
@@ -243,6 +252,10 @@ public class TestsuiteAction extends ActionSupport {
 
 		if (user == null) {
 			this.setPrompt("Please log in firstly!");
+			return "success";
+		}
+		if (this.isRoleOfSut(user) == false) {
+			this.setPrompt("You has not authority to work under this group!");
 			return "success";
 		}
 
@@ -349,6 +362,11 @@ public class TestsuiteAction extends ActionSupport {
 			request.setAttribute("error", "Please log in firstly!");
 			return "error";
 		}
+		if (this.isRoleOfSut(user) == false) {
+			request.setAttribute("error",
+					"You has not authority to work under this group!");
+			return "error";
+		}
 
 		Testcase testcase = testcaseService.findTestcaseById(this
 				.getTestcase_id());
@@ -395,6 +413,7 @@ public class TestsuiteAction extends ActionSupport {
 							testcases.get(i).getStatus(), "废弃", "状态");
 					testcases.get(i).setStatus("废弃");
 					testcases.get(i).setTestcase_approval("待评审");
+					testcases.get(i).setChangetag(testcases.get(i).getChangetag()+1);
 					testcaseService.updateTestcase(testcases.get(i));
 				}
 			} else {
@@ -405,6 +424,7 @@ public class TestsuiteAction extends ActionSupport {
 							testcases.get(i).getCaseName(), caseName, "用例名");
 					testcases.get(i).setCaseName(caseName);
 					testcases.get(i).setTestcase_approval("待评审");
+					testcases.get(i).setChangetag(testcases.get(i).getChangetag()+1);
 					testcaseService.updateTestcase(testcases.get(i));
 				}
 			}
@@ -414,7 +434,7 @@ public class TestsuiteAction extends ActionSupport {
 	private Boolean updateTestcaseHistorys(User user, Testcase testcase,
 			CaseChangeHistory casechangehistory, Integer changetag) {
 
-		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
+//		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
 		int i = 0;
 		List<CaseChangeOperation> casechangeoperations = new ArrayList<CaseChangeOperation>();
 		if (testcase.getCaseName().equals(this.getTestcase_name()) == false) {
@@ -530,12 +550,12 @@ public class TestsuiteAction extends ActionSupport {
 		}
 		if (changetag != targetchangetag
 				|| targetchangetag.toString().equals(this.getChangetag()) == false) {
-			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
 			return false;
 		} else {
 			Integer temp_changetag = testcase.getChangetag() + 1;
 			testcase.setChangetag(temp_changetag);
 			testcaseService.updateTestcase(testcase);
+			casechangehistoryService.saveCaseChangeHistory(casechangehistory);
 			for (int j = 0; j < i; j++) {
 				casechangeoperationService
 						.saveCaseChangeOperation(casechangeoperations.get(j));
@@ -883,9 +903,9 @@ public class TestsuiteAction extends ActionSupport {
 
 		return parentNode0000;
 	}
-	
-	private List<Testcase> sort(List<Testcase> testcases){
-		
+
+	private List<Testcase> sort(List<Testcase> testcases) {
+
 		CompareObjects compare = new CompareObjects();
 		Collections.sort(testcases, compare);
 		return testcases;
