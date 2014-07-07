@@ -400,7 +400,7 @@ public class TestsuiteAction extends ActionSupport {
 					String caseName = testcases.get(i).getCaseName()
 							.replaceAll(sourceName, targetName);
 					this.updateTestcaseHistory(testcases.get(i),
-							testcases.get(i).getCaseName(), caseName, "name");
+							testcases.get(i).getCaseName(), caseName, "用例名");
 					testcases.get(i).setCaseName(caseName);
 					testcaseService.updateTestcase(testcases.get(i));
 				}
