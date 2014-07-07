@@ -57,6 +57,7 @@ public class ApplySutAction extends ActionSupport {
 	@Resource
 	private SutGroupService sutgroupService;
 	private Integer id;
+	private Integer sut_id;
 
 	private String code;
 	private String sutname;
@@ -184,7 +185,9 @@ public class ApplySutAction extends ActionSupport {
 		}
 
 		ApplySut applySut = applySutService.findApplySutById(this.getId());
+		Integer temp_sut_id = sutService.findSutByName(this.getSutname()).getId();
 		request.setAttribute("applySut", applySut);
+		request.setAttribute("sut_id", temp_sut_id);
 
 		return "success";
 	}
@@ -249,8 +252,16 @@ public class ApplySutAction extends ActionSupport {
 		applySut.setDescription(this.getDescription());
 		this.resolvetime = new Date();
 		applySut.setResolvetime(this.getResolvetime());
-
 		applySutService.updateApplySut(applySut);
+		
+		if (applySut.getApplysutstatus().getName().equals("通过") || applySut.getApplysutstatus().getName().equals("待审批")){
+			Sut sut = sutService.findSutById(this.getSut_id());
+			sut.setCode(this.getCode());
+			sut.setName(this.getSutname());
+			sut.setDescription(this.getDescription());
+			sut.setGroup(sutgroup);
+			sutService.saveSut(sut);
+		}
 
 		return "success";
 	}
@@ -588,6 +599,14 @@ public class ApplySutAction extends ActionSupport {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getSut_id() {
+		return sut_id;
+	}
+
+	public void setSut_id(Integer sut_id) {
+		this.sut_id = sut_id;
 	}
 
 }
