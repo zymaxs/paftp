@@ -49,6 +49,8 @@ public class RoleAction extends ActionSupport {
 
 	private Integer row;
 	private Integer pagenum;
+	private String prompt;
+
 	private Long pages;
 	private List<Role> currentPageRoles = new ArrayList<Role>();
 	private List<User> resultusers = new ArrayList<User>();
@@ -277,11 +279,9 @@ public class RoleAction extends ActionSupport {
 
 	public String queryRoles() {
 
-		HttpServletRequest request = ServletActionContext.getRequest();
-
 		if (this.getSut_name() == null) {
-			request.setAttribute("error", "One sut must be given!");
-			return "error";
+			this.setPrompt("One sut must be given!");
+			return "success";
 		}
 
 		Sut sut = sutService.findSutByName(this.getSut_name());
@@ -322,15 +322,21 @@ public class RoleAction extends ActionSupport {
 									.equals(conditionuser.getAlias()))) {
 						// Role seniorrole = roleService
 						// .findRoleByName("seniormanager");
+						Role temp_role = new Role();
 						if (role.getName().equals(this.getSut_name() + "Manager")){
-							role.setName("管理员");
+							temp_role.setName("管理员");
+							temp_role.setDescription(role.getDescription());
 						}else if (role.getName().equals(this.getSut_name() + "Sdet")){
-							role.setName("成员");
+							temp_role.setName("成员");
+							temp_role.setDescription(role.getDescription());
 						}
 						List<Role> currentroles = new ArrayList<Role>();
-						currentroles.add(role);
-						users.get(j).setRoles(currentroles);
-						this.resultusers.add(users.get(j));
+						currentroles.add(temp_role);
+						User temp_user = new User();
+						temp_user.setAlias(users.get(j).getAlias());
+						temp_user.setDisplayName(users.get(j).getDisplayName());
+						temp_user.setRoles(currentroles);
+						this.resultusers.add(temp_user);    //User dto for the out of memory issue
 					}
 				}
 			}
@@ -612,5 +618,13 @@ public class RoleAction extends ActionSupport {
 
 	public void setRole_name(String role_name) {
 		this.role_name = role_name;
+	}
+	
+	public String getPrompt() {
+		return prompt;
+	}
+
+	public void setPrompt(String prompt) {
+		this.prompt = prompt;
 	}
 }
