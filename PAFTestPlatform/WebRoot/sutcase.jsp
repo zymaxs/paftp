@@ -187,6 +187,10 @@ function demo_create() {
 		alert("请登录后再进行操作！");
 	}
 	else{
+	if('<%=isCurrentRole%>' != "y"){
+	alert("您目前权限不足，请向该项目经理去申请操作权限！")
+	}
+	else {
 	  var ref = $('#jstree').jstree(true);
 	  var	sel = ref.get_selected();
 	  if(!sel.length) { return false; }
@@ -219,6 +223,7 @@ function demo_create() {
 				  }
 		  }
 	  }
+	}
 	}
   };
   /*function demo_rename() {

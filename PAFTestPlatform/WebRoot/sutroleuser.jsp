@@ -93,16 +93,36 @@ String sut_name = (String)request.getAttribute("sut_name");
 	
 	function ini(){
 		if ('<%=isAdmin%>' == "true" && '<%=isManager%>' != "true"){
+			document.getElementById('freeuserselect').style.display = "none";
+			document.getElementById('freeuserselect').disabled = "true";
+			
+			document.getElementById('sutworkerselect').style.display = "block";
+			document.getElementById('sutworkerselect').disabled = "false";
+			
 			document.getElementById('manageselect').style.display = "block";
+			document.getElementById('manageselect').disabled = "false";
+			
 			document.getElementById('workerselect').style.display = "none";
 			document.getElementById('workerselect').disabled = "ture";
+			
 			document.getElementById('workerstring').disabled = "true";
+			document.getElementById('managerstring').disabled = "false";
 			}
 		else if ('<%=isAdmin%>' != "true" && '<%=isManager%>' == "true"){
+			document.getElementById('freeuserselect').style.display = "block";
+			document.getElementById('freeuserselect').disabled = "false";
+			
+			document.getElementById('sutworkerselect').style.display = "none";
+			document.getElementById('sutworkerselect').disabled = "true";
+			
 			document.getElementById('manageselect').style.display = "none";
 			document.getElementById('manageselect').disabled = "ture";
+			
 			document.getElementById('workerselect').style.display = "block";
+			document.getElementById('workerselect').disabled = "false";
+			
 			document.getElementById('managerstring').disabled = "true";
+			document.getElementById('workerstring').disabled = "false";
 		}
 		};
 		
@@ -125,6 +145,7 @@ String sut_name = (String)request.getAttribute("sut_name");
 		%>
 		return '<%=workerdata%>';
 		};
+	
 	function inimanagerdata(){
 		<%
 		String managerdata = "";
@@ -140,11 +161,12 @@ $(function(){
 	$("#freeuser").append(inifreeuserdata());
 	$("#manage").append(inimanagerdata());
 	$("#worker").append(iniworkerdata());
+	$("#sutworker").append(iniworkerdata());
     //移到右边
     $('#add').click(function() {
     //获取选中的选项，删除并追加给对方
 		if (document.getElementById('manageselect').style.display == "block"){
-        $('#freeuser option:selected').appendTo('#manage');
+        $('#sutworkerselect option:selected').appendTo('#manage');
 		}
 		else {
 		$('#freeuser option:selected').appendTo('#worker');
@@ -153,7 +175,7 @@ $(function(){
     //移到左边
     $('#remove').click(function() {
 		if (document.getElementById('manageselect').style.display == "block"){
-        $('#manage option:selected').appendTo('#freeuser');
+        $('#manage option:selected').appendTo('#sutworkerselect');
 		}
 		else {
 		$('#worker option:selected').appendTo('#freeuser');
@@ -163,7 +185,7 @@ $(function(){
     $('#add_all').click(function() {
         //获取全部的选项,删除并追加给对方
 		if (document.getElementById('manageselect').style.display == "block"){
-        $('#freeuser option').appendTo('#manage');
+        $('#sutworkerselect option').appendTo('#manage');
 		}
 		else {
 		$('#freeuser option').appendTo('#worker');
@@ -172,7 +194,7 @@ $(function(){
     //全部移到左边
     $('#remove_all').click(function() {
 		if (document.getElementById('manageselect').style.display == "block"){
-        $('#manage option').appendTo('#freeuser');
+        $('#manage option').appendTo('#sutworkerselect');
 		}
 		else {
 		$('#worker option').appendTo('#freeuser');
@@ -399,6 +421,8 @@ $(function(){
       <table align="center">
         <tr>
           <td id="freeuserselect"><select multiple="multiple"  id="freeuser" style="height:300px; width:200px">
+            </select></td>
+          <td id="sutworkerselect"><select multiple="multiple"  id="sutworker" style="height:300px; width:200px">
             </select></td>
           <td><table>
               <tr>
