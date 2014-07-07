@@ -474,6 +474,10 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 
+		if(this.getApproval_comments() != null && this.getApproval_comments().equals("") == false){
+			testcase.setApproval_comments(this.getApproval_comments());
+		}
+		
 		if (i == 0) {
 			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
 		}
@@ -481,6 +485,7 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperationService
 					.saveCaseChangeOperation(casechangeoperations.get(j));
 		}
+		
 		testcaseService.updateTestcase(testcase);
 	}
 
