@@ -495,14 +495,14 @@ public class TestsuiteAction extends ActionSupport {
 				testcase.setTestcase_approval(this.getTestcase_approval());
 				i++;
 			}
-		} else if (testcase.getTestcase_approval().equals("待审批") == false) {
+		} else if (testcase.getTestcase_approval().equals("待评审") == false) {
 			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getTestcase_approval());
-			casechangeoperation.setNewValue("待审批");
+			casechangeoperation.setNewValue("待评审");
 			casechangeoperation.setField("审批状态");
 			casechangeoperations.add(casechangeoperation);
-			testcase.setTestcase_approval("待审批");
+			testcase.setTestcase_approval("待评审");
 			i++;
 		}
 
