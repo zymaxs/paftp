@@ -195,21 +195,26 @@ public class TestsuiteAction extends ActionSupport {
 
 		Testsuite testsuite = testsuiteService.findTestsuiteById(this
 				.getTestsuite_id());
-		if (testsuite.getChangetag().toString().equals(this.getChangetag()) == false){
-			request.setAttribute("error", "This testsuite has been changed and please refreh before modifying it!");
-			return "error";
-		}
 		Version version = versionService.findVersionByVersionNum(this
 				.getVersion());
 		String sourceName = testsuite.getName();
 		String targetName = this.getTestsuite_name();
 		sourceName = sourceName.replaceAll("Ts", "Tc");
 		targetName = targetName.replaceAll("Ts", "Tc");
+		Testsuite temp_testsuite = testsuiteService.findTestsuiteByNameAndSutid(targetName, testsuite.getSut().getId());
+		if (temp_testsuite != null){
+			request.setAttribute("error", "The testcase of " + targetName + "has been exist!");
+			return "error";
+		}
 
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setStatus(this.getIsdiscard());
 		testsuite.setVersion(version);
+		if (testsuite.getChangetag().toString().equals(this.getChangetag()) == false){
+			request.setAttribute("error", "This testsuite has been changed and please refreh before modifying it!");
+			return "error";
+		}
 		testsuiteService.updateTestsuite(testsuite);
 
 		if (this.getIsdiscard().equals("已废弃")) {
@@ -346,6 +351,11 @@ public class TestsuiteAction extends ActionSupport {
 			this.setPrompt("The testcase is not exist!");
 			return "success";
 		}
+		Testcase temp_testcase = testcaseService.findTestcaseByNameAndTestsuiteid(this.getTestcase_name(), testcase.getTestsuite().getId());
+		if (temp_testcase != null) {
+			this.setPrompt("The new testcase name is already exist!");
+			return "success";
+		}
 		Integer sourcechangetag = testcase.getChangetag();
 
 		CaseChangeHistory casechangehistory = new CaseChangeHistory();
@@ -355,7 +365,7 @@ public class TestsuiteAction extends ActionSupport {
 		java.sql.Timestamp updatedatetime = new java.sql.Timestamp(
 				updatetime.getTime());
 		casechangehistory.setUpdate_time(updatedatetime);
-
+		
 		Boolean result = this.updateTestcaseHistorys(user, testcase, casechangehistory,
 				sourcechangetag);
 		if (result == false){
@@ -367,7 +377,9 @@ public class TestsuiteAction extends ActionSupport {
 
 	private void updateTestcaseSpecial(Testsuite testsuite, String tag,
 			String sourceName, String targetName) {
+		
 		List<Testcase> testcases = testsuite.getTestcases();
+		
 		if (testcases != null) {
 			if (tag.equals("0")) {
 				for (int i = 0; i < testcases.size(); i++) {
