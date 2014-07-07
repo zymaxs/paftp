@@ -61,7 +61,7 @@ $(document).ready(function(){
 			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
 				inisutgroupinfo += "&nbsp;&nbsp;&nbsp;&nbsp;<a href='roleindex.jsp?sut_name=" + sutGroup.get(i).getSuts().get(j).getName() +"'>" + sutGroup.get(i).getSuts().get(j).getName() + "</a>"+" ";
 			}
-			inisutgroup += "<blockquote></p>";
+			inisutgroup += "<blockquote><p>";
 			inisutgroup += sutGroup.get(i).getName();
 			inisutgroup += "</p><small>";
 			inisutgroup += inisutgroupinfo;
@@ -283,7 +283,7 @@ $(document).ready(function(){
     <%}}%>
   </ul>
   <!--主体-->
-  <div id="sutgrouptab"> </div>
+  <div id="sutgrouptab"> <h2>权限管理</h2></div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

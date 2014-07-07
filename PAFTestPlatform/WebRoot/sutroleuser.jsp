@@ -96,10 +96,10 @@ String sut_name = (String)request.getAttribute("sut_name");
 			document.getElementById('freeuserselect').style.display = "none";
 			document.getElementById('freeuserselect').disabled = "true";
 			
-			document.getElementById('sutworkerselect').style.display = "block";
+			document.getElementById('sutworkerselect').style.display = "";
 			document.getElementById('sutworkerselect').disabled = "false";
 			
-			document.getElementById('manageselect').style.display = "block";
+			document.getElementById('manageselect').style.display = "";
 			document.getElementById('manageselect').disabled = "false";
 			
 			document.getElementById('workerselect').style.display = "none";
@@ -108,7 +108,7 @@ String sut_name = (String)request.getAttribute("sut_name");
 			document.getElementById('workerstring').disabled = "true";
 			}
 		else if ('<%=isAdmin%>' != "true" && '<%=isManager%>' == "true"){
-			document.getElementById('freeuserselect').style.display = "block";
+			document.getElementById('freeuserselect').style.display = "";
 			document.getElementById('freeuserselect').disabled = "false";
 			
 			document.getElementById('sutworkerselect').style.display = "none";
@@ -117,7 +117,7 @@ String sut_name = (String)request.getAttribute("sut_name");
 			document.getElementById('manageselect').style.display = "none";
 			document.getElementById('manageselect').disabled = "ture";
 			
-			document.getElementById('workerselect').style.display = "block";
+			document.getElementById('workerselect').style.display = "";
 			document.getElementById('workerselect').disabled = "false";
 			
 			document.getElementById('managerstring').disabled = "true";

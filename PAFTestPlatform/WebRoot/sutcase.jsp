@@ -182,6 +182,19 @@ else { isCurrentRole = "n";};
 var interfacetestsuite = "";
 var interfacetestcase = "";
 var node_id = "";
+
+function demo_refresh(){
+$('#jstree').jstree(true).destroy();
+initree();
+initype();
+document.getElementById('sutCaseInfoTd').style.display = "block";
+document.getElementById('interfacesearchTd').style.display = "none";
+document.getElementById('showTestSuiteTd').style.display = "none";
+document.getElementById('showTestCaseTd').style.display = "none";
+querySutCaseInfo();
+}
+
+
 function demo_create() {
 	if('<%=session.getAttribute("user")%>' == 'null'){
 		alert("请登录后再进行操作！");
@@ -1489,12 +1502,14 @@ $('#jstree').jstree('select_node', 'j1_1');
     <tr> 
       <!--左边Tree-->
       <td style="vertical-align:top;"><div style="width:283px;height:624px;overflow:scroll;">
-          <div id="searchDiv">
-            <input type="text" id="plugins4_q" value="" class="input" style="display:block; padding:4px; border-radius:4px; border:1px solid silver;">
+          <div id="searchDiv" align="left">
+            <input type="text" id="plugins4_q" value="" class="input" style="display:block; width:210px; padding:4px; border-radius:4px; border:1px solid silver;">
           </div>
           <br>
           <div id="createbtn">
-            <button type="button" class="btn btn-success" style="width:80px" onclick="demo_create();">新建</button>
+            <button type="button" class="btn btn-success" style="width:100px" onclick="demo_create();">新建</button>
+            <button type="button" class="btn btn-info" style="width:100px" onclick="demo_refresh();">刷新</button>
+            
           </div>
           <div id="jstree"></div>
           <!--<div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>--> 
@@ -1637,7 +1652,7 @@ $('#jstree').jstree('select_node', 'j1_1');
       <td style="display:none; width:1000px" id="showTestCaseTd"><form id="showTestCaseForm" style="margin:0 0 0 0;">
           <table width="100%" id="showcaseinfo">
             <tr>
-              <td colspan="2" style="text-align:center">用例详情</td>
+              <td colspan="2" style="text-align:center"></td>
               <td style="text-align:center; width:300px">历史修改记录</td>
             </tr>
             <tr>

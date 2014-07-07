@@ -363,30 +363,29 @@ function inidata(){
     <%}}%>
   </ul>
 <!--主体-->
-<table width="80%" align="center">
-<tr align="left">
-<td><button type="button" class="btn btn-primary btn-success" style="width:80px;text-align:center" onClick="applyUserac()">授权用户</button></td>
+<table width="100%">
+<tr>
+<td colspan="3" style="font-size:30px; text-align:left"><%=sut_name%>系统权限</td>
 </tr>
 <tr>
 <td>&nbsp;</td>
 </tr>
+<tr>
+<td width="80%" align="left"><button type="button" class="btn btn-primary btn-success btn-sm" style="width:80px;text-align:center" onClick="applyUserac()">授权用户</button></td>
+<td><input type="text" id="rolealias" name="rolealias" style="height:30px"></td>
+<td><input type="button" id="queryrole" name="queryrole" class="btn btn-primary btn-sm" style="width:80px;text-align:center" value="搜索账号"></td>
+</tr>
+<tr>
+<td style="display:none"><input id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
+</tr>
+<tr>
+<td colspan="2">&nbsp;</td>
+</tr>
 </table>
-<form id="queryForm" name="queryForm" action="">
-  <table width="80%" align="center">
-    <tr>
-      <td width="100px">账号</td>
-      <td width="180px"><input type="text" id="rolealias" name="rolealias"></td>
-      <td style="display:none"><input id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
-      <td align="left"><input type="button" id="queryrole" name="queryrole" class="btn btn-primary btn-sm" style="width:80px;text-align:center" value="搜索"></td>
-    </tr>
-  </table>
-</form>
+
 <div>
-    <table id="roleForm" class="table table-hover" style="width:80%" align="center">
+    <table id="roleForm" class="table table-hover" style="text-align:center">
       <thead>
-      	<tr style="text-align:center">
-        <td colspan="4"><strong>用户权限</strong></td>
-        </tr>
         <tr>
           <td>账号</td>
           <td>昵称</td>
