@@ -49,7 +49,7 @@ public class CaseChangeHistory {
 		this.updator = updator;
 	}
 
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "testcase_id")
 	public Testcase getTestcase() {
 		return testcase;
