@@ -423,7 +423,9 @@ public class TestsuiteAction extends ActionSupport {
 					this.updateTestcaseHistory(testcases.get(i),
 							testcases.get(i).getCaseName(), caseName, "用例名");
 					testcases.get(i).setCaseName(caseName);
-					testcases.get(i).setTestcase_approval("待评审");
+					if(testcases.get(i).getTestcase_approval().equals("待评审") == false){
+						testcases.get(i).setTestcase_approval("待评审");
+					}
 					testcases.get(i).setChangetag(testcases.get(i).getChangetag()+1);
 					testcaseService.updateTestcase(testcases.get(i));
 				}
