@@ -204,7 +204,7 @@ public class TestsuiteAction extends ActionSupport {
 		Testsuite temp_testsuite = testsuiteService
 				.findTestsuiteByNameAndSutid(targetName, testsuite.getSut()
 						.getId());
-		if (temp_testsuite != null) {
+		if (temp_testsuite != null && testsuite.getId() != temp_testsuite.getId()) {
 			this.setPrompt("The testsuite of " + temp_testsuite.getName()
 					+ " has been exist!");
 			return "success";
