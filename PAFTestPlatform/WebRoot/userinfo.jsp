@@ -12,8 +12,8 @@
 <% 
 List<Role> roles = (List<Role>)request.getAttribute("currentPageRoles");
 String pagenum = request.getAttribute("pages").toString();
-User user = (User)request.getAttribute("user");
-UserInfo userinfo = (UserInfo) user.getUserInfo();
+User users = (User)request.getAttribute("user");
+UserInfo userinfo = (UserInfo) users.getUserInfo();
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
@@ -47,7 +47,7 @@ UserInfo userinfo = (UserInfo) user.getUserInfo();
 </style>
 <%  
 Integer id = 0;
-String name = "";
+String username = "";
 String displayname = "";
 String department = "";
 String position = "";
@@ -56,16 +56,16 @@ String telephone = "";
 String othermail = "";
 String otherinfo ="";
 
-if(user.getId() != null){
-	id = user.getId();
+if(users.getId() != null){
+	id = users.getId();
 }
 
-if (user.getAlias() != null) {
-	name = user.getAlias();
+if (users.getAlias() != null) {
+	username = users.getAlias();
 }
 
-if (user.getDisplayName() != null) {
-	displayname = user.getDisplayName();
+if (users.getDisplayName() != null) {
+	displayname = users.getDisplayName();
 }
 
 if (userinfo.getDepartment() != null && userinfo.getDepartment().getName() != null) {
@@ -308,7 +308,8 @@ function inidata(){
       <div class="col-md-7"></div>
       <%if (session.getAttribute("user") == null) {%>
       <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </div>
-      <%} else { %>
+      <%} else { User loginuser = (User) session.getAttribute("user");
+                      String name = loginuser.getAlias();%>
       <div class="col-md-3 whitelink" style="text-align:center;font-size:15px; font-family:Microsoft YaHei;"> <a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </div>
       <%}%>
     </div>
@@ -365,28 +366,32 @@ function inidata(){
     <fieldset>
       <legend> 用户信息 </legend>
       <table style="width:40%" align="left" class="table table-striped">
+      	<tr>
+        <td>&nbsp;&nbsp;Alias&nbsp;&nbsp;:</td>
+        <td><%=username%></td>
+        </tr>
         <tr>
-          <td >真实姓名 :</td>
+          <td>真实姓名 :</td>
           <td ><%=displayname%></td>
         </tr>
         <tr>
-          <td >所属部门 :</td>
+          <td>所属部门 :</td>
           <td ><%=department%></td>
         </tr>
         <tr>
-          <td >当前职位 :</td>
+          <td>当前职位 :</td>
           <td ><%=position%></td>
         </tr>
         <tr>
-          <td >移动电话 :</td>
+          <td>移动电话 :</td>
           <td ><%=mobile%></td>
         </tr>
         <tr>
-          <td >座式电话 :</td>
+          <td>座式电话 :</td>
           <td ><%=telephone%></td>
         </tr>
         <tr>
-          <td >其他邮件 :</td>
+          <td>其他邮件 :</td>
           <td ><%=othermail%></td>
         </tr>
         <tr>
