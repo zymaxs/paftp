@@ -24,6 +24,7 @@ String isManager = String.valueOf(request.getAttribute("isManager"));
 List<User> managers = (List<User>)request.getAttribute("managers");
 List<User> workers = (List<User>)request.getAttribute("workers");
 List<User> freeusers = (List<User>)request.getAttribute("freeusers");
+List<User> nonmanagers = (List<User>)request.getAttribute("nonmanagers");
 String sut_name = (String)request.getAttribute("sut_name");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">

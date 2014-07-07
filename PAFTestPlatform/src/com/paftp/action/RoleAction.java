@@ -60,6 +60,7 @@ public class RoleAction extends ActionSupport {
 	List<User> freeusers = new ArrayList<User>();
 	List<User> seniormanagers = new ArrayList<User>();
 	List<User> normalusers = new ArrayList<User>();
+	List<User> nonmanagers = new ArrayList<User>();
 
 	private String managerstring;
 	private String workerstring;
@@ -128,6 +129,7 @@ public class RoleAction extends ActionSupport {
 						break;
 					} else {
 						workers.add(users.get(i));
+						nonmanagers.add(users.get(i));
 						freeuser = false;
 						break;
 					}
@@ -138,10 +140,12 @@ public class RoleAction extends ActionSupport {
 			}
 			if (freeuser) {
 				freeusers.add(users.get(i));
+				nonmanagers.add(users.get(i));
 			}
 		}
 
 		request.setAttribute("managers", managers);
+		request.setAttribute("nonmanagers", nonmanagers);
 		request.setAttribute("workers", workers);
 		request.setAttribute("freeusers", freeusers);
 		request.setAttribute("seniormanagers", seniormanagers);
