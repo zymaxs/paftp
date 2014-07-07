@@ -209,6 +209,9 @@ public class RoleAction extends ActionSupport {
 					if (j == total) {
 						User user = userService.findUserByAlias(updateusers[i]);
 						user.getRoles().add(role);
+						if (role.getName().equals(this.getSut_name() + "Manager")){ 
+							user.getRoles().remove(sdet_role);
+						}
 						updatedusers.add(user);
 						changenum++;
 					}
