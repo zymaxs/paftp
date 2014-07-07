@@ -89,7 +89,7 @@ if (userinfo.getOthermail() != null) {
 	othermail = userinfo.getOthermail();
 }
 if (userinfo.getOtherinfo() != null) {
-		othermail = userinfo.getOtherinfo();
+		otherinfo = userinfo.getOtherinfo();
 	}
 	;
 %>
