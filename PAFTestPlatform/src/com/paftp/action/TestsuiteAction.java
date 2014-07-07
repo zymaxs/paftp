@@ -359,7 +359,7 @@ public class TestsuiteAction extends ActionSupport {
 			return "success";
 		}
 		Testcase temp_testcase = testcaseService.findTestcaseByNameAndTestsuiteid(this.getTestcase_name(), testcase.getTestsuite().getId());
-		if (temp_testcase != null) {
+		if (testcase.getCaseName().equals(this.getTestcase_name()) == false && temp_testcase != null) {
 			this.setPrompt("The new testcase name is already exist!");
 			return "success";
 		}

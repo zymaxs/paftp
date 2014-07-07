@@ -499,7 +499,7 @@ function saveTestCaseac(){
 			  }
 		  });
 	}
-	}
+	};
 
 function testtest(){
   // 6 create an instance when the DOM is ready
@@ -680,11 +680,11 @@ function testtest(){
 					  $('#jstree').jstree(true).destroy();
 					  initree();
 					  initype();
-						document.getElementById('sutCaseInfoTd').style.display = "block";
-						document.getElementById('interfacesearchTd').style.display = "none";
-						document.getElementById('showTestSuiteTd').style.display = "none";
-						document.getElementById('showTestCaseTd').style.display = "none";
-						querySutCaseInfo();
+					  document.getElementById('sutCaseInfoTd').style.display = "block";
+					  document.getElementById('interfacesearchTd').style.display = "none";
+					  document.getElementById('showTestSuiteTd').style.display = "none";
+					  document.getElementById('showTestCaseTd').style.display = "none";
+					  querySutCaseInfo();
 					  }
 					else {
 				  isSelf =  root.isSelf;
@@ -694,8 +694,6 @@ function testtest(){
 				  document.getElementById('showtestcase_changetag').value = root.changetag;   
 				  var creator_name = "<a href='getuserinfo.action?userid="+root.testcasedto.creator.id+"'>"+root.testcasedto.creator.displayName+"</a>";
 				  $("#showtestcasecreator").append(creator_name);
-				  
-				  
 				  var obj_priority = document.getElementsByName('updatepriority');
 				  for (i=0 ; i < obj_priority.length ; i++){
 					  if(obj_priority[i].value == root.testcasedto.priority){
@@ -1605,8 +1603,9 @@ $('#jstree').jstree('select_node', 'j1_1');
               <td rowspan="14" style="vertical-align:top"><div id="showCaseChangeHistoryDiv" style="height:604px;overflow:scroll;"> </div></td>
             </tr>
             <tr>
-              <td colspan="2"><input id="showtestcase_id" name="showtestcase_id" value="" style="display:none" readonly></td>
-            </tr>
+              <td><input id="showtestcase_id" name="showtestcase_id" value="" style="display:none" readonly></td>
+			  <td><input id="showtestcase_changetag" name="showtestcase_changetag" value="" style="display:none" readonly></td>
+			</tr>
             <tr>
               <td>创建者</td>
               <td><div id="showtestcasecreator"></div></td>
