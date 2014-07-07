@@ -299,6 +299,10 @@ function updateTestSuiteac(){
 		alert("请登录后再进行操作！");
 	}
 	else{
+	if('<%=isCurrentRole%>' != "y"){
+	alert("您目前权限不足，请向该项目经理去申请操作权限！")
+	}
+	else {
 	document.getElementById('showtestsuite_name').readOnly = false;
 	document.getElementById('showtestsuite_description').readOnly = false;
 	document.getElementById('showversion').readOnly = false;
@@ -308,6 +312,7 @@ function updateTestSuiteac(){
 	document.getElementById('showversionoption').style.display = "block";	
 	document.getElementById('upTestSuiteTd').style.display = "none";
 	document.getElementById('saveTestSuiteTd').style.display = "block";
+	}
 	}
 	};
 
