@@ -27,6 +27,7 @@ if ((String)request.getAttribute("isAdmin") != null){
 	
 	
 ApplySut applySut = (ApplySut)request.getAttribute("applySut");
+Integer sut_id = (Integer)request.getAttribute("sut_id");
 String applyer = applySut.getUser().getAlias();
 int id = applySut.getId();
 %>
@@ -373,6 +374,9 @@ var applyer = '<%=applyer%>';
           <td style="text-align:right">* 系统名 :&nbsp;&nbsp;</td>
           <td><input type="text" class="form-control input-sm" style="width:200px" id="sutname"
 							name="sutname" value="<%=applySut.getName()%>" readonly></td>
+        </tr>
+        <tr style="display:none">
+        	<td><input type="text" class="form-control input-sm" id="sut_id" name="sut_id" value="<%=sut_id%>" ></td>
         </tr>
         <tr>
          <td>&nbsp;</td>

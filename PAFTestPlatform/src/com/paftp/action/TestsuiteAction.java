@@ -139,6 +139,7 @@ public class TestsuiteAction extends ActionSupport {
 			this.setJsonArray(jsonarray);
 		} else {
 			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
+			return "success";
 		}
 
 		return "success";
@@ -175,9 +176,11 @@ public class TestsuiteAction extends ActionSupport {
 			} else {
 				this.setPrompt("The testsuite" + this.getTestsuite_name()
 						+ "is not exist!");
+				return "success";
 			}
 		} else {
 			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
+			return "success";
 		}
 
 		return "success";
@@ -189,8 +192,8 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
+			this.setPrompt("Please log in firstly!");
+			return "success";
 		}
 
 		Testsuite testsuite = testsuiteService.findTestsuiteById(this
@@ -203,8 +206,8 @@ public class TestsuiteAction extends ActionSupport {
 		targetName = targetName.replaceAll("Ts", "Tc");
 		Testsuite temp_testsuite = testsuiteService.findTestsuiteByNameAndSutid(targetName, testsuite.getSut().getId());
 		if (temp_testsuite != null){
-			request.setAttribute("error", "The testcase of " + targetName + "has been exist!");
-			return "error";
+			this.setPrompt("The testsuite of " + temp_testsuite.getName() + "has been exist!");
+			return "success";
 		}
 
 		testsuite.setDescription(this.getTestsuite_description());
@@ -212,9 +215,11 @@ public class TestsuiteAction extends ActionSupport {
 		testsuite.setStatus(this.getIsdiscard());
 		testsuite.setVersion(version);
 		if (testsuite.getChangetag().toString().equals(this.getChangetag()) == false){
-			request.setAttribute("error", "This testsuite has been changed and please refreh before modifying it!");
-			return "error";
+			this.setPrompt("This testsuite has been changed and please refreh before modifying it!");
+			return "success";
 		}
+		Integer temp_changetag = testsuite.getChangetag() + 1;
+		testsuite.setChangetag(temp_changetag);
 		testsuiteService.updateTestsuite(testsuite);
 
 		if (this.getIsdiscard().equals("已废弃")) {
@@ -225,8 +230,6 @@ public class TestsuiteAction extends ActionSupport {
 				&& sourceName.equals(this.getTestsuite_name()) == false) {
 			this.updateTestcaseSpecial(testsuite, "1", sourceName, targetName);
 		}
-
-		request.setAttribute("testsuite", testsuite);
 
 		return "success";
 
@@ -286,9 +289,11 @@ public class TestsuiteAction extends ActionSupport {
 			} else {
 				this.setPrompt("The testsuite" + this.getTestsuite_name()
 						+ "is not exist!");
+				return "success";
 			}
 		} else {
 			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
+			return "success";
 		}
 
 		return "success";
@@ -327,9 +332,11 @@ public class TestsuiteAction extends ActionSupport {
 			} else {
 				this.setPrompt("The testsuite" + this.getTestsuite_name()
 						+ "is not exist!");
+				return "success";
 			}
 		} else {
 			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
+			return "success";
 		}
 
 		return "success";
@@ -509,6 +516,8 @@ public class TestsuiteAction extends ActionSupport {
 			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
 			return false;
 		} else {
+			Integer temp_changetag = testcase.getChangetag() + 1;
+			testcase.setChangetag(temp_changetag);
 			testcaseService.updateTestcase(testcase);
 			for (int j = 0; j < i; j++) {
 				casechangeoperationService

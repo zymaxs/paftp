@@ -312,7 +312,7 @@ function saveTestSuiteac(){
 	  	}
 	  };
 	var testsuite_name = "Ts_" + $("#showtestsuite_name").val();
-	var tsparams = {testsuite_name:testsuite_name,sut_name:$("#showsut_name").val(),testsuite_id:$("#showtestsuite_id").val(),testsuite_description:$("#showtestsuite_description").val(),isdiscard:isdiscard_value,version:$("#updateversion").val()};
+	var tsparams = {testsuite_name:testsuite_name,sut_name:$("#showsut_name").val(),testsuite_id:$("#showtestsuite_id").val(),testsuite_description:$("#showtestsuite_description").val(),isdiscard:isdiscard_value,version:$("#updateversion").val(),changetag:$("#showtestsuite_changetag").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "updateTestsuite.action",
@@ -464,7 +464,7 @@ function saveTestCaseac(){
 	  };*/
 	  var sut_name = '<%=sut_name%>';
 	  var testcase_name = $('#pre_casename').text() + $("#showtestcase_name").val();
-	  var tsparams = {testcase_name:testcase_name,sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val()};
+	  var tsparams = {testcase_name:testcase_name,sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val(),changetag:$("#showtestcase_changetag").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "updateTestcase.action",
@@ -534,9 +534,22 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				  if ( root.prompt != null){
+					  alert(root.prompt);
+					  $('#jstree').jstree(true).destroy();
+					  initree();
+					  initype();
+					  document.getElementById('sutCaseInfoTd').style.display = "block";
+				      document.getElementById('interfacesearchTd').style.display = "none";
+					  document.getElementById('showTestSuiteTd').style.display = "none";
+					  document.getElementById('showTestCaseTd').style.display = "none";
+					  querySutCaseInfo();
+					  }
+					else {
 				 document.getElementById('showtestsuite_id').value = root.testsuitedto.id;
 				 document.getElementById('showtestsuite_description').value = root.testsuitedto.description;
 				 document.getElementById('showisdiscard').value = root.testsuitedto.status;
+				 document.getElementById('showtestsuite_changetag').value = root.changetag;
 				 var obj_status = document.getElementsByName('updatestatus');
 				  for (i=0 ; i < obj_status.length ; i++){
 					  if(obj_status[i].value == root.testsuitedto.status){
@@ -630,6 +643,7 @@ function testtest(){
 				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>"+ zidong+"</td><td>"+shoudong+"</td><td>"+feiqi+"</td><td>"+p1+"</td><td>"+p2+"</td><td>"+p3+"</td><td>"+daipingshen+"</td><td>"+tongguo+"</td><td>"+butongguo+"</td><td>"+zhengli+"</td><td>"+fanli+"</td></tr></table>";
 				  $("#testsuiteInfoDiv").append(queryTestSuiteResult);
+				}
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -661,10 +675,23 @@ function testtest(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
+				  if ( root.prompt != null){
+					  alert(root.prompt);
+					  $('#jstree').jstree(true).destroy();
+					  initree();
+					  initype();
+						document.getElementById('sutCaseInfoTd').style.display = "block";
+						document.getElementById('interfacesearchTd').style.display = "none";
+						document.getElementById('showTestSuiteTd').style.display = "none";
+						document.getElementById('showTestCaseTd').style.display = "none";
+						querySutCaseInfo();
+					  }
+					else {
 				  isSelf =  root.isSelf;
 				  document.getElementById('showtestcase_id').value = root.testcasedto.id;
 				  document.getElementById('showcasepriority').value = root.testcasedto.priority;
 				  document.getElementById('showtestcasecreattime').value = root.testcasedto.createTime;
+				  document.getElementById('showtestcase_changetag').value = root.changetag;   
 				  var creator_name = "<a href='getuserinfo.action?userid="+root.testcasedto.creator.id+"'>"+root.testcasedto.creator.displayName+"</a>";
 				  $("#showtestcasecreator").append(creator_name);
 				  
@@ -735,7 +762,7 @@ function testtest(){
 					  }
 					$("#showCaseChangeHistoryDiv").append(caseChangeHistory);
 				  
-				  
+					}	  
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -1176,7 +1203,7 @@ function saveapprovalac(){
 				},
 				"showcasesteps" : {
 					required : "请输入用例步骤",
-					maxlength : $.validator.format("用例步骤最大输入不超过一百五十个字符.")
+					maxlength : $.validator.format("用例步骤最大输入不超过三百个字符.")
 				}
 			}
 		});
@@ -1492,6 +1519,9 @@ $('#jstree').jstree('select_node', 'j1_1');
                   <input id="showtestsuite_name" class="form-control input-sm" name="showtestsuite_name" value="" style="width:200px" readonly>
                 </div>
             </tr>
+            <tr style="display:block">
+              <td><input id="showtestsuite_changetag" name="showtestsuite_changetag" type="text" class="form-control" readonly></td>
+            </tr>
             <tr>
               <td colspan="2">&nbsp;</td>
             </tr>
@@ -1542,7 +1572,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             <tr>
             <tr>
               <td  align="right" width="100px">描述  :&nbsp;&nbsp;</td>
-              <td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge form-control" readonly id="showtestsuite_description" style="max-height:50px; max-width:200px; width:200px; height:50px;"></textarea></td>
+              <td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge form-control" readonly id="showtestsuite_description" style="max-height:100px; max-width:200px; width:200px; height:100px;"></textarea></td>
             </tr>
             <tr>
               <td colspan="2">&nbsp;</td>

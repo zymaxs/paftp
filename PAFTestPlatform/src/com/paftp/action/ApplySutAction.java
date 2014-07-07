@@ -185,7 +185,7 @@ public class ApplySutAction extends ActionSupport {
 		}
 
 		ApplySut applySut = applySutService.findApplySutById(this.getId());
-		Integer temp_sut_id = sutService.findSutByName(this.getSutname()).getId();
+		Integer temp_sut_id = sutService.findSutByName(applySut.getName()).getId();
 		request.setAttribute("applySut", applySut);
 		request.setAttribute("sut_id", temp_sut_id);
 
