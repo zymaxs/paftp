@@ -106,7 +106,6 @@ String sut_name = (String)request.getAttribute("sut_name");
 			document.getElementById('workerselect').disabled = "ture";
 			
 			document.getElementById('workerstring').disabled = "true";
-			document.getElementById('managerstring').disabled = "false";
 			}
 		else if ('<%=isAdmin%>' != "true" && '<%=isManager%>' == "true"){
 			document.getElementById('freeuserselect').style.display = "block";
@@ -122,7 +121,6 @@ String sut_name = (String)request.getAttribute("sut_name");
 			document.getElementById('workerselect').disabled = "false";
 			
 			document.getElementById('managerstring').disabled = "true";
-			document.getElementById('workerstring').disabled = "false";
 		}
 		};
 		
