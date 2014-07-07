@@ -13,7 +13,6 @@
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialroles.action").forward(request,response);}
 List<Role> currentPageRoles = (List<Role>)request.getAttribute("currentPageRoles");
-List<User> resultusers = (List<User>)request.getAttribute("resultusers");
 String pagenum = request.getAttribute("pages").toString();
 String sut_name = (String)request.getAttribute("sut_name");
 %>
@@ -55,7 +54,7 @@ $(document).ready( function(){
 	    $("#roleForm").append(inidata());
 		
 		$("#queryrole").click(function(){
-		params = {pagenum:1,sut_name:sutname1,rolealias:$("#rolealias").val(),role_name:$("#role_name").val()};
+		params = {pagenum:1,sut_name:sutname1,rolealias:$("#rolealias").val()};
 		$.ajax({
 						type : "POST",
 						url : "queryRolesAjax.action",
@@ -89,7 +88,7 @@ $(document).ready( function(){
 				max_page : pagentotal, 
 				paged : function(page) {
 
-						params = {pagenum:page,sut_name:sutname1,rolealias:$("#rolealias").val(),role_name:$("#role_name").val()};
+						params = {pagenum:page,sut_name:sutname1,rolealias:$("#rolealias").val()};
 
 						$.ajax({
 						type : "POST",
