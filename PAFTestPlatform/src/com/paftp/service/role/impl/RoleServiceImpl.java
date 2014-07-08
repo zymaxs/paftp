@@ -77,7 +77,6 @@ public class RoleServiceImpl implements RoleService {
 		List<RoleDto> roleDtoes = new ArrayList<RoleDto>();
 		
 		for (int i=0; i<roles.size(); i++){
-			if (roles.get(i).getName().equals("seniormanager") == false){
 			RoleDto roleDto = new RoleDto();
 			roleDto.setId(roles.get(i).getId());
 			roleDto.setName(roles.get(i).getName());
@@ -87,7 +86,6 @@ public class RoleServiceImpl implements RoleService {
 			sutDto.setName(roles.get(i).getSut().getName());
 			roleDto.setSutdto(sutDto);
 			roleDtoes.add(roleDto);
-			}
 		}
 		
 		return roleDtoes;

@@ -127,7 +127,14 @@ public class UserProfileAction extends ActionSupport {
 			if (i < roles.size()) {
 				Role role = new Role();
 				role = roles.get(i);
+				if (role.getName().equals("seniormanager") == false) {
+				if (this.existSubString(role.getName(), "Manager")){
+					role.setName("管理员");
+				}else{
+					role.setName("成员");
+				}
 				temp_currentPageRoles.add(role);
+				}
 			} else {
 				break;
 			}

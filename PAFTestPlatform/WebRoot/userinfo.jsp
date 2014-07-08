@@ -112,11 +112,8 @@ $(document).ready( function(){
 				success : function(root) {
 
 					$("#roleFormTab").html("");
-					$(root.currentPageRoles).each(function(i,value){
-						if (value.sut == null)
-							$("#sutFormTab").append("<tr>"+"<td>"+value.name+"</td>"+"<td>"+value.description+"</td>"+"</tr>");
-						else
-							$("#sutFormTab").append("<tr>"+"<td>"+value.name+"</td>"+"<td>"+value.sut.name+"</td>"+"<td>"+value.description+"</td>"+"</tr>");
+					$(root.currentPageRoleDtoes).each(function(i,value){
+					$("#roleFormTab").append("<tr><td>"+value.name+"</td><td>"+value.sutdto.name+"</td><td>"+value.description+"</td></tr>");
 					})
 				},
 
