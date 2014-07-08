@@ -15,6 +15,7 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/initialroles.ac
 List<User> resultusers = (List<User>)request.getAttribute("resultusers");
 String pagenum = request.getAttribute("pages").toString();
 String sut_name = (String)request.getAttribute("sut_name");
+String sut_id = request.getAttribute("sut_id").toString();
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
@@ -374,6 +375,7 @@ function inidata(){
 </tr>
 <tr>
 <td style="display:none"><input id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
+<td style="display:none"><input id="sut_id" name="sut_id" value="<%=sut_id%>"></td>
 </tr>
 <tr>
 <td colspan="2">&nbsp;</td>
