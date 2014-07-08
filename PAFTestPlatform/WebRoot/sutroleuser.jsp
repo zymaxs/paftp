@@ -94,31 +94,23 @@ String sut_name = (String)request.getAttribute("sut_name");
 	function ini(){
 		if ('<%=isAdmin%>' == "true" && '<%=isManager%>' != "true"){
 			document.getElementById('freeuserselect').style.display = "none";
-			document.getElementById('freeuserselect').disabled = "true";
 			
 			document.getElementById('sutworkerselect').style.display = "";
-			document.getElementById('sutworkerselect').disabled = "false";
 			
 			document.getElementById('manageselect').style.display = "";
-			document.getElementById('manageselect').disabled = "false";
 			
 			document.getElementById('workerselect').style.display = "none";
-			document.getElementById('workerselect').disabled = "ture";
 			
 			document.getElementById('workerstring').disabled = "true";
 			}
 		else if ('<%=isAdmin%>' != "true" && '<%=isManager%>' == "true"){
 			document.getElementById('freeuserselect').style.display = "";
-			document.getElementById('freeuserselect').disabled = "false";
 			
 			document.getElementById('sutworkerselect').style.display = "none";
-			document.getElementById('sutworkerselect').disabled = "true";
 			
 			document.getElementById('manageselect').style.display = "none";
-			document.getElementById('manageselect').disabled = "ture";
 			
 			document.getElementById('workerselect').style.display = "";
-			document.getElementById('workerselect').disabled = "false";
 			
 			document.getElementById('managerstring').disabled = "true";
 		}
@@ -163,7 +155,7 @@ $(function(){
     //移到右边
     $('#add').click(function() {
     //获取选中的选项，删除并追加给对方
-		if (document.getElementById('manageselect').style.display == "block"){
+		if (document.getElementById('manageselect').style.display == ""){
         $('#sutworker option:selected').appendTo('#manage');
 		}
 		else {
@@ -172,7 +164,7 @@ $(function(){
     });
     //移到左边
     $('#remove').click(function() {
-		if (document.getElementById('manageselect').style.display == "block"){
+		if (document.getElementById('manageselect').style.display == ""){
         $('#manage option:selected').appendTo('#sutworker');
 		}
 		else {
@@ -182,7 +174,7 @@ $(function(){
     //全部移到右边
     $('#add_all').click(function() {
         //获取全部的选项,删除并追加给对方
-		if (document.getElementById('manageselect').style.display == "block"){
+		if (document.getElementById('manageselect').style.display == ""){
         $('#sutworker option').appendTo('#manage');
 		}
 		else {
@@ -191,7 +183,7 @@ $(function(){
     });
     //全部移到左边
     $('#remove_all').click(function() {
-		if (document.getElementById('manageselect').style.display == "block"){
+		if (document.getElementById('manageselect').style.display == ""){
         $('#manage option').appendTo('#sutworker');
 		}
 		else {
