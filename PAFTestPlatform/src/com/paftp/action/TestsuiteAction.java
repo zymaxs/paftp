@@ -510,6 +510,7 @@ public class TestsuiteAction extends ActionSupport {
 				casechangeoperation.setField("审批状态");
 				casechangeoperations.add(casechangeoperation);
 				testcase.setTestcase_approval(this.getTestcase_approval());
+				testcase.setApproval_comments(this.getApproval_comments());
 				i++;
 			}
 		} else if (testcase.getTestcase_approval().equals("待评审") == false) {
