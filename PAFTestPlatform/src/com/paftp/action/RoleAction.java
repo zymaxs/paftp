@@ -302,13 +302,12 @@ public class RoleAction extends ActionSupport {
 
 	public String queryRoles() {
 
-		if (this.getSut_id() == null) {
+		if (this.getSut_name() == null) {
 			this.setPrompt("One sut must be given!");
 			return "success";
 		}
 
-//		Sut sut = sutService.findSutByName(this.getSut_name());
-		Sut sut = sutService.findSutById(Integer.parseInt(this.getSut_id()));
+		Sut sut = sutService.findSutByName(this.getSut_name());
 		List<Role> roles = sut.getRole_results();
 
 		if(this.getRow() == null) {
