@@ -142,7 +142,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 				orignpassword_md5);
 
 		if (dbUser == null) {
-			request.setAttribute("error", "User cannot be empty!");
+			request.setAttribute("error", "The password is wrong and please get back it by clicking the login window!");
 			return "error";
 		}
 
