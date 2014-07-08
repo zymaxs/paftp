@@ -25,7 +25,7 @@ List<User> managers = (List<User>)request.getAttribute("managers");
 List<User> workers = (List<User>)request.getAttribute("workers");
 List<User> freeusers = (List<User>)request.getAttribute("freeusers");
 List<User> nonmanagers = (List<User>)request.getAttribute("nonmanagers");
-String sut_name = (String)request.getAttribute("sut_name");
+String sut_id = (String)request.getAttribute("sut_id");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
@@ -440,7 +440,7 @@ $(function(){
             </select></td>
           <td ><input style="display:none" id="managerstring" name="managerstring" value="managerstring"></td>
           <td><input style="display:none" id="workerstring" name="workerstring" value="workerstring"></td>
-          <td><input style="display:none" id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
+          <td><input style="display:none" id="sut_id" name="sut_id" value="<%=sut_id%>"></td>
         </tr>
         <tr style="text-align:center">
           <td colspan="3"><input type="button" class="btn btn-primary" style="width:80px;" onClick="updateroleac()" value="更新"></td>
