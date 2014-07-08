@@ -131,6 +131,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
 					"Your account or password can't be empty!");
 			return "error";
 		}
+		if(this.getOriginpassword().equals(this.getPassword())){
+			request.setAttribute("error",
+					"Your new password is same with the old one!");
+			return "error";
+		}
 
 		String orignpassword_md5 = util.md5Encryption(this.getOriginpassword());
 		User dbUser = userService.findUserByAliasAndPassword(this.getAlias(),

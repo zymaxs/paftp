@@ -241,7 +241,7 @@ public class UserProfileAction extends ActionSupport {
 		userInfo.setOtherinfo(this.getOtherinfo());
 		user.setUserInfo(userInfo);
 		user.setDisplayName(this.getDisplayname());
-		userService.saveUser(user);
+		userService.updateUser(user);
 
 		return user;
 
