@@ -191,8 +191,6 @@ public class TestsuiteAction extends ActionSupport {
 
 	public String updateTestsuite() {
 
-		HttpServletRequest request = ServletActionContext.getRequest();
-
 		user = getSessionUser();
 		if (user == null) {
 			this.setPrompt("Please log in firstly!");
@@ -926,12 +924,15 @@ public class TestsuiteAction extends ActionSupport {
 		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
 
 		CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+
+		if(testcase.getTestcase_approval().equals("待评审") == false){
 		casechangeoperation.setCaseChangeHistory(casechangehistory);
 		casechangeoperation.setOldValue(testcase.getTestcase_approval());
 		casechangeoperation.setNewValue("待评审");
 		casechangeoperation.setField("审批状态");
 		casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
-
+		}
+		
 		casechangeoperation = new CaseChangeOperation();
 		casechangeoperation.setCaseChangeHistory(casechangehistory);
 		casechangeoperation.setOldValue(oldValue);
