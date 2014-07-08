@@ -19,7 +19,7 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/shou.css" rel="stylesheet">
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="dist/libs/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
@@ -63,10 +63,12 @@ $(document).ready(function(){
                 email:true
             },
             "telephone":{
-                digits:true
+                digits:true,
+				maxlength: 20
             },
             "mobile":{
-                digits:true
+                digits:true,
+				maxlength: 20
             },
             "otherinfo":{
                 maxlength: 60
@@ -84,10 +86,12 @@ $(document).ready(function(){
                 email:"请输入正确的email地址"
             },
             "telephone":{
-                digits: "请输入数字"
+                digits: "请输入数字",
+				maxlength: $.validator.format("最大输入不超过二十个字符.")
             },
             "mobile":{
-                digits: "请输入数字"
+                digits: "请输入数字",
+				maxlength: $.validator.format("最大输入不超过二十个字符.")
             },
             "otherinfo":{
                 maxlength: $.validator.format("用户备注最大输入不超过六十个字符.")
@@ -107,6 +111,24 @@ $(document).ready(function(){
 	$("#selectPosition").jQSelect({});
 	$("#selectDepartment").jQSelect({});
 });	
+</script>
+<script language="javascript">
+function quanjiao(obj)
+{
+    var str=obj.value;
+    if (str.length>0)
+    {
+        for (var i = str.length-1; i >= 0; i--)
+        {
+            unicode=str.charCodeAt(i);
+            if (unicode>65280 && unicode<65375)
+            {
+                alert("不能输入全角字符，请输入半角字符");
+                obj.value=str.substr(0,i);
+            }
+        }
+    }
+}
 </script>
 <style>
 /*导航默认样式，可根据实际情况修改*/
@@ -262,7 +284,7 @@ $(document).ready(function(){
   	<td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
     <td colspan="7">&nbsp;</td>
     <%if (session.getAttribute("user") == null) {%>
-    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </td>
+    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"></td>
     <%} else { User user = (User) session.getAttribute("user");
                       String name = user.getAlias(); %>
     <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </td>
@@ -290,18 +312,21 @@ $(document).ready(function(){
       <input type="text" name="alias" id="alias" tabindex="1">
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
-      <div>
-      	<br>
+      <div> <br/>
         <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
         <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
   <script type="text/javascript">
-	$(function(){
-	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
-	});
-  </script> 
+			$(function() {
+				$('#login').leanModal({
+					top : 110,
+					overlay : 0.45,
+					closeButton : ".hidemodal"
+				});
+			});
+		</script> 
   <!--导航-->
   <ul class="daohang" id="navigator">
     <li><a href="index_1.jsp">主页</a></li>
@@ -323,7 +348,7 @@ $(document).ready(function(){
       <table border="0">
         <tr>
           <td style="text-align:right">* 用户名 :&nbsp;&nbsp;</td>
-          <td colspan="3" style="text-align:left"><input type="text" id="alias" name="alias">@pingan.com.cn</td>
+          <td colspan="3" style="text-align:left"><input type="text" id="alias" name="alias" onKeyUp="quanjiao(this);">@pingan.com.cn</td>
         </tr>
         <tr>
           <td></td>
@@ -344,7 +369,7 @@ $(document).ready(function(){
           <td style="text-align:left;">
           <div id="selectDepartment" class="selectbox">
               <div class="cartes">
-                <input type="text" value="<%=departments.get(0)%>" id="department" name="department" class="listTxt" style="vertical-align:middle" />
+                <input type="text" value="<%=departments.get(0)%>" id="department" name="department" class="listTxt" style="vertical-align:middle"  readonly/>
                 <div class="listBtn"><b></b></div>
                 <input type="hidden" value="" class="listVal" />
               </div>
@@ -361,7 +386,7 @@ $(document).ready(function(){
           <td style="text-align:left">
           <div id="selectPosition" class="selectbox">
               <div class="cartes">
-                <input type="text" value="<%=positions.get(0)%>" id="position" name="position" class="listTxt" />
+                <input type="text" value="<%=positions.get(0)%>" id="position" name="position" class="listTxt" readonly />
                 <div class="listBtn"><b></b></div>
                 <input type="hidden" value="" class="listVal" />
               </div>

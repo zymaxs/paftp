@@ -69,10 +69,12 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 					email : true
 				},
             	"telephone":{
-                	digits:true
+                	digits:true,
+					maxlength: 20
            		},
             	"mobile":{
-                	digits:true
+                	digits:true,
+					maxlength: 20
             	},
             	"otherinfo":{
                 	maxlength: 60
@@ -87,10 +89,12 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 					email : "请输入正确的email地址"
 				},
             	"telephone":{
-                	digits: "请输入数字"
+                	digits: "请输入数字",
+					maxlength: $.validator.format("最大输入不超过二十个字符.")
             	},
             	"moible":{
-                	digits: "请输入数字"
+                	digits: "请输入数字",
+					maxlength: $.validator.format("最大输入不超过二十个字符.")
             	},
             	"otherinfo":{
                 	maxlength: $.validator.format("用户备注最大输入不超过六十个字符.")
