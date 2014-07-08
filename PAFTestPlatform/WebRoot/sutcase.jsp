@@ -1779,7 +1779,7 @@ $('#jstree').jstree('select_node', 'j1_1');
           <select id="version"  name="version" style="width:150px;" >
                 <option value="<%=versions.get(0).getVersionNum()%>" selected><%=versions.get(0).getVersionNum()%></option>
                 <% for (int i =1; i< versions.size();i++ ){%>
-                <option value="<%=versions.get(i).getVersionNum()%>>"><%=versions.get(i).getVersionNum()%></option>
+                <option value="<%=versions.get(i).getVersionNum()%>"><%=versions.get(i).getVersionNum()%></option>
                 <%}%>
               </select></td>
         </tr>

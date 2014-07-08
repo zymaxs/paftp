@@ -360,7 +360,7 @@ function inidata(){
     <%}}%>
   </ul>
 <!--主体-->
-<form id="queryForm" name="queryForm" action="">
+<form id="queryForm" name="queryForm" action="" method="post">
 <table width="100%">
 <tr>
 <td colspan="3" style="font-size:30px; text-align:left"><%=sut_name%>系统权限</td>
@@ -374,7 +374,6 @@ function inidata(){
 <td><input type="button" id="queryrole" name="queryrole" class="btn btn-primary btn-sm" style="width:80px;text-align:center" value="搜索账号"></td>
 </tr>
 <tr>
-<td style="display:none"><input id="sut_name" name="sut_name" value="<%=sut_name%>"></td>
 <td style="display:none"><input id="sut_id" name="sut_id" value="<%=sut_id%>"></td>
 </tr>
 <tr>
