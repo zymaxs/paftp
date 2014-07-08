@@ -191,8 +191,6 @@ public class TestsuiteAction extends ActionSupport {
 
 	public String updateTestsuite() {
 
-		HttpServletRequest request = ServletActionContext.getRequest();
-
 		user = getSessionUser();
 		if (user == null) {
 			this.setPrompt("Please log in firstly!");
@@ -355,17 +353,14 @@ public class TestsuiteAction extends ActionSupport {
 
 	public String updateTestcase() {
 
-		HttpServletRequest request = ServletActionContext.getRequest();
-
 		user = getSessionUser();
 		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
+			this.setPrompt("Please log in firstly!");
+			return "success";
 		}
 		if (this.isRoleOfSut(user) == false) {
-			request.setAttribute("error",
-					"You has not authority to work under this group!");
-			return "error";
+			this.setPrompt("You has not authority to work under this group!");
+			return "success";
 		}
 
 		Testcase testcase = testcaseService.findTestcaseById(this
@@ -413,8 +408,7 @@ public class TestsuiteAction extends ActionSupport {
 							testcases.get(i).getStatus(), "废弃", "状态");
 					testcases.get(i).setStatus("废弃");
 					testcases.get(i).setTestcase_approval("待评审");
-					testcases.get(i).setChangetag(
-							testcases.get(i).getChangetag() + 1);
+					testcases.get(i).setChangetag(testcases.get(i).getChangetag()+1);
 					testcaseService.updateTestcase(testcases.get(i));
 				}
 			} else {
@@ -424,9 +418,10 @@ public class TestsuiteAction extends ActionSupport {
 					this.updateTestcaseHistory(testcases.get(i),
 							testcases.get(i).getCaseName(), caseName, "用例名");
 					testcases.get(i).setCaseName(caseName);
-					testcases.get(i).setTestcase_approval("待评审");
-					testcases.get(i).setChangetag(
-							testcases.get(i).getChangetag() + 1);
+					if(testcases.get(i).getTestcase_approval().equals("待评审") == false){
+						testcases.get(i).setTestcase_approval("待评审");
+					}
+					testcases.get(i).setChangetag(testcases.get(i).getChangetag()+1);
 					testcaseService.updateTestcase(testcases.get(i));
 				}
 			}
@@ -436,7 +431,7 @@ public class TestsuiteAction extends ActionSupport {
 	private Boolean updateTestcaseHistorys(User user, Testcase testcase,
 			CaseChangeHistory casechangehistory, Integer changetag) {
 
-		// casechangehistoryService.saveCaseChangeHistory(casechangehistory);
+//		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
 		int i = 0;
 		List<CaseChangeOperation> casechangeoperations = new ArrayList<CaseChangeOperation>();
 		if (testcase.getCaseName().equals(this.getTestcase_name()) == false) {
@@ -515,23 +510,17 @@ public class TestsuiteAction extends ActionSupport {
 				casechangeoperation.setField("审批状态");
 				casechangeoperations.add(casechangeoperation);
 				testcase.setTestcase_approval(this.getTestcase_approval());
-				if (this.getTestcase_approval().equals("未通过")) {
-					testcase.setApproval_comments(this.getApproval_comments());
-				}
 				i++;
 			}
-		} else {
-			if (testcase.getTestcase_approval().equals("待评审") == false) {
-				CaseChangeOperation casechangeoperation = new CaseChangeOperation();
-				casechangeoperation.setCaseChangeHistory(casechangehistory);
-				casechangeoperation
-						.setOldValue(testcase.getTestcase_approval());
-				casechangeoperation.setNewValue("待评审");
-				casechangeoperation.setField("审批状态");
-				casechangeoperations.add(casechangeoperation);
-				testcase.setTestcase_approval("待评审");
-				i++;
-			}
+		} else if (testcase.getTestcase_approval().equals("待评审") == false) {
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getTestcase_approval());
+			casechangeoperation.setNewValue("待评审");
+			casechangeoperation.setField("审批状态");
+			casechangeoperations.add(casechangeoperation);
+			testcase.setTestcase_approval("待评审");
+			i++;
 		}
 
 		if (testcase.getTestcaseproject().getName()
@@ -932,12 +921,15 @@ public class TestsuiteAction extends ActionSupport {
 		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
 
 		CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+
+		if(testcase.getTestcase_approval().equals("待评审") == false){
 		casechangeoperation.setCaseChangeHistory(casechangehistory);
 		casechangeoperation.setOldValue(testcase.getTestcase_approval());
 		casechangeoperation.setNewValue("待评审");
 		casechangeoperation.setField("审批状态");
 		casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
-
+		}
+		
 		casechangeoperation = new CaseChangeOperation();
 		casechangeoperation.setCaseChangeHistory(casechangehistory);
 		casechangeoperation.setOldValue(oldValue);

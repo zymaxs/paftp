@@ -364,7 +364,7 @@ function inidata(){
   </tr>
   </table>
   <form id="queryForm" name="queryForm" action="">
-    <table width="100%">
+    <table>
       <tr>
         <td style="width:50px">系统名</td>
         <td><input type="text" id="sutname" name="sutname" style="width:100px"></td>
@@ -387,7 +387,7 @@ function inidata(){
   </form>
   
   <!--TABLE展示-->
-  <table id="sutForm" class="table table-striped" style="text-align:center;">
+  <table id="sutForm" class="table table-striped" style="text-align:center; width:80%" align="center">
     <thead>
       <tr>
         <td>申请序号</td>

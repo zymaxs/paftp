@@ -54,6 +54,7 @@ public class UserProfileAction extends ActionSupport {
 	private String positionDesc;
 
 	private String alias;
+	private String displayname;
 
 	private Integer row;
 	private Integer pagenum;
@@ -143,7 +144,7 @@ public class UserProfileAction extends ActionSupport {
 			return "error";
 
 		updatedUser = setUserInfo(user);
-
+		
 		setSession("user", updatedUser);
 
 		return "success";
@@ -241,8 +242,9 @@ public class UserProfileAction extends ActionSupport {
 		userInfo.setTelephone(this.getTelephone());
 		userInfo.setOthermail(this.getOthermail());
 		userInfo.setOtherinfo(this.getOtherinfo());
-		userInfoService.updateUserInfo(userInfo);
 		user.setUserInfo(userInfo);
+		user.setDisplayName(this.getDisplayname());
+		userService.updateUser(user);
 
 		return user;
 
@@ -418,6 +420,14 @@ public class UserProfileAction extends ActionSupport {
 
 	public void setPositionDesc(String positionDesc) {
 		this.positionDesc = positionDesc;
+	}
+
+	public String getDisplayname() {
+		return displayname;
+	}
+
+	public void setDisplayname(String displayname) {
+		this.displayname = displayname;
 	}
 
 }
