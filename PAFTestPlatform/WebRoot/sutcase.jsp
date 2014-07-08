@@ -1594,7 +1594,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             <tr>
               <td  align="right" width="100px">测试集  :&nbsp;&nbsp;</td>
               <td><div class="input-group"> <span class="input-group-addon">Ts_</span>
-                  <input id="showtestsuite_name" class="form-control input-sm" name="showtestsuite_name" value="" style="width:200px" readonly>
+                  <input id="showtestsuite_name"  onKeyUp="quanjiao(this);" class="form-control input-sm" name="showtestsuite_name" value="" style="width:200px" readonly>
                 </div>
             </tr>
             <tr style="display:none">
@@ -1650,7 +1650,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             <tr>
             <tr>
               <td  align="right" width="100px">描述  :&nbsp;&nbsp;</td>
-              <td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge form-control" readonly id="showtestsuite_description" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td>
+              <td><textarea  rows="4" name="showtestsuite_description" onKeyUp="quanjiao(this);" class="input-xlarge form-control" readonly id="showtestsuite_description" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td>
             </tr>
             <tr>
               <td colspan="2">&nbsp;</td>
@@ -1678,7 +1678,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             <tr>
               <td width="100px">用例名称</td>
               <td><div class="input-group"> <span class="input-group-addon" id="pre_casename"></span>
-                  <input id="showtestcase_name" class="form-control input-sm" name="showtestcase_name" value="" style="width:200px" onKeyUp="quanjiao(this);" readonly>
+                  <input id="showtestcase_name" class="form-control input-sm" onKeyUp="quanjiao(this);" name="showtestcase_name" value="" style="width:200px" onKeyUp="quanjiao(this);" readonly>
                 </div>
               <td rowspan="14" style="vertical-align:top"><div id="showCaseChangeHistoryDiv" style="height:604px;overflow:scroll;"> </div></td>
             </tr>
@@ -1746,11 +1746,11 @@ $('#jstree').jstree('select_node', 'j1_1');
             </tr>
             <tr>
               <td>描述</td>
-              <td><textarea  rows="4" name="showcasedescription" class="form-control" id="showcasedescription" style="max-height:50px; max-width:550px; width:550px; height:50px;" readonly></textarea></td>
+              <td><textarea  rows="4" name="showcasedescription" onKeyUp="quanjiao(this);" class="form-control" id="showcasedescription" style="max-height:50px; max-width:550px; width:550px; height:50px;" readonly></textarea></td>
             </tr>
             <tr>
               <td>步骤</td>
-              <td><textarea  rows="4" name="showcasesteps" class="form-control" id="showcasesteps" style="max-height:150px; max-width:550px; width:550px; height:150px;"  readonly></textarea></td>
+              <td><textarea  rows="4" name="showcasesteps" onKeyUp="quanjiao(this);" class="form-control" id="showcasesteps" style="max-height:150px; max-width:550px; width:550px; height:150px;"  readonly></textarea></td>
             </tr>
             <tr align="left">
               <td colspan="2" id="upTestCaseTd" style="display:" align="center"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center"  onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" >更新</button></td>
@@ -1803,7 +1803,7 @@ $('#jstree').jstree('select_node', 'j1_1');
         </tr>
         <tr>
           <td>描述</td>
-          <td><textarea  rows="4" name="testsuite_description" id="testsuite_description" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td> 
+          <td><textarea  rows="4" name="testsuite_description" id="testsuite_description" onKeyUp="quanjiao(this);" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td> 
         </tr>
       </table>
     </form>
@@ -1864,11 +1864,11 @@ $('#jstree').jstree('select_node', 'j1_1');
         </tr>
         <tr>
           <td>描述</td>
-          <td><textarea  rows="4" name="description" id="description" style="max-height:50px; max-width:400px; width:400px; height:50px;"></textarea></td>
+          <td><textarea  rows="4" name="description" id="description" onKeyUp="quanjiao(this);" style="max-height:50px; max-width:400px; width:400px; height:50px;"></textarea></td>
         </tr>
         <tr>
           <td>步骤</td>
-          <td><textarea  rows="4" name="casesteps" id="casesteps" style="max-height:150px; max-width:400px; width:400px; height:150px;"></textarea></td>
+          <td><textarea  rows="4" name="casesteps" id="casesteps"  onKeyUp="quanjiao(this);" style="max-height:150px; max-width:400px; width:400px; height:150px;"></textarea></td>
         </tr>
       </table>
     </form>

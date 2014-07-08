@@ -319,7 +319,7 @@ $(document).ready(function(){
         <table>
           <tr>
             <td style="text-align:right">* 系统名 :&nbsp;&nbsp;</td>
-            <td><input type="text" class="input-xlarge" id="sutname" name="sutname"></td>
+            <td><input type="text" class="input-xlarge" id="sutname" onKeyUp="quanjiao(this);" name="sutname"></td>
           </tr>
           <tr>
           <td>&nbsp;</td>
