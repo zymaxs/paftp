@@ -53,6 +53,7 @@ public class RoleAction extends ActionSupport {
 
 	private Long pages;
 	private List<Role> currentPageRoles = new ArrayList<Role>();
+	private List<Role> totalRoles = new ArrayList<Role>();
 	private List<User> resultusers = new ArrayList<User>();
 
 	List<User> managers = new ArrayList<User>();
@@ -275,14 +276,21 @@ public class RoleAction extends ActionSupport {
 				}else if (role.getName().equals(this.getSut_name() + "Sdet")){
 					role.setName("成员");
 				}
-				currentPageRoles.add(role);
+				this.totalRoles.add(role);
 			} else {
 				break;
 			}
 		}
+		
+		if(this.getRow() == null) {
+			this.setRow(10);
+		} 
+		if (this.getPagenum() == null){
+			this.setPagenum(1);
+		}
 
 		request.setAttribute("pages", pages);
-		request.setAttribute("currentPageRoles", roles);
+		request.setAttribute("currentPageRoles", totalRoles);
 		request.setAttribute("sut_name", this.getSut_name());
 		request.setAttribute("flag", true);
 
@@ -299,7 +307,12 @@ public class RoleAction extends ActionSupport {
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		List<Role> roles = sut.getRole_results();
 
-		row = 10;
+		if(this.getRow() == null) {
+			this.setRow(10);
+		} 
+		if (this.getPagenum() == null){
+			this.setPagenum(1);
+		}
 		pages = (long) Math.ceil(roles.size() / (double) row);
 
 		User conditionuser = null;
@@ -321,19 +334,17 @@ public class RoleAction extends ActionSupport {
 		}
 
 		Role role = null;
+		int number = 0;
+		Integer start = (this.getPagenum()-1) * 10;
+		Integer end = start + this.getRow();
 		for (int i = 0; i < roles.size(); i++) {
 			role = roleService.findRoleById(roles.get(i).getId());
 			if ((this.getRole_name() == null || this.getRole_name().equals(""))
 					|| (conditionrole != null && role.getId().equals(conditionrole.getId()))) {
 				List<User> users = role.getUsers();
 				for (int j = 0; j < users.size(); j++) {
-					if (this.getRolealias() == null
-							|| this.getRolealias().equals("")
-							|| (conditionuser != null && users.get(j)
-									.getAlias()
-									.equals(conditionuser.getAlias()))) {
-						// Role seniorrole = roleService
-						// .findRoleByName("seniormanager");
+					if (this.getRolealias() == null || this.getRolealias().equals("") || (conditionuser != null && users.get(j).getAlias().equals(conditionuser.getAlias()))) {
+						if (number >= start && number < end){
 						Role temp_role = new Role();
 						if (role.getName().equals(this.getSut_name() + "Manager")){
 							temp_role.setName("管理员");
@@ -349,7 +360,12 @@ public class RoleAction extends ActionSupport {
 						temp_user.setDisplayName(users.get(j).getDisplayName());
 						temp_user.setRoles(currentroles);
 						this.resultusers.add(temp_user);    //User dto for the out of memory issue
-					}
+						}
+						if (number == end){
+							break;
+						}
+						number ++;
+						}
 				}
 			}
 		}
@@ -391,6 +407,22 @@ public class RoleAction extends ActionSupport {
 				names.add(i, roles.get(i).getName());
 		}
 		return names;
+	}
+
+	
+private List<User> getSpecialPageUsers(List<User> users){
+		
+		Integer start = (this.getPagenum()-1) * 10;
+		List<User> return_users = new ArrayList<User>();
+		
+		for(int i = start; i< (start+this.getRow()); i++){
+			if (i == users.size()){
+				break;
+			}
+			return_users.add(users.get(i));
+		}
+		
+		return return_users;
 	}
 
 	private User sessionUser() {
