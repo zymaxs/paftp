@@ -18,7 +18,9 @@ if (request.getAttribute("projectflag") == null ){
 request.getRequestDispatcher("${pageContext.request.contextPath}/queryTestcaseproject.action").forward(request,response);}
 List<TestcaseProject> testcaseprojects = (List<TestcaseProject>)request.getAttribute("testcaseprojects");
 List<Version> versions = (List<Version>)request.getAttribute("versions");
-String sut_name = (String)request.getAttribute("sut_name");
+Sut sut  = (Sut)request.getAttribute("sut");
+String sut_name = sut.getName();
+String sut_id =(String)request.getAttribute("sut_id");
 String isCurrentRole;
 if (String.valueOf(request.getAttribute("isCurrentRole")) == "true"){
 	isCurrentRole = "y";
@@ -1773,20 +1775,13 @@ $('#jstree').jstree('select_node', 'j1_1');
         </tr>
         <tr>
           <td>起始版本</td>
-          <td><div id="versiongroup" class="selectbox">
-              <div class="cartes">
-                <input type="text" value="<%=versions.get(0).getVersionNum()%>" id="version" name="version" class="listTxt" readonly />
-                <div class="listBtn"><b></b></div>
-                <input type="hidden" value="" class="listVal" />
-              </div>
-              <div class="lists">
-                <ul class="list">
-                  <% for (int i =0; i<versions.size(); i++){%>
-                  <li id=<%=i%>><%=versions.get(i).getVersionNum()%></li>
-                  <%}%>
-                </ul>
-              </div>
-            </div></td>
+          <td>
+          <select id="version"  name="version" style="width:150px;" >
+                <option value="<%=versions.get(0).getVersionNum()%>" selected><%=versions.get(0).getVersionNum()%></option>
+                <% for (int i =1; i< versions.size();i++ ){%>
+                <option value="<%=versions.get(i).getVersionNum()%>>"><%=versions.get(i).getVersionNum()%></option>
+                <%}%>
+              </select></td>
         </tr>
         <tr>
           <td>描述</td>
@@ -1816,20 +1811,13 @@ $('#jstree').jstree('select_node', 'j1_1');
         </tr>
         <tr>
           <td>项目</td>
-          <td><div id="projectgroup" class="selectbox">
-              <div class="cartes">
-                <input type="text" value="<%=testcaseprojects.get(0).getName()%>" id="project" name="project" class="listTxt" readonly />
-                <div class="listBtn"><b></b></div>
-                <input type="hidden" value="" class="listVal" />
-              </div>
-              <div class="lists">
-                <ul class="list">
-                  <% for (int i =0; i<testcaseprojects.size(); i++){%>
-                  <li id=<%=i%>><%=testcaseprojects.get(i).getName()%></li>
-                  <%}%>
-                </ul>
-              </div>
-            </div></td>
+          <td>
+          <select id="project"  name="project" style="width:150px">
+                <option value="<%=testcaseprojects.get(0).getName()%>" selected><%=testcaseprojects.get(0).getName()%></option>
+                <% for (int i =1; i< testcaseprojects.size();i++ ){%>
+                <option value="<%=testcaseprojects.get(i).getName()%>"><%=testcaseprojects.get(i).getName()%></option>
+                <%}%>
+              </select></td>
         </tr>
         <tr>
           <td>优先级</td>
