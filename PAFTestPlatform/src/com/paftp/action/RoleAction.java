@@ -90,6 +90,7 @@ public class RoleAction extends ActionSupport {
 				this.setRole_name(this.getSut_name() + "Manager");
 			}
 		} else if (isManager) {
+			this.setSut_name(sutService.findSutById(Integer.parseInt(this.getSut_id())).getName());
 			this.setRole_name(this.getSut_name() + "Worker");
 		} else {
 			request.setAttribute("error", "This is not a manager for this!");
@@ -158,7 +159,7 @@ public class RoleAction extends ActionSupport {
 		if (this.getIsManager())
 			request.setAttribute("isManager", isManager);
 		request.setAttribute("flag", true);
-		request.setAttribute("sut_name", this.getSut_name());
+		request.setAttribute("sut_id", this.getSut_id());
 
 		return "success";
 	}
