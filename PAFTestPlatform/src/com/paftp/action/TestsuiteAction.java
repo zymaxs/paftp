@@ -603,7 +603,9 @@ public class TestsuiteAction extends ActionSupport {
 		if (user != null) {
 			request.setAttribute("isCurrentRole", this.isRoleOfSut(user));
 		}
-		Sut sut = sutService.findSutByName(this.getSut_name());
+		//Sut sut = sutService.findSutByName(this.getSut_name());
+
+		Sut sut = sutService.findSutByName("cip1");
 		request.setAttribute("sut", sut);
 		request.setAttribute("flag", false);
 
@@ -849,7 +851,12 @@ public class TestsuiteAction extends ActionSupport {
 		List<Sut> suts = new ArrayList<Sut>();
 
 		Sut sut = sutService.findSutByName(sut_name);
-		suts.add(sut);
+		if (sut != null){
+			suts.add(sut);
+		}
+		if (suts.size() == 0){
+			return null;
+		}
 
 		JSONArray parentNode0000 = new JSONArray();
 
