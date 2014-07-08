@@ -603,10 +603,15 @@ public class TestsuiteAction extends ActionSupport {
 		if (user != null) {
 			request.setAttribute("isCurrentRole", this.isRoleOfSut(user));
 		}
+		
 		//Sut sut = sutService.findSutByName(this.getSut_name());
-
-		Sut sut = sutService.findSutByName("cip1");
+		if (this.getSut_id() != null){
+		Sut sut = sutService.findSutById(Integer.parseInt(this.getSut_id()));
 		request.setAttribute("sut", sut);
+		} else {
+			request.setAttribute("error", "The sut is null!");
+			return "error";
+		}
 		request.setAttribute("flag", false);
 
 		return "success";
@@ -851,6 +856,7 @@ public class TestsuiteAction extends ActionSupport {
 		List<Sut> suts = new ArrayList<Sut>();
 
 		Sut sut = sutService.findSutByName(sut_name);
+//		Sut sut = sutService.findSutById(Integer.parseInt(sut_id));
 		if (sut != null){
 			suts.add(sut);
 		}
