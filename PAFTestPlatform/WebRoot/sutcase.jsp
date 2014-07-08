@@ -623,7 +623,7 @@ function testtest(){
 				 document.getElementById('showtestsuite_description').value = root.testsuitedto.description;
 				 document.getElementById('showisdiscard').value = root.testsuitedto.status;
 				 document.getElementById('showtestsuite_changetag').value = root.changetag;
-				 var obj_status = document.getElementsByName('updatestatus');
+				 var obj_status = document.getElementsByName('updateisdiscard');
 				  for (i=0 ; i < obj_status.length ; i++){
 					  if(obj_status[i].value == root.testsuitedto.status){
 						  obj_status[i].checked = true;
