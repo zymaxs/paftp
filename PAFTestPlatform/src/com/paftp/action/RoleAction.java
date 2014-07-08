@@ -53,7 +53,6 @@ public class RoleAction extends ActionSupport {
 
 	private Long pages;
 	private List<Role> currentPageRoles = new ArrayList<Role>();
-	private List<Role> totalRoles = new ArrayList<Role>();
 	private List<User> resultusers = new ArrayList<User>();
 
 	List<User> managers = new ArrayList<User>();
@@ -249,10 +248,6 @@ public class RoleAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
-		// user = this.getSessionUser();
-		// if (user == null)
-		// return "login";
-
 		if (this.getSut_name() == null) {
 			request.setAttribute("error", "One sut must be given!");
 			return "error";
@@ -267,32 +262,35 @@ public class RoleAction extends ActionSupport {
 
 		List<Role> roles = sut.getRole_results();
 
-		row = 10;
+		this.setRow(10);
+		int number = 0;
+		User temp_user = new User();
 		pages = (long) Math.ceil(roles.size() / (double) row);
-		Role role = null;
-		for (int i = 0; i < row; i++) {
-			if (i < roles.size()) {
-				role = roleService.findRoleById(roles.get(i).getId());
+		Role role = new Role();
+		for (int i = 0; i < roles.size(); i++) {
+				if (number < this.getRow()){
+				role = roles.get(i);
+				List<Role> currentroles = new ArrayList<Role>();
 				if (role.getName().equals(this.getSut_name() + "Manager")){
 					role.setName("管理员");
 				}else if (role.getName().equals(this.getSut_name() + "Sdet")){
 					role.setName("成员");
 				}
-				this.totalRoles.add(role);
-			} else {
-				break;
-			}
-		}
-		
-		if(this.getRow() == null) {
-			this.setRow(10);
-		} 
-		if (this.getPagenum() == null){
-			this.setPagenum(1);
+				currentroles.add(role);
+				for (int j = 0; j< role.getUsers().size(); j++){
+					temp_user.setAlias(role.getUsers().get(j).getAlias());
+					temp_user.setDisplayName(role.getUsers().get(j).getDisplayName());
+					temp_user.setRoles(currentroles);
+					resultusers.add(temp_user);
+					number ++;
+				}
+				}else{
+					break;
+				}
 		}
 
 		request.setAttribute("pages", pages);
-		request.setAttribute("currentPageRoles", totalRoles);
+		request.setAttribute("resultusers", resultusers);
 		request.setAttribute("sut_name", this.getSut_name());
 		request.setAttribute("flag", true);
 
