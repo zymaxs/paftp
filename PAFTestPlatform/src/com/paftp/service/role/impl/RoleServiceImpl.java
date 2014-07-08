@@ -1,5 +1,6 @@
 package com.paftp.service.role.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -7,7 +8,11 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
+import com.paftp.dto.ApplySutDto;
+import com.paftp.dto.RoleDto;
+import com.paftp.dto.SutDto;
 import com.paftp.entity.Role;
+import com.paftp.entity.Sut;
 import com.paftp.service.role.RoleService;
 
 
@@ -65,6 +70,27 @@ public class RoleServiceImpl implements RoleService {
 	public Role findRoleBySutIdAndName(Integer id, String name) {
 		// TODO Auto-generated method stub
 		return baseDAO.get(" from Role r where r.sut_id = ? and r.name = ?", new Object[] {id, name});
+	}
+
+	public List<RoleDto> getRoleDto(List<Role> roles) {
+		// TODO Auto-generated method stub
+		List<RoleDto> roleDtoes = new ArrayList<RoleDto>();
+		
+		for (int i=0; i<roles.size(); i++){
+			if (roles.get(i).getName().equals("seniormanager") == false){
+			RoleDto roleDto = new RoleDto();
+			roleDto.setId(roles.get(i).getId());
+			roleDto.setName(roles.get(i).getName());
+			roleDto.setDescription(roles.get(i).getDescription());
+			SutDto sutDto = new SutDto();
+			sutDto.setCode(roles.get(i).getSut().getCode());
+			sutDto.setName(roles.get(i).getSut().getName());
+			roleDto.setSutdto(sutDto);
+			roleDtoes.add(roleDto);
+			}
+		}
+		
+		return roleDtoes;
 	}
 
 

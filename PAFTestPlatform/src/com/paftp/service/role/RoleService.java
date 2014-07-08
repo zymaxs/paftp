@@ -2,6 +2,7 @@ package com.paftp.service.role;
 
 import java.util.List;
 
+import com.paftp.dto.RoleDto;
 import com.paftp.entity.Role;
 
 public interface RoleService {
@@ -24,5 +25,5 @@ public interface RoleService {
 
 	public List<Role> findAllList();
 
-
+	public List<RoleDto> getRoleDto(List<Role> roles);
 }

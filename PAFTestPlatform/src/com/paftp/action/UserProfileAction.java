@@ -11,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.paftp.dto.RoleDto;
 import com.paftp.entity.Role;
 import com.paftp.entity.User;
 import com.paftp.entity.UserInfo;
@@ -65,6 +66,7 @@ public class UserProfileAction extends ActionSupport {
 	private User updatedUser;
 	private Util util = new Util();
 	private List<Role> currentPageRoles = new ArrayList<Role>();
+	private List<RoleDto> currentPageRoleDtoes = new ArrayList<RoleDto>();
 
 	private HttpSession session;
 
@@ -110,11 +112,12 @@ public class UserProfileAction extends ActionSupport {
 		
 		row = 10;
 		
-		user = userService.findUserById(this.getUserid());
+		User temp_user = userService.findUserById(this.getUserid());
 		
-		List<Role> roles = user.getRoles();
-
-		pages = (long) Math.ceil(roles.size() / (double) row);
+		List<Role> roles = temp_user.getRoles();
+		List<Role> temp_currentPageRoles = new ArrayList<Role>();
+		
+		Long temp_pages = (long) Math.ceil(roles.size() / (double) row);
 
 		if (pagenum == null || pagenum == 0) {
 			pagenum = 1;
@@ -124,14 +127,16 @@ public class UserProfileAction extends ActionSupport {
 			if (i < roles.size()) {
 				Role role = new Role();
 				role = roles.get(i);
-				currentPageRoles.add(role);
+				temp_currentPageRoles.add(role);
 			} else {
 				break;
 			}
 		}
+		
+		List<RoleDto> roleDtoes = roleService.getRoleDto(temp_currentPageRoles);
 
-		this.setPages(pages);
-		this.setCurrentPageRoles(currentPageRoles);
+		this.setPages(temp_pages);
+		this.setCurrentPageRoleDtoes(roleDtoes);
 
 		return "success";
 	}
@@ -428,6 +433,14 @@ public class UserProfileAction extends ActionSupport {
 
 	public void setDisplayname(String displayname) {
 		this.displayname = displayname;
+	}
+
+	public List<RoleDto> getCurrentPageRoleDtoes() {
+		return currentPageRoleDtoes;
+	}
+
+	public void setCurrentPageRoleDtoes(List<RoleDto> currentPageRoleDtoes) {
+		this.currentPageRoleDtoes = currentPageRoleDtoes;
 	}
 
 }
