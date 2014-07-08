@@ -173,22 +173,26 @@ public class RoleAction extends ActionSupport {
 		setIsManager(isManager(user.getAlias()));// Verify whether this needs to
 													// be initialed!
 		Role sdet_role = new Role();
-		
+		Sut sut = null;
 		if (isAdmin || isManager) {
 			String[] updateusers = null;
 			if (isAdmin) {
-				if (this.getSut_name() == null
-						|| this.getSut_name().equals("null")) {
+				if (this.getSut_id() == null
+						|| this.getSut_id().equals("null")) {
 					this.setRole_name("seniormanager");
 					updateusers = util.splitString(this
 							.getSeniormanagerstring());
 				} else {
-					this.setRole_name(this.getSut_name() + "Manager");
+					sut = sutService.findSutById(Integer.parseInt(this.getSut_id()));
+					this.setSut_name(sut.getName());
+					this.setRole_name(sut.getName() + "Manager");
 					updateusers = util.splitString(this.getManagerstring());
-					sdet_role = roleService.findRoleByName(this.getSut_name() + "Sdet");
+					sdet_role = roleService.findRoleByName(sut.getName() + "Sdet");
 				}
 			} else {
-				this.setRole_name(this.getSut_name() + "Sdet");
+				sut = sutService.findSutById(Integer.parseInt(this.getSut_id()));
+				this.setSut_name(sut.getName());
+				this.setRole_name(sut.getName() + "Sdet");
 				updateusers = util.splitString(this.getWorkerstring());
 			}
 			Role role = roleService.findRoleByName(this.getRole_name());
