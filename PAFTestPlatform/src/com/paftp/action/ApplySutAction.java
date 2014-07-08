@@ -105,8 +105,9 @@ public class ApplySutAction extends ActionSupport {
 		ApplySut applySut = new ApplySut();
 		applySut.setUser(user);
 		applySut = setApplySut(applySut, this.getStatus());
-		
-		ApplySut existSuts = applySutService.findApplySutByName(this.getSutname());
+
+		ApplySut existSuts = applySutService.findApplySutByName(this
+				.getSutname());
 		if (existSuts != null) {
 			if (existSuts.getUser().getAlias().equals(user.getAlias())) {
 				request.setAttribute("error",
@@ -126,7 +127,7 @@ public class ApplySutAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 		Integer test = this.getSut_id();
-		
+
 		user = getSessionUser();
 		this.isAdmin = this.isAdmin(user.getAlias());
 
@@ -140,7 +141,7 @@ public class ApplySutAction extends ActionSupport {
 			request.setAttribute("error", "You are not the admin to do this!");
 			return "error";
 		}
-		
+
 		ApplySut applySut = applySutService.findApplySutByName(this
 				.getSutname());
 		applySut = setApplySut(applySut, this.getStatus());
@@ -187,7 +188,7 @@ public class ApplySutAction extends ActionSupport {
 
 		ApplySut applySut = applySutService.findApplySutById(this.getId());
 		Sut temp_sut = sutService.findSutByName(applySut.getName());
-		if (temp_sut != null){
+		if (temp_sut != null) {
 			Integer temp_sut_id = temp_sut.getId();
 			request.setAttribute("sut_id", temp_sut_id);
 		}
@@ -199,14 +200,15 @@ public class ApplySutAction extends ActionSupport {
 	public String querySut() throws ParseException {
 
 		User applyer = userService.findUserByAlias(this.getApplyer());
-		
+
 		Integer applyer_id = null;
-		if (this.getApplyer() != null && this.getApplyer().equals("") == false && applyer == null){
+		if (this.getApplyer() != null && this.getApplyer().equals("") == false
+				&& applyer == null) {
 			applyer_id = -1;
-		}else if(applyer != null){
+		} else if (applyer != null) {
 			applyer_id = applyer.getId();
 		}
-		
+
 		result = new HashMap<String, Object>();
 
 		String newStartTime = this.getStarttime().replace("/", "-");
@@ -222,10 +224,10 @@ public class ApplySutAction extends ActionSupport {
 
 		if (this.getRow() == null)
 			this.setRow(10);
-		
-		if (pagecount > 0){
-		pages = (long) Math.ceil(pagecount / (double) this.getRow());
-		}else {
+
+		if (pagecount > 0) {
+			pages = (long) Math.ceil(pagecount / (double) this.getRow());
+		} else {
 			pages = (long) 1;
 		}
 
@@ -246,7 +248,7 @@ public class ApplySutAction extends ActionSupport {
 
 		SutGroup sutgroup = sutgroupService.findSutGroupByName(this
 				.getGroupname());
-		
+
 		ApplySut applySut = applySutService.findApplySutById(this.getId());
 
 		applySut.setGroup(sutgroup);
@@ -257,9 +259,9 @@ public class ApplySutAction extends ActionSupport {
 		this.resolvetime = new Date();
 		applySut.setResolvetime(this.getResolvetime());
 		applySutService.updateApplySut(applySut);
-		
-		if (applySut.getApplysutstatus().getName().equals("通过") || applySut.getApplysutstatus().getName().equals("待审批")){
-			Sut sut = sutService.findSutById(this.getSut_id());
+
+		Sut sut = sutService.findSutById(this.getSut_id());
+		if (sut != null) {
 			sut.setCode(this.getCode());
 			sut.setName(this.getSutname());
 			sut.setDescription(this.getDescription());
@@ -301,7 +303,8 @@ public class ApplySutAction extends ActionSupport {
 
 		if (applySutStatus.getId() == 1) { // status: �����
 			this.applytime = new Date();
-			java.sql.Timestamp applydatetime = new java.sql.Timestamp(applytime.getTime());
+			java.sql.Timestamp applydatetime = new java.sql.Timestamp(
+					applytime.getTime());
 			applySut.setApplytime(applydatetime);
 
 			applySut.setApplysutstatus(applySutStatus);
@@ -312,9 +315,10 @@ public class ApplySutAction extends ActionSupport {
 			SutGroup group = sutgroupService.findSutGroupByName(this
 					.getGroupname());
 			applySut.setGroup(group);
-		} else { 
+		} else {
 			this.resolvetime = new Date();
-			java.sql.Timestamp resolvedatetime = new java.sql.Timestamp(resolvetime.getTime());
+			java.sql.Timestamp resolvedatetime = new java.sql.Timestamp(
+					resolvetime.getTime());
 			applySut.setApplysutstatus(applySutStatus);
 			SutGroup sutGroup = sutgroupService.findSutGroupByName(this
 					.getGroupname());
