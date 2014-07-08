@@ -20,7 +20,7 @@ List<TestcaseProject> testcaseprojects = (List<TestcaseProject>)request.getAttri
 List<Version> versions = (List<Version>)request.getAttribute("versions");
 Sut sut  = (Sut)request.getAttribute("sut");
 String sut_name = sut.getName();
-String sut_id =(String)request.getAttribute("sut_id");
+String sut_id = request.getAttribute("sut_id").toString();
 String isCurrentRole;
 if (String.valueOf(request.getAttribute("isCurrentRole")) == "true"){
 	isCurrentRole = "y";

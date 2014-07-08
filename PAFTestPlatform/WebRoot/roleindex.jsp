@@ -12,7 +12,7 @@
 <% 
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialroles.action").forward(request,response);}
-List<Role> currentPageRoles = (List<Role>)request.getAttribute("currentPageRoles");
+List<User> resultusers = (List<User>)request.getAttribute("resultusers");
 String pagenum = request.getAttribute("pages").toString();
 String sut_name = (String)request.getAttribute("sut_name");
 %>
@@ -134,17 +134,13 @@ function inidata(){
 	<%
 	String iniinsertdata="";
 	
-	for(int i=0; i< currentPageRoles.size() ;i++ ){
-		if(currentPageRoles.get(i).getUsers() != null){
-		for (int j=0; j<currentPageRoles.get(i).getUsers().size(); j++){
+	for(int i=0; i< resultusers.size() ;i++ ){
 		iniinsertdata +="<tr>";
-		iniinsertdata +="<td><a href='getuserinfo.action?userid="+currentPageRoles.get(i).getUsers().get(j).getId()+"'>" +currentPageRoles.get(i).getUsers().get(j).getAlias()+"</a></td>";
-		iniinsertdata +="<td>"+currentPageRoles.get(i).getUsers().get(j).getDisplayName()+"</td>";
-		iniinsertdata +="<td>"+currentPageRoles.get(i).getName()+"</td>";
-		iniinsertdata +="<td>"+currentPageRoles.get(i).getDescription()+"</td>";
+		iniinsertdata +="<td><a href='getuserinfo.action?userid="+resultusers.get(i).getId()+"'>" +resultusers.get(i).getAlias()+"</a></td>";
+		iniinsertdata +="<td>"+resultusers.get(i).getDisplayName()+"</td>";
+		iniinsertdata +="<td>"+resultusers.get(i).getRoles().get(0).getName()+"</td>";
+		iniinsertdata +="<td>"+resultusers.get(i).getRoles().get(0).getDescription()+"</td>";
 		iniinsertdata +="</tr>";
-		}
-		}
 	}
 	%>
 	return "<%=iniinsertdata%>";
