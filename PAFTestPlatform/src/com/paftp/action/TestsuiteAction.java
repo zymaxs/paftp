@@ -353,17 +353,14 @@ public class TestsuiteAction extends ActionSupport {
 
 	public String updateTestcase() {
 
-		HttpServletRequest request = ServletActionContext.getRequest();
-
 		user = getSessionUser();
 		if (user == null) {
-			request.setAttribute("error", "Please log in firstly!");
-			return "error";
+			this.setPrompt("Please log in firstly!");
+			return "success";
 		}
 		if (this.isRoleOfSut(user) == false) {
-			request.setAttribute("error",
-					"You has not authority to work under this group!");
-			return "error";
+			this.setPrompt("You has not authority to work under this group!");
+			return "success";
 		}
 
 		Testcase testcase = testcaseService.findTestcaseById(this
