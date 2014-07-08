@@ -272,9 +272,8 @@ public class RoleAction extends ActionSupport {
 
 		this.setRow(10);
 		int number = 0;
-		User temp_user = new User();
-		pages = (long) Math.ceil(roles.size() / (double) row);
 		Role role = new Role();
+		pages = (long) Math.ceil(roles.size() / (double) row);
 		for (int i = 0; i < roles.size(); i++) {
 				if (number < this.getRow()){
 				role = roles.get(i);
@@ -286,6 +285,7 @@ public class RoleAction extends ActionSupport {
 				}
 				currentroles.add(role);
 				for (int j = 0; j< role.getUsers().size(); j++){
+					User temp_user = new User();
 					temp_user.setId(role.getUsers().get(j).getId());
 					temp_user.setAlias(role.getUsers().get(j).getAlias());
 					temp_user.setDisplayName(role.getUsers().get(j).getDisplayName());
