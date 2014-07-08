@@ -347,7 +347,7 @@ List<User> normalusers = (List<User>)request.getAttribute("normalusers");
                 <td><input class="btn input-mini" id="remove_all" value="<<"></td>
               </tr>
             </table></td>
-          <td id="manageselect"><select multiple="multiple" id="seniormanager" style="height:300px;">
+          <td id="manageselect"><select multiple="multiple" id="seniormanager" style="height:300px; width:200px;">
             </select></td>
           <td ><input style="display:none" id="seniormanagerstring" name="seniormanagerstring" value="seniormanagerstring"></td>
         </tr>
