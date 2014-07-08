@@ -280,6 +280,7 @@ public class RoleAction extends ActionSupport {
 				}
 				currentroles.add(role);
 				for (int j = 0; j< role.getUsers().size(); j++){
+					temp_user.setId(role.getUsers().get(j).getId());
 					temp_user.setAlias(role.getUsers().get(j).getAlias());
 					temp_user.setDisplayName(role.getUsers().get(j).getDisplayName());
 					temp_user.setRoles(currentroles);
