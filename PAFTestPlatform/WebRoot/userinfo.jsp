@@ -103,7 +103,7 @@ $(document).ready( function(){
 		link_string : '/?page={page_number}',
 		max_page : pagentotal, 
 		paged : function(page) {
-			params = {pagenum:page,userid:$("#id").val()};
+		params = {pagenum:page,userid:<%=id%>};
 		$.ajax({
 				type : "POST",
 				url : "getUserInfoAjax.action",
@@ -122,7 +122,7 @@ $(document).ready( function(){
 
 				error : function(root) {
 
-					alert("json=" + root);
+					alert("failed");
 
 					return false;
 

@@ -107,8 +107,11 @@ public class UserProfileAction extends ActionSupport {
 	}
 
 	public String getRoles() {
+		
 		row = 10;
-
+		
+		user = userService.findUserById(this.getUserid());
+		
 		List<Role> roles = user.getRoles();
 
 		pages = (long) Math.ceil(roles.size() / (double) row);
