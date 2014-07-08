@@ -83,9 +83,10 @@ public class RoleAction extends ActionSupport {
 		setIsManager(isManager(user.getAlias()));
 
 		if (isAdmin) {
-			if (this.getSut_name() == null) {
+			if (this.getSut_id() == null) {
 				this.setRole_name("seniormanager");
 			} else {
+				this.setSut_name(sutService.findSutById(Integer.parseInt(this.getSut_id())).getName());
 				this.setRole_name(this.getSut_name() + "Manager");
 			}
 		} else if (isManager) {
@@ -455,10 +456,20 @@ private List<User> getSpecialPageUsers(List<User> users){
 	private Boolean isManager(String alias) {
 		user = userService.findUserByAlias(alias);
 		List<Role> roles = user.getRoles();
+		Sut sut = null;
+		if (this.getSut_id() != null){
+			sut = sutService.findSutById(Integer.parseInt(this.getSut_id()));
+		} else {
+			if (this.getSut_name() != null){
+				sut = sutService.findSutByName(this.getSut_name());
+			}
+		}
+		if (sut != null){
 		for (int i = 0; i < roles.size(); i++) {
-			if (roles.get(i).getName().equals(this.getSut_name() + "Manager")) {
+			if (roles.get(i).getName().equals(sut.getName() + "Manager")) {
 				return true;
 			}
+		}
 		}
 		return false;
 	}

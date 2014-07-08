@@ -841,9 +841,17 @@ public class TestsuiteAction extends ActionSupport {
 	private Boolean isRoleOfSut(User user) {
 		User currentuser = userService.findUserByAlias(user.getAlias());
 		List<Role> roles = currentuser.getRoles();
+		Sut sut = null;
+		if (this.getSut_id() != null){
+			sut = sutService.findSutById(Integer.parseInt(this.getSut_id()));
+		} else {
+			if (this.getSut_name() != null){
+				sut = sutService.findSutByName(this.getSut_name());
+			}
+		}
 		for (int i = 0; i < roles.size(); i++) {
 			if (roles.get(i).getSut() != null) {
-				if (roles.get(i).getSut().getName().equals(this.getSut_name())) {
+				if (roles.get(i).getSut().getName().equals(sut.getName())) {
 					return true;
 				}
 			}
