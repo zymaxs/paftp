@@ -18,14 +18,14 @@ public class CompareObjects implements Comparator {
 		} else if (name1.charAt(0) < name2.charAt(0)) {
 			return -1;
 		} else {
-			String alphabet1 = name1.replaceAll("\\d+", "");
-			String alphabet2 = name2.replaceAll("\\d+", "");
+			String alphabet1 = name1.replaceAll("\\d", "");
+			String alphabet2 = name2.replaceAll("\\d", "");
 			int cmpAlphabet = alphabet1.compareToIgnoreCase(alphabet2);
 			if (cmpAlphabet != 0) {
 				return cmpAlphabet;
 			}
-			String numeric1 = name1.replaceAll("^[^0-9]+", "");
-			String numeric2 = name2.replaceAll("^[^0-9]+", "");
+			String numeric1 = name1.replaceAll("[^0-9]", "");
+			String numeric2 = name2.replaceAll("[^0-9]", "");
 			if ("".equals(numeric1)) {
 				return -1;
 			}
