@@ -246,6 +246,8 @@ public class ApplySutAction extends ActionSupport {
 
 	public String updateSut() {
 
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
 		SutGroup sutgroup = sutgroupService.findSutGroupByName(this
 				.getGroupname());
 
@@ -262,11 +264,28 @@ public class ApplySutAction extends ActionSupport {
 
 		Sut sut = sutService.findSutById(this.getSut_id());
 		if (sut != null) {
+			Sut target_sut = sutService.findSutByName(this.getSutname());
+			
+			if (target_sut != null){
+				request.setAttribute("error", "The sut already exist : " + this.getSutname());
+				return "error";
+			}
+			
+			if (sut.getName().equals(this.getSutname()) == false){
+				List<Role> roles = sut.getRole_results();
+				for (int i = 0; i < roles.size(); i ++){
+					String role_name = roles.get(i).getName().replaceAll(sut.getName(), this.getSutname());
+					String role_description = roles.get(i).getName().replaceAll(sut.getName(), this.getSutname());
+					roles.get(i).setName(role_name);
+					roles.get(i).setDescription(role_description);
+				}
+			}
+			
 			sut.setCode(this.getCode());
 			sut.setName(this.getSutname());
 			sut.setDescription(this.getDescription());
 			sut.setGroup(sutgroup);
-			sutService.saveSut(sut);
+			sutService.updateSut(sut);
 		}
 
 		return "success";

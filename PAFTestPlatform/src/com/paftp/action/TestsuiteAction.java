@@ -918,8 +918,11 @@ public class TestsuiteAction extends ActionSupport {
 		java.sql.Timestamp updatedatetime = new java.sql.Timestamp(
 				updatetime.getTime());
 		casechangehistory.setUpdate_time(updatedatetime);
-		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
 
+		if(testcase.getTestcase_approval().equals("待评审") == false || (newValue != null && oldValue.equals(newValue) == false)){
+		casechangehistoryService.saveCaseChangeHistory(casechangehistory);
+		}
+		
 		CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 
 		if(testcase.getTestcase_approval().equals("待评审") == false){
@@ -930,12 +933,14 @@ public class TestsuiteAction extends ActionSupport {
 		casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
 		}
 		
+		if (newValue != null && oldValue.equals(newValue) == false){
 		casechangeoperation = new CaseChangeOperation();
 		casechangeoperation.setCaseChangeHistory(casechangehistory);
 		casechangeoperation.setOldValue(oldValue);
 		casechangeoperation.setNewValue(newValue);
 		casechangeoperation.setField(field);
 		casechangeoperationService.saveCaseChangeOperation(casechangeoperation);
+		}
 	}
 
 	private User getSessionUser() {
