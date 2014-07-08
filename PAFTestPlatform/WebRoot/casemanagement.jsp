@@ -59,7 +59,7 @@ $(document).ready(function(){
 		for (int i=0; i < sutGroup.size(); i++){
 			String inisutgroupinfo = "";
 			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
-				inisutgroupinfo += "&nbsp;&nbsp;&nbsp;&nbsp;<a href='sutcase.jsp?sut_name=" + sutGroup.get(i).getSuts().get(j).getName() +"'>" +sutGroup.get(i).getSuts().get(j).getName() + "</a> ";
+				inisutgroupinfo += "&nbsp;&nbsp;&nbsp;&nbsp;<a href='sutcase.jsp?sut_id=" + sutGroup.get(i).getSuts().get(j).getId() +"'>" +sutGroup.get(i).getSuts().get(j).getName() + "</a> ";
 			}
 			inisutgroup += "<blockquote><p>";
 			inisutgroup += sutGroup.get(i).getName();

@@ -11,9 +11,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+
 <%
-	if (session.getAttribute("user") == null) {
-%>
+	if ( session.getAttribute("user") == null ) { %>
 <Meta http-equiv="refresh" content="0;url='index_1.jsp'; ">
 <%
 	}
@@ -92,7 +92,7 @@ List<String> positions = (List<String>)request.getAttribute("positions");
                 	digits: "请输入数字",
 					maxlength: $.validator.format("最大输入不超过二十个字符.")
             	},
-            	"moible":{
+            	"mobile":{
                 	digits: "请输入数字",
 					maxlength: $.validator.format("最大输入不超过二十个字符.")
             	},
@@ -331,6 +331,7 @@ $(document).ready(function(){
 </head>
 
 <body>
+<%=session.getAttribute("user")%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff;"> <br>
@@ -380,14 +381,14 @@ $(document).ready(function(){
         <table style="width:40%" align="left" class="table table-striped">
           <tr>
             <td>* 真实姓名 :</td>
-            <td><input type="text" id="displayname"
+            <td colspan="3"><input type="text" id="displayname"
 								name="displayname" value="<%=displayname%>" style="width:200px;"></td>
           </tr>
           <tr>
             <td>* 所属部门 :</td>
             <td><div id="selectDepartment" class="selectbox">
                 <div class="cartes">
-                  <input type="text" value="<%=departments.get(0)%>" id="department" name="department" class="listTxt" />
+                  <input type="text" value="<%=department%>" id="department" name="department" class="listTxt" />
                   <div class="listBtn"><b></b></div>
                   <input type="hidden" value="" class="listVal" />
                 </div>
@@ -399,12 +400,10 @@ $(document).ready(function(){
                   </ul>
                 </div>
               </div></td>
-            </tr>
-            <tr>
-            <td>* 所属部门 :</td>
+            <td>* 职  位 :</td>
             <td><div id="selectPosition" class="selectbox">
                 <div class="cartes">
-                  <input type="text" value="<%=positions.get(0)%>" id="position" name="position" class="listTxt" />
+                  <input type="text" value="<%=position%>" id="position" name="position" class="listTxt" />
                   <div class="listBtn"><b></b></div>
                   <input type="hidden" value="" class="listVal" />
                 </div>
@@ -419,25 +418,25 @@ $(document).ready(function(){
           </tr>
           <tr>
             <td>联系电话 :</td>
-            <td><input type="text" id="telephone" name="telephone"
+            <td colspan="3"><input type="text" id="telephone" name="telephone"
 								value="<%=telephone%>" style="width:200px;"></td>
           </tr>
           <tr>
             <td>移动电话 :</td>
-            <td><input type="text" id="mobile"
+            <td colspan="3"><input type="text" id="mobile"
 								name="mobile" value="<%=mobile%>" style="width:200px;"></td>
           </tr>
           <tr>
           	<td>其他邮件 :</td>
-            <td><input type="text" id="othermail"
+            <td colspan="3"><input type="text" id="othermail"
 								name="othermail" value="<%=othermail%>" style="width:200px;"></td>
           </tr>
           <tr>
           <td>用户备注 :</td>
-          <td><textarea  id="otherinfo" name="otherinfo" style="height:100px; max-height:100px; width:300px; max-width:300px" ><%=otherinfo%></textarea></td>
+          <td colspan="3"><textarea  id="otherinfo" name="otherinfo" style="height:100px; max-height:100px; width:300px; max-width:300px" ><%=otherinfo%></textarea></td>
         </tr>
           <tr align="center">
-          	<td colspan="2"><button type="submit" class="btn btn-primary" style="width:80px; text-align:center">提交</button></td>
+          	<td colspan="4"><button type="submit" class="btn btn-primary" style="width:80px; text-align:center">提交</button></td>
           </tr>
         </table>
       </fieldset>

@@ -682,7 +682,7 @@ function testtest(){
 					else if(root.condtestcase_quantity.testcase_approval[i].value == "通过"){
 						tongguo = root.condtestcase_quantity.testcase_approval[i].count;
 						}  
-					else if(root.condtestcase_quantity.testcase_approval[i].value == "不通过"){
+					else if(root.condtestcase_quantity.testcase_approval[i].value == "未通过"){
 						butongguo = root.condtestcase_quantity.testcase_approval[i].count;
 						} 
 						}
