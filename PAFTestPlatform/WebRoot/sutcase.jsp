@@ -42,6 +42,24 @@ else { isCurrentRole = "n";};
 <script type="text/javascript" src="js/zDialog.js"></script>
 <script type="text/javascript" src="js/zDrag.js"></script>
 <script type="text/javascript" src="js/jQSelect.js"></script>
+<script language="javascript">
+function quanjiao(obj)
+{
+    var str=obj.value;
+    if (str.length>0)
+    {
+        for (var i = str.length-1; i >= 0; i--)
+        {
+            unicode=str.charCodeAt(i);
+            if (unicode>65280 && unicode<65375)
+            {
+                alert("不能输入全角字符，请输入半角字符");
+                obj.value=str.substr(0,i);
+            }
+        }
+    }
+}
+</script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -1660,7 +1678,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             <tr>
               <td width="100px">用例名称</td>
               <td><div class="input-group"> <span class="input-group-addon" id="pre_casename"></span>
-                  <input id="showtestcase_name" class="form-control input-sm" name="showtestcase_name" value="" style="width:200px" readonly>
+                  <input id="showtestcase_name" class="form-control input-sm" name="showtestcase_name" value="" style="width:200px" onKeyUp="quanjiao(this);" readonly>
                 </div>
               <td rowspan="14" style="vertical-align:top"><div id="showCaseChangeHistoryDiv" style="height:604px;overflow:scroll;"> </div></td>
             </tr>
@@ -1732,7 +1750,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             </tr>
             <tr>
               <td>步骤</td>
-              <td><textarea  rows="4" name="showcasesteps" class="form-control" id="showcasesteps" style="max-height:150px; max-width:550px; width:550px; height:150px;" readonly></textarea></td>
+              <td><textarea  rows="4" name="showcasesteps" class="form-control" id="showcasesteps" style="max-height:150px; max-width:550px; width:550px; height:150px;"  readonly></textarea></td>
             </tr>
             <tr align="left">
               <td colspan="2" id="upTestCaseTd" style="display:" align="center"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center"  onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" >更新</button></td>
@@ -1767,7 +1785,7 @@ $('#jstree').jstree('select_node', 'j1_1');
         <tr>
           <td width="100px">测试集</td>
           <td><div class="input-group"> <span class="input-group-addon">Ts_</span>
-              <input id="testsuite_name" class="form-control input-sm" name="testsuite_name" value="" style="width:200px">
+              <input id="testsuite_name" class="form-control input-sm" name="testsuite_name" value=""  style="width:200px">
             </div></td>
         </tr>
         <tr>
@@ -1799,7 +1817,7 @@ $('#jstree').jstree('select_node', 'j1_1');
           <td><!--TODO-->
             
             <div class="input-group"> <span class="input-group-addon" id="pre_stname"></span>
-              <input id="testcase_name" class="form-control input-sm" name="testcase_name" value="" style="width:200px">
+              <input id="testcase_name" class="form-control input-sm" name="testcase_name" value="" onKeyUp="quanjiao(this);" style="width:200px">
             </div>
         </tr>
         <tr>
