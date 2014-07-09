@@ -295,6 +295,12 @@ function inidata(){
 								});
 		   });
 </script>
+<script type="text/javascript">
+	function loginac() {
+		document.loginform.action = "${pageContext.request.contextPath}/login.action";
+		document.loginform.submit();
+	}
+</script>
 </head>
 
 <body>

@@ -60,7 +60,8 @@ $(document).ready(function(){
                 required: true
             },
             "othermail":{
-                email:true
+                email:true,
+				maxlength: 50
             },
             "telephone":{
                 digits:true,
@@ -83,7 +84,8 @@ $(document).ready(function(){
 				maxlength: $.validator.format("真实姓名最大输入不超过十个字符.")
             },
             "othermail":{
-                email:"请输入正确的email地址"
+                email:"请输入正确的email地址",
+				maxlength: $.validator.format("最大输入不超过五十个字符.")
             },
             "telephone":{
                 digits: "请输入数字",
@@ -118,15 +120,16 @@ function quanjiao(obj)
     var str=obj.value;
     if (str.length>0)
     {
-        for (var i = str.length-1; i >= 0; i--)
+        for (i = str.length-1; i >= 0; i--)
         {
             unicode=str.charCodeAt(i);
             if (unicode>65280 && unicode<65375)
             {
                 alert("不能输入全角字符，请输入半角字符");
-                obj.value=str.substr(0,i);
+				 obj.value=str.substr(0,i);
             }
         }
+		 
     }
 }
 </script>
@@ -284,7 +287,7 @@ function quanjiao(obj)
   	<td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
     <td colspan="7">&nbsp;</td>
     <%if (session.getAttribute("user") == null) {%>
-    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"></td>
+    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </td>
     <%} else { User user = (User) session.getAttribute("user");
                       String name = user.getAlias(); %>
     <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </td>

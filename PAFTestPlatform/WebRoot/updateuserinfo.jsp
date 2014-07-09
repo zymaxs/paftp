@@ -11,19 +11,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
-
-<%
-	if ( session.getAttribute("user") == null ) { %>
-<Meta http-equiv="refresh" content="0;url='index_1.jsp'; ">
-<%
-	}
-%>
+<script type="text/javascript">
+<%if(session.getAttribute("user") == null){%>
+window.location = "index_1.jsp";
+<%}%>
 <% 
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/upuserinfo.action").forward(request,response);}
 List<String> departments = (List<String>)request.getAttribute("departments");
 List<String> positions = (List<String>)request.getAttribute("positions");
 %>
+</script>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -52,7 +50,11 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 }
 </style>
 <script type="text/javascript">
+
+
 	$(document).ready(function() {
+		$("#selectPosition").jQSelect({});
+		$("#selectDepartment").jQSelect({});
 		$("#updateinfoForm").validate({
 			rules : {
 				"displayname" : {
@@ -134,8 +136,6 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 	});
 </script>
 <%
-	User user = (User) session.getAttribute("user");
-	UserInfo userinfo = (UserInfo) user.getUserInfo();
 	String name = "";
 	String displayname = "";
 	String department = "";
@@ -144,6 +144,9 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 	String telephone = "";
 	String othermail = "";
 	String otherinfo ="";
+	if (session.getAttribute("user") != null){
+	User user = (User) session.getAttribute("user");
+	UserInfo userinfo = (UserInfo) user.getUserInfo();
 
 	if (user.getAlias() != null) {
 		name = user.getAlias();
@@ -178,14 +181,9 @@ List<String> positions = (List<String>)request.getAttribute("positions");
 	if (userinfo.getOtherinfo() != null) {
 		otherinfo = userinfo.getOtherinfo();
 	}
+	}
 	;
 %>
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#selectPosition").jQSelect({});
-	$("#selectDepartment").jQSelect({});
-});	
-</script>
 <style>
 /*导航默认样式，可根据实际情况修改*/
 * {
@@ -331,7 +329,6 @@ $(document).ready(function(){
 </head>
 
 <body>
-<%=session.getAttribute("user")%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff;"> <br>
