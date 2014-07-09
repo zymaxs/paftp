@@ -56,7 +56,8 @@ public class UserProfileAction extends ActionSupport {
 
 	private String alias;
 	private String displayname;
-
+	private String originpassword;
+	
 	private Integer row;
 	private Integer pagenum;
 	private Long pages;
@@ -165,14 +166,25 @@ public class UserProfileAction extends ActionSupport {
 
 	public String updatePassword() {
 
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
 		user = getSessionUser();
+		
+		if(this.getOriginpassword() == null || this.getPassword() == null || this.getOriginpassword().equals(this.getPassword())){
+			request.setAttribute("error",
+					"Your new password is same with the old one or your input is null!");
+			return "error";
+		}
 
 		String orignpassword_md5 = util.md5Encryption(this.orignpassword);
 		User dbUser = userService.findUserByAliasAndPassword(user.getAlias(),
 				orignpassword_md5);
 
-		if (dbUser == null)
-			return "error"; // source password error
+		if (dbUser == null){
+			request.setAttribute("error",
+					"Your password is wrong!");
+			return "error";
+		}
 
 		if (dbUser.getStatus().equals("initial"))
 			dbUser.setStatus("old");
@@ -448,6 +460,14 @@ public class UserProfileAction extends ActionSupport {
 
 	public void setCurrentPageRoleDtoes(List<RoleDto> currentPageRoleDtoes) {
 		this.currentPageRoleDtoes = currentPageRoleDtoes;
+	}
+
+	public String getOriginpassword() {
+		return originpassword;
+	}
+
+	public void setOriginpassword(String originpassword) {
+		this.originpassword = originpassword;
 	}
 
 }
