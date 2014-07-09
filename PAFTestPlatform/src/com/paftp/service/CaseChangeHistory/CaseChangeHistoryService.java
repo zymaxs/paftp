@@ -19,6 +19,8 @@ public interface CaseChangeHistoryService {
 	public void deleteCaseChangeHistory(CaseChangeHistory casechangehistory);
 
 	public List<CaseChangeHistory> findAllList();
+	
+	public List<CaseChangeHistory> findAllListByTestcaseId(Integer id);
 
 	//public User findUserByNameAndPassword(String username, String password);
 

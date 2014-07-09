@@ -327,8 +327,9 @@ public class TestsuiteAction extends ActionSupport {
 				if (testcase != null) {
 
 					this.setChangetag(testcase.getChangetag().toString());
+					List<CaseChangeHistory> casechangehistories_source = casechangehistoryService.findAllListByTestcaseId(testcase.getId());
 					this.setTestcasedto(testsuiteService
-							.getTestcaseDto(testcase));
+							.getTestcaseDto(testcase, casechangehistories_source));
 					if (user != null
 							&& user.getAlias().equals(
 									testcase.getCreator().getAlias()) == true) {
@@ -542,14 +543,15 @@ public class TestsuiteAction extends ActionSupport {
 		Testcase checktestcase = testcaseService.findTestcaseById(testcase
 				.getId());
 		Integer targetchangetag = checktestcase.getChangetag();
-		if (i == 0) {
-			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
-			return true;
-		}
+//		if (i == 0) {
+//			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
+//			return true;
+//		}
 		if (changetag != targetchangetag
 				|| targetchangetag.toString().equals(this.getChangetag()) == false) {
 			return false;
 		} else {
+			if (i > 0){
 			Integer temp_changetag = testcase.getChangetag() + 1;
 			testcase.setChangetag(temp_changetag);
 			testcaseService.updateTestcase(testcase);
@@ -557,6 +559,7 @@ public class TestsuiteAction extends ActionSupport {
 			for (int j = 0; j < i; j++) {
 				casechangeoperationService
 						.saveCaseChangeOperation(casechangeoperations.get(j));
+			}
 			}
 			return true;
 		}
