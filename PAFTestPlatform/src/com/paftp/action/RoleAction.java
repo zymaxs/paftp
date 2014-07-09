@@ -53,7 +53,6 @@ public class RoleAction extends ActionSupport {
 	private String prompt;
 
 	private Long pages;
-	private List<Role> currentPageRoles = new ArrayList<Role>();
 	private List<User> resultusers = new ArrayList<User>();
 
 	List<User> managers = new ArrayList<User>();
@@ -385,54 +384,54 @@ public class RoleAction extends ActionSupport {
 		return "success";
 	}
 
-	private List<String> getManagedSut(String alias) {
+//	private List<String> getManagedSut(String alias) {
+//
+//		String sutName;
+//		List<String> sut_names = new ArrayList<String>();
+//		List<Role> managerRoles = userService.findUserByAlias(alias).getRoles();
+//		for (int i = 0; i < managerRoles.size(); i++) {
+//			if (managerRoles.get(i).getName().equals("administator")) {
+//				List<Sut> suts = sutService.findAllList(); // Rayleigh
+//				for (int j = 0; j < suts.size(); j++) {
+//					sut_names.add(j, suts.get(j).getName());
+//				}
+//				return sut_names;
+//			} else {
+//				sutName = managerRoles.get(i).getSut().getName();
+//				sut_names.add(sutName);
+//			}
+//
+//		}
+//
+//		return sut_names;
+//	}
 
-		String sutName;
-		List<String> sut_names = new ArrayList<String>();
-		List<Role> managerRoles = userService.findUserByAlias(alias).getRoles();
-		for (int i = 0; i < managerRoles.size(); i++) {
-			if (managerRoles.get(i).getName().equals("administator")) {
-				List<Sut> suts = sutService.findAllList(); // Rayleigh
-				for (int j = 0; j < suts.size(); j++) {
-					sut_names.add(j, suts.get(j).getName());
-				}
-				return sut_names;
-			} else {
-				sutName = managerRoles.get(i).getSut().getName();
-				sut_names.add(sutName);
-			}
-
-		}
-
-		return sut_names;
-	}
-
-	private List<String> getRoles(String roleName) {
-		List<Role> roles = roleService.findAllList();
-		List<String> names = new ArrayList<String>();
-		for (int i = 0; i < roles.size(); i++) {
-			if (!roles.get(i).getName().equals("administrator")
-					&& !roles.get(i).getName().equals(roleName))
-				names.add(i, roles.get(i).getName());
-		}
-		return names;
-	}
+//	private List<String> getRoles(String roleName) {
+//		List<Role> roles = roleService.findAllList();
+//		List<String> names = new ArrayList<String>();
+//		for (int i = 0; i < roles.size(); i++) {
+//			if (!roles.get(i).getName().equals("administrator")
+//					&& !roles.get(i).getName().equals(roleName))
+//				names.add(i, roles.get(i).getName());
+//		}
+//		return names;
+//	}
 
 	
-private List<User> getSpecialPageUsers(List<User> users){
-		
-		Integer start = (this.getPagenum()-1) * 10;
-		List<User> return_users = new ArrayList<User>();
-		
-		for(int i = start; i< (start+this.getRow()); i++){
-			if (i == users.size()){
-				break;
-			}
-			return_users.add(users.get(i));
-		}
-		
-		return return_users;
-	}
+//private List<User> getSpecialPageUsers(List<User> users){
+//		
+//		Integer start = (this.getPagenum()-1) * 10;
+//		List<User> return_users = new ArrayList<User>();
+//		
+//		for(int i = start; i< (start+this.getRow()); i++){
+//			if (i == users.size()){
+//				break;
+//			}
+//			return_users.add(users.get(i));
+//		}
+//		
+//		return return_users;
+//	}
 
 	private User sessionUser() {
 
@@ -479,57 +478,57 @@ private List<User> getSpecialPageUsers(List<User> users){
 		return false;
 	}
 
-	private List<User> getManagedUsers(String alias) {
+//	private List<User> getManagedUsers(String alias) {
+//
+//		List<User> managedUsers = new ArrayList<User>();
+//
+//		User currentUser = userService.findUserByAlias(alias); // find the
+//																// current user
+//																// in database
+//		List<Role> roles = currentUser.getRoles(); // query the roles of current
+//													// manager
+//
+//		for (int i = 0; i < roles.size(); i++) {
+//			if (roles.get(i).getName() == "manager") {
+//				List<Role> workerRoles = roleService.findRoleBySutId(roles.get(
+//						i).getId()); // get all the roles under the managed
+//										// system under current manager
+//				for (int j = 0; j < workerRoles.size(); j++) {
+//					if (workerRoles.get(j).getName() == "worker") {
+//						List<User> workerUsers = workerRoles.get(j).getUsers();
+//						for (int m = 0; m < workerUsers.size(); m++) {
+//							managedUsers.add(m, workerUsers.get(m));
+//						}
+//					}
+//				}
+//			}
+//			if (roles.get(i).getName() == "administrator") {
+//				List<Role> workerRoles = roleService.findAllList();
+//				for (int j = 0; j < workerRoles.size(); j++) {
+//					if (workerRoles.get(j).getName() != "administrator") {
+//						List<User> workerUsers = workerRoles.get(j).getUsers();
+//						for (int m = 0; m < workerUsers.size(); m++) {
+//							managedUsers.add(m, workerUsers.get(m));
+//						}
+//					}
+//				}
+//			}
+//
+//		}
+//
+//		return managedUsers;
+//	}
 
-		List<User> managedUsers = new ArrayList<User>();
-
-		User currentUser = userService.findUserByAlias(alias); // find the
-																// current user
-																// in database
-		List<Role> roles = currentUser.getRoles(); // query the roles of current
-													// manager
-
-		for (int i = 0; i < roles.size(); i++) {
-			if (roles.get(i).getName() == "manager") {
-				List<Role> workerRoles = roleService.findRoleBySutId(roles.get(
-						i).getId()); // get all the roles under the managed
-										// system under current manager
-				for (int j = 0; j < workerRoles.size(); j++) {
-					if (workerRoles.get(j).getName() == "worker") {
-						List<User> workerUsers = workerRoles.get(j).getUsers();
-						for (int m = 0; m < workerUsers.size(); m++) {
-							managedUsers.add(m, workerUsers.get(m));
-						}
-					}
-				}
-			}
-			if (roles.get(i).getName() == "administrator") {
-				List<Role> workerRoles = roleService.findAllList();
-				for (int j = 0; j < workerRoles.size(); j++) {
-					if (workerRoles.get(j).getName() != "administrator") {
-						List<User> workerUsers = workerRoles.get(j).getUsers();
-						for (int m = 0; m < workerUsers.size(); m++) {
-							managedUsers.add(m, workerUsers.get(m));
-						}
-					}
-				}
-			}
-
-		}
-
-		return managedUsers;
-	}
-
-	private Boolean isSeniorManager(String alias) {
-		user = userService.findUserByAlias(alias);
-		List<Role> roles = user.getRoles();
-		for (int i = 0; i < roles.size(); i++) {
-			if (roles.get(i).getName().equals("seniormanager")) {
-				return true;
-			}
-		}
-		return false;
-	}
+//	private Boolean isSeniorManager(String alias) {
+//		user = userService.findUserByAlias(alias);
+//		List<Role> roles = user.getRoles();
+//		for (int i = 0; i < roles.size(); i++) {
+//			if (roles.get(i).getName().equals("seniormanager")) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	public String getDisplayname() {
 		return displayname;

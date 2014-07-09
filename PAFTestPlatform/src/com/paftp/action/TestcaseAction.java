@@ -1,17 +1,13 @@
 package com.paftp.action;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
-import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -19,12 +15,8 @@ import com.paftp.dto.TestcaseCountDto;
 import com.paftp.dto.TestcaseDto;
 import com.paftp.dto.TestsuiteDto;
 import com.paftp.entity.CaseChangeHistory;
-import com.paftp.entity.CaseChangeOperation;
-import com.paftp.entity.Sut;
 import com.paftp.entity.Testcase;
-import com.paftp.entity.TestcaseProject;
 import com.paftp.entity.Testsuite;
-import com.paftp.entity.User;
 import com.paftp.service.CaseChangeHistory.CaseChangeHistoryService;
 import com.paftp.service.CaseChangeOperation.CaseChangeOperationService;
 import com.paftp.service.StaticColumn.TestcaseProjectService;
@@ -34,11 +26,15 @@ import com.paftp.service.Testsuite.TestsuiteService;
 import com.paftp.service.sut.SutService;
 import com.paftp.service.user.UserService;
 import com.paftp.service.version.VersionService;
-import com.paftp.util.Util;
 
 @Controller
 public class TestcaseAction extends ActionSupport {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6668865078541529298L;
+	
 	@Resource
 	private UserService userService;
 	@Resource
@@ -85,7 +81,6 @@ public class TestcaseAction extends ActionSupport {
 	private String approval_comments;
 
 	private JSONArray jsonArray;
-	private User user;
 
 	private String prompt;
 	private String isSelf;
@@ -94,8 +89,6 @@ public class TestcaseAction extends ActionSupport {
 	private Testsuite testsuite;
 	private HashMap<String, Integer> testcase_count;
 	private HashMap<String, List<TestcaseCountDto>> condtestcase_quantity;
-
-	private Util util = new Util();
 	
 	@SuppressWarnings("unused")
 	private List<CaseChangeHistory> queryTestcaseChangehistory(
@@ -109,18 +102,18 @@ public class TestcaseAction extends ActionSupport {
 		return casechangehistorys;
 	}
 	
-	private User getSessionUser() {
-
-		HttpSession session = ServletActionContext.getRequest().getSession(
-				false);
-
-		if (session == null || session.getAttribute("user") == null) {
-			return null;
-		} else {
-			User user = (User) session.getAttribute("user");
-			return user;
-		}
-	}
+//	private User getSessionUser() {
+//
+//		HttpSession session = ServletActionContext.getRequest().getSession(
+//				false);
+//
+//		if (session == null || session.getAttribute("user") == null) {
+//			return null;
+//		} else {
+//			User user = (User) session.getAttribute("user");
+//			return user;
+//		}
+//	}
 
 	public JSONArray getJsonArray() {
 		return jsonArray;

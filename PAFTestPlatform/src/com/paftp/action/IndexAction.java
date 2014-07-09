@@ -8,7 +8,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
@@ -49,7 +48,6 @@ public class IndexAction extends ActionSupport {
 	public String index() throws ServletException, IOException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		HttpServletResponse response = ServletActionContext.getResponse();
 		User user = userService.findUserByAlias("duanjuding");
 		Date date = null;
 		if (user == null) {
@@ -59,16 +57,14 @@ public class IndexAction extends ActionSupport {
 			user.setCreateTime(date);
 			user.setPassword("123");
 			UserInfo userInfo = new UserInfo();
-//			userInfo.setPositionId(1);
-//			userInfo.setDepartmentId(1);
 			user.setUserInfo(userInfo);
 			user.setStatus("intial");
 			user.setDisplayName("�ξӶ�");
 			userService.saveUser(user);
 
 		}
-		// create sut: MTP
-		Sut sut = sutService.findSutByCode("MTP");  //Rayleigh
+		
+		Sut sut = sutService.findSutByCode("MTP"); 
 		if (sut == null) {
 			sut = new Sut();   //Rayleigh
 			sut.setCode("MTP");

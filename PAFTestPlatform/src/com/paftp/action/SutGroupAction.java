@@ -1,8 +1,5 @@
 package com.paftp.action;
 
-import java.util.Date;
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,15 +8,17 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.paftp.entity.Sut;
 import com.paftp.entity.SutGroup;
 import com.paftp.entity.User;
-import com.paftp.entity.Version;
 import com.paftp.service.StaticColumn.SutGroupService;
 
 @Controller
 public class SutGroupAction extends ActionSupport{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5936674026788636033L;
 	private String name;
 	private String description;
 	

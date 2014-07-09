@@ -13,7 +13,6 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.Sut;
 import com.paftp.entity.Testpass;
 import com.paftp.entity.User;
-import com.paftp.service.Testcase.TestcaseService;
 import com.paftp.service.Testpass.TestpassService;
 import com.paftp.service.sut.SutService;
 

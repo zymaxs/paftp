@@ -1,12 +1,6 @@
 package com.paftp.action;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -18,6 +12,10 @@ import com.paftp.service.Testsuite.TestsuiteService;
 @Controller
 public class TestAction extends ActionSupport{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2467240814567830530L;
 	@Resource
 	private TestcaseService testcaseService;
 	@Resource
@@ -25,7 +23,7 @@ public class TestAction extends ActionSupport{
 	
 	public String testDelete(){
 		
-		HttpServletRequest request = ServletActionContext.getRequest();
+//		HttpServletRequest request = ServletActionContext.getRequest();
 		
 //		List<Testcase> testcases = new ArrayList<Testcase>();
 //		Testcase testcase = new Testcase();
