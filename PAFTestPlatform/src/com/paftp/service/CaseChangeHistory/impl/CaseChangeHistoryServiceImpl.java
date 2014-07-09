@@ -44,6 +44,12 @@ public class CaseChangeHistoryServiceImpl implements CaseChangeHistoryService {
 		return baseDAO.find(" from CaseChangeHistory u order by u.id");
 	}
 
+	@Override
+	public List<CaseChangeHistory> findAllListByTestcaseId(Integer id) {
+		// TODO Auto-generated method stub
+		return baseDAO.find(" from CaseChangeHistory u where testcase.id = ? order by u.id", new Object[] { id });
+	}
+
 //	@Override
 //	public User findUserByNameAndPassword(String username, String password) {
 //		return baseDAO.get(

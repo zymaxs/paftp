@@ -88,7 +88,7 @@ public TestsuiteDto getTestsuiteDto(Testsuite testsuite){
 	return testsuitedto;
 }
 
-public TestcaseDto getTestcaseDto(Testcase testcase){
+public TestcaseDto getTestcaseDto(Testcase testcase, List<CaseChangeHistory> casechangehistories_source){
 	
 	TestcaseDto testcasedto = new TestcaseDto();
 	testcasedto.setCaseName(testcase.getCaseName());
@@ -117,7 +117,7 @@ public TestcaseDto getTestcaseDto(Testcase testcase){
 	}
 	
 	List<CaseChangeHistory> casechangehistories = new ArrayList<CaseChangeHistory>();
-	List<CaseChangeHistory> casechangehistories_source = testcase.getCaseChangeHistorys();
+//	List<CaseChangeHistory> casechangehistories_source = testcase.getCaseChangeHistorys();
 	for (int i=0; i< casechangehistories_source.size(); i++){
 		List<CaseChangeOperation> casechangeoperations_source = casechangehistories_source.get(i).getCaseChangeOperations();
 		List<CaseChangeOperation> casechangeoperations = new ArrayList<CaseChangeOperation>();
