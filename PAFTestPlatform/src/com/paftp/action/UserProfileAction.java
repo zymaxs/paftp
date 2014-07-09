@@ -56,7 +56,6 @@ public class UserProfileAction extends ActionSupport {
 
 	private String alias;
 	private String displayname;
-	private String originpassword;
 	
 	private Integer row;
 	private Integer pagenum;
@@ -170,7 +169,7 @@ public class UserProfileAction extends ActionSupport {
 		
 		user = getSessionUser();
 		
-		if(this.getOriginpassword() == null || this.getPassword() == null || this.getOriginpassword().equals(this.getPassword())){
+		if(this.getOrignpassword() == null || this.getPassword() == null || this.getOrignpassword().equals(this.getPassword())){
 			request.setAttribute("error",
 					"Your new password is same with the old one or your input is null!");
 			return "error";
@@ -462,12 +461,5 @@ public class UserProfileAction extends ActionSupport {
 		this.currentPageRoleDtoes = currentPageRoleDtoes;
 	}
 
-	public String getOriginpassword() {
-		return originpassword;
-	}
-
-	public void setOriginpassword(String originpassword) {
-		this.originpassword = originpassword;
-	}
 
 }
