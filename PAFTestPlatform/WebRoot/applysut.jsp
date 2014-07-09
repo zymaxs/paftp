@@ -353,7 +353,7 @@ $(document).ready(function(){
           </tr>
           <tr>
             <td style="text-align:right">* 系统描述 :&nbsp;&nbsp;</td>
-            <td><textarea  rows="4" name="description" class="input-xlarge" id="description"></textarea></td>
+            <td><textarea  rows="4" name="description" class="input-xlarge" id="description" style=" width:100px; max-height:100px; width:200px; max-width:200px"></textarea></td>
           </tr>
           <tr>
           <td>&nbsp;</td>
