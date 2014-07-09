@@ -163,8 +163,8 @@ function quanjiao(obj)
 					else if (topWin.$id('casesteps').value == ""){
 					Dialog.alert("用例步骤不能为空");	
 						}
-					else if (topWin.$id('casesteps').value.length > 300 ){
-					Dialog.alert("用例步骤不能超过300个字符");
+					else if (topWin.$id('casesteps').value.length > 500 ){
+					Dialog.alert("用例步骤不能超过500个字符");
 						}
 					else{
 						newTestCaseac();
@@ -1260,7 +1260,7 @@ function saveapprovalac(){
 				},
 				"showcasesteps" : {
 					required : true,
-					maxlength : 300
+					maxlength : 500
 				},
 			},
 			messages : {
@@ -1274,7 +1274,7 @@ function saveapprovalac(){
 				},
 				"showcasesteps" : {
 					required : "请输入用例步骤",
-					maxlength : $.validator.format("用例步骤最大输入不超过三百个字符.")
+					maxlength : $.validator.format("用例步骤最大输入不超过五百个字符.")
 				}
 			}
 		});

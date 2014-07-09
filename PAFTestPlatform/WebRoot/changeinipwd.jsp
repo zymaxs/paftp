@@ -13,7 +13,7 @@
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="dist/libs/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>

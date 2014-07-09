@@ -331,7 +331,6 @@ $(document).ready(function(){
 </head>
 
 <body>
-<%=session.getAttribute("user")%>
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff;"> <br>
