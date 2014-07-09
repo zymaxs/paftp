@@ -161,7 +161,6 @@
 		</action>
 		<action name="upuserinfo" method="userinfo"
 			class="com.paftp.action.StaticAction">
-			<interceptor-ref name="sessionExpirayStack" />
 			<result name="success">/updateuserinfo.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>

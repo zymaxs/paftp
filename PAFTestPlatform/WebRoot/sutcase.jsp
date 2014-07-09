@@ -631,6 +631,7 @@ function testtest(){
 					  
 					  };
 				 document.getElementById('showversion').value = root.testsuitedto.version.versionNum;
+				 document.getElementById('updateversion').value = root.testsuitedto.version.versionNum;
 				 var p1 = "0";
 				 var p2 = "0";
 				 var p3 = "0";
@@ -715,7 +716,9 @@ function testtest(){
 				  queryTestSuiteResult += "<table width='100%' class='table  table-bordered'><tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正/反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>"+ zidong+"</td><td>"+shoudong+"</td><td>"+feiqi+"</td><td>"+p1+"</td><td>"+p2+"</td><td>"+p3+"</td><td>"+daipingshen+"</td><td>"+tongguo+"</td><td>"+butongguo+"</td><td>"+zhengli+"</td><td>"+fanli+"</td></tr></table>";
+				   if (document.getElementById("testsuiteInfoDiv").innerHTML.toString()==""){
 				  $("#testsuiteInfoDiv").append(queryTestSuiteResult);
+				   }
 				}
 			  },
 
@@ -764,9 +767,11 @@ function testtest(){
 				  document.getElementById('showtestcase_id').value = root.testcasedto.id;
 				  document.getElementById('showcasepriority').value = root.testcasedto.priority;
 				  document.getElementById('showtestcasecreattime').value = root.testcasedto.createTime;
-				  document.getElementById('showtestcase_changetag').value = root.changetag;   
+				  document.getElementById('showtestcase_changetag').value = root.changetag;  
 				  var creator_name = "<a href='getuserinfo.action?userid="+root.testcasedto.creator.id+"'>"+root.testcasedto.creator.displayName+"</a>";
+				  if (document.getElementById("showtestcasecreator").innerHTML.toString()==""){
 				  $("#showtestcasecreator").append(creator_name);
+				  }
 				  var obj_priority = document.getElementsByName('updatepriority');
 				  for (i=0 ; i < obj_priority.length ; i++){
 					  if(obj_priority[i].value == root.testcasedto.priority){
@@ -831,8 +836,9 @@ function testtest(){
 						  }
 					  caseChangeHistory += "</table></div>";
 					  }
+					 if (document.getElementById("showCaseChangeHistoryDiv").innerHTML.toString() == ""){
 					$("#showCaseChangeHistoryDiv").append(caseChangeHistory);
-				  
+					 }
 					}	  
 			  },
 
@@ -1619,7 +1625,7 @@ $('#jstree').jstree('select_node', 'j1_1');
               <td id="showversiontd" style="display:block"><input id="showversion" value="" class="form-control input-sm" style="width:200px" readonly></td>
               <td id="showversionoption" style="display:none"><div id="updateversiongroup" class="selectbox">
                   <div class="cartes">
-                    <input type="text" value="<%=versions.get(0).getVersionNum()%>" id="updateversion" name="version" class="listTxt" readonly>
+                    <input type="text" value="" id="updateversion" name="version" class="listTxt" readonly>
                     <div class="listBtn"><b></b></div>
                     <input type="hidden" value="" class="listVal" >
                   </div>
@@ -1763,7 +1769,7 @@ $('#jstree').jstree('select_node', 'j1_1');
                 待评审&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="updateapproval" onClick="document.getElementById('approval_commentsTd').style.display ='none';document.getElementById('approval_comments').readOnly = true;" value="通过">
                 通过&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateapproval" onClick="document.getElementById('approval_commentsTd').style.display='';document.getElementById('approval_comments').readOnly = false;" value="未通过">
+                <input type="radio" name="updateapproval" onClick="document.getElementById('approval_commentsTd').style.display='';document.getElementById('approval_comments').readOnly = false;document.getElementById('approval_comments').value='请输入拒绝原因!';" value="未通过">
                 未通过&nbsp;&nbsp;&nbsp;&nbsp; </td>
             </tr>
             <tr id="approval_commentsTd" style="display:none;">
