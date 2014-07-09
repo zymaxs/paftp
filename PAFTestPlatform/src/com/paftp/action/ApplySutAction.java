@@ -1,9 +1,7 @@
 package com.paftp.action;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -126,7 +124,6 @@ public class ApplySutAction extends ActionSupport {
 	public String approveSut() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
-		Integer test = this.getSut_id();
 
 		user = getSessionUser();
 		this.isAdmin = this.isAdmin(user.getAlias());
@@ -165,7 +162,6 @@ public class ApplySutAction extends ActionSupport {
 		request.setAttribute("suts", applySuts);
 		request.setAttribute("flag", "true");
 
-		// generateAdminAndManager();
 		user = getSessionUser();
 		if (user != null && this.isSeniorManager(user.getAlias()) == true)
 			request.setAttribute("isSeniormanager", true);
@@ -316,10 +312,6 @@ public class ApplySutAction extends ActionSupport {
 		ApplySutStatus applySutStatus = applySutStatusService
 				.findApplySutStatusByName(status);
 
-		// SimpleDateFormat format = new
-		// SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		// Date now = new Date();
-
 		if (applySutStatus.getId() == 1) { // status: �����
 			this.applytime = new Date();
 			java.sql.Timestamp applydatetime = new java.sql.Timestamp(
@@ -424,7 +416,7 @@ public class ApplySutAction extends ActionSupport {
 		List<Permission> permissions2 = null;
 		role2 = new Role();
 		role2.setName(sut.getName() + "Sdet");
-		role2.setDescription(sut.getName() + "成员，可以查询该系统下信息！");
+		role2.setDescription(sut.getName() + "成员，可以处理该系统用例！");
 		role2.setSut(sut);
 		permissions2 = new ArrayList<Permission>();
 		permission2 = permissionService.findPermissionByScope("work");
@@ -444,31 +436,31 @@ public class ApplySutAction extends ActionSupport {
 
 	}
 
-	private void generateAdminAndManager() {
-		if (roleService.findRoleByName("administrator") == null) {
-			User user = userService.findUserByAlias("admin");
-			List<Role> roles = new ArrayList<Role>();
-
-			Role adminRole = new Role();
-			adminRole.setName("administrator");
-			adminRole.setDescription("The admin role!");
-			List<Permission> adminPermissions = permissionService.findAllList();
-			adminRole.setPermissions(adminPermissions);
-
-			Role managerRole = new Role();
-			managerRole.setName("seniormanager");
-			managerRole.setDescription("The up manager role!");
-			managerRole.setPermissions(adminPermissions);
-
-			roleService.saveRole(adminRole); // Save the new system
-												// administrator
-			roleService.saveRole(managerRole);
-
-			roles.add(adminRole);
-			user.setRoles(roles);
-			userService.updateUser(user);
-		}
-	}
+//	private void generateAdminAndManager() {
+//		if (roleService.findRoleByName("administrator") == null) {
+//			User user = userService.findUserByAlias("admin");
+//			List<Role> roles = new ArrayList<Role>();
+//
+//			Role adminRole = new Role();
+//			adminRole.setName("administrator");
+//			adminRole.setDescription("The admin role!");
+//			List<Permission> adminPermissions = permissionService.findAllList();
+//			adminRole.setPermissions(adminPermissions);
+//
+//			Role managerRole = new Role();
+//			managerRole.setName("seniormanager");
+//			managerRole.setDescription("The up manager role!");
+//			managerRole.setPermissions(adminPermissions);
+//
+//			roleService.saveRole(adminRole); // Save the new system
+//												// administrator
+//			roleService.saveRole(managerRole);
+//
+//			roles.add(adminRole);
+//			user.setRoles(roles);
+//			userService.updateUser(user);
+//		}
+//	}
 
 	private Boolean isAdmin(String alias) {
 		user = userService.findUserByAlias(alias);

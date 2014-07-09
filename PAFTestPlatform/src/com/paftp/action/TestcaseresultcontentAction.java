@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.TestcaseResultContent;
-import com.paftp.entity.TestsuiteResult;
-import com.paftp.service.TestcaseResultContent.TestcaseResultContentService;
 import com.paftp.service.TestcassResult.TestcaseResultService;
-import com.paftp.service.TestsuiteResult.TestsuiteResultService;
 
 @Controller
 public class TestcaseresultcontentAction extends ActionSupport{

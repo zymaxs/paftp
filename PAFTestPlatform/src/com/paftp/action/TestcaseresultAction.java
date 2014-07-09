@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.TestsuiteResult;
-import com.paftp.service.Testpass.TestpassService;
 import com.paftp.service.TestsuiteResult.TestsuiteResultService;
 
 @Controller

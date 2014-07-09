@@ -652,7 +652,6 @@ public class TestsuiteAction extends ActionSupport {
 			List<Testsuite> testsuites = testsuiteService
 					.findAllSuiteByMultiConditions(conditions);
 
-			Integer testsuite_quantity = 0;
 			Integer testcase_quantity = 0;
 			if (testsuites != null) {
 				testsuite_quantity = testsuites.size();

@@ -51,11 +51,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		user = userService.findUserByAliasAndPassword(alias, password_md5);
 
 		if (user != null) {
-
-			// User newuser = new User();
-			// newuser.setAlias(user.getAlias());
-			// newuser.setStatus("old");
-			// newuser.setDisplayName(user.getDisplayName());
 			
 			sessionMap.put("user", user);
 			
