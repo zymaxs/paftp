@@ -141,7 +141,7 @@ public class Testcase {
 		this.testcase_results = testcase_results;
 	}
 
-	@Column(name = "casesteps", length = 500)
+	@Column(name = "casesteps", length = 1536)
 	public String getCasesteps() {
 		return casesteps;
 	}
