@@ -1746,11 +1746,11 @@ $('#jstree').jstree('select_node', 'j1_1');
             </tr>
             <tr>
               <td>描述</td>
-              <td><textarea  rows="4" name="showcasedescription" onKeyUp="quanjiao(this);" class="form-control" id="showcasedescription" style="max-height:50px; max-width:550px; width:550px; height:50px;" readonly></textarea></td>
+              <td><textarea  rows="4" name="showcasedescription" class="form-control" id="showcasedescription" style="max-height:50px; max-width:550px; width:550px; height:50px;" readonly></textarea></td>
             </tr>
             <tr>
               <td>步骤</td>
-              <td><textarea  rows="4" name="showcasesteps" onKeyUp="quanjiao(this);" class="form-control" id="showcasesteps" style="max-height:150px; max-width:550px; width:550px; height:150px;"  readonly></textarea></td>
+              <td><textarea  rows="4" name="showcasesteps"  class="form-control" id="showcasesteps" style="max-height:150px; max-width:550px; width:550px; height:150px;"  readonly></textarea></td>
             </tr>
             <tr align="left">
               <td colspan="2" id="upTestCaseTd" style="display:" align="center"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center"  onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" >更新</button></td>
@@ -1864,11 +1864,11 @@ $('#jstree').jstree('select_node', 'j1_1');
         </tr>
         <tr>
           <td>描述</td>
-          <td><textarea  rows="4" name="description" id="description" onKeyUp="quanjiao(this);" style="max-height:50px; max-width:400px; width:400px; height:50px;"></textarea></td>
+          <td><textarea  rows="4" name="description" id="description" style="max-height:50px; max-width:400px; width:400px; height:50px;"></textarea></td>
         </tr>
         <tr>
           <td>步骤</td>
-          <td><textarea  rows="4" name="casesteps" id="casesteps"  onKeyUp="quanjiao(this);" style="max-height:150px; max-width:400px; width:400px; height:150px;"></textarea></td>
+          <td><textarea  rows="4" name="casesteps" id="casesteps" style="max-height:150px; max-width:400px; width:400px; height:150px;"></textarea></td>
         </tr>
       </table>
     </form>
