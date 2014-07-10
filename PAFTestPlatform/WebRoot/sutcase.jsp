@@ -119,7 +119,7 @@ function quanjiao(obj)
 					     data : {sut_name:'<%=sut_name%>'},
 			  			 dataType : "json",
 			 			 success : function(root) {
-								   $('#jstree').jstree(true).destroy();
+								   $("#jstree").jstree("destroy");
 				  				   initree();
 								   diag.close();
 								   document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -179,7 +179,7 @@ function quanjiao(obj)
 					     data : {sut_name:'<%=sut_name%>'},
 			  			 dataType : "json",
 			 			 success : function(root) {
-								   $('#jstree').jstree(true).destroy();
+								   $("#jstree").jstree("destroy");
 				  				   initree();
 								   diag.close();
 								   document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -204,7 +204,7 @@ var interfacetestcase = "";
 var node_id = "";
 
 function demo_refresh(){
-$('#jstree').jstree(true).destroy();
+$("#jstree").jstree("destroy");
 initree();
 initype();
 document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -300,11 +300,11 @@ function demo_create() {
 			  success : function(root) {
 				  if ( root.prompt != null){
 					  alert(root.prompt);
-					  $('#jstree').jstree(true).destroy();
+					  $("#jstree").jstree("destroy");
 					  initree();
 					  }
 					else {
-				  $('#jstree').jstree(true).destroy();
+				  $("#jstree").jstree("destroy");
 				  datadata = root.jsonArray;
 				  testtest();
 				  document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -369,7 +369,7 @@ function saveTestSuiteac(){
 			  success : function(root) {
 				  if ( root.prompt != null){
 					  alert(root.prompt);
-					  $('#jstree').jstree(true).destroy();
+					  $("#jstree").jstree("destroy");
 					  initree();
 					  initype();
 					  document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -442,11 +442,11 @@ function newTestCaseac(){
 			  success : function(root) {
 				  if ( root.prompt != null){
 					  alert(root.prompt);
-					  $('#jstree').jstree(true).destroy();
+					  $("#jstree").jstree("destroy");
 					  initree();
 					  }
 					else {
-				  $('#jstree').jstree(true).destroy();
+				  $("#jstree").jstree("destroy");
 				  initree();
 				  document.getElementById('sutCaseInfoTd').style.display = "block";
 				  document.getElementById('interfacesearchTd').style.display = "none";
@@ -528,7 +528,7 @@ function saveTestCaseac(){
 			  success : function(root) {
 				  if ( root.prompt != null){
 					  alert(root.prompt);
-					  $('#jstree').jstree(true).destroy();
+					  $("#jstree").jstree("destroy");
 					  initree();
 					  initype();
 					  document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -538,7 +538,7 @@ function saveTestCaseac(){
 					  querySutCaseInfo();
 					  }
 					else {
-				  //$('#jstree').jstree(true).destroy();
+				  //$("#jstree").jstree("destroy");
 				  //initree();
 				  document.getElementById('interfacesearchTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
@@ -603,7 +603,7 @@ function testtest(){
 			  success : function(root) {
 				  if ( root.prompt != null){
 					  alert(root.prompt);
-					  $('#jstree').jstree(true).destroy();
+					  $("#jstree").jstree("destroy");
 					  initree();
 					  initype();
 					  document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -747,7 +747,7 @@ function testtest(){
 			  success : function(root) {
 				  if ( root.prompt != null){
 					  alert(root.prompt);
-					  $('#jstree').jstree(true).destroy();
+					  $("#jstree").jstree("destroy");
 					  initree();
 					  initype();
 					  document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -1137,7 +1137,7 @@ function queryinterfaceac(){
 				  var searchresultdata;
 				  searchresultdata = "<h1>此次搜索共匹配"+ root.testcase_quantity +"条记录</h1>";
 				  $("#interfaceSearchResultDiv").append(searchresultdata);
-				  $('#jstree').jstree(true).destroy();
+				  $("#jstree").jstree("destroy");
 				  datadata = root.jsonArray;
 				  testtest();
 				   
@@ -1192,7 +1192,7 @@ function saveapprovalac(){
 			  data : tsparams,
 			  dataType : "json",
 			  success : function(root) {
-				  $('#jstree').jstree(true).destroy();
+				  $("#jstree").jstree("destroy");
 				  initree();  
 				  initype();
 				  document.getElementById('sutCaseInfoTd').style.display = "block";
@@ -1281,7 +1281,7 @@ function saveapprovalac(){
 		
 		$('button').on('click', function () {
 			//alert("botton");
-			// $('#jstree').jstree(true).destroy();
+			// $("#jstree").jstree("destroy");
 			$("#jstree").jstree("destroy");
 			initree();
 			//sleepI(2);
@@ -1296,7 +1296,7 @@ function saveapprovalac(){
 
 function rootnode(){
 //alert("function");
-//$('#jstree').jstree(true).destroy();
+//$("#jstree").jstree("destroy");
 //initree();
 //sleepI(1);
 $('#jstree').jstree('select_node', 'j1_1');
