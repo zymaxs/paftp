@@ -40,6 +40,7 @@ import com.paftp.service.TestcaseStep.TestcaseStepService;
 import com.paftp.service.user.UserService;
 import com.paftp.service.version.VersionService;
 import com.paftp.util.CompareObjects;
+import com.paftp.util.CompareTestsuiteName;
 import com.paftp.util.Util;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -875,6 +876,7 @@ public class TestsuiteAction extends ActionSupport {
 
 		for (int i = 0; i < suts.size(); i++) {
 			List<Testsuite> testsuites = suts.get(i).getTestsuites();
+			testsuites = this.sortTestsuite(testsuites);
 			JSONArray parentNode000 = new JSONArray();
 			JSONArray parentNode00 = new JSONArray();
 			for (int j = 0; j < testsuites.size(); j++) {
@@ -926,6 +928,13 @@ public class TestsuiteAction extends ActionSupport {
 		CompareObjects compare = new CompareObjects();
 		Collections.sort(testcases, compare);
 		return testcases;
+	}
+	
+	private List<Testsuite> sortTestsuite(List<Testsuite> testsuites) {
+
+		CompareTestsuiteName compare = new CompareTestsuiteName();
+		Collections.sort(testsuites, compare);
+		return testsuites;
 	}
 
 	private void updateTestcaseHistory(Testcase testcase, String oldValue,

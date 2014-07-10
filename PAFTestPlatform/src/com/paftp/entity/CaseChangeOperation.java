@@ -52,7 +52,7 @@ public class CaseChangeOperation {
 		this.caseChangeHistory = caseChangeHistory;
 	}
 	
-	@Column(name = "old_value", length = 200)
+	@Column(name = "old_value", length = 1536)
 	public String getOldValue() {
 		return oldValue;
 	}
@@ -61,7 +61,7 @@ public class CaseChangeOperation {
 		this.oldValue = oldValue;
 	}
 	
-	@Column(name = "new_value", length = 200)
+	@Column(name = "new_value", length = 1536)
 	public String getNewValue() {
 		return newValue;
 	}

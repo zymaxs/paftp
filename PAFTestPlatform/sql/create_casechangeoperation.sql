@@ -2,8 +2,8 @@
 CREATE TABLE `CaseChangeOperation` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `field` varchar(20) DEFAULT NULL,
-    `old_value` varchar(500) DEFAULT NULL,
-    `new_value` varchar(500) DEFAULT NULL,
+    `old_value` varchar(1536) DEFAULT NULL,
+    `new_value` varchar(1536) DEFAULT NULL,
     `casechangehistory_id` int(11) DEFAULT NULL,
     INDEX casechangehistory_ind (casechangehistory_id),
     FOREIGN KEY (casechangehistory_id)
