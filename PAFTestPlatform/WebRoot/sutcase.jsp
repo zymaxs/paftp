@@ -379,8 +379,8 @@ function saveTestSuiteac(){
 					  querySutCaseInfo();
 					  }
 					else {
-				  $('#jstree').jstree(true).destroy();
-				  initree();
+				  //$('#jstree').jstree(true).destroy();
+				  //initree();
 				  document.getElementById('sutCaseInfoTd').style.display = "block";
 				  document.getElementById('interfacesearchTd').style.display = "none";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
@@ -544,8 +544,8 @@ function saveTestCaseac(){
 					  querySutCaseInfo();
 					  }
 					else {
-				  $('#jstree').jstree(true).destroy();
-				  initree();
+				  //$('#jstree').jstree(true).destroy();
+				  //initree();
 				  document.getElementById('interfacesearchTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
