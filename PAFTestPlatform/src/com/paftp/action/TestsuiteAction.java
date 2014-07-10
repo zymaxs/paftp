@@ -543,10 +543,6 @@ public class TestsuiteAction extends ActionSupport {
 		Testcase checktestcase = testcaseService.findTestcaseById(testcase
 				.getId());
 		Integer targetchangetag = checktestcase.getChangetag();
-//		if (i == 0) {
-//			casechangehistoryService.deleteCaseChangeHistory(casechangehistory);
-//			return true;
-//		}
 		if (changetag != targetchangetag
 				|| targetchangetag.toString().equals(this.getChangetag()) == false) {
 			return false;
