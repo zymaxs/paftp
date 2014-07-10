@@ -538,8 +538,8 @@ function saveTestCaseac(){
 					  querySutCaseInfo();
 					  }
 					else {
-				  //$("#jstree").jstree("destroy");
-				  //initree();
+				  $("#jstree").jstree("destroy");
+				  initree();
 				  document.getElementById('interfacesearchTd').style.display = "block";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
 				  document.getElementById('showTestCaseTd').style.display = "none";
@@ -1650,7 +1650,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             <tr>
             <tr>
               <td  align="right" width="100px">描述  :&nbsp;&nbsp;</td>
-              <td><textarea  rows="4" name="showtestsuite_description" onKeyUp="quanjiao(this);" class="input-xlarge form-control" readonly id="showtestsuite_description" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td>
+              <td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge form-control" readonly id="showtestsuite_description" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td>
             </tr>
             <tr>
               <td colspan="2">&nbsp;</td>
@@ -1803,7 +1803,7 @@ $('#jstree').jstree('select_node', 'j1_1');
         </tr>
         <tr>
           <td>描述</td>
-          <td><textarea  rows="4" name="testsuite_description" id="testsuite_description" onKeyUp="quanjiao(this);" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td> 
+          <td><textarea  rows="4" name="testsuite_description" id="testsuite_description" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td> 
         </tr>
       </table>
     </form>
