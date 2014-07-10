@@ -379,8 +379,8 @@ function saveTestSuiteac(){
 					  querySutCaseInfo();
 					  }
 					else {
-				  //$('#jstree').jstree(true).destroy();
-				  //initree();
+				  $("#jstree").jstree("destroy");
+				  initree();
 				  document.getElementById('sutCaseInfoTd').style.display = "block";
 				  document.getElementById('interfacesearchTd').style.display = "none";
 				  document.getElementById('showTestSuiteTd').style.display = "none";
@@ -516,12 +516,6 @@ function saveTestCaseac(){
 	  	}
 	  };
 	  var approval_value = document.getElementById('showapproval').value;
-	  /*approval_radio = document.getElementsByName('updateapproval');
-	  for(i=0;i<approval_radio.length;i++){  
-	  	if(approval_radio[i].checked){
-	    	approval_value = approval_radio[i].value;
-	  	}
-	  };*/
 	  var sut_name = '<%=sut_name%>';
 	  var testcase_name = $('#pre_casename').text() + $("#showtestcase_name").val();
 	  var tsparams = {testcase_name:testcase_name,sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val(),changetag:$("#showtestcase_changetag").val()};
@@ -910,7 +904,7 @@ function testtest(){
 				  "valid_children": ["testcase"]
 			  },
 			  "stresstestcase" : {
-				  "icon":"XXX",
+				  "icon":"glyphicon glyphicon-book",
 				"valid_children" : []
 			  },
 			  "testcase":{
