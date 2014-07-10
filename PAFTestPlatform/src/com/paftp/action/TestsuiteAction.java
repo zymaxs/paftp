@@ -108,6 +108,7 @@ public class TestsuiteAction extends ActionSupport {
 
 	private Util util = new Util();
 
+	@SuppressWarnings("static-access")
 	public String createTestsuite() {
 
 		user = getSessionUser();
@@ -137,6 +138,7 @@ public class TestsuiteAction extends ActionSupport {
 			testsuite.setVersion(currentversion);
 			testsuite.setSut(sut);
 			testsuite.setStatus(this.getIsdiscard());
+			this.setTestsuite_description(util.full2HalfChange(this.getTestsuite_description()));
 			testsuite.setDescription(this.getTestsuite_description());
 			testsuite.setChangetag(0);
 
@@ -190,6 +192,7 @@ public class TestsuiteAction extends ActionSupport {
 		return "success";
 	}
 
+	@SuppressWarnings("static-access")
 	public String updateTestsuite() {
 
 		user = getSessionUser();
@@ -220,6 +223,7 @@ public class TestsuiteAction extends ActionSupport {
 		sourceName = sourceName.replaceAll("Ts", "Tc");
 		targetName = targetName.replaceAll("Ts", "Tc");
 
+		this.setTestsuite_description(util.full2HalfChange(this.getTestsuite_description()));
 		testsuite.setDescription(this.getTestsuite_description());
 		testsuite.setName(this.getTestsuite_name());
 		testsuite.setStatus(this.getIsdiscard());
@@ -245,6 +249,7 @@ public class TestsuiteAction extends ActionSupport {
 
 	}
 
+	@SuppressWarnings("static-access")
 	public String createTestcase() {
 
 		user = getSessionUser();
@@ -272,12 +277,14 @@ public class TestsuiteAction extends ActionSupport {
 
 				Testcase testcase = new Testcase();
 				testcase.setCaseName(this.getTestcase_name());
+				this.setDescription(util.full2HalfChange(this.getDescription()));
 				testcase.setDescription(this.getDescription());
 				testcase.setPriority(this.getPriority());
 				testcase.setStatus(this.getStatus());
 				testcase.setTestcase_approval(this.getTestcase_approval());
 				testcase.setApproval_comments(this.getApproval_comments());
 				testcase.setCasetype(this.getCasetype());
+				this.setCasesteps(util.full2HalfChange(this.getCasesteps()));
 				testcase.setCasesteps(this.getCasesteps());
 				testcase.setChangetag(0);
 				testcase.setCreator(user);
@@ -430,6 +437,7 @@ public class TestsuiteAction extends ActionSupport {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	private Boolean updateTestcaseHistorys(User user, Testcase testcase,
 			CaseChangeHistory casechangehistory, Integer changetag) {
 
@@ -469,6 +477,7 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 
+		this.setDescription(util.full2HalfChange(this.getDescription()));
 		if (testcase.getDescription().equals(this.getDescription()) == false) {
 			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
@@ -491,6 +500,7 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 
+		this.setCasesteps(util.full2HalfChange(this.getCasesteps()));
 		if (testcase.getCasesteps().equals(this.getCasesteps()) == false) {
 			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 			casechangeoperation.setCaseChangeHistory(casechangehistory);

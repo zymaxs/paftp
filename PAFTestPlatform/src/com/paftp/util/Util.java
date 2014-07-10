@@ -1,5 +1,6 @@
 package com.paftp.util;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,7 +9,6 @@ import java.text.SimpleDateFormat;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import sun.misc.BASE64Encoder;
-
 
 /**
  * 閫氱敤宸ュ叿绫�
@@ -72,7 +72,8 @@ public class Util {
 		return strings;
 	}
 
-	public JSONObject childNode(Integer id, String text, String type, JSONArray parent) {
+	public JSONObject childNode(Integer id, String text, String type,
+			JSONArray parent) {
 
 		JSONObject children = new JSONObject();
 		children.put("node_id", id);
@@ -85,20 +86,51 @@ public class Util {
 
 		return children;
 	}
-	
-	public String nodeType(String type){
-		if (type == "0"){
+
+	public String nodeType(String type) {
+		if (type == "0") {
 			return "interfacetestcase";
 		}
-		
-		if (type == "00"){
+
+		if (type == "00") {
 			return "testcase";
 		}
-		
-		if (type == "01"){
+
+		if (type == "01") {
 			return "stresstestcase";
 		}
-		
+
 		return "";
+	}
+
+	public static final String full2HalfChange(String QJstr) {
+		if (QJstr == null){
+			return QJstr;
+		}
+		StringBuffer outStrBuf = new StringBuffer("");
+		String Tstr = "";
+		byte[] b = null;
+		for (int i = 0; i < QJstr.length(); i++) {
+			Tstr = QJstr.substring(i, i + 1);
+			if (Tstr.equals("　")) {
+				outStrBuf.append(" ");
+				continue;
+			}
+			try {
+				b = Tstr.getBytes("unicode");
+				if (b[2] == -1) {
+					b[3] = (byte) (b[3] + 32);
+					b[2] = 0;
+					outStrBuf.append(new String(b, "unicode"));
+				} else {
+					outStrBuf.append(Tstr);
+				}
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} // end for.
+		return outStrBuf.toString();
 	}
 }
