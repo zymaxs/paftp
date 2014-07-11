@@ -904,7 +904,7 @@ function testtest(){
 				  "valid_children": ["testcase"]
 			  },
 			  "stresstestcase" : {
-				  "icon":"glyphicon glyphicon-book",
+			    "icon":"glyphicon glyphicon-book",
 				"valid_children" : []
 			  },
 			  "testcase":{
