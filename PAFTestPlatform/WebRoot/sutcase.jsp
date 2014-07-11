@@ -1521,7 +1521,7 @@ $('#jstree').jstree('select_node', 'j1_1');
   <table id="maintable" width="100%" align="center" class="table table-bordered">
     <tr> 
       <!--左边Tree-->
-      <td style="vertical-align:top;"><div style="width:283px;height:624px;overflow:scroll;">
+      <td style="vertical-align:top;"><div style="width:283px;height:450px;overflow:scroll;">
           <div id="searchDiv" align="left">
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; width:210px; padding:4px; border-radius:4px; border:1px solid silver;">
           </div>
@@ -1536,10 +1536,10 @@ $('#jstree').jstree('select_node', 'j1_1');
         </div></td>
       
       <!--About SUT-->
-      <td height="641px" id="sutCaseInfoTd" style="display:block; width:1000px" ><div id="sutCaseInfoDiv" style="text-align:center"> </div></td>
+      <td height="467px" id="sutCaseInfoTd" style="display:block; width:1000px" ><div id="sutCaseInfoDiv" style="text-align:center"> </div></td>
       
       <!--Interface Search-->
-      <td id="interfacesearchTd" style="display:none; width:1000px" height="641px"><table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
+      <td id="interfacesearchTd" style="display:none; width:1000px" height="467px"><table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
           <tr style="text-align:center">
             <td width="20%">自动化</td>
             <td width="20%">优先级</td>
@@ -1585,12 +1585,8 @@ $('#jstree').jstree('select_node', 'j1_1');
         <div id="interfaceSearchResultDiv" style="text-align:center"></div></td>
       
       <!--展示、更新testsuite-->
-      <td style="display:none; width:1000px" id="showTestSuiteTd" height="641px"><form id="showTestSuiteForm" name="showTestSuiteForm">
-          <table width="100%" height="100%" id="showTestSuiteTable">
-            <tr>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr>
+      <td style="display:none; width:1000px" id="showTestSuiteTd" height="467px"><form id="showTestSuiteForm" name="showTestSuiteForm">
+          <table width="100%" height="467px" id="showTestSuiteTable">
             <tr>
               <td  align="right" width="100px">测试集  :&nbsp;&nbsp;</td>
               <td><div class="input-group"> <span class="input-group-addon">Ts_</span>
@@ -1601,19 +1597,12 @@ $('#jstree').jstree('select_node', 'j1_1');
               <td><input id="showtestsuite_changetag" name="showtestsuite_changetag" type="text" class="form-control" readonly></td>
             </tr>
             <tr>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr>
               <td colspan="2"><input id="showtestsuite_id" name="showtestsuite_id" value="" class="form-control input-sm" style="display:none" readonly></td>
             </tr>
             <tr>
               <td  align="right" width="100px">所属系统  :&nbsp;&nbsp;</td>
               <td><input id="showsut_name" name="showsut_name" value="<%=sut_name%>" class="form-control input-sm" style="width:200px" readonly></td>
             </tr>
-            <tr>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr>
             <tr>
               <td  align="right" width="100px">起始版本  :&nbsp;&nbsp;</td>
               <td id="showversiontd" style="display:block"><input id="showversion" value="" class="form-control input-sm" style="width:200px" readonly></td>
@@ -1633,10 +1622,6 @@ $('#jstree').jstree('select_node', 'j1_1');
                 </div></td>
             </tr>
             <tr>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr>
-            <tr>
               <td align="right" width="100px">状态  :&nbsp;&nbsp;</td>
               <td id="showisdiscardtd" style="display:block"><input id="showisdiscard" value="" class="form-control input-sm" style="width:200px" readonly></td>
               <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="正在使用" checked>
@@ -1645,17 +1630,9 @@ $('#jstree').jstree('select_node', 'j1_1');
                 已废弃&nbsp;&nbsp;&nbsp;&nbsp; </td>
             </tr>
             <tr>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr>
-            <tr>
               <td  align="right" width="100px">描述  :&nbsp;&nbsp;</td>
               <td><textarea  rows="4" name="showtestsuite_description" class="input-xlarge form-control" readonly id="showtestsuite_description" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td>
             </tr>
-            <tr>
-              <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr>
             <tr align="left">
               <td colspan="2" id="upTestSuiteTd" style="display:block"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="updateTestSuiteac()" id="upTestSuite" name="upTestSuite">更新</button></td>
               <td colspan="2" id="saveTestSuiteTd" style="display:none"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="saveTestSuiteac()" id="saveTestSuite" name="saveTestSuite" >保存</button></td>
@@ -1663,35 +1640,33 @@ $('#jstree').jstree('select_node', 'j1_1');
             <tr>
               <td colspan="2">&nbsp;</td>
             </tr>
-            <tr>
           </table>
         </form>
         <div id="testsuiteInfoDiv" style="text-align:center"> </div></td>
       
       <!--展示更新testcase-->
-      <td style="display:none; width:1000px" id="showTestCaseTd"><form id="showTestCaseForm" style="margin:0 0 0 0;">
+      <td style="display:none; width:1000px; height:467px" id="showTestCaseTd"><form id="showTestCaseForm">
           <table width="100%" id="showcaseinfo">
             <tr>
-              <td colspan="2" style="text-align:center"></td>
+              <td colspan="4" style="text-align:center"></td>
               <td style="text-align:center; width:300px">历史修改记录</td>
             </tr>
             <tr>
-              <td width="100px">用例名称</td>
-              <td><div class="input-group"> <span class="input-group-addon" id="pre_casename"></span>
-                  <input id="showtestcase_name" class="form-control input-sm" onKeyUp="quanjiao(this);" name="showtestcase_name" value="" style="width:200px" onKeyUp="quanjiao(this);" readonly>
+              <td width="90px">用例名称</td>
+              <td colspan="3"><div class="input-group"> <span class="input-group-addon" id="pre_casename"></span>
+                  <input id="showtestcase_name" class="form-control input-sm" name="showtestcase_name" value="" style="width:100px" onKeyUp="quanjiao(this);" readonly>
                 </div>
-              <td rowspan="14" style="vertical-align:top"><div id="showCaseChangeHistoryDiv" style="height:604px;overflow:scroll;"> </div></td>
+                </td>
+              <td rowspan="10" style="vertical-align:top"><div id="showCaseChangeHistoryDiv" style="height:430px;overflow:scroll;"> </div></td>
             </tr>
             <tr>
               <td><input id="showtestcase_id" name="showtestcase_id" value="" style="display:none" readonly></td>
 			  <td><input id="showtestcase_changetag" name="showtestcase_changetag" value="" style="display:none" readonly></td>
 			</tr>
             <tr>
-              <td>创建者</td>
+              <td  width="90px">创建者</td>
               <td><div id="showtestcasecreator"></div></td>
-            </tr>
-            <tr>
-              <td>创建时间</td>
+              <td  width="90px">创建时间</td>
               <td><input id="showtestcasecreattime" class="form-control input-sm" style="width:200px" value="" readonly></td>
             </tr>
             <tr style="display:none">
@@ -1715,8 +1690,6 @@ $('#jstree').jstree('select_node', 'j1_1');
                     </ul>
                   </div>
                 </div></td>
-            </tr>
-            <tr>
               <td>优先级</td>
               <td id="showcaseprioritytd" style="display:block"><input id="showcasepriority" value="" class="form-control input-sm" style="width:200px" readonly></td>
               <td id="showcasepriorityoption" style="display:none"><input type="radio" name="updatepriority" id="p1" value="P1" checked>
@@ -1735,8 +1708,6 @@ $('#jstree').jstree('select_node', 'j1_1');
                 自动&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="updatestatus" value="废弃" id="discard">
                 废弃 </td>
-            </tr>
-            <tr>
               <td>正/反例</td>
               <td id="showcasetypetd" style="display:block"><input id="showcasetype" class="form-control input-sm" style="width:200px" value="" readonly></td>
               <td id="showcasetypeoption" style="display:none"><input type="radio" name="updatetype" id="zhengli" value="正例" checked>
@@ -1746,33 +1717,30 @@ $('#jstree').jstree('select_node', 'j1_1');
             </tr>
             <tr>
               <td>描述</td>
-              <td><textarea  rows="4" name="showcasedescription" class="form-control" id="showcasedescription" style="max-height:50px; max-width:550px; width:550px; height:50px;" readonly></textarea></td>
+              <td colspan="3"><textarea  rows="4" name="showcasedescription" class="form-control" id="showcasedescription" style="max-height:50px; max-width:400px; width:400px; height:50px;" readonly></textarea></td>
             </tr>
             <tr>
               <td>步骤</td>
-              <td><textarea  rows="4" name="showcasesteps"  class="form-control" id="showcasesteps" style="max-height:150px; max-width:550px; width:550px; height:150px;"  readonly></textarea></td>
+              <td colspan="3"><textarea  rows="4" name="showcasesteps"  class="form-control" id="showcasesteps" style="max-height:150px; max-width:400px; width:400px; height:150px;"  readonly></textarea></td>
             </tr>
             <tr align="left">
-              <td colspan="2" id="upTestCaseTd" style="display:" align="center"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center"  onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" >更新</button></td>
-              <td colspan="2" id="saveTestCaseTd" style="display:none" align="center"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="saveTestCaseac()" id="saveTestCase" name="saveTestCase" >保存</button></td>
+              <td colspan="4" id="upTestCaseTd" style="display:" align="center"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center"  onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" >更新</button></td>
+              <td colspan="4" id="saveTestCaseTd" style="display:none" align="center"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="saveTestCaseac()" id="saveTestCase" name="saveTestCase" >保存</button></td>
             </tr>
             <tr>
-              <td>用例评审</td>
-              <td id="showapprovaltd" style="display:block"><input id="showapproval" class="input-sm form-control" style="width:200px" value="" readonly></td>
+              <td id="showapprovalupdatetd" style="display:; vertical-align:top" align="center"><input type="button"  class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="开始评审" onClick="updateapprovalac()"></td>
+              <td id="showapprovalsavetd" style="display:none; vertical-align:top" align="center"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="确认评审" onClick="saveapprovalac()"></td>
+              <td id="showapprovaltd" style="display:block"><input id="showapproval" class="input-sm form-control" style="width:200px; vertical-align:top" value="" readonly></td>
               <td id="showaprovaloption" style="display:none"><input type="radio" name="updateapproval" onClick="document.getElementById('approval_commentsTd').style.display='none';document.getElementById('approval_comments').readOnly = true;" value="待评审" checked>
                 待评审&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="updateapproval" onClick="document.getElementById('approval_commentsTd').style.display ='none';document.getElementById('approval_comments').readOnly = true;" value="通过">
                 通过&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateapproval" onClick="document.getElementById('approval_commentsTd').style.display='';document.getElementById('approval_comments').readOnly = false;document.getElementById('approval_comments').value='请输入拒绝原因!';" value="未通过">
+                <input type="radio" name="updateapproval" onClick="document.getElementById('approval_commentsTd').style.display='';document.getElementById('approval_comments').readOnly = false;document.getElementById('approval_comments').value='请输入拒绝原因，最大输入三十个字!';" value="未通过">
                 未通过&nbsp;&nbsp;&nbsp;&nbsp; </td>
             </tr>
             <tr id="approval_commentsTd" style="display:none;">
               <td>拒绝原因</td>
-              <td align="center"><input class="form-control input-sm" style="width:639px;"  id="approval_comments" name="approval_comments" value="请输入拒绝原因！" readonly maxlength="30"></td>
-            </tr>
-            <tr id="showaprovalbtntd">
-              <td colspan="2" id="showapprovalupdatetd" style="display:;" align="center"><input type="button"  class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="开始评审" onClick="updateapprovalac()"></td>
-              <td colspan="2" id="showapprovalsavetd" style="display:none;" align="center"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="确认评审" onClick="saveapprovalac()"></td>
+              <td align="center" colspan="3"><input class="form-control input-sm" style="width:639px;"  id="approval_comments" name="approval_comments" value="请输入拒绝原因，最大输入三十个字!" readonly maxlength="30"></td>
             </tr>
           </table>
         </form></td>
