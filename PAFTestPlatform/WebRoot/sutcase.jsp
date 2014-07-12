@@ -163,8 +163,8 @@ function quanjiao(obj)
 					else if (topWin.$id('casesteps').value == ""){
 					Dialog.alert("用例步骤不能为空");	
 						}
-					else if (topWin.$id('casesteps').value.length > 500 ){
-					Dialog.alert("用例步骤不能超过500个字符");
+					else if (topWin.$id('casesteps').value.length > 1000 ){
+					Dialog.alert("用例步骤不能超过1000个字符");
 						}
 					else{
 						newTestCaseac();
@@ -1260,7 +1260,7 @@ function saveapprovalac(){
 				},
 				"showcasesteps" : {
 					required : true,
-					maxlength : 500
+					maxlength : 1000
 				},
 			},
 			messages : {
@@ -1274,7 +1274,7 @@ function saveapprovalac(){
 				},
 				"showcasesteps" : {
 					required : "请输入用例步骤",
-					maxlength : $.validator.format("用例步骤最大输入不超过五百个字符.")
+					maxlength : $.validator.format("用例步骤最大输入不超过一千个字符.")
 				}
 			}
 		});
@@ -1521,20 +1521,21 @@ $('#jstree').jstree('select_node', 'j1_1');
   <table id="maintable" width="100%" align="center" class="table table-bordered">
     <tr> 
       <!--左边Tree-->
-      <td style="vertical-align:top;"><div style="width:283px;height:450px;overflow:scroll;">
+      <td style="vertical-align:top;">
+      <div id="createbtn">
+            <button type="button" class="btn btn-success" style="width:100px" onclick="demo_create();">新建</button>
+            <button type="button" class="btn btn-info" style="width:100px" onclick="demo_refresh();">刷新</button>
+       
+      </div>
+      <br>
+      <div style="width:283px;height:397px;overflow:scroll;">
           <div id="searchDiv" align="left">
             <input type="text" id="plugins4_q" value="" class="input" style="display:block; width:210px; padding:4px; border-radius:4px; border:1px solid silver;">
           </div>
           <br>
-          <div id="createbtn">
-            <button type="button" class="btn btn-success" style="width:100px" onclick="demo_create();">新建</button>
-            <button type="button" class="btn btn-info" style="width:100px" onclick="demo_refresh();">刷新</button>
-            
-          </div>
           <div id="jstree"></div>
           <!--<div id="event_result" style="margin-top:2em; text-align:left;">hhhhh&nbsp;</div>--> 
         </div></td>
-      
       <!--About SUT-->
       <td height="467px" id="sutCaseInfoTd" style="display:block; width:1000px" ><div id="sutCaseInfoDiv" style="text-align:center"> </div></td>
       
@@ -1586,7 +1587,7 @@ $('#jstree').jstree('select_node', 'j1_1');
       
       <!--展示、更新testsuite-->
       <td style="display:none; width:1000px" id="showTestSuiteTd" height="467px"><form id="showTestSuiteForm" name="showTestSuiteForm">
-          <table width="100%" height="467px" id="showTestSuiteTable">
+          <table width="100%" id="showTestSuiteTable">
             <tr>
               <td  align="right" width="100px">测试集  :&nbsp;&nbsp;</td>
               <td><div class="input-group"> <span class="input-group-addon">Ts_</span>
