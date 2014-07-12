@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
+import com.paftp.dto.TestpassDto;
 import com.paftp.entity.Testpass;
+import com.paftp.entity.Version;
 import com.paftp.service.Testpass.TestpassService;
 
 @Service("testpassService")
@@ -51,6 +53,24 @@ public class TestpassServiceImpl implements TestpassService{
 	public List<Testpass> findAllList() {
 		// TODO Auto-generated method stub
 		return baseDAO.find(" from testpass u order by u.id");
+	}
+
+	@Override
+	public TestpassDto getTestpassDto(Testpass testpass, Integer passcount, Integer failcount, Float percentage) {
+		// TODO Auto-generated method stub
+		TestpassDto testpassdto = new TestpassDto();
+		
+		testpassdto.setId(testpass.getId());
+		testpassdto.setTestset(testpass.getTestset());
+		Version version = new Version();
+		version.setVersionNum(testpass.getVersion().getVersionNum());
+		testpassdto.setVersion(version);
+		testpassdto.setTag(testpass.getTag());
+		testpassdto.setPasscount(passcount);
+		testpassdto.setFailcount(failcount);
+		testpassdto.setPercentage(percentage);
+		
+		return null;
 	}
 
 }

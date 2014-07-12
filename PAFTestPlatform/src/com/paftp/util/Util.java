@@ -5,6 +5,18 @@ import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+
+import com.paftp.entity.Role;
+import com.paftp.entity.Sut;
+import com.paftp.entity.User;
+import com.paftp.service.sut.SutService;
+import com.paftp.service.user.UserService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -21,6 +33,11 @@ public class Util {
 	 * @param str
 	 * @return String
 	 */
+	@Resource
+	private SutService sutService;
+	@Resource
+	private UserService userService;
+	
 	public String md5Encryption(String str) {
 		String newStr = null;
 		try {
@@ -132,5 +149,39 @@ public class Util {
 
 		} // end for.
 		return outStrBuf.toString();
+	}
+	
+	public User getSessionUser() {
+
+		HttpSession session = ServletActionContext.getRequest().getSession(
+				false);
+
+		if (session == null || session.getAttribute("user") == null) {
+			return null;
+		} else {
+			User user = (User) session.getAttribute("user");
+			return user;
+		}
+	}
+	
+	public Boolean isRoleOfSut(User user, String sut_id, String sut_name) {
+		User currentuser = userService.findUserByAlias(user.getAlias());
+		List<Role> roles = currentuser.getRoles();
+		Sut sut = null;
+		if (sut_id != null){
+			sut = sutService.findSutById(Integer.parseInt(sut_id));
+		} else {
+			if (sut_name != null){
+				sut = sutService.findSutByName(sut_name);
+			}
+		}
+		for (int i = 0; i < roles.size(); i++) {
+			if (roles.get(i).getSut() != null) {
+				if (roles.get(i).getSut().getName().equals(sut.getName())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
