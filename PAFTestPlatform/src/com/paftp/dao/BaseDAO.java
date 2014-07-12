@@ -187,5 +187,7 @@ public interface BaseDAO<T> {
 	public List<T> findbyconditions(HashMap<String, Object> param);
 	
 	public List<T> findbyconditionsfortestsuites(HashMap<String, Object> param);
+	
+	public List<T> findbyconditionsforcaseresults(HashMap<String, Object> param);
 
 }

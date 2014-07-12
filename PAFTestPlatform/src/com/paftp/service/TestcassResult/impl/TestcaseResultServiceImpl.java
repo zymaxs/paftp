@@ -1,5 +1,6 @@
 package com.paftp.service.TestcassResult.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.entity.TestcaseResult;
+import com.paftp.entity.Testsuite;
 import com.paftp.service.TestcassResult.TestcaseResultService;
 
 @Service("testcaseResultService")
@@ -51,6 +53,14 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 	public List<TestcaseResult> findAllList() {
 		// TODO Auto-generated method stub
 		return baseDAO.find(" from testcaseresult u order by u.id");
+	}
+
+	@Override
+	public List<TestcaseResult> findAllCaseresultByMultiConditions(
+			HashMap<String, Object> conditions) {
+		// TODO Auto-generated method stub
+		List<TestcaseResult> testcase_results = baseDAO.findbyconditionsfortestsuites(conditions);
+		return testcase_results;
 	}
 
 }

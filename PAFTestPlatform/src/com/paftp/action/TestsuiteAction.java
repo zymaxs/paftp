@@ -144,7 +144,7 @@ public class TestsuiteAction extends ActionSupport {
 
 			testsuiteService.saveTestsuite(testsuite);
 
-			JSONArray jsonarray = this.getRootNode(this.getSut_name());
+			JSONArray jsonarray = this.getRootNode(this.getSut_name(), null);
 			this.setJsonArray(jsonarray);
 		} else {
 			this.setPrompt("The sut" + this.getSut_name() + "is not exist!");
@@ -574,6 +574,8 @@ public class TestsuiteAction extends ActionSupport {
 
 	public String queryCombineConditions() {
 
+		List<Testsuite> testsuite_results = new ArrayList<Testsuite>();
+		
 		Sut sut = sutService.findSutByName(this.getSut_name());
 
 		List<Testsuite> testsuites = sut.getTestsuites();
@@ -596,12 +598,25 @@ public class TestsuiteAction extends ActionSupport {
 			conditions.put("testsuite.id", testsuite.getId());
 			List<Testcase> testcases = testcaseService
 					.findAllCaseByMultiConditions(conditions);
+			
+			if (testcases.size() > 0){
+				Testsuite testsuite_result = new Testsuite();
+				List<Testcase> testcase_results = new ArrayList<Testcase>();
+				for (int j = 0; j< testcases.size(); j++){
+					Testcase testcase_result = testcases.get(j);
+					testcase_results.add(testcase_result);
+				}
+				testsuite_result.setTestcases(testcase_results);
+				testsuite_result.setId(testsuite.getId());
+				testsuite_result.setName(testsuite.getName());
+				testsuite_results.add(testsuite_result);
+			}
 
 			testcasenum += testcases.size();
 		}
 
 		this.setTestcase_quantity(testcasenum);
-		this.setJsonArray(this.getRootNode(this.getSut_name()));
+		this.setJsonArray(this.getRootNode(this.getSut_name(), testsuite_results));
 
 		return "success";
 	}
@@ -631,7 +646,7 @@ public class TestsuiteAction extends ActionSupport {
 
 	public String initialTestsuites() throws ServletException, IOException {
 
-		this.setJsonArray(this.getRootNode(this.getSut_name()));
+		this.setJsonArray(this.getRootNode(this.getSut_name(), null));
 
 		return "success";
 
@@ -869,7 +884,7 @@ public class TestsuiteAction extends ActionSupport {
 		return false;
 	}
 
-	private JSONArray getRootNode(String sut_name) {
+	private JSONArray getRootNode(String sut_name, List<Testsuite> testsuites) {
 
 		List<Sut> suts = new ArrayList<Sut>();
 
@@ -881,11 +896,15 @@ public class TestsuiteAction extends ActionSupport {
 		if (suts.size() == 0){
 			return null;
 		}
-
+		Boolean tag = false;
+		if (testsuites == null){
+			tag = true;
+		}
 		JSONArray parentNode0000 = new JSONArray();
-
+		
 		for (int i = 0; i < suts.size(); i++) {
-			List<Testsuite> testsuites = suts.get(i).getTestsuites();
+			if (tag){
+			testsuites = suts.get(i).getTestsuites();
 			testsuites = this.sortTestsuite(testsuites);
 			JSONArray parentNode000 = new JSONArray();
 			JSONArray parentNode00 = new JSONArray();
@@ -928,7 +947,37 @@ public class TestsuiteAction extends ActionSupport {
 			JSONObject childNode0000 = util.childNode(suts.get(i).getId(), suts
 					.get(i).getName(), "sut", parentNode000);
 			parentNode0000.add(childNode0000);
+		} else {
+			testsuites = this.sortTestsuite(testsuites);
+			JSONArray parentNode000 = new JSONArray();
+			JSONArray parentNode00 = new JSONArray();
+			for (int j = 0; j < testsuites.size(); j++) {
+				List<Testcase> testcases = testsuites.get(j).getTestcases();
+				
+				JSONArray parentNode0 = new JSONArray();
+				if (testcases != null && testcases.size() > 0) {
+					testcases = this.sort(testcases);
+					for (int l = 0; l < testcases.size(); l++) {
+						JSONObject childNode0 = util.childNode(testcases.get(l)
+								.getId(), testcases.get(l).getCaseName(), util
+								.nodeType("00"), null);
+						parentNode0.add(childNode0);
+
+					}
+				}
+				JSONObject childNode00 = util.childNode(testsuites.get(j)
+						.getId(), testsuites.get(j).getName(), util
+						.nodeType("0"), parentNode0);
+				parentNode00.add(childNode00);
+			}
+			JSONObject childNode000 = util.childNode(1, "接口案例",
+					"interfacetestsuite", parentNode00);
+			parentNode000.add(childNode000);
+			JSONObject childNode0000 = util.childNode(suts.get(i).getId(), suts
+					.get(i).getName(), "sut", parentNode000);
+			parentNode0000.add(childNode0000);
 		}
+	}
 
 		return parentNode0000;
 	}

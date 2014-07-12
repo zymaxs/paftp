@@ -26,6 +26,7 @@ public class Testpass {
 	private Sut sut;
 	private List<TestsuiteResult> testsuite_results;
 	private Version version;
+	private String tag;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -86,6 +87,15 @@ public class Testpass {
 
 	public void setVersion(Version version) {
 		this.version = version;
+	}
+
+	@Column(name = "tag", length = 100)
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 
 

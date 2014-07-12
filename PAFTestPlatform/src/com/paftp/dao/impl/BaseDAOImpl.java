@@ -21,6 +21,7 @@ import com.paftp.dao.BaseDAO;
 import com.paftp.dto.TestcaseCountDto;
 import com.paftp.entity.ApplySut;
 import com.paftp.entity.Testcase;
+import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.Testsuite;
 
 @Repository("baseDAO")
@@ -333,6 +334,27 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public List<T> findbyconditionsforcaseresults(HashMap<String, Object> param) {
+		// TODO Auto-generated method stub
+		DetachedCriteria dc = DetachedCriteria.forClass(TestcaseResult.class);
+		
+		Iterator<Entry<String, Object>> iter = param.entrySet().iterator();
+		
+		while(iter.hasNext()){
+			
+			Entry<String, Object> condition = iter.next();     
+			if (condition.getValue() != null  && !condition.getValue().equals("")) {
+		
+		           dc.add(Restrictions.eq(condition.getKey(),condition.getValue()));
+				}
+		}
+
+		Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
+		
+		return c.list();
 	}
 
 }
