@@ -112,16 +112,19 @@ public class TestpassAction extends ActionSupport {
 					testpassdots.add(testpassDto);
 				}
 				
-				this.setTestpassdots(testpassdots);
+				request.setAttribute("testpassdots", testpassdots);
+
+				return "success";
 				
 			} else {
-				this.setPrompt("The sut is not exist!");
+				request.setAttribute("error", "The sut is not exist!");
+				return "error";
 			}
 		} else {
-			this.setPrompt("Please let me konw which sut you want to query!");
+			request.setAttribute("error", "Please let me konw which sut you want to query!");
+			return "error";
 		}
 
-		return "success";
 	}
 
 	public String updateTestpass() {
