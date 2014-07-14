@@ -50,6 +50,7 @@ public class TestpassAction extends ActionSupport {
 	private Long pages;
 	
 	private String prompt;
+	private String flag;
 	
 	List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
 
@@ -62,67 +63,15 @@ public class TestpassAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		user = util.getSessionUser();
 
+		List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
+
 		if (this.getSut_id() != null) {
 			Sut sut = sutService
 					.findSutById(Integer.parseInt(this.getSut_id()));
 			request.setAttribute("sut", sut);
 
 			if (sut != null) {
-				List<Testpass> testpasses = sut.getTestpasses();
-				List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
-				
-				if (this.getRow() == null)
-					this.setRow(10);
-				if (this.getPagenum() == null)
-					this.setPagenum("1");
-				
-				if (testpasses.size() > 0) {
-					this.setPages((long) Math.ceil(testpasses.size() / (double) this.getRow()));
-				} else {
-					this.setPages((long) 1);
-				}
-				
-				Integer start = (Integer.parseInt(this.getPagenum()) - 1) * 10;
-				Integer end = Integer.parseInt(this.getPagenum()) * 10;
-				if (testpasses.size() < end){
-					end = testpasses.size();
-				}
-			
-				for(int i = start ; i<end; i++){
-					Integer testcaseresultpass_quantity = 0;
-					HashMap<String, Integer> testcaseresult_passcounts = new HashMap<String, Integer>();
-					Integer testcaseresultfail_quantity = 0;
-					HashMap<String, Integer> testcaseresult_failcounts = new HashMap<String, Integer>();
-				
-					List<TestsuiteResult> testsuite_results = testpasses.get(i).getTestsuite_results();
-					for (int j=0; j<testsuite_results.size(); j++){
-						HashMap<String, Object> conditions = new HashMap<String, Object>();
-						
-						conditions.put("testsuite_result.id", testsuite_results.get(j).getId());
-						conditions.put("ispass", true);
-						List<TestcaseResult> testcase_results = testcaseresultService.findAllCaseresultByMultiConditions(conditions);
-						testcaseresult_passcounts.put(testsuite_results.get(j).getSuitename(), testcase_results.size());
-						testcaseresultpass_quantity += testcase_results.size();
-						
-						conditions.remove("ispass");
-						conditions.put("ispass", false);
-						testcase_results = testcaseresultService.findAllCaseresultByMultiConditions(conditions);
-						testcaseresult_failcounts.put(testsuite_results.get(j).getSuitename(), testcase_results.size());
-						testcaseresultfail_quantity += testcase_results.size();
-					}
-					
-					Integer total = testcaseresultpass_quantity + testcaseresultfail_quantity;
-					Float percentage = (float)testcaseresultpass_quantity / (float)total;
-					
-					TestpassDto testpassDto = testpassService.getTestpassDto(testpasses.get(i), testcaseresultpass_quantity, testcaseresultfail_quantity, total, percentage);
-					testpassdots.add(testpassDto);
-				}
-				
-				request.setAttribute("testpassdots", testpassdots);
-				request.setAttribute("flag", true);
-				request.setAttribute("pages", this.getPages());
-				return "success";
-				
+				testpassdots = this.getTestpasses(sut);
 			} else {
 				request.setAttribute("error", "The sut is not exist!");
 				request.setAttribute("flag", true);
@@ -134,6 +83,38 @@ public class TestpassAction extends ActionSupport {
 			return "error";
 		}
 
+		request.setAttribute("testpassdots", testpassdots);
+		request.setAttribute("flag", true);
+		request.setAttribute("pages", this.getPages());
+		return "success";
+		
+	}
+	
+	public String queryTestpasses(){
+		
+		List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
+
+		if (this.getSut_id() != null) {
+			Sut sut = sutService
+					.findSutById(Integer.parseInt(this.getSut_id()));
+
+			if (sut != null) {
+				testpassdots = this.getTestpasses(sut);
+			} else {
+				this.setPrompt("The sut is not exist!");
+				this.setFlag("false");
+				return "success";
+			}
+		} else {
+			this.setPrompt("Please let me konw which sut you want to query!");
+			this.setFlag("false");
+			return "success";
+		}
+
+		this.setTestpassdots(testpassdots);
+		this.setFlag("false");
+		
+		return "success";
 	}
 
 	public String updateTestpass() {
@@ -157,6 +138,62 @@ public class TestpassAction extends ActionSupport {
 		return "success";
 	}
 
+	private List<TestpassDto> getTestpasses(Sut sut){
+
+		List<Testpass> testpasses = sut.getTestpasses();
+		List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
+		
+		if (this.getRow() == null)
+			this.setRow(10);
+		if (this.getPagenum() == null)
+			this.setPagenum("1");
+		
+		if (testpasses.size() > 0) {
+			this.setPages((long) Math.ceil(testpasses.size() / (double) this.getRow()));
+		} else {
+			this.setPages((long) 1);
+		}
+		
+		Integer start = (Integer.parseInt(this.getPagenum()) - 1) * 10;
+		Integer end = Integer.parseInt(this.getPagenum()) * 10;
+		if (testpasses.size() < end){
+			end = testpasses.size();
+		}
+	
+		for(int i = start ; i<end; i++){
+			Integer testcaseresultpass_quantity = 0;
+			HashMap<String, Integer> testcaseresult_passcounts = new HashMap<String, Integer>();
+			Integer testcaseresultfail_quantity = 0;
+			HashMap<String, Integer> testcaseresult_failcounts = new HashMap<String, Integer>();
+		
+			List<TestsuiteResult> testsuite_results = testpasses.get(i).getTestsuite_results();
+			for (int j=0; j<testsuite_results.size(); j++){
+				HashMap<String, Object> conditions = new HashMap<String, Object>();
+				
+				conditions.put("testsuite_result.id", testsuite_results.get(j).getId());
+				conditions.put("ispass", true);
+				List<TestcaseResult> testcase_results = testcaseresultService.findAllCaseresultByMultiConditions(conditions);
+				testcaseresult_passcounts.put(testsuite_results.get(j).getSuitename(), testcase_results.size());
+				testcaseresultpass_quantity += testcase_results.size();
+				
+				conditions.remove("ispass");
+				conditions.put("ispass", false);
+				testcase_results = testcaseresultService.findAllCaseresultByMultiConditions(conditions);
+				testcaseresult_failcounts.put(testsuite_results.get(j).getSuitename(), testcase_results.size());
+				testcaseresultfail_quantity += testcase_results.size();
+			}
+			
+			Integer total = testcaseresultpass_quantity + testcaseresultfail_quantity;
+			Float percentage = (float)testcaseresultpass_quantity / (float)total;
+			
+			TestpassDto testpassDto = testpassService.getTestpassDto(testpasses.get(i), testcaseresultpass_quantity, testcaseresultfail_quantity, total, percentage);
+			testpassdots.add(testpassDto);
+		}
+		
+		return testpassdots;
+	
+	}
+	
 	public String getSut_name() {
 		return sut_name;
 	}
@@ -228,5 +265,13 @@ public class TestpassAction extends ActionSupport {
 
 	public void setPages(Long pages) {
 		this.pages = pages;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 }
