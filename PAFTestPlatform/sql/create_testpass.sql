@@ -4,6 +4,7 @@ CREATE TABLE `Testpass`(
 	`createtime` datetime DEFAULT NULL,
 	`testset` varchar(20) DEFAULT NULL,
 	`tag` varchar(100) DEFAULT NULL,
+	`env` varchar(20) DEFAULT NULL,
 	`sut_id` int(11) DEFAULT NULL,
 	`version_id` int(11) DEFAULT NULL,
 	INDEX sut_ind (sut_id), 
