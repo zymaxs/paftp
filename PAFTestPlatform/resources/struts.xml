@@ -248,6 +248,10 @@
 			<result name="success">/inidata.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
+		<action name="initialTestpasses" method="initialTestpasses" class="com.paftp.action.TestpassAction">
+			<result name="success">/result.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
 
 	</package>
 
