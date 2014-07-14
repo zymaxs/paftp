@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.util.*,com.paftp.entity.*"%>
+	import="java.util.*,com.paftp.entity.*,com.paftp.dto.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -9,6 +9,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<% 
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/initialTestpasses.action").forward(request,response);}
+List<TestpassDto> testpassdots = (List<TestpassDto>)request.getAttribute("testpassdots");
+%>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
 <title>无标题文档</title>
@@ -259,6 +265,8 @@
     <%}}%>
   </ul>
   <!--主体-->
+  
+  <!--查询-->
   <table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
     <tr style="text-align:center">
       <td width="48%" colspan="4">时间段</td>
@@ -312,6 +320,9 @@
     </td>
   </tr>
   </table>
+  
+  <!--图表-->
+  
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
