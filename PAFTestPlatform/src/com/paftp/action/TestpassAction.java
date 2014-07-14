@@ -113,15 +113,17 @@ public class TestpassAction extends ActionSupport {
 				}
 				
 				request.setAttribute("testpassdots", testpassdots);
-
+				request.setAttribute("flag", true);
 				return "success";
 				
 			} else {
 				request.setAttribute("error", "The sut is not exist!");
+				request.setAttribute("flag", true);
 				return "error";
 			}
 		} else {
 			request.setAttribute("error", "Please let me konw which sut you want to query!");
+			request.setAttribute("flag", false);
 			return "error";
 		}
 
