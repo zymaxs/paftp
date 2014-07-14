@@ -115,6 +115,7 @@ public class TestpassAction extends ActionSupport {
 				
 				request.setAttribute("testpassdots", testpassdots);
 				request.setAttribute("flag", true);
+				request.setAttribute("pages", this.getPages());
 				return "success";
 				
 			} else {
