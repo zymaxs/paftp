@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Testsuite>
-<Testcase name="Ts_Login_0001" result="0">
+<Testcase name="Tc_Login_0001" result="0">
 <Comment>xxxx</Comment>
 <Comment>xxxx</Comment>
 <Checkpoint result="0">xxxx</Checkpoint>
 </Testcase>
-<Testcase name="Ts_Login_0002" result="0">
+<Testcase name="Tc_Login_0002" result="0">
 <Comment>xxxx</Comment>
 <Comment>xxxx</Comment>
 <Checkpoint result="0">xxxx</Checkpoint>
@@ -13,12 +13,12 @@
 <Comment>xxxx</Comment>
 <Checkpoint result="0">xxxx</Checkpoint>
 </Testcase>
-<Testcase name="Ts_Login_0003" result="1">
+<Testcase name="Tc_Login_0003" result="1">
 <Comment>xxxx</Comment>
 <Comment>xxxx</Comment>
 <Checkpoint result="1">xxxx</Checkpoint>
 </Testcase>
-<Testcase name="Ts_Login_0004" result="1">
+<Testcase name="Tc_Login_0004" result="1">
 <Comment>xxxx</Comment>
 <Comment>xxxx</Comment>
 <Checkpoint result="0">xxxx</Checkpoint>

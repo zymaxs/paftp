@@ -10,6 +10,7 @@ public class Testpass {
 	private Date createtime;
 	private String version_name;
 	private String sut_name;
+	private String env;
 	private List<TestsuiteResult> testsuite_results;
 
 	public String getName() {
@@ -48,6 +49,12 @@ public class Testpass {
 	}
 	public void setSut_name(String sut_name) {
 		this.sut_name = sut_name;
+	}
+	public String getEnv() {
+		return env;
+	}
+	public void setEnv(String env) {
+		this.env = env;
 	}
 
 }

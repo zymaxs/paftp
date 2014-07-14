@@ -31,6 +31,7 @@ public class ResultParser {
 		testpass.setSut_name(p.getProperty("sut"));
 		testpass.setVersion_name(p.getProperty("version"));
 		testpass.setTestset(p.getProperty("testset"));
+		testpass.setEnv(p.getProperty("env"));
 		File[] files = this.getFiles(path + "\\result\\");
 		List<TestsuiteResult> testsuite_results = new ArrayList<TestsuiteResult>();
 		for (int i = 0; i < files.length; i++) {
