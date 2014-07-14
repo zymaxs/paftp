@@ -373,7 +373,7 @@ function inidata(){
         <td>起始日期</td>
         <td><input class="easyui-datetimebox"  id="starttime" name="starttime" editable="false" ></td>
         <td>截止日期</td>
-        <td><input class="easyui-datetimebox"  id="endtime" name="endtime" editable="false""></td>
+        <td><input class="easyui-datetimebox"  id="endtime" name="endtime" editable="false"></td>
       </tr>
       <tr>
       	<td colspan="8">&nbsp;</td>

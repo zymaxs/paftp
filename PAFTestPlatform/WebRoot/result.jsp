@@ -14,9 +14,15 @@
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<link href="css/easyui/themes/default/easyui.css" rel="stylesheet">
+<link href="css/easyui/themes/icon.css" rel="stylesheet">
+<link href="css/easyui/demo.css" rel="stylesheet">
+<link href="css/jqpagination.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="js/jquery.jqpagination.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -189,29 +195,29 @@
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff;"> <br>
-  <table width="100%">
-  <tr>
-  	<td>&nbsp;&nbsp;</td>
-  	<td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
-    <td colspan="7">&nbsp;</td>
-    <%if (session.getAttribute("user") == null) {%>
-    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </td>
-    <%} else { User user = (User) session.getAttribute("user");
+    <table width="100%">
+      <tr>
+        <td>&nbsp;&nbsp;</td>
+        <td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
+        <td colspan="7">&nbsp;</td>
+        <%if (session.getAttribute("user") == null) {%>
+        <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a></td>
+        <%} else { User user = (User) session.getAttribute("user");
                       String name = user.getAlias(); %>
-    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </td>
-    <%}%>
-    <td>&nbsp;&nbsp;</td>
-  </tr>
-  <tr>
-  	<td colspan="12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</td>
-  </tr>
-  <tr>
-  	<td colspan="10">&nbsp;</td>
-    <td style="text-align:right;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</td>
-    <td>&nbsp;&nbsp;</td>
-  </tr>
-  </table>
-  <br>
+        <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a></td>
+        <%}%>
+        <td>&nbsp;&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</td>
+      </tr>
+      <tr>
+        <td colspan="10">&nbsp;</td>
+        <td style="text-align:right;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</td>
+        <td>&nbsp;&nbsp;</td>
+      </tr>
+    </table>
+    <br>
   </div>
   <!--登录-->
   <div id="loginmodal" style="display:none;" align="center">
@@ -253,7 +259,59 @@
     <%}}%>
   </ul>
   <!--主体-->
-  <div align="center"> Hello World! </div>
+  <table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
+    <tr style="text-align:center">
+      <td width="48%" colspan="4">时间段</td>
+      <td width="13%">测试集</td>
+      <td width="13%">测试环境</td>
+      <td width="13%">版本</td>
+      <td width="13%">TAG</td>
+    </tr>
+    <tr>
+      <td>起始日期</td>
+        <td><input class="easyui-datetimebox"  id="starttime" name="starttime" editable="false" ></td>
+        <td>截止日期</td>
+        <td><input class="easyui-datetimebox"  id="endtime" name="endtime" editable="false"></td>
+      <td><select id="querytestset" style="width:100%">
+          <option value="fulltest" selected>fulltest</option>
+        </select></td>
+      <td><select id="env" style="width:100%">
+          <option value="stg1" selected>stg1</option>
+          <option value="stg2">stg2</option>
+          <option value="stg3">stg3</option>
+        </select></td>
+      <td><select id="queryversion" style="width:100%">
+          <option value="All" selected>All</option>
+        </select></td>
+      <td><select id="querytag" style="width:100%">
+          <option value="ALL" selected>ALL</option>
+          <option value="冒烟测试" selected>冒烟测试</option>
+          <option value="系统测试" selected>系统测试</option>
+          <option value="回归测试" selected>回归测试</option>
+        </select></td>
+    </tr>
+    <tr>
+      <td colspan="8" style="text-align:center"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="queryac()" value="搜索"></td>
+    </tr>
+  </table>
+  <table>
+  <tr>
+  	<td width="70%" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">接口自动化测试结果</td>
+    <td width="30%">
+    	<table class="table table-bordered">
+  			<tr>
+  				<th colspan="4"><center>Passrate</center></th>
+            </tr>
+ 			<tr>
+  				<td class="success" style="width:150px"><center>100%</center></td>
+  				<td class="active" style="width:150px"><center>80%-99%</center></td>
+  				<td class="warning" style="width:150px"><center>50%-79%</center></td>
+  				<td class="danger" style="width:150px"><center>0%-49%</center></td>
+ 			</tr>
+  		</table>
+    </td>
+  </tr>
+  </table>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
