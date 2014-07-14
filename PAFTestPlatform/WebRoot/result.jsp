@@ -50,16 +50,16 @@ function inidata(){
 		}
 		
 		
-		iniinsertdata +="<tr"+ rowtype +">";
+		iniinsertdata +="<tr "+ rowtype +">";
 		iniinsertdata +="<td>"+testpassdots.get(i).getCreatetime()+"</td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getTestset()+"</td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getEnv()+"</td>";
-		iniinsertdata +="<td>"+testpassdots.get(i).getVersion()+"</td>";
+		iniinsertdata +="<td>"+testpassdots.get(i).getVersion().getVersionNum()+"</td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getPasscount()+"</td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getFailcount()+"</td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getTotal()+"</td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getPercentage()+"</td>";
-		if (testpassdots.get(i).getTag() == ""){
+		if (testpassdots.get(i).getTag() == null){
 			iniinsertdata +="<td>-</td>";
 		}
 		else{
