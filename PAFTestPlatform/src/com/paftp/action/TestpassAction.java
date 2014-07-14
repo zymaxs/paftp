@@ -106,9 +106,10 @@ public class TestpassAction extends ActionSupport {
 						testcaseresultfail_quantity += testcase_results.size();
 					}
 					
-					Float percentage = (float) (testcaseresultpass_quantity / (testcaseresultpass_quantity + testcaseresultfail_quantity));
+					Integer total = testcaseresultpass_quantity + testcaseresultfail_quantity;
+					Float percentage = (float) (testcaseresultpass_quantity / total);
 					
-					TestpassDto testpassDto = testpassService.getTestpassDto(testpasses.get(i), testcaseresultpass_quantity, testcaseresultfail_quantity, percentage);
+					TestpassDto testpassDto = testpassService.getTestpassDto(testpasses.get(i), testcaseresultpass_quantity, testcaseresultfail_quantity, total, percentage);
 					testpassdots.add(testpassDto);
 				}
 				

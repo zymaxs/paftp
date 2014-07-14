@@ -12,6 +12,7 @@ public class TestpassDto {
 	private Version version;
 	private Integer passcount;
 	private Integer failcount;
+	private Integer total;
 	private Float percentage;
 	private String tag;
 	private String env;
@@ -69,5 +70,11 @@ public class TestpassDto {
 	}
 	public void setEnv(String env) {
 		this.env = env;
+	}
+	public Integer getTotal() {
+		return total;
+	}
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 }

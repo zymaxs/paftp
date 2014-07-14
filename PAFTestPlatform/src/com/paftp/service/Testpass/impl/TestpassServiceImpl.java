@@ -56,7 +56,7 @@ public class TestpassServiceImpl implements TestpassService{
 	}
 
 	@Override
-	public TestpassDto getTestpassDto(Testpass testpass, Integer passcount, Integer failcount, Float percentage) {
+	public TestpassDto getTestpassDto(Testpass testpass, Integer passcount, Integer failcount, Integer total, Float percentage) {
 		// TODO Auto-generated method stub
 		TestpassDto testpassdto = new TestpassDto();
 		
@@ -68,6 +68,7 @@ public class TestpassServiceImpl implements TestpassService{
 		testpassdto.setTag(testpass.getTag());
 		testpassdto.setPasscount(passcount);
 		testpassdto.setFailcount(failcount);
+		testpassdto.setTotal(total);
 		testpassdto.setPercentage(percentage);
 		testpassdto.setEnv(testpass.getEnv());
 		

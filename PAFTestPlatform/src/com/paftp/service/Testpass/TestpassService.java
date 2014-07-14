@@ -21,5 +21,5 @@ public interface TestpassService {
 
 	public List<Testpass> findAllList();
 	
-	public TestpassDto getTestpassDto(Testpass testpass, Integer passcount, Integer failcount, Float percentage);
+	public TestpassDto getTestpassDto(Testpass testpass, Integer passcount, Integer failcount, Integer total, Float percentage);
 }
