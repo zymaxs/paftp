@@ -14,6 +14,7 @@ public class TestpassDto {
 	private Integer failcount;
 	private Float percentage;
 	private String tag;
+	private String env;
 	
 	public Integer getId() {
 		return id;
@@ -62,5 +63,11 @@ public class TestpassDto {
 	}
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+	public String getEnv() {
+		return env;
+	}
+	public void setEnv(String env) {
+		this.env = env;
 	}
 }
