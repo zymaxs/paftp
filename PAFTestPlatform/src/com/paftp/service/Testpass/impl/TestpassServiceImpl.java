@@ -75,7 +75,7 @@ public class TestpassServiceImpl implements TestpassService{
 		testpassdto.setPercentage(percentage_str);
 		testpassdto.setEnv(testpass.getEnv());
 		
-		return null;
+		return testpassdto;
 	}
 
 }

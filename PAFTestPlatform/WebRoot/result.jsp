@@ -29,6 +29,48 @@ List<TestpassDto> testpassdots = (List<TestpassDto>)request.getAttribute("testpa
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="js/jquery.jqpagination.js"></script>
+<script type="text/javascript">
+function inidata(){
+	<%
+	String iniinsertdata="";
+	String rowtype = "";
+	
+	for(int i=0; i< testpassdots.size() ;i++ ){
+		if (testpassdots.get(i).getPercentage() == 100){
+			rowtype = "class='success'";
+		}
+		else if (testpassdots.get(i).getPercentage() < 100 && testpassdots.get(i).getPercentage() >= 80){
+			rowtype = "class='active'";
+		}
+		else if (testpassdots.get(i).getPercentage() < 80 && testpassdots.get(i).getPercentage() >= 50){
+			rowtype = "class='warning'";
+		}
+		else {
+			rowtype = "class='danger'";
+		}
+		
+		
+		iniinsertdata +="<tr "+ rowtype +">";
+		iniinsertdata +="<td>"+testpassdots.get(i).getCreatetime()+"</td>";
+		iniinsertdata +="<td>"+testpassdots.get(i).getTestset()+"</td>";
+		iniinsertdata +="<td>"+testpassdots.get(i).getEnv()+"</td>";
+		iniinsertdata +="<td>"+testpassdots.get(i).getVersion().getVersionNum()+"</td>";
+		iniinsertdata +="<td>"+testpassdots.get(i).getPasscount()+"</td>";
+		iniinsertdata +="<td>"+testpassdots.get(i).getFailcount()+"</td>";
+		iniinsertdata +="<td>"+testpassdots.get(i).getTotal()+"</td>";
+		iniinsertdata +="<td>"+testpassdots.get(i).getPercentage()+"</td>";
+		if (testpassdots.get(i).getTag() == null){
+			iniinsertdata +="<td>-</td>";
+		}
+		else{
+		iniinsertdata +="<td>"+testpassdots.get(i).getTag()+"</td>";
+		}
+		iniinsertdata +="</tr>";
+	}
+	%>
+	return "<%=iniinsertdata%>";
+}
+</script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -52,6 +94,12 @@ List<TestpassDto> testpassdots = (List<TestpassDto>)request.getAttribute("testpa
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+	
+	
+	$(document).ready( function(){
+		$("#resultFormTab").append(inidata());
+	
+	});
 </script>
 <style>
 /*导航默认样式，可根据实际情况修改*/
@@ -322,6 +370,31 @@ List<TestpassDto> testpassdots = (List<TestpassDto>)request.getAttribute("testpa
   </table>
   
   <!--图表-->
+  <table id="resultForm" border="1" style="text-align:center; width:100%" align="center">
+    <thead>
+      <tr>
+        <td>执行日期</td>
+        <td>测试集</td>
+        <td>测试环境</td>
+        <td>版本</td>
+        <td>Pass</td>
+        <td>Fail</td>
+        <td>Total</td>
+        <td>Passrate</td>
+        <td>Tag</td>
+      </tr>
+    </thead>
+    <tbody id="resultFormTab">
+    </tbody>
+  </table>
+  <div align="center">
+  <div class="pagination"> <a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
+			class="previous" data-action="previous">&lsaquo;</a>
+    <input
+			type="text" readonly="readonly"/>
+    <a href="#"
+			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
+			data-action="last">&raquo;</a> </div></div>
   
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">

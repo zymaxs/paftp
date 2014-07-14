@@ -59,7 +59,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 	public List<TestcaseResult> findAllCaseresultByMultiConditions(
 			HashMap<String, Object> conditions) {
 		// TODO Auto-generated method stub
-		List<TestcaseResult> testcase_results = baseDAO.findbyconditionsfortestsuites(conditions);
+		List<TestcaseResult> testcase_results = baseDAO.findbyconditionsforcaseresults(conditions);
 		return testcase_results;
 	}
 

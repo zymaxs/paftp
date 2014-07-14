@@ -73,7 +73,9 @@ public class TestpassAction extends ActionSupport {
 				
 				if (this.getRow() == null)
 					this.setRow(10);
-
+				if (this.getPagenum() == null)
+					this.setPagenum("1");
+				
 				if (testpasses.size() > 0) {
 					this.setPages((long) Math.ceil(testpasses.size() / (double) this.getRow()));
 				} else {
@@ -82,6 +84,9 @@ public class TestpassAction extends ActionSupport {
 				
 				Integer start = (Integer.parseInt(this.getPagenum()) - 1) * 10;
 				Integer end = Integer.parseInt(this.getPagenum()) * 10;
+				if (testpasses.size() < end){
+					end = testpasses.size();
+				}
 			
 				for(int i = start ; i<end; i++){
 					Integer testcaseresultpass_quantity = 0;
@@ -93,7 +98,7 @@ public class TestpassAction extends ActionSupport {
 					for (int j=0; j<testsuite_results.size(); j++){
 						HashMap<String, Object> conditions = new HashMap<String, Object>();
 						
-						conditions.put("testsuiteresult_id", testsuite_results.get(j).getId());
+						conditions.put("testsuite_result.id", testsuite_results.get(j).getId());
 						conditions.put("ispass", true);
 						List<TestcaseResult> testcase_results = testcaseresultService.findAllCaseresultByMultiConditions(conditions);
 						testcaseresult_passcounts.put(testsuite_results.get(j).getSuitename(), testcase_results.size());
@@ -107,7 +112,7 @@ public class TestpassAction extends ActionSupport {
 					}
 					
 					Integer total = testcaseresultpass_quantity + testcaseresultfail_quantity;
-					Float percentage = (float) (testcaseresultpass_quantity / total);
+					Float percentage = (float)testcaseresultpass_quantity / (float)total;
 					
 					TestpassDto testpassDto = testpassService.getTestpassDto(testpasses.get(i), testcaseresultpass_quantity, testcaseresultfail_quantity, total, percentage);
 					testpassdots.add(testpassDto);
