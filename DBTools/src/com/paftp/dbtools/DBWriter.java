@@ -55,7 +55,8 @@ public class DBWriter {
 		java.sql.Timestamp createtime = new java.sql.Timestamp(date.getTime());
 		String testset = testpass.getTestset();
 		String name = createtime.toString();
-		String sql = "INSERT INTO testpass(createtime,testset,sut_id,version_id,name) VALUES (?,?,?,?,?);";
+		String env = testpass.getEnv();
+		String sql = "INSERT INTO testpass(createtime,testset,sut_id,version_id,name, env) VALUES (?,?,?,?,?,?);";
 		PreparedStatement st;
 		try {
 			st = dbConn.prepareStatement(sql);
@@ -64,6 +65,7 @@ public class DBWriter {
 			st.setInt(3, Integer.parseInt(sut_id));
 			st.setInt(4, Integer.parseInt(version_id));
 			st.setString(5, name);
+			st.setString(6, env);
 			st.executeUpdate();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

@@ -94,6 +94,12 @@ function inidata(){
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+	
+	
+	$(document).ready( function(){
+		$("#resultFormTab").append(inidata());
+	
+	});
 </script>
 <style>
 /*导航默认样式，可根据实际情况修改*/
