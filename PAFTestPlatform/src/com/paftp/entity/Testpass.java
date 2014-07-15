@@ -28,6 +28,7 @@ public class Testpass {
 	private Version version;
 	private String tag;
 	private String env;
+	private String name;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -106,6 +107,15 @@ public class Testpass {
 
 	public void setEnv(String env) {
 		this.env = env;
+	}
+
+	@Column(name = "name", length = 100)
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 

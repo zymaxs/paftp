@@ -66,6 +66,7 @@ public class TestpassServiceImpl implements TestpassService{
 		testpassdto.setTestset(testpass.getTestset());
 		Version version = new Version();
 		version.setVersionNum(testpass.getVersion().getVersionNum());
+		testpassdto.setCreatetime(testpass.getCreatetime());
 		testpassdto.setVersion(version);
 		testpassdto.setTag(testpass.getTag());
 		testpassdto.setPasscount(passcount);
@@ -73,6 +74,7 @@ public class TestpassServiceImpl implements TestpassService{
 		testpassdto.setTotal(total);
 		testpassdto.setPercentage(percentage);
 		testpassdto.setEnv(testpass.getEnv());
+		testpassdto.setName(testpass.getName());
 		
 		return testpassdto;
 	}
