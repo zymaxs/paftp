@@ -112,18 +112,14 @@ public class TestpassAction extends ActionSupport {
 				testpassdots = this.getTestpasses(sut);
 			} else {
 				this.setPrompt("The sut is not exist!");
-				this.setFlag("false");
 				return "success";
 			}
 		} else {
 			this.setPrompt("Please let me konw which sut you want to query!");
-			this.setFlag("false");
 			return "success";
 		}
 
 		this.setTestpassdots(testpassdots);
-		this.setFlag("false");
-		
 		return "success";
 	}
 
