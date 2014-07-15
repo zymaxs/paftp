@@ -13,7 +13,7 @@ public class TestpassDto {
 	private Integer passcount;
 	private Integer failcount;
 	private Integer total;
-	private String percentage;
+	private Float percentage;
 	private String tag;
 	private String env;
 	
@@ -72,10 +72,10 @@ public class TestpassDto {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
-	public String getPercentage() {
+	public Float getPercentage() {
 		return percentage;
 	}
-	public void setPercentage(String percentage) {
+	public void setPercentage(Float percentage) {
 		this.percentage = percentage;
 	}
 }
