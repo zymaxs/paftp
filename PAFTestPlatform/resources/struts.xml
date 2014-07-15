@@ -228,6 +228,10 @@
 			<result name="success">/sutcase.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
+		<action name="resultqueryVersion" method="queryVersion" class="com.paftp.action.VersionAction">
+			<result name="success">/result.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
 		<action name="createTestcaseproject" method="createTestcaseproject" class="com.paftp.action.TestcaseprojectAction">
 			<result name="success">/inidata.jsp</result>
 			<result name="error">/error.jsp</result>

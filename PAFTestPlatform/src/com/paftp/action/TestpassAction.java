@@ -112,18 +112,14 @@ public class TestpassAction extends ActionSupport {
 				testpassdots = this.getTestpasses(sut);
 			} else {
 				this.setPrompt("The sut is not exist!");
-				this.setFlag("false");
 				return "success";
 			}
 		} else {
 			this.setPrompt("Please let me konw which sut you want to query!");
-			this.setFlag("false");
 			return "success";
 		}
 
 		this.setTestpassdots(testpassdots);
-		this.setFlag("false");
-		
 		return "success";
 	}
 
@@ -151,8 +147,14 @@ public class TestpassAction extends ActionSupport {
 	private List<TestpassDto> getTestpasses(Sut sut) throws ParseException{
 
 		HashMap<String, Object> testpass_conditions = new HashMap<String, Object>();
-		String newStartTime = this.getStarttime().replace("/", "-");
-		String newEndTime = this.getEndtime().replace("/", "-");
+		if (this.getStarttime() != null && this.getStarttime().equals("") == false){
+			String newStartTime = this.getStarttime().replace("/", "-");
+			testpass_conditions.put("starttime", util.stringToSqlDate(newStartTime));
+		}
+		if (this.getEndtime() != null && this.getEndtime().equals("") == false){
+			String newEndTime = this.getEndtime().replace("/", "-");
+			testpass_conditions.put("endtime", util.stringToSqlDate(newEndTime));
+		}
 		if (this.getVersion() != null && this.getVersion().equals("") == false){
 			Version version = versionService.findVersionByVersionNum(this.getVersion());
 			if (version != null){
@@ -161,8 +163,6 @@ public class TestpassAction extends ActionSupport {
 			}
 		}
 		testpass_conditions.put("sut.id", sut.getId());
-		testpass_conditions.put("starttime", util.stringToSqlDate(newStartTime));
-		testpass_conditions.put("endtime", util.stringToSqlDate(newEndTime));
 		testpass_conditions.put("tag", this.getTag());
 		testpass_conditions.put("env", this.getEnv());
 		testpass_conditions.put("testset", this.getTestset());
