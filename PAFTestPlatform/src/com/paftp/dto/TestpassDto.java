@@ -16,6 +16,7 @@ public class TestpassDto {
 	private Float percentage;
 	private String tag;
 	private String env;
+	private String name;
 	
 	public Integer getId() {
 		return id;
@@ -77,5 +78,11 @@ public class TestpassDto {
 	}
 	public void setPercentage(Float percentage) {
 		this.percentage = percentage;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }

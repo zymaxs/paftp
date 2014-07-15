@@ -74,6 +74,7 @@ public class TestpassServiceImpl implements TestpassService{
 		testpassdto.setTotal(total);
 		testpassdto.setPercentage(percentage);
 		testpassdto.setEnv(testpass.getEnv());
+		testpassdto.setName(testpass.getName());
 		
 		return testpassdto;
 	}
