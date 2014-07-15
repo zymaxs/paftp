@@ -261,6 +261,10 @@
 			<result name="success">/result.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
+		<action name="updateTestpass" method="updateTestpass" class="com.paftp.action.TestpassAction">
+			<result name="success">/result.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
 
 	</package>
 

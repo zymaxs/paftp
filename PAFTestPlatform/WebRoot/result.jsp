@@ -29,11 +29,15 @@ String pagenum = request.getAttribute("pages").toString();
 <link href="css/easyui/themes/icon.css" rel="stylesheet">
 <link href="css/easyui/demo.css" rel="stylesheet">
 <link href="css/jqpagination.css" rel="stylesheet" />
+<link rel="stylesheet" href="dist/themes/default/style.min.css" />
+<link href="css/shou.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
 <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="js/jquery.jqpagination.js"></script>
+<script type="text/javascript" src="js/zDialog.js"></script>
+<script type="text/javascript" src="js/zDrag.js"></script>
 <script type="text/javascript">
 function inidata(){
 	<%
@@ -65,10 +69,10 @@ function inidata(){
 		iniinsertdata +="<td>"+testpassdots.get(i).getTotal()+"</td>";
 		iniinsertdata +="<td>"+(testpassdots.get(i).getPercentage()*100)+"%</td>";
 		if (testpassdots.get(i).getTag() == null){
-			iniinsertdata +="<td>-</td>";
+			iniinsertdata +="<td><a id='"+testpassdots.get(i).getId()+"' onClick='tagac(this)'>-</a></td>";
 		}
 		else{
-		iniinsertdata +="<td>"+testpassdots.get(i).getTag()+"</td>";
+		iniinsertdata +="<td>"+testpassdots.get(i).getTag()+"</label></td>";
 		}
 		iniinsertdata +="</tr>";
 	}
@@ -99,6 +103,29 @@ function inidata(){
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	};
+	
+	
+	function tagac(obj){
+	var test = obj.id;
+	document.getElementById('testpass_id').value = test;
+	var diag = new Dialog();
+	diag.Width = 500;
+	diag.Height = 200;
+	diag.Title = "为本次测试结果打一个标签";
+	diag.InvokeElementId="crateTag"
+	diag.OKEvent = function(){
+					diag.close();
+					updatetagac();
+					};//点击确定后调用的方法
+	diag.show();
+		
+	}
+	
+	function updatetagac(){
+		document.updatetagForm.action = "${pageContext.request.contextPath}/updateTestpass.action";
+		document.updatetagForm.submit();
+	}
+	
 	
 	
 	var sut_id = <%=sut_id%>;
@@ -506,6 +533,31 @@ function inidata(){
     <a href="#"
 			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
 			data-action="last">&raquo;</a> </div></div>
+            
+            
+            
+<!---->   
+<div id="crateTag" style="display:none">
+    <form id="updatetagForm" name="updatetagForm" action="">
+      <table width="500px" height="200px" style="background:#FFF">
+      	<tr>
+          <td><input type="text" id="testpass_id" name="testpass_id" value="" style="display:none"></td>
+        </tr>
+        <tr>
+          <td><input type="text" id="sut_id" name="sut_id" value="<%=sut_id%>" style="display:none"></td>
+        </tr>
+        <tr>
+          <td>
+          <select id="tag"  name="tag" style="width:150px;" >
+                <option value="冒烟测试" selected>冒烟测试</option>
+                <option value="系统测试" selected>系统测试测试</option>
+                <option value="回归测试" selected>回归测试</option>
+          </select>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
   
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
