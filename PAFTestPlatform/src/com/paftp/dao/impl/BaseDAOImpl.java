@@ -318,9 +318,11 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 			
 			Criteria c = dc.getExecutableCriteria(this.getCurrentSession());
 			
-			List<ApplySut> applySuts = c.list();
+//			List<ApplySut> applySuts = c.list();
+//			
+//			int num = applySuts.size();
 			
-			int num = applySuts.size();
+			int num = (Integer) c.uniqueResult();
 			
 			return num;
 		}
