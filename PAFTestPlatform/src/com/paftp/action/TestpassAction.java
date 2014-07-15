@@ -1,12 +1,12 @@
 package com.paftp.action;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
@@ -18,10 +18,12 @@ import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.Testpass;
 import com.paftp.entity.TestsuiteResult;
 import com.paftp.entity.User;
+import com.paftp.entity.Version;
 import com.paftp.service.TestcassResult.TestcaseResultService;
 import com.paftp.service.Testpass.TestpassService;
 import com.paftp.service.sut.SutService;
 import com.paftp.service.user.UserService;
+import com.paftp.service.version.VersionService;
 import com.paftp.util.Util;
 
 @Controller
@@ -38,27 +40,35 @@ public class TestpassAction extends ActionSupport {
 	private UserService userService;
 	@Resource 
 	private TestcaseResultService testcaseresultService;
+	@Resource
+	private VersionService versionService;
 
 	private String sut_id;
 	private String sut_name;
 	private Integer testpass_id;
 	private String tag;
-	
+	private String env;
+	private String testset;
+
+	private String version;
 	private User user;
 	private String pagenum;
 	private Integer row;
 	private Long pages;
 	
+	private String starttime;
+	private String endtime;
+	
 	private String prompt;
 	private String flag;
 	
-	List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
+	private List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
 
 	private Util util = new Util();
 
 	private static final long serialVersionUID = -1539739561518693848L;
 
-	public String initialTestpasses() {
+	public String initialTestpasses() throws ParseException {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 		user = util.getSessionUser();
@@ -90,7 +100,7 @@ public class TestpassAction extends ActionSupport {
 		
 	}
 	
-	public String queryTestpasses(){
+	public String queryTestpasses() throws ParseException{
 		
 		List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
 
@@ -138,9 +148,26 @@ public class TestpassAction extends ActionSupport {
 		return "success";
 	}
 
-	private List<TestpassDto> getTestpasses(Sut sut){
+	private List<TestpassDto> getTestpasses(Sut sut) throws ParseException{
 
-		List<Testpass> testpasses = sut.getTestpasses();
+		HashMap<String, Object> testpass_conditions = new HashMap<String, Object>();
+		String newStartTime = this.getStarttime().replace("/", "-");
+		String newEndTime = this.getEndtime().replace("/", "-");
+		if (this.getVersion() != null && this.getVersion().equals("") == false){
+			Version version = versionService.findVersionByVersionNum(this.getVersion());
+			if (version != null){
+				Integer version_id = version.getId();
+				testpass_conditions.put("version.id", version_id);
+			}
+		}
+		testpass_conditions.put("sut.id", sut.getId());
+		testpass_conditions.put("starttime", util.stringToSqlDate(newStartTime));
+		testpass_conditions.put("endtime", util.stringToSqlDate(newEndTime));
+		testpass_conditions.put("tag", this.getTag());
+		testpass_conditions.put("env", this.getEnv());
+		testpass_conditions.put("testset", this.getTestset());
+		List<Testpass> testpasses = testpassService.findAllTestpassByMultiConditions(testpass_conditions);
+		
 		List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
 		
 		if (this.getRow() == null)
@@ -172,15 +199,15 @@ public class TestpassAction extends ActionSupport {
 				
 				conditions.put("testsuite_result.id", testsuite_results.get(j).getId());
 				conditions.put("ispass", true);
-				List<TestcaseResult> testcase_results = testcaseresultService.findAllCaseresultByMultiConditions(conditions);
-				testcaseresult_passcounts.put(testsuite_results.get(j).getSuitename(), testcase_results.size());
-				testcaseresultpass_quantity += testcase_results.size();
+				Integer caseresults_count = testcaseresultService.findCountOfCaseresults(conditions);
+				testcaseresult_passcounts.put(testsuite_results.get(j).getSuitename(), caseresults_count);
+				testcaseresultpass_quantity += caseresults_count;
 				
 				conditions.remove("ispass");
 				conditions.put("ispass", false);
-				testcase_results = testcaseresultService.findAllCaseresultByMultiConditions(conditions);
-				testcaseresult_failcounts.put(testsuite_results.get(j).getSuitename(), testcase_results.size());
-				testcaseresultfail_quantity += testcase_results.size();
+				caseresults_count = testcaseresultService.findCountOfCaseresults(conditions);
+				testcaseresult_failcounts.put(testsuite_results.get(j).getSuitename(), caseresults_count);
+				testcaseresultfail_quantity += caseresults_count;
 			}
 			
 			Integer total = testcaseresultpass_quantity + testcaseresultfail_quantity;
@@ -273,5 +300,45 @@ public class TestpassAction extends ActionSupport {
 
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+
+	public String getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+
+	public String getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
+	}
+	
+	public String getEnv() {
+		return env;
+	}
+
+	public void setEnv(String env) {
+		this.env = env;
+	}
+
+	public String getTestset() {
+		return testset;
+	}
+
+	public void setTestset(String testset) {
+		this.testset = testset;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 }

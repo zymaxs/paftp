@@ -62,5 +62,13 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 		List<TestcaseResult> testcase_results = baseDAO.findbyconditionsforcaseresults(conditions);
 		return testcase_results;
 	}
+	
+	@Override
+	public Integer findCountOfCaseresults(HashMap<String, Object> conditions) {
+		// TODO Auto-generated method stub
+		int i = baseDAO.countForCaseresults(conditions);
+		return i;
+
+	}
 
 }

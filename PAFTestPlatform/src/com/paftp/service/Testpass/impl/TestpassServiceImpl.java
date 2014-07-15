@@ -1,5 +1,6 @@
 package com.paftp.service.Testpass.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.dto.TestpassDto;
+import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.Testpass;
 import com.paftp.entity.Version;
 import com.paftp.service.Testpass.TestpassService;
@@ -76,6 +78,14 @@ public class TestpassServiceImpl implements TestpassService{
 		testpassdto.setEnv(testpass.getEnv());
 		
 		return testpassdto;
+	}
+
+	@Override
+	public List<Testpass> findAllTestpassByMultiConditions(
+			HashMap<String, Object> conditions) {
+		// TODO Auto-generated method stub
+		List<Testpass> testpasses = baseDAO.findbyconditionsfortestpasses(conditions);
+		return testpasses;
 	}
 
 }

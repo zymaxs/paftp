@@ -20,4 +20,6 @@ public interface TestcaseResultService {
 	public List<TestcaseResult> findAllList();
 	
 	public List<TestcaseResult> findAllCaseresultByMultiConditions(HashMap<String, Object> conditions);
+
+	Integer findCountOfCaseresults(HashMap<String, Object> conditions);
 }

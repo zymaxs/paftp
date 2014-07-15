@@ -162,6 +162,8 @@ public interface BaseDAO<T> {
 	
 	public Long count(HashMap<String, Object> param);
 	
+	public Integer countForCaseresults(HashMap<String, Object> param);
+	
 	public Integer executeHql(String hql);
 
 	/**
@@ -189,5 +191,7 @@ public interface BaseDAO<T> {
 	public List<T> findbyconditionsfortestsuites(HashMap<String, Object> param);
 	
 	public List<T> findbyconditionsforcaseresults(HashMap<String, Object> param);
+
+	List<T> findbyconditionsfortestpasses(HashMap<String, Object> param);
 
 }
