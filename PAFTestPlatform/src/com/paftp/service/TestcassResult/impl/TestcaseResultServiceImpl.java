@@ -81,7 +81,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 			}
 			Entry<String, Object> condition = iter.next();
 			if (condition != null && condition.equals("") == false){
-				if (condition.getKey().equals("testsuite_result.id")){
+				if (condition.getKey().indexOf(".") != -1){
 			sqlbuffer.append(condition.getKey() + " = " + condition.getValue() + " ");
 				} else{
 					sqlbuffer.append("u." + condition.getKey() + " = " + condition.getValue() + " ");
