@@ -62,9 +62,6 @@ public class TestpassServiceImpl implements TestpassService{
 		// TODO Auto-generated method stub
 		TestpassDto testpassdto = new TestpassDto();
 		
-		java.text.NumberFormat percentFormat =java.text.NumberFormat.getPercentInstance();
-		String percentage_str = percentFormat.format(percentage);
-		
 		testpassdto.setId(testpass.getId());
 		testpassdto.setTestset(testpass.getTestset());
 		Version version = new Version();
@@ -74,7 +71,7 @@ public class TestpassServiceImpl implements TestpassService{
 		testpassdto.setPasscount(passcount);
 		testpassdto.setFailcount(failcount);
 		testpassdto.setTotal(total);
-		testpassdto.setPercentage(percentage_str);
+		testpassdto.setPercentage(percentage);
 		testpassdto.setEnv(testpass.getEnv());
 		
 		return testpassdto;
