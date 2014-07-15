@@ -1,7 +1,9 @@
 package com.paftp.service.TestcassResult.impl;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -39,7 +41,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 	@Override
 	public TestcaseResult findTestcaseResultByName(String name) {
 		// TODO Auto-generated method stub
-		return baseDAO.get(" from testcaseresult u where u.name = ?",
+		return baseDAO.get(" from TestcaseResult u where u.name = ?",
 				new Object[] { name });
 	}
 
@@ -52,7 +54,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 	@Override
 	public List<TestcaseResult> findAllList() {
 		// TODO Auto-generated method stub
-		return baseDAO.find(" from testcaseresult u order by u.id");
+		return baseDAO.find(" from TestcaseResult u order by u.id");
 	}
 
 	@Override
@@ -66,8 +68,28 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 	@Override
 	public Integer findCountOfCaseresults(HashMap<String, Object> conditions) {
 		// TODO Auto-generated method stub
-		int i = baseDAO.countForCaseresults(conditions);
-		return i;
+		Boolean tag = true;
+		Iterator<Entry<String, Object>> iter = conditions.entrySet().iterator();
+		StringBuffer sqlbuffer = new StringBuffer();
+		sqlbuffer.append("select count(*) from TestcaseResult u ");
+		while (iter.hasNext()){
+			if (tag){
+				sqlbuffer.append("where ");
+				tag = false;
+			} else{
+				sqlbuffer.append("and ");
+			}
+			Entry<String, Object> condition = iter.next();
+			if (condition != null && condition.equals("") == false){
+				if (condition.getKey().equals("testsuite_result.id")){
+			sqlbuffer.append(condition.getKey() + " = " + condition.getValue() + " ");
+				} else{
+					sqlbuffer.append("u." + condition.getKey() + " = " + condition.getValue() + " ");
+				}
+			}
+		}
+		Long i = baseDAO.count(sqlbuffer.toString());
+		return Integer.parseInt(i.toString());
 
 	}
 
