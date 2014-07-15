@@ -41,13 +41,13 @@ function inidata(){
 	String rowtype = "";
 	
 	for(int i=0; i< testpassdots.size() ;i++ ){
-		if (testpassdots.get(i).getPercentage() == 100){
+		if (testpassdots.get(i).getPercentage() == 1){
 			rowtype = "class='success'";
 		}
-		else if (testpassdots.get(i).getPercentage() < 100 && testpassdots.get(i).getPercentage() >= 80){
+		else if (testpassdots.get(i).getPercentage() < 1 && testpassdots.get(i).getPercentage() >= 0.8){
 			rowtype = "class='active'";
 		}
-		else if (testpassdots.get(i).getPercentage() < 80 && testpassdots.get(i).getPercentage() >= 50){
+		else if (testpassdots.get(i).getPercentage() < 0.8 && testpassdots.get(i).getPercentage() >= 0.5){
 			rowtype = "class='warning'";
 		}
 		else {
@@ -63,7 +63,7 @@ function inidata(){
 		iniinsertdata +="<td>"+testpassdots.get(i).getPasscount()+"</td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getFailcount()+"</td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getTotal()+"</td>";
-		iniinsertdata +="<td>"+testpassdots.get(i).getPercentage()+"</td>";
+		iniinsertdata +="<td>"+(testpassdots.get(i).getPercentage()*100)+"%</td>";
 		if (testpassdots.get(i).getTag() == null){
 			iniinsertdata +="<td>-</td>";
 		}
@@ -98,7 +98,8 @@ function inidata(){
 	function loginac() {
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
-	}
+	};
+	
 	
 	var sut_id = <%=sut_id%>;
 	var pagentotal = <%=pagenum%>;
@@ -106,7 +107,50 @@ function inidata(){
 	$(document).ready( function(){
 		$("#resultFormTab").append(inidata());
 		
+		$("#queryresult").click(function(){
+		params = {pagenum:1,sut_id:sut_id,starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue"),env:$("#queryenv").val(),testset:$("#querytestset").val(),version:$("#queryversion").val(),tag:$("#querytag").val()};
 		
+		$.ajax({
+						type : "POST",
+						url : "queryTestpasses.action",
+						data : params,
+						dataType : "json",
+						success : function(test) {
+							$("#resultFormTab").html("");
+							
+							$(root.testpassdots).each(function(i,value){
+								var rowtype = "";
+								if (value.percentage == 1){
+									rowtype = "class='success'";
+									}
+								else if (value.percentage < 1 && value.percentage >= 0.8){
+									rowtype = "class='active'";
+									}
+								else if (value.percentage < 0.8 && value.percentage >= 0.5){
+									rowtype = "class='warning'";
+									}
+								else {
+									rowtype = "class='danger'";
+									}
+								
+								$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.Version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td>" );
+							})
+							
+							$('.pagination').jqPagination('option', 'max_page', test.pages);
+							
+						},
+						error : function(root) {
+
+							alert("json=" + root);
+
+							return false;
+
+						}
+				});
+		
+	
+				
+		});
 		
 		$('.pagination').jqPagination({
 				link_string : '/?page={page_number}',
@@ -115,13 +159,27 @@ function inidata(){
 				params = {pagenum:page,sut_id:sut_id,starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue"),env:$("#queryenv").val(),testset:$("#querytestset").val(),version:$("#queryversion").val(),tag:$("#querytag").val()};
 				$.ajax({
 						type : "POST",
-						url : "querySutsAjax.action",
+						url : "queryTestpasses.action",
 						data : params,
 						dataType : "json",
 						success : function(root) {
-							$("#sutFormTab").html("");
-							$(root.applySutDtos).each(function(i,value){
-								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td><a href='getuserinfo.action?userid="+value.user_id+"'>"+value.applyer+"</a></td>"+"<td>"+value.applytime+"</td>"+"<td><a href='initialSut.action?id="+value.id+"'>"+value.applysutstatusdto.description+"</a></td>"+"</tr>");
+							$("#resultFormTab").html("");
+							$(root.testpassdots).each(function(i,value){
+								var rowtype = "";
+								if (value.percentage == 1){
+									rowtype = "class='success'";
+									}
+								else if (value.percentage < 1 && value.percentage >= 0.8){
+									rowtype = "class='active'";
+									}
+								else if (value.percentage < 0.8 && value.percentage >= 0.5){
+									rowtype = "class='warning'";
+									}
+								else {
+									rowtype = "class='danger'";
+									}
+								
+								$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.Version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td>" );
 							})
 						},
 
@@ -385,7 +443,7 @@ function inidata(){
         </select></td>
     </tr>
     <tr>
-      <td colspan="8" style="text-align:center"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="queryac()" value="搜索"></td>
+      <td colspan="8" style="text-align:center"><input type="button" id="queryresult" class="btn btn-primary btn-sm"  style="width:80px" name="queryresult" value="搜索"></td>
     </tr>
   </table>
   <table>
@@ -408,7 +466,7 @@ function inidata(){
   </table>
   
   <!--图表-->
-  <table id="resultForm" border="1" style="text-align:center; width:100%" align="center">
+  <table id="resultForm" class="table table-bordered" style="text-align:center; width:100%" align="center">
     <thead>
       <tr>
         <td>执行日期</td>

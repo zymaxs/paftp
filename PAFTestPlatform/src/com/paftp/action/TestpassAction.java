@@ -118,7 +118,7 @@ public class TestpassAction extends ActionSupport {
 			this.setPrompt("Please let me konw which sut you want to query!");
 			return "success";
 		}
-
+		
 		this.setTestpassdots(testpassdots);
 		return "success";
 	}
@@ -212,8 +212,9 @@ public class TestpassAction extends ActionSupport {
 			
 			Integer total = testcaseresultpass_quantity + testcaseresultfail_quantity;
 			Float percentage = (float)testcaseresultpass_quantity / (float)total;
+			Float percentage_foursets=   (float)(Math.round(percentage*10000))/10000;
 			
-			TestpassDto testpassDto = testpassService.getTestpassDto(testpasses.get(i), testcaseresultpass_quantity, testcaseresultfail_quantity, total, percentage);
+			TestpassDto testpassDto = testpassService.getTestpassDto(testpasses.get(i), testcaseresultpass_quantity, testcaseresultfail_quantity, total, percentage_foursets);
 			testpassdots.add(testpassDto);
 		}
 		
