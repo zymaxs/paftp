@@ -13,10 +13,10 @@
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialTestpasses.action").forward(request,response);}
 if (request.getAttribute("versionflag") == null ){
-request.getRequestDispatcher("${pageContext.request.contextPath}/queryVersion.action").forward(request,response);}
+request.getRequestDispatcher("${pageContext.request.contextPath}/resultqueryVersion.action").forward(request,response);}
 List<Version> versions = (List<Version>)request.getAttribute("versions");
 List<TestpassDto> testpassdots = (List<TestpassDto>)request.getAttribute("testpassdots");
-String sut_id = request.getAttribute("sut_id");
+String sut_id = request.getAttribute("sut_id").toString();
 String pagenum = request.getAttribute("pages").toString();
 %>
 
@@ -372,13 +372,13 @@ function inidata(){
           <option value="stg3">stg3</option>
         </select></td>
       <td><select id="queryversion" style="width:100%">
-          <option value="All" selected>All</option>
+          <option value="" selected>All</option>
           <% for (int i =0; i< versions.size();i++ ){%>
           <option value="<%=versions.get(i).getVersionNum()%>"><%=versions.get(i).getVersionNum()%></option>
           <%}%>
         </select></td>
       <td><select id="querytag" style="width:100%">
-          <option value="ALL" selected>ALL</option>
+          <option value="" selected>All</option>
           <option value="冒烟测试" selected>冒烟测试</option>
           <option value="系统测试" selected>系统测试</option>
           <option value="回归测试" selected>回归测试</option>
