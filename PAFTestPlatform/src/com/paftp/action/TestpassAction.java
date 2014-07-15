@@ -163,9 +163,15 @@ public class TestpassAction extends ActionSupport {
 			}
 		}
 		testpass_conditions.put("sut.id", sut.getId());
-		testpass_conditions.put("tag", this.getTag());
-		testpass_conditions.put("env", this.getEnv());
-		testpass_conditions.put("testset", this.getTestset());
+		if (this.getTag() != null && this.getTag().equals("") == false){
+			testpass_conditions.put("tag", this.getTag());
+		}
+		if (this.getEnv() != null && this.getEnv().equals("") == false){
+			testpass_conditions.put("env", this.getEnv());
+		}
+		if (this.getTestset() != null && this.getTestset().equals("") == false){
+			testpass_conditions.put("testset", this.getTestset());
+		}
 		List<Testpass> testpasses = testpassService.findAllTestpassByMultiConditions(testpass_conditions);
 		
 		List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();

@@ -115,7 +115,7 @@ function inidata(){
 						url : "queryTestpasses.action",
 						data : params,
 						dataType : "json",
-						success : function(test) {
+						success : function(root) {
 							$("#resultFormTab").html("");
 							
 							$(root.testpassdots).each(function(i,value){
@@ -133,10 +133,17 @@ function inidata(){
 									rowtype = "class='danger'";
 									}
 								
-								$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.Version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td>" );
+								if ( value.tag == null){
+									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td>-</td></tr>" );
+									}
+								else{
+									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td>"+value.tag+"</td></tr>" );
+									}
+								
 							})
 							
-							$('.pagination').jqPagination('option', 'max_page', test.pages);
+							$('.pagination').jqPagination('option', 'max_page', root.pages);
+							
 							
 						},
 						error : function(root) {
@@ -151,6 +158,7 @@ function inidata(){
 	
 				
 		});
+		
 		
 		$('.pagination').jqPagination({
 				link_string : '/?page={page_number}',
@@ -179,7 +187,13 @@ function inidata(){
 									rowtype = "class='danger'";
 									}
 								
-								$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.Version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td>" );
+								if ( value.tag == null){
+									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td>-</td></tr>" );
+									}
+								else{
+									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td>"+value.tag+"</td></tr>" );
+									}
+								
 							})
 						},
 
@@ -425,7 +439,8 @@ function inidata(){
         <td><input class="easyui-datetimebox"  id="endtime" name="endtime" editable="false"></td>
       <td><input id="querytestset"  class="form-control input-sm" name="querytestset" value="" style="width:100%"></td>
       <td><select id="queryenv" style="width:100%">
-          <option value="stg1" selected>stg1</option>
+      		<option value="" selected>All</option>
+          <option value="stg1">stg1</option>
           <option value="stg2">stg2</option>
           <option value="stg3">stg3</option>
         </select></td>
