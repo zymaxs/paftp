@@ -12,7 +12,12 @@
 <% 
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialTestpasses.action").forward(request,response);}
+if (request.getAttribute("versionflag") == null ){
+request.getRequestDispatcher("${pageContext.request.contextPath}/queryVersion.action").forward(request,response);}
+List<Version> versions = (List<Version>)request.getAttribute("versions");
 List<TestpassDto> testpassdots = (List<TestpassDto>)request.getAttribute("testpassdots");
+String sut_id = request.getAttribute("sut_id");
+String pagenum = request.getAttribute("pages").toString();
 %>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -95,9 +100,41 @@ function inidata(){
 		document.loginform.submit();
 	}
 	
-	
+	var sut_id = <%=sut_id%>;
+	var pagentotal = <%=pagenum%>;
+	var params;
 	$(document).ready( function(){
 		$("#resultFormTab").append(inidata());
+		
+		
+		
+		$('.pagination').jqPagination({
+				link_string : '/?page={page_number}',
+				max_page : pagentotal, 
+				paged : function(page) {
+				params = {pagenum:page,sut_id:sut_id,starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue"),env:$("#queryenv").val(),testset:$("#querytestset").val(),version:$("#queryversion").val(),tag:$("#querytag").val()};
+				$.ajax({
+						type : "POST",
+						url : "querySutsAjax.action",
+						data : params,
+						dataType : "json",
+						success : function(root) {
+							$("#sutFormTab").html("");
+							$(root.applySutDtos).each(function(i,value){
+								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td><a href='getuserinfo.action?userid="+value.user_id+"'>"+value.applyer+"</a></td>"+"<td>"+value.applytime+"</td>"+"<td><a href='initialSut.action?id="+value.id+"'>"+value.applysutstatusdto.description+"</a></td>"+"</tr>");
+							})
+						},
+
+						error : function(root) {
+
+							alert("json=" + root);
+
+							return false;
+
+						}
+					})
+				}
+				});
 	
 	});
 </script>
@@ -328,16 +365,17 @@ function inidata(){
         <td><input class="easyui-datetimebox"  id="starttime" name="starttime" editable="false" ></td>
         <td>截止日期</td>
         <td><input class="easyui-datetimebox"  id="endtime" name="endtime" editable="false"></td>
-      <td><select id="querytestset" style="width:100%">
-          <option value="fulltest" selected>fulltest</option>
-        </select></td>
-      <td><select id="env" style="width:100%">
+      <td><input id="querytestset"  class="form-control input-sm" name="querytestset" value="" style="width:100%"></td>
+      <td><select id="queryenv" style="width:100%">
           <option value="stg1" selected>stg1</option>
           <option value="stg2">stg2</option>
           <option value="stg3">stg3</option>
         </select></td>
       <td><select id="queryversion" style="width:100%">
           <option value="All" selected>All</option>
+          <% for (int i =0; i< versions.size();i++ ){%>
+          <option value="<%=versions.get(i).getVersionNum()%>"><%=versions.get(i).getVersionNum()%></option>
+          <%}%>
         </select></td>
       <td><select id="querytag" style="width:100%">
           <option value="ALL" selected>ALL</option>
