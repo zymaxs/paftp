@@ -123,7 +123,7 @@ public class TestpassAction extends ActionSupport {
 		return "success";
 	}
 
-	public String updateTestpass() {
+	public String updateTestpass() throws ParseException {
 
 		user = util.getSessionUser();
 
@@ -140,6 +140,8 @@ public class TestpassAction extends ActionSupport {
 				.getTestpass_id());
 		testpass.setTag(this.getTag());
 		testpassService.updateTestpass(testpass);
+		
+		this.queryTestpasses();
 
 		return "success";
 	}
