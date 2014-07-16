@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.dto.TestpassDto;
+import com.paftp.dto.TestsuiteDto;
 import com.paftp.entity.Sut;
 import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.Testpass;
@@ -174,6 +175,67 @@ public class TestpassAction extends ActionSupport {
 
 		this.queryTestpasses();
 
+		return "success";
+	}
+	
+	public String getSpecialTestpassContent(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		Testpass testpass = testpassService.findTestpassById(this.getTestpass_id());
+		
+		Integer testcaseresultpass_quantity = 0;
+		HashMap<String, Integer> testcaseresult_passcounts = new HashMap<String, Integer>();
+		Integer testcaseresultfail_quantity = 0;
+		HashMap<String, Integer> testcaseresult_failcounts = new HashMap<String, Integer>();
+		Integer testcaseresulttotal_quantity = 0;
+		List<TestsuiteDto> testsuitedtoes = new ArrayList<TestsuiteDto>();
+
+		List<TestsuiteResult> testsuite_results = testpass.getTestsuite_results();
+		for (int j = 0; j < testsuite_results.size(); j++) {
+			TestsuiteDto testsuitedto = new TestsuiteDto();
+			testsuitedto.setId(testsuite_results.get(j).getTestsuite().getId());
+			testsuitedto.setName(testsuite_results.get(j).getSuitename());
+			
+			HashMap<String, Object> conditions = new HashMap<String, Object>();
+			conditions.put("testsuite_result.id", testsuite_results.get(j)
+					.getId());
+			conditions.put("ispass", true);
+			Integer caseresults_count = testcaseresultService
+					.findCountOfCaseresults(conditions);
+			testcaseresult_passcounts.put(testsuite_results.get(j)
+					.getSuitename(), caseresults_count);
+			testsuitedto.setPasscount(caseresults_count);
+			testcaseresultpass_quantity += caseresults_count;
+			testcaseresulttotal_quantity = caseresults_count;
+					
+			conditions.remove("ispass");
+			conditions.put("ispass", false);
+			caseresults_count = testcaseresultService
+					.findCountOfCaseresults(conditions);
+			testcaseresult_failcounts.put(testsuite_results.get(j)
+					.getSuitename(), caseresults_count);
+			testsuitedto.setFailcount(caseresults_count);
+			testcaseresultfail_quantity += caseresults_count;
+			testcaseresulttotal_quantity += caseresults_count;
+
+			testsuitedto.setTotal(testcaseresulttotal_quantity);
+			testsuitedtoes.add(testsuitedto);
+		}
+
+		Integer total = testcaseresultpass_quantity
+				+ testcaseresultfail_quantity;
+		Float percentage = (float) testcaseresultpass_quantity
+				/ (float) total;
+		Float percentage_foursets = (float) (Math.round(percentage * 10000)) / 10000;
+		
+		TestpassDto testpassDto = testpassService.getTestpassDto(
+				testpass, testcaseresultpass_quantity,
+				testcaseresultfail_quantity, total, percentage_foursets);
+		
+		request.setAttribute("testpassdto", testpassDto);
+		request.setAttribute("testsuitedtoes", testsuitedtoes);
+		
 		return "success";
 	}
 

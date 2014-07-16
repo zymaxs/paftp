@@ -17,6 +17,9 @@ public class TestsuiteDto {
 	private Version version;
 	private List<Testcase> testcases;
 	private List<TestsuiteResult> testsuite_results;
+	private Integer passcount;
+	private Integer failcount;
+	private Integer total;
 	
 
 	public Integer getId() {
@@ -66,6 +69,24 @@ public class TestsuiteDto {
 	}
 	public void setTestsuite_results(List<TestsuiteResult> testsuite_results) {
 		this.testsuite_results = testsuite_results;
+	}
+	public Integer getPasscount() {
+		return passcount;
+	}
+	public void setPasscount(Integer passcount) {
+		this.passcount = passcount;
+	}
+	public Integer getFailcount() {
+		return failcount;
+	}
+	public void setFailcount(Integer failcount) {
+		this.failcount = failcount;
+	}
+	public Integer getTotal() {
+		return total;
+	}
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 	
 }
