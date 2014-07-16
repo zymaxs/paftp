@@ -184,4 +184,17 @@ public class Util {
 		}
 		return false;
 	}
+	
+	public Boolean isManagerOfSut(User currentuser, Sut sut) {
+
+		List<Role> roles = currentuser.getRoles();
+		for (int i = 0; i < roles.size(); i++) {
+			if (roles.get(i).getName().equals(sut.getName() + "Manager")) {			
+					return true;
+			}
+		}
+		
+		return false;
+	}
+	
 }

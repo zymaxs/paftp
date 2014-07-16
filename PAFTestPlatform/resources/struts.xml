@@ -73,6 +73,11 @@
 			<result type="json">
 			</result>
 		</action>
+		<action name="updateTestpass" method="updateTestpass"
+			class="com.paftp.action.TestpassAction">
+			<result type="json">
+			</result>
+		</action>
 	</package>
 
 	<package name="s2sh" extends="struts-default">
@@ -261,10 +266,7 @@
 			<result name="success">/result.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="updateTestpass" method="updateTestpass" class="com.paftp.action.TestpassAction">
-			<result name="success">/result.jsp</result>
-			<result name="error">/error.jsp</result>
-		</action>
+		
 
 	</package>
 

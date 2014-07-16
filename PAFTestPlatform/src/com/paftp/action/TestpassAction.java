@@ -38,7 +38,7 @@ public class TestpassAction extends ActionSupport {
 	private SutService sutService;
 	@Resource
 	private UserService userService;
-	@Resource 
+	@Resource
 	private TestcaseResultService testcaseresultService;
 	@Resource
 	private VersionService versionService;
@@ -47,6 +47,7 @@ public class TestpassAction extends ActionSupport {
 	private String sut_name;
 	private Integer testpass_id;
 	private String tag;
+	private String show_tag;
 	private String env;
 	private String testset;
 
@@ -55,13 +56,13 @@ public class TestpassAction extends ActionSupport {
 	private String pagenum;
 	private Integer row;
 	private Long pages;
-	
+
 	private String starttime;
 	private String endtime;
-	
+
 	private String prompt;
 	private String flag;
-	
+
 	private List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
 
 	private Util util = new Util();
@@ -72,6 +73,18 @@ public class TestpassAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 		user = util.getSessionUser();
+		if (user == null) {
+			request.setAttribute("isManager", false);
+		} else {
+			User currentuser = userService.findUserByAlias(user.getAlias());
+			Sut sut = sutService
+					.findSutById(Integer.parseInt(this.getSut_id()));
+			if (util.isManagerOfSut(currentuser, sut)) {
+				request.setAttribute("isManager", true);
+			} else {
+				request.setAttribute("isManager", false);
+			}
+		}
 
 		List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
 
@@ -88,7 +101,8 @@ public class TestpassAction extends ActionSupport {
 				return "error";
 			}
 		} else {
-			request.setAttribute("error", "Please let me konw which sut you want to query!");
+			request.setAttribute("error",
+					"Please let me konw which sut you want to query!");
 			request.setAttribute("flag", false);
 			return "error";
 		}
@@ -97,11 +111,11 @@ public class TestpassAction extends ActionSupport {
 		request.setAttribute("flag", true);
 		request.setAttribute("pages", this.getPages());
 		return "success";
-		
+
 	}
-	
-	public String queryTestpasses() throws ParseException{
-		
+
+	public String queryTestpasses() throws ParseException {
+
 		List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
 
 		if (this.getSut_id() != null) {
@@ -118,7 +132,7 @@ public class TestpassAction extends ActionSupport {
 			this.setPrompt("Please let me konw which sut you want to query!");
 			return "success";
 		}
-		
+
 		this.setTestpassdots(testpassdots);
 		return "success";
 	}
@@ -127,109 +141,142 @@ public class TestpassAction extends ActionSupport {
 
 		user = util.getSessionUser();
 
-		if (user == null ) {
-			this.setPrompt("Please log in firstly!");
-			return "success";
-		}
-		if (util.isRoleOfSut(user, this.getSut_id(), this.getSut_name()) == false){
-			this.setPrompt("You are not the role under this Sut!");
-			return "success";
-		}
+		// if (user == null ) {
+		// this.setPrompt("Please log in firstly!");
+		// return "success";
+		// }
+		// if (util.isRoleOfSut(user, this.getSut_id(), this.getSut_name()) ==
+		// false){
+		// this.setPrompt("You are not the role under this Sut!");
+		// return "success";
+		// }
 
 		Testpass testpass = testpassService.findTestpassById(this
 				.getTestpass_id());
-		testpass.setTag(this.getTag());
+		if (this.getShow_tag() == null || this.getShow_tag().equals("")) {
+			testpass.setTag(null);
+		} else {
+			HashMap<String, Object> conditions = new HashMap<String, Object>();
+			conditions.put("sut.id", testpass.getSut().getId());
+			conditions.put("version.id", testpass.getVersion().getId());
+			conditions.put("tag", this.getShow_tag());
+			List<Testpass> testpass_temps = testpassService
+					.findAllTestpassByMultiConditions(conditions);
+			if (testpass_temps.size() == 0) {
+				testpass.setTag(this.getShow_tag());
+			} else {
+				this.setPrompt("次版本已存在该状态 " + this.getShow_tag()
+						+ " 的测试用例集，请先移除后再设置!");
+				return "success";
+			}
+		}
 		testpassService.updateTestpass(testpass);
-		
+
 		this.queryTestpasses();
 
 		return "success";
 	}
 
-	private List<TestpassDto> getTestpasses(Sut sut) throws ParseException{
+	private List<TestpassDto> getTestpasses(Sut sut) throws ParseException {
 
 		HashMap<String, Object> testpass_conditions = new HashMap<String, Object>();
-		if (this.getStarttime() != null && this.getStarttime().equals("") == false){
+		if (this.getStarttime() != null
+				&& this.getStarttime().equals("") == false) {
 			String newStartTime = this.getStarttime().replace("/", "-");
-			testpass_conditions.put("starttime", util.stringToSqlDate(newStartTime));
+			testpass_conditions.put("starttime",
+					util.stringToSqlDate(newStartTime));
 		}
-		if (this.getEndtime() != null && this.getEndtime().equals("") == false){
+		if (this.getEndtime() != null && this.getEndtime().equals("") == false) {
 			String newEndTime = this.getEndtime().replace("/", "-");
-			testpass_conditions.put("endtime", util.stringToSqlDate(newEndTime));
+			testpass_conditions
+					.put("endtime", util.stringToSqlDate(newEndTime));
 		}
-		if (this.getVersion() != null && this.getVersion().equals("") == false){
-			Version version = versionService.findVersionByVersionNum(this.getVersion());
-			if (version != null){
+		if (this.getVersion() != null && this.getVersion().equals("") == false) {
+			Version version = versionService.findVersionByVersionNum(this
+					.getVersion());
+			if (version != null) {
 				Integer version_id = version.getId();
 				testpass_conditions.put("version.id", version_id);
 			}
 		}
 		testpass_conditions.put("sut.id", sut.getId());
-		if (this.getTag() != null && this.getTag().equals("") == false){
+		if (this.getTag() != null && this.getTag().equals("") == false) {
 			testpass_conditions.put("tag", this.getTag());
 		}
-		if (this.getEnv() != null && this.getEnv().equals("") == false){
+		if (this.getEnv() != null && this.getEnv().equals("") == false) {
 			testpass_conditions.put("env", this.getEnv());
 		}
-		if (this.getTestset() != null && this.getTestset().equals("") == false){
+		if (this.getTestset() != null && this.getTestset().equals("") == false) {
 			testpass_conditions.put("testset", this.getTestset());
 		}
-		List<Testpass> testpasses = testpassService.findAllTestpassByMultiConditions(testpass_conditions);
-		
+		List<Testpass> testpasses = testpassService
+				.findAllTestpassByMultiConditions(testpass_conditions);
+
 		List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
-		
+
 		if (this.getRow() == null)
 			this.setRow(10);
 		if (this.getPagenum() == null)
 			this.setPagenum("1");
-		
+
 		if (testpasses.size() > 0) {
-			this.setPages((long) Math.ceil(testpasses.size() / (double) this.getRow()));
+			this.setPages((long) Math.ceil(testpasses.size()
+					/ (double) this.getRow()));
 		} else {
 			this.setPages((long) 1);
 		}
-		
+
 		Integer start = (Integer.parseInt(this.getPagenum()) - 1) * 10;
 		Integer end = Integer.parseInt(this.getPagenum()) * 10;
-		if (testpasses.size() < end){
+		if (testpasses.size() < end) {
 			end = testpasses.size();
 		}
-	
-		for(int i = start ; i<end; i++){
+
+		for (int i = start; i < end; i++) {
 			Integer testcaseresultpass_quantity = 0;
 			HashMap<String, Integer> testcaseresult_passcounts = new HashMap<String, Integer>();
 			Integer testcaseresultfail_quantity = 0;
 			HashMap<String, Integer> testcaseresult_failcounts = new HashMap<String, Integer>();
-		
-			List<TestsuiteResult> testsuite_results = testpasses.get(i).getTestsuite_results();
-			for (int j=0; j<testsuite_results.size(); j++){
+
+			List<TestsuiteResult> testsuite_results = testpasses.get(i)
+					.getTestsuite_results();
+			for (int j = 0; j < testsuite_results.size(); j++) {
 				HashMap<String, Object> conditions = new HashMap<String, Object>();
-				
-				conditions.put("testsuite_result.id", testsuite_results.get(j).getId());
+
+				conditions.put("testsuite_result.id", testsuite_results.get(j)
+						.getId());
 				conditions.put("ispass", true);
-				Integer caseresults_count = testcaseresultService.findCountOfCaseresults(conditions);
-				testcaseresult_passcounts.put(testsuite_results.get(j).getSuitename(), caseresults_count);
+				Integer caseresults_count = testcaseresultService
+						.findCountOfCaseresults(conditions);
+				testcaseresult_passcounts.put(testsuite_results.get(j)
+						.getSuitename(), caseresults_count);
 				testcaseresultpass_quantity += caseresults_count;
-				
+
 				conditions.remove("ispass");
 				conditions.put("ispass", false);
-				caseresults_count = testcaseresultService.findCountOfCaseresults(conditions);
-				testcaseresult_failcounts.put(testsuite_results.get(j).getSuitename(), caseresults_count);
+				caseresults_count = testcaseresultService
+						.findCountOfCaseresults(conditions);
+				testcaseresult_failcounts.put(testsuite_results.get(j)
+						.getSuitename(), caseresults_count);
 				testcaseresultfail_quantity += caseresults_count;
 			}
-			
-			Integer total = testcaseresultpass_quantity + testcaseresultfail_quantity;
-			Float percentage = (float)testcaseresultpass_quantity / (float)total;
-			Float percentage_foursets=   (float)(Math.round(percentage*10000))/10000;
-			
-			TestpassDto testpassDto = testpassService.getTestpassDto(testpasses.get(i), testcaseresultpass_quantity, testcaseresultfail_quantity, total, percentage_foursets);
+
+			Integer total = testcaseresultpass_quantity
+					+ testcaseresultfail_quantity;
+			Float percentage = (float) testcaseresultpass_quantity
+					/ (float) total;
+			Float percentage_foursets = (float) (Math.round(percentage * 10000)) / 10000;
+
+			TestpassDto testpassDto = testpassService.getTestpassDto(
+					testpasses.get(i), testcaseresultpass_quantity,
+					testcaseresultfail_quantity, total, percentage_foursets);
 			testpassdots.add(testpassDto);
 		}
-		
+
 		return testpassdots;
-	
+
 	}
-	
+
 	public String getSut_name() {
 		return sut_name;
 	}
@@ -261,7 +308,6 @@ public class TestpassAction extends ActionSupport {
 	public void setSut_id(String sut_id) {
 		this.sut_id = sut_id;
 	}
-
 
 	public List<TestpassDto> getTestpassdots() {
 		return testpassdots;
@@ -326,7 +372,7 @@ public class TestpassAction extends ActionSupport {
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
 	}
-	
+
 	public String getEnv() {
 		return env;
 	}
@@ -349,5 +395,13 @@ public class TestpassAction extends ActionSupport {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public String getShow_tag() {
+		return show_tag;
+	}
+
+	public void setShow_tag(String show_tag) {
+		this.show_tag = show_tag;
 	}
 }

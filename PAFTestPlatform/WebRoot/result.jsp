@@ -12,6 +12,11 @@
 <% 
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/initialTestpasses.action").forward(request,response);}
+String isManager;
+if (String.valueOf(request.getAttribute("isManager")) == "true"){
+	isManager = "y";
+}
+else { isManager = "n";};
 if (request.getAttribute("versionflag") == null ){
 request.getRequestDispatcher("${pageContext.request.contextPath}/resultqueryVersion.action").forward(request,response);}
 List<Version> versions = (List<Version>)request.getAttribute("versions");
@@ -69,10 +74,10 @@ function inidata(){
 		iniinsertdata +="<td>"+testpassdots.get(i).getTotal()+"</td>";
 		iniinsertdata +="<td>"+(testpassdots.get(i).getPercentage()*100)+"%</td>";
 		if (testpassdots.get(i).getTag() == null){
-			iniinsertdata +="<td><a id='"+testpassdots.get(i).getId()+"' onClick='tagac(this)'>-</a></td>";
+			iniinsertdata +="<td><a id='"+testpassdots.get(i).getId()+"' onClick='tagac(this)'>————</a></td>";
 		}
 		else{
-		iniinsertdata +="<td>"+testpassdots.get(i).getTag()+"</label></td>";
+		iniinsertdata +="<td><a id='"+testpassdots.get(i).getId()+"' onClick='tagac(this)'>"+testpassdots.get(i).getTag()+"</a></td>";
 		}
 		iniinsertdata +="</tr>";
 	}
@@ -99,6 +104,10 @@ function inidata(){
 }
 </style>
 <script type="text/javascript">
+	var sut_id = <%=sut_id%>;
+	var pagentotal = <%=pagenum%>;
+	var params;
+	
 	function loginac() {
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
@@ -106,6 +115,14 @@ function inidata(){
 	
 	
 	function tagac(obj){
+	if('<%=session.getAttribute("user")%>' == 'null'){
+		alert("请登录后再进行操作！");
+	}
+	else{
+	if('<%=isManager%>' != "y"){
+	alert("您目前权限不足！")
+	}
+	else {
 	var test = obj.id;
 	document.getElementById('testpass_id').value = test;
 	var diag = new Dialog();
@@ -118,19 +135,63 @@ function inidata(){
 					updatetagac();
 					};//点击确定后调用的方法
 	diag.show();
-		
+	}
+	}
 	}
 	
 	function updatetagac(){
-		document.updatetagForm.action = "${pageContext.request.contextPath}/updateTestpass.action";
-		document.updatetagForm.submit();
+		$.ajax({
+			 	type : "POST",
+			 	 url : "updateTestpass.action",
+			   cache : false,
+			    data : {sut_id:sut_id,testpass_id:$("#testpass_id").val(),show_tag:$("#tag").val(),tag:$("#querytag").val()},
+			dataType : "json",
+			 success : function(root) {
+				 		if ( root.prompt != null){
+					  		alert(root.prompt);
+					  		}
+						else{
+					   $("#resultFormTab").html("");
+							
+					   $(root.testpassdots).each(function(i,value){
+						  var rowtype = "";
+						  if (value.percentage == 1){
+							  rowtype = "class='success'";
+							  }
+						  else if (value.percentage < 1 && value.percentage >= 0.8){
+							  rowtype = "class='active'";
+							  }
+						  else if (value.percentage < 0.8 && value.percentage >= 0.5){
+							  rowtype = "class='warning'";
+							  }
+						  else {
+							  rowtype = "class='danger'";
+							  }
+						  
+						  if ( value.tag == null){
+							  $("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
+							  }
+						  else{
+							  $("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
+							  }
+						  
+					  })
+					  
+					  $('.pagination').jqPagination('option', 'max_page', root.pages);
+						}
+			 			},
+			  	error: function(XMLHttpRequest, textStatus, errorThrown) {
+				  	   alert(XMLHttpRequest.status);
+				  	   alert(XMLHttpRequest.readyState);
+				  	   alert(textStatus);
+			  		   }
+		  		});
+		
 	}
 	
 	
 	
-	var sut_id = <%=sut_id%>;
-	var pagentotal = <%=pagenum%>;
-	var params;
+	
 	$(document).ready( function(){
 		$("#resultFormTab").append(inidata());
 		
@@ -161,10 +222,10 @@ function inidata(){
 									}
 								
 								if ( value.tag == null){
-									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td>-</td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
 									}
 								else{
-									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td>"+value.tag+"</td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
 									}
 								
 							})
@@ -181,9 +242,6 @@ function inidata(){
 
 						}
 				});
-		
-	
-				
 		});
 		
 		
@@ -215,10 +273,10 @@ function inidata(){
 									}
 								
 								if ( value.tag == null){
-									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td>-</td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
 									}
 								else{
-									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td>"+value.tag+"</td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
 									}
 								
 							})
@@ -479,9 +537,10 @@ function inidata(){
         </select></td>
       <td><select id="querytag" style="width:100%">
           <option value="" selected>All</option>
-          <option value="冒烟测试" selected>冒烟测试</option>
-          <option value="系统测试" selected>系统测试</option>
-          <option value="回归测试" selected>回归测试</option>
+          <option value="">————</option>
+          <option value="冒烟测试">冒烟测试</option>
+          <option value="系统测试">系统测试</option>
+          <option value="回归测试">回归测试</option>
         </select></td>
     </tr>
     <tr>
@@ -536,7 +595,7 @@ function inidata(){
             
             
             
-<!---->   
+<!--打TAG-->   
 <div id="crateTag" style="display:none">
     <form id="updatetagForm" name="updatetagForm" action="">
       <table width="500px" height="200px" style="background:#FFF">
@@ -544,14 +603,12 @@ function inidata(){
           <td><input type="text" id="testpass_id" name="testpass_id" value="" style="display:none"></td>
         </tr>
         <tr>
-          <td><input type="text" id="sut_id" name="sut_id" value="<%=sut_id%>" style="display:none"></td>
-        </tr>
-        <tr>
           <td>
           <select id="tag"  name="tag" style="width:150px;" >
-                <option value="冒烟测试" selected>冒烟测试</option>
-                <option value="系统测试" selected>系统测试测试</option>
-                <option value="回归测试" selected>回归测试</option>
+          		<option value="" selected>————</option>
+                <option value="冒烟测试">冒烟测试</option>
+                <option value="系统测试">系统测试测试</option>
+                <option value="回归测试">回归测试</option>
           </select>
           </td>
         </tr>
