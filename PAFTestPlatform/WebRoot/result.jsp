@@ -521,8 +521,8 @@ function inidata(){
       <td>起始日期</td>
         <td><input class="easyui-datetimebox"  id="starttime" name="starttime" editable="false" ></td>
         <td>截止日期</td>
-        <td><input class="easyui-datetimebox"  id="endtime" name="endtime" editable="false"></td>
-      <td><input id="querytestset"  class="form-control input-sm" name="querytestset" value="" style="width:100%"></td>
+        <td><input class="easyui-datetimebox"  id="endtime" name="endtime" editable="false" ></td>
+      <td><input id="querytestset"  class="form-control input-sm" name="querytestset" value="" style="width:100%; height:24px"></td>
       <td><select id="queryenv" style="width:100%">
       		<option value="" selected>All</option>
           <option value="stg1">stg1</option>
