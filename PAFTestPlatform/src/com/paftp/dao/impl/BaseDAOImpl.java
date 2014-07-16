@@ -405,9 +405,9 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 			if (condition.getValue() != null && !condition.getValue().equals("")) {
 				if(condition.getValue() instanceof Date){
 					if(condition.getKey().equals("starttime")){
-					dc.add(Restrictions.ge("applytime",condition.getValue()));
+					dc.add(Restrictions.ge("createtime",condition.getValue()));
 					}else{
-						dc.add(Restrictions.le("applytime",condition.getValue()));
+						dc.add(Restrictions.le("createtime",condition.getValue()));
 					}
 				}else{
 		           dc.add(Restrictions.eq(condition.getKey(),condition.getValue()));
