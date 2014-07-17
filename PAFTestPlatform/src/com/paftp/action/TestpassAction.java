@@ -16,6 +16,7 @@ import com.paftp.dto.TestpassDto;
 import com.paftp.dto.TestsuiteDto;
 import com.paftp.entity.Sut;
 import com.paftp.entity.TestcaseResult;
+import com.paftp.entity.TestcaseResultContent;
 import com.paftp.entity.Testpass;
 import com.paftp.entity.Testsuite;
 import com.paftp.entity.TestsuiteResult;
@@ -59,6 +60,8 @@ public class TestpassAction extends ActionSupport {
 	private String env;
 	private String testset;
 	private Integer testsuite_id;
+	private Integer testcase_id;
+	private Integer testcaseresult_id;
 
 	private String version;
 	private User user;
@@ -185,13 +188,14 @@ public class TestpassAction extends ActionSupport {
 
 		return "success";
 	}
-	
-	public String getSpecialTestpassContent(){
-		
+
+	public String getSpecialTestpassContent() {
+
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
-		Testpass testpass = testpassService.findTestpassById(this.getTestpass_id());
-		
+
+		Testpass testpass = testpassService.findTestpassById(this
+				.getTestpass_id());
+
 		Integer testcaseresultpass_quantity = 0;
 		HashMap<String, Integer> testcaseresult_passcounts = new HashMap<String, Integer>();
 		Integer testcaseresultfail_quantity = 0;
@@ -199,12 +203,13 @@ public class TestpassAction extends ActionSupport {
 		Integer testcaseresulttotal_quantity = 0;
 		List<TestsuiteDto> testsuitedtoes = new ArrayList<TestsuiteDto>();
 
-		List<TestsuiteResult> testsuite_results = testpass.getTestsuite_results();
+		List<TestsuiteResult> testsuite_results = testpass
+				.getTestsuite_results();
 		for (int j = 0; j < testsuite_results.size(); j++) {
 			TestsuiteDto testsuitedto = new TestsuiteDto();
 			testsuitedto.setId(testsuite_results.get(j).getTestsuite().getId());
 			testsuitedto.setName(testsuite_results.get(j).getSuitename());
-			
+
 			HashMap<String, Object> conditions = new HashMap<String, Object>();
 			conditions.put("testsuite_result.id", testsuite_results.get(j)
 					.getId());
@@ -216,7 +221,7 @@ public class TestpassAction extends ActionSupport {
 			testsuitedto.setPasscount(caseresults_count);
 			testcaseresultpass_quantity += caseresults_count;
 			testcaseresulttotal_quantity = caseresults_count;
-					
+
 			conditions.remove("ispass");
 			conditions.put("ispass", false);
 			caseresults_count = testcaseresultService
@@ -233,43 +238,46 @@ public class TestpassAction extends ActionSupport {
 
 		Integer total = testcaseresultpass_quantity
 				+ testcaseresultfail_quantity;
-		Float percentage = (float) testcaseresultpass_quantity
-				/ (float) total;
+		Float percentage = (float) testcaseresultpass_quantity / (float) total;
 		Float percentage_foursets = (float) (Math.round(percentage * 10000)) / 10000;
-		
-		TestpassDto testpassDto = testpassService.getTestpassDto(
-				testpass, testcaseresultpass_quantity,
-				testcaseresultfail_quantity, total, percentage_foursets);
-		
+
+		TestpassDto testpassDto = testpassService.getTestpassDto(testpass,
+				testcaseresultpass_quantity, testcaseresultfail_quantity,
+				total, percentage_foursets);
+
 		request.setAttribute("testpassdto", testpassDto);
 		request.setAttribute("testsuitedtoes", testsuitedtoes);
 		request.setAttribute("flag", true);
-		
+
 		return "success";
 	}
-	
-	public String getSpecialTestsuiteResultContent(){
-		
+
+	public String getSpecialTestsuiteResultContent() {
+
 		HttpServletRequest request = ServletActionContext.getRequest();
-		
-		if (this.getTestsuite_id() != null && this.getTestsuite_id().equals("") == false){
-			if (this.getTestpass_id() != null && this.getTestpass_id().equals("") == false){
-		
+
+		if (this.getTestsuite_id() != null
+				&& this.getTestsuite_id().equals("") == false) {
+			if (this.getTestpass_id() != null
+					&& this.getTestpass_id().equals("") == false) {
+
 				HashMap<String, Object> conditions = new HashMap<String, Object>();
 				conditions.put("testpass.id", this.getTestpass_id());
 				conditions.put("testsuite.id", this.getTestsuite_id());
-				List<TestsuiteResult> testsuite_results = testsuiteresultService.findSuiteResultByMultiConditions(conditions);
-				
+				List<TestsuiteResult> testsuite_results = testsuiteresultService
+						.findSuiteResultByMultiConditions(conditions);
+
 				Testsuite testsuite = testsuite_results.get(0).getTestsuite();
-				List<TestcaseResult> testcase_results = testsuite_results.get(0).getTestcase_results();
-				
+				List<TestcaseResult> testcase_results = testsuite_results
+						.get(0).getTestcase_results();
+
 				request.setAttribute("testsuite", testsuite);
 				request.setAttribute("testcaseresults", testcase_results);
 				request.setAttribute("flag", true);
-				
+
 				return "success";
-				
-			}else{
+
+			} else {
 				request.setAttribute("error", "The testpass id is null!");
 				request.setAttribute("flag", false);
 				return "error";
@@ -279,7 +287,34 @@ public class TestpassAction extends ActionSupport {
 			request.setAttribute("flag", false);
 			return "error";
 		}
-		
+
+	}
+
+	public String getSpecialTestcaseResultContent() {
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		if (this.getTestcaseresult_id() != null) {
+
+			TestcaseResult testcaseresult = testcaseresultService
+					.findTestcaseResultById(this.getTestcaseresult_id());
+
+			List<TestcaseResultContent> testcaseresult_contents = testcaseresult
+					.getTestcaseresult_contents();
+
+			request.setAttribute("testcase", testcaseresult.getTestcase());
+			request.setAttribute("testcaseresultcontents",
+					testcaseresult_contents);
+			request.setAttribute("flag", true);
+
+			return "success";
+
+		} else {
+			request.setAttribute("error", "The testcaseresult id is null!");
+			request.setAttribute("flag", false);
+			return "error";
+		}
+
 	}
 
 	private List<TestpassDto> getTestpasses(Sut sut) throws ParseException {
@@ -509,12 +544,28 @@ public class TestpassAction extends ActionSupport {
 	public void setShow_tag(String show_tag) {
 		this.show_tag = show_tag;
 	}
-	
+
 	public Integer getTestsuite_id() {
 		return testsuite_id;
 	}
 
 	public void setTestsuite_id(Integer testsuite_id) {
 		this.testsuite_id = testsuite_id;
+	}
+
+	public Integer getTestcase_id() {
+		return testcase_id;
+	}
+
+	public void setTestcase_id(Integer testcase_id) {
+		this.testcase_id = testcase_id;
+	}
+
+	public Integer getTestcaseresult_id() {
+		return testcaseresult_id;
+	}
+
+	public void setTestcaseresult_id(Integer testcaseresult_id) {
+		this.testcaseresult_id = testcaseresult_id;
 	}
 }
