@@ -61,9 +61,9 @@ String url_path = "papay-hp:8080/PAFTestPlatform/";
 		for (int i=0 ; i < testcase_results.size(); i++){
 			caseinfo += "<tr>";
 			if (String.valueOf(testcase_results.get(i).getIspass()) == "true"){
-			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+greentype+"><a href='http://"+url_path+"caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + testcase_results.get(i).getIspass() + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";}
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+greentype+"><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + testcase_results.get(i).getIspass() + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";}
 			else {
-			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+redtype+"><a href='http://"+url_path+"caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + testcase_results.get(i).getIspass() + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+redtype+"><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + testcase_results.get(i).getIspass() + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";
 				}
 			caseinfo += "</tr>";}
 		%>
