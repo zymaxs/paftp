@@ -15,7 +15,9 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.dto.TestpassDto;
 import com.paftp.dto.TestsuiteDto;
 import com.paftp.entity.Sut;
+import com.paftp.entity.Testcase;
 import com.paftp.entity.TestcaseResult;
+import com.paftp.entity.TestcaseResultContent;
 import com.paftp.entity.Testpass;
 import com.paftp.entity.Testsuite;
 import com.paftp.entity.TestsuiteResult;
@@ -59,6 +61,8 @@ public class TestpassAction extends ActionSupport {
 	private String env;
 	private String testset;
 	private String testsuite_id;
+	private String testcase_id;
+	private String testsuiteresult_id;
 
 	private String version;
 	private User user;
@@ -278,6 +282,38 @@ public class TestpassAction extends ActionSupport {
 		
 	}
 
+	public String getSpecialTestcaseResultContent(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		if (this.getTestcase_id() != null && this.getTestcase_id().equals("") == false){
+			if (this.getTestsuiteresult_id() != null && this.getTestsuiteresult_id().equals("") == false){
+		
+				HashMap<String, Object> conditions = new HashMap<String, Object>();
+				conditions.put("testcase.id", this.getTestcase_id());
+				conditions.put("testsuite_result.id", this.getTestsuiteresult_id());
+				List<TestcaseResult> testcase_results = testcaseresultService.findAllCaseresultByMultiConditions(conditions);
+				
+				Testcase testcase = testcase_results.get(0).getTestcase();
+				List<TestcaseResultContent> testcaseresult_contents = testcase_results.get(0).getTestcaseresult_contents();
+				
+				request.setAttribute("testcase", testcase);
+				request.setAttribute("testcaseresult_contents", testcaseresult_contents);
+				
+				return "success";
+				
+			}else{
+				request.setAttribute("error", "The testsuiteresult id is null!");
+				return "error";
+			}
+		} else {
+			request.setAttribute("error", "The testcase id is null!");
+			return "error";
+		}
+		
+	}
+	
+	
 	private List<TestpassDto> getTestpasses(Sut sut) throws ParseException {
 
 		HashMap<String, Object> testpass_conditions = new HashMap<String, Object>();
@@ -512,5 +548,21 @@ public class TestpassAction extends ActionSupport {
 
 	public void setTestsuite_id(String testsuite_id) {
 		this.testsuite_id = testsuite_id;
+	}
+
+	public String getTestcase_id() {
+		return testcase_id;
+	}
+
+	public void setTestcase_id(String testcase_id) {
+		this.testcase_id = testcase_id;
+	}
+
+	public String getTestsuiteresult_id() {
+		return testsuiteresult_id;
+	}
+
+	public void setTestsuiteresult_id(String testsuiteresult_id) {
+		this.testsuiteresult_id = testsuiteresult_id;
 	}
 }
