@@ -106,6 +106,9 @@ public class ResultParser {
 			testcaseresult_content.setType("Checkpoint");
 			testcaseresult_content.setResult(testcasecontentElemet
 					.getAttribute("result"));
+		} else if (testcasecontentElemet.getNodeName().equals("Error")){
+			testcaseresult_content.setType(testcasecontentElemet.getNodeName());
+			testcaseresult_content.setResult("1");
 		} else {
 			testcaseresult_content.setType(testcasecontentElemet.getNodeName());
 		}
