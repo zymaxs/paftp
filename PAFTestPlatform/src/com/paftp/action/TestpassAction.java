@@ -58,7 +58,7 @@ public class TestpassAction extends ActionSupport {
 	private String show_tag;
 	private String env;
 	private String testset;
-	private String testsuite_id;
+	private Integer testsuite_id;
 
 	private String version;
 	private User user;
@@ -510,11 +510,11 @@ public class TestpassAction extends ActionSupport {
 		this.show_tag = show_tag;
 	}
 	
-	public String getTestsuite_id() {
+	public Integer getTestsuite_id() {
 		return testsuite_id;
 	}
 
-	public void setTestsuite_id(String testsuite_id) {
+	public void setTestsuite_id(Integer testsuite_id) {
 		this.testsuite_id = testsuite_id;
 	}
 }

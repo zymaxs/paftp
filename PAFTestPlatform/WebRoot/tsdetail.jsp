@@ -15,6 +15,7 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/getSpecialTests
 Testsuite testsuite = (Testsuite)request.getAttribute("testsuite");
 String ts_name = testsuite.getName().toString();
 String ts_desc = testsuite.getDescription().toString();
+List<TestcaseResult> testcase_results = (List<TestcaseResult>)request.getAttribute("testcaseresults");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
@@ -49,6 +50,23 @@ String ts_desc = testsuite.getDescription().toString();
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+	
+	function inidata(){
+		<%
+		String caseinfo = "";
+		for (int i=0 ; i < testcase_results.size(); i++){
+			caseinfo += "<tr>";
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td>" + testcase_results.get(i).getIspass() + "</td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";
+			caseinfo += "</tr>";}
+		%>
+		return "<%=caseinfo%>";
+		
+	}
+	
+	$(document).ready( function(){
+		$("#caseinfoTab").html("");
+		$("#caseinfoTab").append(inidata());
+		});
 </script>
 <style>
 /*导航默认样式，可根据实际情况修改*/
@@ -275,12 +293,16 @@ String ts_desc = testsuite.getDescription().toString();
   </table>
   <br>
   <table class="table table-bordered">
-  	<tr>
+  	<thead>
+    <tr>
 		<td>case名称</td>
 		<td>结果</td>
 		<td>正例/反例</td>
 		<td>描述</td>		
 	</tr>
+    </thead>
+    <tbody id="caseinfoTab">
+    </tbody>
   </table>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
