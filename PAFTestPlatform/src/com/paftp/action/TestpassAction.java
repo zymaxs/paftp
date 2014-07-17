@@ -265,15 +265,18 @@ public class TestpassAction extends ActionSupport {
 				
 				request.setAttribute("testsuite", testsuite);
 				request.setAttribute("testcaseresults", testcase_results);
+				request.setAttribute("flag", true);
 				
 				return "success";
 				
 			}else{
 				request.setAttribute("error", "The testpass id is null!");
+				request.setAttribute("flag", false);
 				return "error";
 			}
 		} else {
 			request.setAttribute("error", "The testuiste id is null!");
+			request.setAttribute("flag", false);
 			return "error";
 		}
 		
