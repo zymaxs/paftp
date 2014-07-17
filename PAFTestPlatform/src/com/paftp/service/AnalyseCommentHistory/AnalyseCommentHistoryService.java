@@ -15,4 +15,6 @@ public interface AnalyseCommentHistoryService {
 	public void deleteAnalyseCommentHistory(AnalyseCommentHistory analyseCommentHistory);
 
 	public List<AnalyseCommentHistory> findAllList();
+
+	List<String> findAllStatues(Integer id);
 }

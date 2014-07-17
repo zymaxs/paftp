@@ -16,6 +16,8 @@ public class AnalyseCommentHistoryServiceImpl implements AnalyseCommentHistorySe
 
 	@Resource
 	private BaseDAO<AnalyseCommentHistory> baseDAO;
+	@Resource
+	private BaseDAO<String> baseStringDAO;
 	
 	@Override
 	public void saveAnalyseCommentHistory(
@@ -48,6 +50,12 @@ public class AnalyseCommentHistoryServiceImpl implements AnalyseCommentHistorySe
 	public List<AnalyseCommentHistory> findAllList() {
 		// TODO Auto-generated method stub
 		return baseDAO.find(" from analysecommenthistory u order by u.id");
+	}
+	
+	@Override
+	public List<String> findAllStatues(Integer id) {
+		// TODO Auto-generated method stub
+		return baseStringDAO.getgroup("select status from AnalyseCommentHistory a where testcaseresult.id = ? order by a.createtime desc", new Object[] { id });
 	}
 
 }

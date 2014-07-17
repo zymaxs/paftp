@@ -1,5 +1,6 @@
 package com.paftp.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,9 +22,14 @@ import org.hibernate.annotations.GenericGenerator;
 public class AnalyseCommentHistory {
 
 	private Integer id;
-	private TestcaseResult testcaseresult;
+	private TestcaseResult testcase_result;
+	private String oldstatus;
+	private String newstatus;
+	private String oldcomment;
+	private String newcomment;
 	private User updator;
-	private List<AnalyseCommentContent> analyseCommentContent;
+	private Date createtime;
+	
 	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -35,16 +43,6 @@ public class AnalyseCommentHistory {
 		this.id = id;
 	}
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "testcaseresult_id")
-	public TestcaseResult getTestcaseresult() {
-		return testcaseresult;
-	}
-	
-	public void setTestcaseresult(TestcaseResult testcaseresult) {
-		this.testcaseresult = testcaseresult;
-	}
-	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	public User getUpdator() {
@@ -54,15 +52,60 @@ public class AnalyseCommentHistory {
 	public void setUpdator(User updator) {
 		this.updator = updator;
 	}
-	
-	@OneToMany(mappedBy = "analyseCommentHistory")
-	public List<AnalyseCommentContent> getAnalyseCommentContent() {
-		return analyseCommentContent;
-	}
-	
-	public void setAnalyseCommentContent(
-			List<AnalyseCommentContent> analyseCommentContent) {
-		this.analyseCommentContent = analyseCommentContent;
+
+	@Column(name = "oldstatus", length = 20)  
+	public String getOldstatus() {
+		return oldstatus;
 	}
 
+	public void setOldstatus(String oldstatus) {
+		this.oldstatus = oldstatus;
+	}
+
+	@Column(name = "newstatus", length = 20)  
+	public String getNewstatus() {
+		return newstatus;
+	}
+
+	public void setNewstatus(String newstatus) {
+		this.newstatus = newstatus;
+	}
+
+	@Column(name = "oldcomment", length = 3076)  
+	public String getOldcomment() {
+		return oldcomment;
+	}
+
+	public void setOldcomment(String oldcomment) {
+		this.oldcomment = oldcomment;
+	}
+
+	@Column(name = "newcomment", length = 3076)  
+	public String getNewcomment() {
+		return newcomment;
+	}
+
+	public void setNewcomment(String newcomment) {
+		this.newcomment = newcomment;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "createtime")
+	public Date getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+	
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "testcaseresult_id")
+	public TestcaseResult getTestcase_result() {
+		return testcase_result;
+	}
+
+	public void setTestcase_result(TestcaseResult testcase_result) {
+		this.testcase_result = testcase_result;
+	}
 }

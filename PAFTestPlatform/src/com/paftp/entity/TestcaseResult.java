@@ -25,6 +25,7 @@ public class TestcaseResult {
 	private Testcase testcase;
 	private TestsuiteResult testsuite_result;
 	private List<TestcaseResultContent> testcaseresult_contents;
+	private List<AnalyseCommentHistory> analysecomment_histories;
 	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -102,6 +103,15 @@ public class TestcaseResult {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	@OneToMany(mappedBy = "testcase_result")
+	public List<AnalyseCommentHistory> getAnalysecomment_histories() {
+		return analysecomment_histories;
+	}
+
+	public void setAnalysecomment_histories(List<AnalyseCommentHistory> analysecomment_histories) {
+		this.analysecomment_histories = analysecomment_histories;
 	}
 
 	
