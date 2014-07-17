@@ -285,6 +285,11 @@
 			<result name="success">/tsdetail.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
+		<action name="getSpecialTestcaseResultContent" method="getSpecialTestcaseResultContent"
+			class="com.paftp.action.TestpassAction">
+			<result name="success">/caseresult.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
 
 
 	</package>
