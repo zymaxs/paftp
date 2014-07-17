@@ -17,11 +17,14 @@ import com.paftp.dto.TestsuiteDto;
 import com.paftp.entity.Sut;
 import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.Testpass;
+import com.paftp.entity.Testsuite;
 import com.paftp.entity.TestsuiteResult;
 import com.paftp.entity.User;
 import com.paftp.entity.Version;
 import com.paftp.service.TestcassResult.TestcaseResultService;
 import com.paftp.service.Testpass.TestpassService;
+import com.paftp.service.Testsuite.TestsuiteService;
+import com.paftp.service.TestsuiteResult.TestsuiteResultService;
 import com.paftp.service.sut.SutService;
 import com.paftp.service.user.UserService;
 import com.paftp.service.version.VersionService;
@@ -43,6 +46,10 @@ public class TestpassAction extends ActionSupport {
 	private TestcaseResultService testcaseresultService;
 	@Resource
 	private VersionService versionService;
+	@Resource
+	private TestsuiteService testsuiteService;
+	@Resource
+	private TestsuiteResultService testsuiteresultService;
 
 	private String sut_id;
 	private String sut_name;
@@ -51,6 +58,7 @@ public class TestpassAction extends ActionSupport {
 	private String show_tag;
 	private String env;
 	private String testset;
+	private String testsuite_id;
 
 	private String version;
 	private User user;
@@ -237,6 +245,37 @@ public class TestpassAction extends ActionSupport {
 		request.setAttribute("testsuitedtoes", testsuitedtoes);
 		
 		return "success";
+	}
+	
+	public String getSpecialTestsuiteResultContent(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		if (this.getTestsuite_id() != null && this.getTestsuite_id().equals("") == false){
+			if (this.getTestpass_id() != null && this.getTestpass_id().equals("") == false){
+		
+				HashMap<String, Object> conditions = new HashMap<String, Object>();
+				conditions.put("testpass.id", this.getTestpass_id());
+				conditions.put("testsuite.id", this.getTestsuite_id());
+				List<TestsuiteResult> testsuite_results = testsuiteresultService.findSuiteResultByMultiConditions(conditions);
+				
+				Testsuite testsuite = testsuite_results.get(0).getTestsuite();
+				List<TestcaseResult> testcase_results = testsuite_results.get(0).getTestcase_results();
+				
+				request.setAttribute("testsuite", testsuite);
+				request.setAttribute("testcaseresults", testcase_results);
+				
+				return "success";
+				
+			}else{
+				request.setAttribute("error", "The testpass id is null!");
+				return "error";
+			}
+		} else {
+			request.setAttribute("error", "The testuiste id is null!");
+			return "error";
+		}
+		
 	}
 
 	private List<TestpassDto> getTestpasses(Sut sut) throws ParseException {
@@ -465,5 +504,13 @@ public class TestpassAction extends ActionSupport {
 
 	public void setShow_tag(String show_tag) {
 		this.show_tag = show_tag;
+	}
+	
+	public String getTestsuite_id() {
+		return testsuite_id;
+	}
+
+	public void setTestsuite_id(String testsuite_id) {
+		this.testsuite_id = testsuite_id;
 	}
 }

@@ -1,5 +1,6 @@
 package com.paftp.service.TestsuiteResult.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
+import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.TestsuiteResult;
 import com.paftp.service.TestsuiteResult.TestsuiteResultService;
 
@@ -52,5 +54,11 @@ public class TestsuiteResultServiceImpl implements TestsuiteResultService{
 		// TODO Auto-generated method stub
 		return baseDAO.find(" from testsuiteresult u order by u.id");
 	}
+	
+	@Override
+	public List<TestsuiteResult> findSuiteResultByMultiConditions(HashMap<String, Object> conditions){
+		return baseDAO.findbyconditionsforsuiteresults(conditions);
+	}
+
 
 }
