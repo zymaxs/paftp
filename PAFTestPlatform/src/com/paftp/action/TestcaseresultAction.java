@@ -10,42 +10,53 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.entity.TestcaseResult;
+import com.paftp.entity.TestcaseResultContent;
 import com.paftp.entity.TestsuiteResult;
+import com.paftp.service.TestcassResult.TestcaseResultService;
 import com.paftp.service.TestsuiteResult.TestsuiteResultService;
 
 @Controller
-public class TestcaseresultAction extends ActionSupport{
+public class TestcaseresultAction extends ActionSupport {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7010705889254732007L;
 
-	private Integer testsuite_id;
+	private Integer testcaseresult_id;
+	
+	private String prompt;
 
 	@Resource
-	private TestsuiteResultService testsuiteresultService;
-	
-	public String initialTestcaseresults(){
-		
-		HttpServletRequest request = ServletActionContext.getRequest();
-		
-		TestsuiteResult testsuiteresult = testsuiteresultService.findTestsuiteResultById(this.getTestsuite_id());
-		
-		List<TestcaseResult> testcaseresults = testsuiteresult.getTestcase_results();
-		
-		request.setAttribute("testsuiteresult", testsuiteresult);
-		request.setAttribute("testcaseresults", testcaseresults);
-		
+	private TestcaseResultService testcaseresultService;
+
+	public String getTRHistoryStatus() {
+		if (this.getTestcaseresult_id() != null) {
+
+			TestcaseResult testcaseresult = testcaseresultService
+					.findTestcaseResultById(this.getTestcaseresult_id());
+
+		} else {
+			this.setPrompt("The testcaseresult id is null!");
+		}
+
 		return "success";
-	}
-	
-	public Integer getTestsuite_id() {
-		return testsuite_id;
+		
 	}
 
-	public void setTestsuite_id(Integer testsuite_id) {
-		this.testsuite_id = testsuite_id;
+	public Integer getTestcaseresult_id() {
+		return testcaseresult_id;
 	}
-	
+
+	public void setTestcaseresult_id(Integer testcaseresult_id) {
+		this.testcaseresult_id = testcaseresult_id;
+	}
+
+	public String getPrompt() {
+		return prompt;
+	}
+
+	public void setPrompt(String prompt) {
+		this.prompt = prompt;
+	}
 }
