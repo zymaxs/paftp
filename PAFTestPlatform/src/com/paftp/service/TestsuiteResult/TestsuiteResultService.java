@@ -1,5 +1,6 @@
 package com.paftp.service.TestsuiteResult;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.paftp.entity.TestsuiteResult;
@@ -17,4 +18,7 @@ public interface TestsuiteResultService {
 	public void deleteTestsuiteResult(TestsuiteResult testsuiteResult);
 
 	public List<TestsuiteResult> findAllList();
+
+	List<TestsuiteResult> findSuiteResultByMultiConditions(
+			HashMap<String, Object> conditions);
 }

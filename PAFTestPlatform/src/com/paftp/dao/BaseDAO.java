@@ -194,4 +194,6 @@ public interface BaseDAO<T> {
 
 	List<T> findbyconditionsfortestpasses(HashMap<String, Object> param);
 
+	List<T> findbyconditionsforsuiteresults(HashMap<String, Object> param);
+
 }
