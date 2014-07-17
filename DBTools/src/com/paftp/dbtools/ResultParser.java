@@ -108,7 +108,7 @@ public class ResultParser {
 					.getAttribute("result"));
 		} else if (testcasecontentElemet.getNodeName().equals("Error")){
 			testcaseresult_content.setType(testcasecontentElemet.getNodeName());
-			testcaseresult_content.setResult("0");
+			testcaseresult_content.setResult("1");
 		} else {
 			testcaseresult_content.setType(testcasecontentElemet.getNodeName());
 		}
