@@ -54,9 +54,15 @@ List<TestcaseResult> testcase_results = (List<TestcaseResult>)request.getAttribu
 	function inidata(){
 		<%
 		String caseinfo = "";
+		String redtype = "style='background-color:#ff0000;font-weight:bloder;'";
+		String greentype = "style='background-color:#00ff00;font-weight:bloder;'";
 		for (int i=0 ; i < testcase_results.size(); i++){
 			caseinfo += "<tr>";
-			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td>" + testcase_results.get(i).getIspass() + "</td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";
+			if (String.valueOf(testcase_results.get(i).getIspass()) == "true"){
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+greentype+">" + testcase_results.get(i).getIspass() + "</td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";}
+			else {
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+redtype+">" + testcase_results.get(i).getIspass() + "</td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";
+				}
 			caseinfo += "</tr>";}
 		%>
 		return "<%=caseinfo%>";
