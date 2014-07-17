@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.util.*,com.paftp.entity.*,com.paftp.dto.*"%>
+	import="java.util.*,com.paftp.entity.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -11,30 +11,11 @@
 <head>
 <% 
 if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/getSpecialTestpassContent.action").forward(request,response);}
-TestpassDto testpassDto = (TestpassDto)request.getAttribute("testpassdto");
-List<TestsuiteDto> testsuitedtoes = (List<TestsuiteDto>)request.getAttribute("testsuitedtoes");
-String testpass_id = testpassDto.getId().toString();
-String env = testpassDto.getEnv();
-String tspasssum = testpassDto.getPasscount().toString();
-String tsfailsum = testpassDto.getFailcount().toString();
-String tstotalsum = testpassDto.getTotal().toString();
-float tspassrate = testpassDto.getPercentage()*100;
-String exec_time = testpassDto.getCreatetime().toString();
-String exec_st = testpassDto.getName().toString();
-String categories = "";
-String catefail = "";
-String catepass = "";
-String catetotal = "";
-String url_path = "papay-hp:8080/PAFTestPlatform/";
-int height = (testsuitedtoes.size()*80+100);
-for (int i =0 ; i < testsuitedtoes.size(); i ++ ){
-	categories += "'<a href=\"http://"+url_path +"tsdetail.jsp?testpass_id="+testpass_id+"&testsuite_id="+testsuitedtoes.get(i).getId()+"\">" + testsuitedtoes.get(i).getName()+"</a>'" + ",";
-	catefail += testsuitedtoes.get(i).getFailcount() + ",";
-	catepass += testsuitedtoes.get(i).getPasscount() + ",";
-	catetotal += testsuitedtoes.get(i).getTotal() + ",";
-	 
-}
+request.getRequestDispatcher("${pageContext.request.contextPath}/getSpecialTestcaseResultContent.action").forward(request,response);}
+Testcase testcase = (Testcase)request.getAttribute("testcase");
+List<TestcaseResultContent> testcaseresult_contents = (List<TestcaseResultContent>)request.getAttribute("testcaseresultcontents");
+int size = testcaseresult_contents.size();
+String case_name = testcase.getCaseName().toString();
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
@@ -69,6 +50,35 @@ for (int i =0 ; i < testsuitedtoes.size(); i ++ ){
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+	
+	function inidata(){
+		<%
+		String caseresult = "";
+		String rowtype = "";
+		for (int i=0 ; i < testcaseresult_contents.size(); i++){
+			if ( testcaseresult_contents.get(i).getResult() == null){
+				rowtype = "";
+				}
+			else if (testcaseresult_contents.get(i).getResult() == "0"){
+				rowtype = "style='background-color:#ff0000;font-weight:bloder;'";
+				}
+			else {rowtype = "style='background-color:#00ff00;font-weight:bloder;'";}
+			
+			//TODO
+			caseresult += "<tr>";
+			caseresult += "<td>" + testcaseresult_contents.get(i).getStatus() + "</td>";
+			caseresult += "<td "+rowtype+">" + testcaseresult_contents.get(i).getValue() + "</td>";
+			caseresult += "</tr>";
+			}
+		%>
+		return "<%=caseresult%>";	
+		
+	}
+	
+	$(document).ready( function(){
+		$("#caseinfoTab").html("");
+		$("#caseinfoTab").append(inidata());
+		});
 </script>
 <style>
 /*导航默认样式，可根据实际情况修改*/
@@ -218,29 +228,29 @@ for (int i =0 ; i < testsuitedtoes.size(); i ++ ){
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff;"> <br>
-    <table width="100%">
-      <tr>
-        <td>&nbsp;&nbsp;</td>
-        <td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
-        <td colspan="7">&nbsp;</td>
-        <%if (session.getAttribute("user") == null) {%>
-        <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a></td>
-        <%} else { User user = (User) session.getAttribute("user");
+  <table width="100%">
+  <tr>
+  	<td>&nbsp;&nbsp;</td>
+  	<td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
+    <td colspan="7">&nbsp;</td>
+    <%if (session.getAttribute("user") == null) {%>
+    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </td>
+    <%} else { User user = (User) session.getAttribute("user");
                       String name = user.getAlias(); %>
-        <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a></td>
-        <%}%>
-        <td>&nbsp;&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</td>
-      </tr>
-      <tr>
-        <td colspan="10">&nbsp;</td>
-        <td style="text-align:right;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</td>
-        <td>&nbsp;&nbsp;</td>
-      </tr>
-    </table>
-    <br>
+    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </td>
+    <%}%>
+    <td>&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+  	<td colspan="12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</td>
+  </tr>
+  <tr>
+  	<td colspan="10">&nbsp;</td>
+    <td style="text-align:right;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</td>
+    <td>&nbsp;&nbsp;</td>
+  </tr>
+  </table>
+  <br>
   </div>
   <!--登录-->
   <div id="loginmodal" style="display:none;" align="center">
@@ -282,92 +292,11 @@ for (int i =0 ; i < testsuitedtoes.size(); i ++ ){
     <%}}%>
   </ul>
   <!--主体-->
-  <div style="text-align:center">
-    <table class="table table-bordered" align="center" style="width:60%; margin:auto">
-      <tr>
-        <td colspan='4'>测试环境<%=env%></td>
-      </tr>
-      <tr>
-        <td >Total</td>
-        <td >Pass</td>
-        <td >Fail</td>
-        <td >Pass Rate</td>
-      </tr>
-      <tr>
-        <td><%=tstotalsum%></td>
-        <td><%=tspasssum%></td>
-        <td><%=tsfailsum%></td>
-        <td><%=tspassrate%>%</td>
-      </tr>
-    </table>
-    </div>
-  <div id="container" style=" width:80%;height:<%=height%>px; margin:auto"></div>
-<script>
-$(function () {
-        $('#container').highcharts({
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                text: '<%=exec_time%>'
-            },
-            subtitle: {
-                text: '<%=exec_st%>'
-            },
-            xAxis: {
-                categories: [<%=categories%>],
-                title: {
-                    text: null
-                }
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Case (number)',
-                    align: 'high'
-                },
-                labels: {
-                    overflow: 'justify'
-                }
-            },
-            tooltip: {
-                valueSuffix: ''
-            },
-            plotOptions: {
-                bar: {
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -30,
-                y: 0,
-                floating: true,
-                borderWidth: 1,
-                backgroundColor: '#FFFFFF',
-                shadow: true
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: 'Fail',
-                data: [<%=catefail%>]
-            }, {
-                name: 'Pass',
-                data: [<%=catepass%>]
-            }, {
-                name: 'Total',
-                data: [<%=catetotal%>]
-            }]
-        });
-    });
-</script> 
-  
+  <p><h2><%=case_name%>测试结果</h2></p>
+  <table class="table table-bordered">
+    <tbody id="caseinfoTab">
+    </tbody>
+  </table>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

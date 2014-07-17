@@ -15,7 +15,9 @@ request.getRequestDispatcher("${pageContext.request.contextPath}/getSpecialTests
 Testsuite testsuite = (Testsuite)request.getAttribute("testsuite");
 String ts_name = testsuite.getName().toString();
 String ts_desc = testsuite.getDescription().toString();
+String ts_id = testsuite.getId().toString();
 List<TestcaseResult> testcase_results = (List<TestcaseResult>)request.getAttribute("testcaseresults");
+String url_path = "papay-hp:8080/PAFTestPlatform/";
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
@@ -59,9 +61,9 @@ List<TestcaseResult> testcase_results = (List<TestcaseResult>)request.getAttribu
 		for (int i=0 ; i < testcase_results.size(); i++){
 			caseinfo += "<tr>";
 			if (String.valueOf(testcase_results.get(i).getIspass()) == "true"){
-			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+greentype+">" + testcase_results.get(i).getIspass() + "</td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";}
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+greentype+"><a href='http://"+url_path+"caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + testcase_results.get(i).getIspass() + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";}
 			else {
-			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+redtype+">" + testcase_results.get(i).getIspass() + "</td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+redtype+"><a href='http://"+url_path+"caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + testcase_results.get(i).getIspass() + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";
 				}
 			caseinfo += "</tr>";}
 		%>
