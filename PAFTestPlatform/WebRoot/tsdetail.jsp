@@ -16,6 +16,7 @@ Testsuite testsuite = (Testsuite)request.getAttribute("testsuite");
 String ts_name = testsuite.getName().toString();
 String ts_desc = testsuite.getDescription().toString();
 List<TestcaseResult> testcase_results = (List<TestcaseResult>)request.getAttribute("testcaseresults");
+String url_path = "172.16.0.146:8080/PAFTestPlatform/";
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
