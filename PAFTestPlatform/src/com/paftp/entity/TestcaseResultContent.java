@@ -60,7 +60,7 @@ public class TestcaseResultContent {
 		this.testcase_result = testcase_result;
 	}
 
-	@Column(name = "description", length = 200) 
+	@Column(name = "result", length = 200)  
 	public String getResult() {
 		return result;
 	}
