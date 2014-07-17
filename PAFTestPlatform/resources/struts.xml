@@ -8,7 +8,7 @@
 	<constant name="struts.action.extension" value="action" />
 	<constant name="struts.serve.static.browserCache" value="false" />
 	<constant name="struts.devMode" value="true" />
-	
+
 	<package name="ajax" extends="json-default">
 		<action name="querySutsAjax" method="querySut"
 			class="com.paftp.action.ApplySutAction">
@@ -230,43 +230,57 @@
 			<result name="success">/test.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="createVersion" method="createVersion" class="com.paftp.action.VersionAction">
+		<action name="createVersion" method="createVersion"
+			class="com.paftp.action.VersionAction">
 			<result name="success">/inidata.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="queryVersion" method="queryVersion" class="com.paftp.action.VersionAction">
+		<action name="queryVersion" method="queryVersion"
+			class="com.paftp.action.VersionAction">
 			<result name="success">/sutcase.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="resultqueryVersion" method="queryVersion" class="com.paftp.action.VersionAction">
+		<action name="resultqueryVersion" method="queryVersion"
+			class="com.paftp.action.VersionAction">
 			<result name="success">/result.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="createTestcaseproject" method="createTestcaseproject" class="com.paftp.action.TestcaseprojectAction">
+		<action name="createTestcaseproject" method="createTestcaseproject"
+			class="com.paftp.action.TestcaseprojectAction">
 			<result name="success">/inidata.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="queryTestcaseproject" method="queryTestcaseproject" class="com.paftp.action.TestcaseprojectAction">
+		<action name="queryTestcaseproject" method="queryTestcaseproject"
+			class="com.paftp.action.TestcaseprojectAction">
 			<result name="success">/sutcase.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="createSutGroup" method="createSutGroup" class="com.paftp.action.SutGroupAction">
+		<action name="createSutGroup" method="createSutGroup"
+			class="com.paftp.action.SutGroupAction">
 			<result name="success">/inidata.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="createDepartment" method="createDepartment" class="com.paftp.action.UserProfileAction">
+		<action name="createDepartment" method="createDepartment"
+			class="com.paftp.action.UserProfileAction">
 			<result name="success">/inidata.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="createPosition" method="createPosition" class="com.paftp.action.UserProfileAction">
+		<action name="createPosition" method="createPosition"
+			class="com.paftp.action.UserProfileAction">
 			<result name="success">/inidata.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="initialTestpasses" method="initialTestpasses" class="com.paftp.action.TestpassAction">
+		<action name="initialTestpasses" method="initialTestpasses"
+			class="com.paftp.action.TestpassAction">
 			<result name="success">/result.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		
+		<action name="getSpecialTestpassContent" method="getSpecialTestpassContent"
+			class="com.paftp.action.TestpassAction">
+			<result name="success">/tsresult.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+
 
 	</package>
 

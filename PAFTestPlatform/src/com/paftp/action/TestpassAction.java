@@ -235,6 +235,7 @@ public class TestpassAction extends ActionSupport {
 		
 		request.setAttribute("testpassdto", testpassDto);
 		request.setAttribute("testsuitedtoes", testsuitedtoes);
+		request.setAttribute("flag", true);
 		
 		return "success";
 	}
