@@ -256,7 +256,7 @@ document.updatepwdform.submit();
   <ul class="daohang" id="navigator">
     <li><a href="index_1.jsp">主页</a></li>
     <li><a href="casemanagement.jsp">用例管理</a></li>
-    <li><a href="#">结果管理</a></li>
+    <li><a href="resultmanagement.jsp">结果管理</a></li>
     <li><a href="sutindex.jsp">接入申请</a></li>
     <li><a href="rolemanagement.jsp">用户权限</a></li>
     <%if (session.getAttribute("isAdmin") != null){

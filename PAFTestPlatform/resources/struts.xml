@@ -189,6 +189,11 @@
 			<result name="success">/casemanagement.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
+		<action name="resultqueryGroups" method="queryGroups"
+			class="com.paftp.action.ApplySutAction">
+			<result name="success">/resultmanagement.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
 		<action name="rolequeryGroups" method="queryGroups"
 			class="com.paftp.action.ApplySutAction">
 			<result name="success">/rolemanagement.jsp</result>
