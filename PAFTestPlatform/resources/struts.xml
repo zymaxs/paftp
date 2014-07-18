@@ -290,6 +290,11 @@
 			<result name="success">/caseresult.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
+		<action name="getTRHistoryStatus" method="getTRHistoryStatus"
+			class="com.paftp.action.TestcaseresultAction">
+			<result name="success">/caseresult.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
 
 
 	</package>

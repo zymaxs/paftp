@@ -57,5 +57,11 @@ public class AnalyseCommentHistoryServiceImpl implements AnalyseCommentHistorySe
 		// TODO Auto-generated method stub
 		return baseStringDAO.getgroup("select status from AnalyseCommentHistory a where testcaseresult.id = ? order by a.createtime desc", new Object[] { id });
 	}
+	
+	@Override
+	public List<AnalyseCommentHistory> findAllListByTime(Integer id) {
+		// TODO Auto-generated method stub
+		return baseDAO.getgroup("select * from AnalyseCommentHistory a where testcaseresult.id = ? order by a.createtime desc", new Object[] { id });
+	}
 
 }

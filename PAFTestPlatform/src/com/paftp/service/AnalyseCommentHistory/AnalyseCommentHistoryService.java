@@ -17,4 +17,6 @@ public interface AnalyseCommentHistoryService {
 	public List<AnalyseCommentHistory> findAllList();
 
 	List<String> findAllStatues(Integer id);
+	
+	List<AnalyseCommentHistory> findAllListByTime(Integer id);
 }

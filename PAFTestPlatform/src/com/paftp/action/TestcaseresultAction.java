@@ -43,21 +43,30 @@ public class TestcaseresultAction extends ActionSupport {
 
 	public String getTRHistoryStatus() {
 		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
 		if (this.getTestcaseresult_id() != null) {
 
 			TestcaseResult testcaseresult = testcaseresultService.findTestcaseResultById(this.getTestcaseresult_id());
-			List<String> statuses = analysecommenthistoryService.findAllStatues(testcaseresult.getId());
+			List<AnalyseCommentHistory> analysecomment_histories = analysecommenthistoryService.findAllListByTime(testcaseresult.getId());
 			
-			if (statuses != null && statuses.size() > 0) {
-				this.setStatus(statuses.get(0));
+			if (analysecomment_histories != null && analysecomment_histories.size() > 0) {
+				this.setStatus(analysecomment_histories.get(0).getNewstatus());
+				this.setComment(analysecomment_histories.get(0).getNewcomment());
 			} else {
 				this.setStatus("未处理");
+				this.setComment("");
 			}
 			
 		} else {
-			this.setPrompt("The testcaseresult id is null!");
+			request.setAttribute("error", "The testcaseresult id is null!");
+			return "error";
 		}
 
+		request.setAttribute("status", this.getStatus());
+		request.setAttribute("comment", this.getComment());
+		request.setAttribute("commentflag", true);
+		
 		return "success";
 		
 	}
