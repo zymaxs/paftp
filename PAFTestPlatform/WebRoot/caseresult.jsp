@@ -12,6 +12,10 @@
 <% 
 if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/getSpecialTestcaseResultContent.action").forward(request,response);}
+if (request.getAttribute("commentflag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/getTRHistoryStatus.action").forward(request,response);}
+String status =  request.getAttribute("status").toString();
+String comment = request.getAttribute("comment").toString();
 Testcase testcase = (Testcase)request.getAttribute("testcase");
 List<TestcaseResultContent> testcaseresult_contents = (List<TestcaseResultContent>)request.getAttribute("testcaseresultcontents");
 int size = testcaseresult_contents.size();
@@ -76,6 +80,8 @@ String case_name = testcase.getCaseName().toString();
 	}
 	
 	$(document).ready( function(){
+		document.getElementById('showcomment').value = '<%=status%>';
+		document.getElementById('comment').value = '<%=comment%>';
 		$("#caseinfoTab").html("");
 		$("#caseinfoTab").append(inidata());
 		});
@@ -297,6 +303,25 @@ String case_name = testcase.getCaseName().toString();
     <tbody id="caseinfoTab">
     </tbody>
   </table>
+  
+  <form id="commentForm" name="commentForm">
+  <table>
+  <tr>
+  <td id="showcommentupdatetd" style="display:; vertical-align:top" align="center"><input type="button"  class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="分析结果" onClick="updatecommentac()"></td>
+  <td id="showcommentsavetd" style="display:none; vertical-align:top" align="center"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="确认结果" onClick="savecommentac()"></td>
+  <td id="showcommenttd" style="display:block"><input id="showcomment" class="input-sm form-control" style="width:200px; vertical-align:top" value="" readonly></td>
+  <td id="showcommentoption" style="display:none"><input type="radio" name="updatecoment" value="缺陷" checked>
+                缺陷&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="updatecomment" value="关闭">
+                关闭&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+  	<td>拒绝原因</td>
+    <td><textarea  rows="4" name="comment" class="input-xlarge form-control" readonly id="comment" style="max-height:100px; max-width:300px; width:300px; height:100px;"></textarea></td>
+  </tr>
+  </table>
+  </form>
+  
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
