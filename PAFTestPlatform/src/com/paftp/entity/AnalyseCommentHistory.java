@@ -71,7 +71,7 @@ public class AnalyseCommentHistory {
 		this.newstatus = newstatus;
 	}
 
-	@Column(name = "oldcomment", length = 3076)  
+	@Column(name = "oldcomment", length = 1024)  
 	public String getOldcomment() {
 		return oldcomment;
 	}
@@ -80,7 +80,7 @@ public class AnalyseCommentHistory {
 		this.oldcomment = oldcomment;
 	}
 
-	@Column(name = "newcomment", length = 3076)  
+	@Column(name = "newcomment", length = 1024)  
 	public String getNewcomment() {
 		return newcomment;
 	}
