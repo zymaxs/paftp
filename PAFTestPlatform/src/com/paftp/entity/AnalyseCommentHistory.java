@@ -44,7 +44,7 @@ public class AnalyseCommentHistory {
 	}
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "updator_id")
 	public User getUpdator() {
 		return updator;
 	}
