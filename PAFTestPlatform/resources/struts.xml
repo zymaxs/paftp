@@ -78,6 +78,16 @@
 			<result type="json">
 			</result>
 		</action>
+		<action name="getTRHistories" method="getTRHistories"
+			class="com.paftp.action.TestcaseresultAction">
+			<result type="json">
+			</result>
+		</action>
+		<action name="addTRHistory" method="addTRHistory"
+			class="com.paftp.action.TestcaseresultAction">
+			<result type="json">
+			</result>
+		</action>
 	</package>
 
 	<package name="s2sh" extends="struts-default">
