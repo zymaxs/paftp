@@ -11,13 +11,16 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.paftp.dto.AnalyseCommentHistoryDto;
 import com.paftp.entity.AnalyseCommentHistory;
 import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.TestcaseResultContent;
 import com.paftp.entity.TestsuiteResult;
+import com.paftp.entity.User;
 import com.paftp.service.AnalyseCommentHistory.AnalyseCommentHistoryService;
 import com.paftp.service.TestcassResult.TestcaseResultService;
 import com.paftp.service.TestsuiteResult.TestsuiteResultService;
+import com.paftp.util.Util;
 
 @Controller
 public class TestcaseresultAction extends ActionSupport {
@@ -33,9 +36,10 @@ public class TestcaseresultAction extends ActionSupport {
 	
 	private String status;
 	private String comment;
-	private Date createtime;
-	private List<AnalyseCommentHistory> analysecommenthistories = new ArrayList<AnalyseCommentHistory>();
-	private AnalyseCommentHistory analysehistory_model = new AnalyseCommentHistory();
+	private User user;
+	
+	private Util util = new Util();
+	private List<AnalyseCommentHistoryDto> analysecommenthistoryDtoes = new ArrayList<AnalyseCommentHistoryDto>();
 
 	@Resource
 	private TestcaseResultService testcaseresultService;
@@ -74,6 +78,11 @@ public class TestcaseresultAction extends ActionSupport {
 	
 	public String addTRHistory(){
 		
+		user = util.getSessionUser();
+		if (user == null){
+			this.setPrompt("Please log in firstly!");
+		}
+		
 		if (this.getTestcaseresult_id() != null) {
 
 			TestcaseResult testcaseresult = testcaseresultService.findTestcaseResultById(this.getTestcaseresult_id());
@@ -82,21 +91,20 @@ public class TestcaseresultAction extends ActionSupport {
 			AnalyseCommentHistory history_model = new AnalyseCommentHistory();
 			if (history_models != null && history_models.size() > 0) {
 				history_model.setOldstatus(history_models.get(0).getNewstatus());
-				history_model.setOldcomment(history_models.get(0).getOldcomment());
+				history_model.setOldcomment(history_models.get(0).getNewcomment());
 			} else {
 				history_model.setOldstatus("未处理");
 				history_model.setOldcomment("");
 			}
 			history_model.setNewstatus(this.getStatus());
 			history_model.setNewcomment(this.getComment());
-			this.createtime = new Date();
+			Date createtime = new Date();
 			java.sql.Timestamp createdatetime = new java.sql.Timestamp(
 					createtime.getTime());
 			history_model.setCreatetime(createdatetime);
 			history_model.setTestcase_result(testcaseresult);
+			history_model.setUpdator(user);
 			analysecommenthistoryService.saveAnalyseCommentHistory(history_model);
-			
-			this.setAnalysehistory_model(history_model);
 			
 		} else {
 			this.setPrompt("The testcaseresult id is null!");
@@ -112,7 +120,7 @@ public class TestcaseresultAction extends ActionSupport {
 			TestcaseResult testcaseresult = testcaseresultService.findTestcaseResultById(this.getTestcaseresult_id());
 			List<AnalyseCommentHistory> analysecomment_histories = testcaseresult.getAnalysecomment_histories();
 			
-			this.setAnalysecommenthistories(analysecomment_histories);
+			this.setAnalysecommenthistoryDtoes(analysecommenthistoryService.getAnalyseCommentHistoriesDto(analysecomment_histories));
 			
 		} else {
 			this.setPrompt("The testcaseresult id is null!");
@@ -154,29 +162,22 @@ public class TestcaseresultAction extends ActionSupport {
 		this.comment = comment;
 	}
 
-	public Date getCreatetime() {
-		return createtime;
+	public List<AnalyseCommentHistoryDto> getAnalysecommenthistoryDtoes() {
+		return analysecommenthistoryDtoes;
 	}
 
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
-	}
-	
-	public List<AnalyseCommentHistory> getAnalysecommenthistories() {
-		return analysecommenthistories;
+	public void setAnalysecommenthistoryDtoes(
+			List<AnalyseCommentHistoryDto> analysecommenthistoryDtoes) {
+		this.analysecommenthistoryDtoes = analysecommenthistoryDtoes;
 	}
 
-	public void setAnalysecommenthistories(
-			List<AnalyseCommentHistory> analysecommenthistories) {
-		this.analysecommenthistories = analysecommenthistories;
-	}
-	
-	public AnalyseCommentHistory getAnalysehistory_model() {
-		return analysehistory_model;
+	public Util getUtil() {
+		return util;
 	}
 
-	public void setAnalysehistory_model(AnalyseCommentHistory analysehistory_model) {
-		this.analysehistory_model = analysehistory_model;
+	public void setUtil(Util util) {
+		this.util = util;
 	}
+
 	
 }

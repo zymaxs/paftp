@@ -2,6 +2,7 @@ package com.paftp.service.AnalyseCommentHistory;
 
 import java.util.List;
 
+import com.paftp.dto.AnalyseCommentHistoryDto;
 import com.paftp.entity.AnalyseCommentHistory;
 
 public interface AnalyseCommentHistoryService {
@@ -19,4 +20,7 @@ public interface AnalyseCommentHistoryService {
 	List<String> findAllStatues(Integer id);
 	
 	List<AnalyseCommentHistory> findAllListByTime(Integer id);
+
+	List<AnalyseCommentHistoryDto> getAnalyseCommentHistoriesDto(
+			List<AnalyseCommentHistory> analysecommenthistories);
 }

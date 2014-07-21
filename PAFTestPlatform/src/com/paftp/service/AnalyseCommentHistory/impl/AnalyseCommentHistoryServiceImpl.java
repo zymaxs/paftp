@@ -1,5 +1,6 @@
 package com.paftp.service.AnalyseCommentHistory.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -7,7 +8,11 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
+import com.paftp.dto.AnalyseCommentHistoryDto;
+import com.paftp.dto.ApplySutDto;
 import com.paftp.entity.AnalyseCommentHistory;
+import com.paftp.entity.ApplySut;
+import com.paftp.entity.User;
 import com.paftp.service.AnalyseCommentHistory.AnalyseCommentHistoryService;
 
 @Service("analysecommenthistoryService")
@@ -65,4 +70,29 @@ public class AnalyseCommentHistoryServiceImpl implements AnalyseCommentHistorySe
 		return baseDAO.getgroup("from AnalyseCommentHistory a where testcase_result.id = ? order by a.createtime desc", new Object[] { id });
 	}
 
+	@Override
+	public List<AnalyseCommentHistoryDto> getAnalyseCommentHistoriesDto(List<AnalyseCommentHistory> analysecommenthistories){
+		
+		List<AnalyseCommentHistoryDto> analyseCommentHistoryDtoes = new ArrayList<AnalyseCommentHistoryDto>();
+		
+		for(int i=0; i<analysecommenthistories.size(); i++){
+			
+			AnalyseCommentHistoryDto analyseCommentHistoryDto = new AnalyseCommentHistoryDto();
+			analyseCommentHistoryDto.setCreatetime(analysecommenthistories.get(i).getCreatetime());
+			analyseCommentHistoryDto.setOldcomment(analysecommenthistories.get(i).getOldcomment());
+			analyseCommentHistoryDto.setNewcomment(analysecommenthistories.get(i).getNewcomment());
+			analyseCommentHistoryDto.setNewstatus(analysecommenthistories.get(i).getNewstatus());
+			User user = new User();
+			user.setAlias(analysecommenthistories.get(i).getUpdator().getAlias());
+			user.setId(analysecommenthistories.get(i).getUpdator().getId());
+			user.setDisplayName(analysecommenthistories.get(i).getUpdator().getDisplayName());
+			analyseCommentHistoryDto.setUpdator(user);
+			
+			analyseCommentHistoryDtoes.add(analyseCommentHistoryDto);
+			
+		}
+		
+		return analyseCommentHistoryDtoes;
+		
+	}
 }
