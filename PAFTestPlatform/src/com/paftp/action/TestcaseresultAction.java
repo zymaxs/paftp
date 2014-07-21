@@ -35,6 +35,7 @@ public class TestcaseresultAction extends ActionSupport {
 	private String comment;
 	private Date createtime;
 	private List<AnalyseCommentHistory> analysecommenthistories = new ArrayList<AnalyseCommentHistory>();
+	private AnalyseCommentHistory analysehistory_model = new AnalyseCommentHistory();
 
 	@Resource
 	private TestcaseResultService testcaseresultService;
@@ -76,22 +77,26 @@ public class TestcaseresultAction extends ActionSupport {
 		if (this.getTestcaseresult_id() != null) {
 
 			TestcaseResult testcaseresult = testcaseresultService.findTestcaseResultById(this.getTestcaseresult_id());
-			List<String> statuses = analysecommenthistoryService.findAllStatues(testcaseresult.getId());
+			List<AnalyseCommentHistory> history_models = analysecommenthistoryService.findAllListByTime(testcaseresult.getId());
 			
-			AnalyseCommentHistory analysecomment_history = new AnalyseCommentHistory();
-			if (statuses != null && statuses.size() > 0) {
-				analysecomment_history.setOldstatus(statuses.get(0));
+			AnalyseCommentHistory history_model = new AnalyseCommentHistory();
+			if (history_models != null && history_models.size() > 0) {
+				history_model.setOldstatus(history_models.get(0).getNewstatus());
+				history_model.setOldcomment(history_models.get(0).getOldcomment());
 			} else {
-				analysecomment_history.setOldstatus("未处理");
+				history_model.setOldstatus("未处理");
+				history_model.setOldcomment("");
 			}
-			analysecomment_history.setNewstatus(this.getStatus());
-			analysecomment_history.setNewcomment(this.getComment());
+			history_model.setNewstatus(this.getStatus());
+			history_model.setNewcomment(this.getComment());
 			this.createtime = new Date();
 			java.sql.Timestamp createdatetime = new java.sql.Timestamp(
 					createtime.getTime());
-			analysecomment_history.setCreatetime(createdatetime);
-			analysecomment_history.setTestcase_result(testcaseresult);
-			analysecommenthistoryService.saveAnalyseCommentHistory(analysecomment_history);
+			history_model.setCreatetime(createdatetime);
+			history_model.setTestcase_result(testcaseresult);
+			analysecommenthistoryService.saveAnalyseCommentHistory(history_model);
+			
+			this.setAnalysehistory_model(history_model);
 			
 		} else {
 			this.setPrompt("The testcaseresult id is null!");
@@ -164,6 +169,14 @@ public class TestcaseresultAction extends ActionSupport {
 	public void setAnalysecommenthistories(
 			List<AnalyseCommentHistory> analysecommenthistories) {
 		this.analysecommenthistories = analysecommenthistories;
+	}
+	
+	public AnalyseCommentHistory getAnalysehistory_model() {
+		return analysehistory_model;
+	}
+
+	public void setAnalysehistory_model(AnalyseCommentHistory analysehistory_model) {
+		this.analysehistory_model = analysehistory_model;
 	}
 	
 }
