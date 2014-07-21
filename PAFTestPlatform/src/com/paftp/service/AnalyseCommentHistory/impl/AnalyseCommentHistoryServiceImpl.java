@@ -55,7 +55,8 @@ public class AnalyseCommentHistoryServiceImpl implements AnalyseCommentHistorySe
 	@Override
 	public List<String> findAllStatues(Integer id) {
 		// TODO Auto-generated method stub
-		return baseStringDAO.getgroup("select status from AnalyseCommentHistory a where testcaseresult.id = ? order by a.createtime desc", new Object[] { id });
+		List<String> result  = baseStringDAO.getgroup("select newstatus from AnalyseCommentHistory a where testcase_result.id = ? order by a.createtime desc", new Object[] { id });
+		return result;
 	}
 	
 	@Override
