@@ -158,7 +158,7 @@ String testcaseresult_id = request.getAttribute("testcaseresult_id").toString();
 		document.getElementById('comment').value = '<%=comment%>';
 		$("#caseinfoTab").html("");
 		$("#caseinfoTab").append(inidata());
-		inihistory();
+		//inihistory();
 		});
 </script>
 <style>
