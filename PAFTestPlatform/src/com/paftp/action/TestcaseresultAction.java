@@ -21,6 +21,7 @@ import com.paftp.entity.User;
 import com.paftp.service.AnalyseCommentHistory.AnalyseCommentHistoryService;
 import com.paftp.service.TestcassResult.TestcaseResultService;
 import com.paftp.service.TestsuiteResult.TestsuiteResultService;
+import com.paftp.service.user.UserService;
 import com.paftp.util.Util;
 
 @Controller
@@ -46,6 +47,8 @@ public class TestcaseresultAction extends ActionSupport {
 	private TestcaseResultService testcaseresultService;
 	@Resource
 	private AnalyseCommentHistoryService analysecommenthistoryService;
+	@Resource
+	private UserService userService;
 
 	public String getTRHistoryStatus() {
 		
@@ -79,10 +82,12 @@ public class TestcaseresultAction extends ActionSupport {
 	
 	public String addTRHistory(){
 		
-		user = this.getSessionUser();
+		user = util.getSessionUser();
 		if (user == null){
 			this.setPrompt("Please log in firstly!");
 			return "success";
+		} else {
+			user = userService.findUserByAlias(user.getAlias());
 		}
 		
 		if (this.getTestcaseresult_id() != null) {
