@@ -92,27 +92,43 @@ public class TestcaseresultAction extends ActionSupport {
 		
 		if (this.getTestcaseresult_id() != null) {
 
+			Boolean tag = false;
 			TestcaseResult testcaseresult = testcaseresultService.findTestcaseResultById(this.getTestcaseresult_id());
 			List<AnalyseCommentHistory> history_models = analysecommenthistoryService.findAllListByTime(testcaseresult.getId());
 			
 			AnalyseCommentHistory history_model = new AnalyseCommentHistory();
 			if (history_models != null && history_models.size() > 0) {
-				history_model.setOldstatus(history_models.get(0).getNewstatus());
-				history_model.setOldcomment(history_models.get(0).getNewcomment());
+				if (this.getStatus() != null && this.getStatus().equals(history_models.get(0).getOldstatus()) == false){
+					history_model.setOldstatus(history_models.get(0).getNewstatus());
+					history_model.setNewstatus(this.getStatus());
+					tag = true;
+				}
+				if (this.getComment() != null && this.getComment().equals(history_models.get(0).getOldcomment()) == false){
+					history_model.setOldcomment(history_models.get(0).getNewcomment());
+					history_model.setNewcomment(this.getComment());
+					tag = true;
+				}
 			} else {
-				history_model.setOldstatus("未处理");
-				history_model.setOldcomment("");
+				if (this.getStatus() != null){	
+					history_model.setOldstatus("未处理");
+					history_model.setNewstatus(this.getStatus());
+					tag = true;
+				}
+				if (this.getComment() != null){
+					history_model.setOldcomment("");
+					history_model.setNewcomment(this.getComment());
+					tag = true;
+				}
 			}
-			history_model.setNewstatus(this.getStatus());
-			history_model.setNewcomment(this.getComment());
-			Date createtime = new Date();
-			java.sql.Timestamp createdatetime = new java.sql.Timestamp(
-					createtime.getTime());
-			history_model.setCreatetime(createdatetime);
-			history_model.setTestcase_result(testcaseresult);
-			history_model.setUpdator(user);
-			analysecommenthistoryService.saveAnalyseCommentHistory(history_model);
 			
+			if (tag){
+				Date createtime = new Date();
+				java.sql.Timestamp createdatetime = new java.sql.Timestamp(createtime.getTime());
+				history_model.setCreatetime(createdatetime);
+				history_model.setTestcase_result(testcaseresult);
+				history_model.setUpdator(user);
+				analysecommenthistoryService.saveAnalyseCommentHistory(history_model);
+			}
 		} else {
 			this.setPrompt("The testcaseresult id is null!");
 		}
