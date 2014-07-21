@@ -164,23 +164,13 @@ public class Util {
 		}
 	}
 	
-	public Boolean isRoleOfSut(User user, String sut_id, String sut_name) {
-		User currentuser = userService.findUserByAlias(user.getAlias());
+	public Boolean isRoleOfSut(User currentuser, Sut sut) {
+		
 		List<Role> roles = currentuser.getRoles();
-		Sut sut = null;
-		if (sut_id != null){
-			sut = sutService.findSutById(Integer.parseInt(sut_id));
-		} else {
-			if (sut_name != null){
-				sut = sutService.findSutByName(sut_name);
-			}
-		}
 		for (int i = 0; i < roles.size(); i++) {
-			if (roles.get(i).getSut() != null) {
-				if (roles.get(i).getSut().getName().equals(sut.getName())) {
-					return true;
-				}
-			}
+			if (roles.get(i).getName().equals(sut.getName() + "Sdet") || roles.get(i).getName().equals(sut.getName() + "Manager")) {			
+				return true;
+		}
 		}
 		return false;
 	}

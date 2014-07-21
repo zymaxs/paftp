@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.dto.AnalyseCommentHistoryDto;
 import com.paftp.entity.AnalyseCommentHistory;
+import com.paftp.entity.Sut;
 import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.TestcaseResultContent;
 import com.paftp.entity.TestsuiteResult;
@@ -55,9 +56,16 @@ public class TestcaseresultAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
 		if (this.getTestcaseresult_id() != null) {
-
+			
 			TestcaseResult testcaseresult = testcaseresultService.findTestcaseResultById(this.getTestcaseresult_id());
 			List<AnalyseCommentHistory> analysecomment_histories = analysecommenthistoryService.findAllListByTime(testcaseresult.getId());
+			
+			Sut sut = testcaseresult.getTestsuite_result().getTestsuite().getSut();
+			user = util.getSessionUser();
+			if (util.isRoleOfSut(user, sut) == false){
+				request.setAttribute("error", "You must be talent to do the outstanding things!");
+				return "error";
+			}
 			
 			if (analysecomment_histories != null && analysecomment_histories.size() > 0) {
 				this.setStatus(analysecomment_histories.get(0).getNewstatus());

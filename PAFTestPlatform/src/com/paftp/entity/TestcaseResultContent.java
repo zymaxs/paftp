@@ -41,7 +41,7 @@ public class TestcaseResultContent {
 		this.status = status;
 	}
 
-	@Column(name = "value", length = 100)  
+	@Column(name = "value", length = 1024)  
 	public String getValue() {
 		return value;
 	}
