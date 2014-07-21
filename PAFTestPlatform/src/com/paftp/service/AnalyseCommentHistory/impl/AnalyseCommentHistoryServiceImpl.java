@@ -79,6 +79,7 @@ public class AnalyseCommentHistoryServiceImpl implements AnalyseCommentHistorySe
 			
 			AnalyseCommentHistoryDto analyseCommentHistoryDto = new AnalyseCommentHistoryDto();
 			analyseCommentHistoryDto.setCreatetime(analysecommenthistories.get(i).getCreatetime());
+			analyseCommentHistoryDto.setOldstatus(analysecommenthistories.get(i).getOldstatus());
 			analyseCommentHistoryDto.setOldcomment(analysecommenthistories.get(i).getOldcomment());
 			analyseCommentHistoryDto.setNewcomment(analysecommenthistories.get(i).getNewcomment());
 			analyseCommentHistoryDto.setNewstatus(analysecommenthistories.get(i).getNewstatus());

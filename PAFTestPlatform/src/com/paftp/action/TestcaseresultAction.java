@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
@@ -78,9 +79,10 @@ public class TestcaseresultAction extends ActionSupport {
 	
 	public String addTRHistory(){
 		
-		user = util.getSessionUser();
+		user = this.getSessionUser();
 		if (user == null){
 			this.setPrompt("Please log in firstly!");
+			return "success";
 		}
 		
 		if (this.getTestcaseresult_id() != null) {
@@ -127,6 +129,19 @@ public class TestcaseresultAction extends ActionSupport {
 		}
 		
 		return "success";
+	}
+	
+	private User getSessionUser() {
+
+		HttpSession session = ServletActionContext.getRequest().getSession(
+				false);
+
+		if (session == null || session.getAttribute("user") == null) {
+			return null;
+		} else {
+			User user = (User) session.getAttribute("user");
+			return user;
+		}
 	}
 	
 	public Integer getTestcaseresult_id() {
