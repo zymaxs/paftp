@@ -78,12 +78,12 @@
 			<result type="json">
 			</result>
 		</action>
-		<action name="getTRHistories" method="getTRHistories"
+		<action name="addTRHistory" method="addTRHistory"
 			class="com.paftp.action.TestcaseresultAction">
 			<result type="json">
 			</result>
 		</action>
-		<action name="addTRHistory" method="addTRHistory"
+		<action name="listTRHistories" method="listTRHistories"
 			class="com.paftp.action.TestcaseresultAction">
 			<result type="json">
 			</result>

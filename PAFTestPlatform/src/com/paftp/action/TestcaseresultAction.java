@@ -120,7 +120,7 @@ public class TestcaseresultAction extends ActionSupport {
 		return "success";
 	}
 
-	public String getTRHistories(){
+	public String listTRHistories(){
 		
 		if (this.getTestcaseresult_id() != null) {
 
@@ -189,14 +189,6 @@ public class TestcaseresultAction extends ActionSupport {
 	public void setAnalysecommenthistoryDtoes(
 			List<AnalyseCommentHistoryDto> analysecommenthistoryDtoes) {
 		this.analysecommenthistoryDtoes = analysecommenthistoryDtoes;
-	}
-
-	public Util getUtil() {
-		return util;
-	}
-
-	public void setUtil(Util util) {
-		this.util = util;
 	}
 
 	

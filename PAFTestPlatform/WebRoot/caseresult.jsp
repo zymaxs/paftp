@@ -56,6 +56,9 @@ String testcaseresult_id = request.getAttribute("testcaseresult_id").toString();
 		document.loginform.submit();
 	}
 	
+	
+	
+	
 	function inidata(){
 		<%
 		String caseresult = "";
@@ -79,6 +82,8 @@ String testcaseresult_id = request.getAttribute("testcaseresult_id").toString();
 		return "<%=caseresult%>";	
 		
 	}
+	
+	
 	
 	function updatecommentac(){
 		document.getElementById('showcommentupdatetd').style.display = "none";
@@ -113,6 +118,7 @@ String testcaseresult_id = request.getAttribute("testcaseresult_id").toString();
 		  		  document.getElementById('showcommentoption').style.display = "none";
 				  document.getElementById('comment').readOnly = true;
 				  document.getElementById('showcomment').value = status_value;
+				  inihistory();
 				  //alert("zhow");
 				  //sleepI(1);
 				  //rootnode();
@@ -128,20 +134,17 @@ String testcaseresult_id = request.getAttribute("testcaseresult_id").toString();
 		}
 		
 	
-	
-	
-	function inihistory (){
+	function inihistory(){
 		$.ajax({
 			  type : "POST",
-			  url : "getTRHistories.action",
+			  url : "listTRHistories.action",
 			  cache : false,
 			  data : {testcaseresult_id:'<%=testcaseresult_id%>'},
 			  dataType : "json",
 			  success : function(root) {
-				  //alert("zhow");
-				  //sleepI(1);
-				  //rootnode();
-				  //alert("after select");
+				  alert("zhow");
+				  var caseChangeHistory="";
+				  var historylength = root.analysecommenthistoryDtoeslength;
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -152,13 +155,12 @@ String testcaseresult_id = request.getAttribute("testcaseresult_id").toString();
 		  });
 		}
 	
-	
 	$(document).ready( function(){
 		document.getElementById('showcomment').value = '<%=status%>';
 		document.getElementById('comment').value = '<%=comment%>';
 		$("#caseinfoTab").html("");
 		$("#caseinfoTab").append(inidata());
-		//inihistory();
+		inihistory();
 		});
 </script>
 <style>
