@@ -113,7 +113,6 @@ String testcaseresult_id = request.getAttribute("testcaseresult_id").toString();
 		  		  document.getElementById('showcommentoption').style.display = "none";
 				  document.getElementById('comment').readOnly = true;
 				  document.getElementById('showcomment').value = status_value;
-				  
 				  //alert("zhow");
 				  //sleepI(1);
 				  //rootnode();
