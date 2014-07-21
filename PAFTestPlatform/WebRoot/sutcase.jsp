@@ -812,7 +812,7 @@ function testtest(){
 				  for (i=0 ; i< historylength ;i++){
 					  caseChangeHistory += "<p><a href='#casechange"+ i +"' data-toggle='collapse'>" + root.testcasedto.caseChangeHistorys[i].update_time +"</a>&nbsp;&nbsp;By&nbsp;&nbsp;<a href='getuserinfo.action?userid="+ root.testcasedto.caseChangeHistorys[i].updator.id+"'>"+root.testcasedto.caseChangeHistorys[i].updator.displayName+"</a></p>";
 				 	  caseChangeHistory += "<div id='casechange"+ i +"' class='collapse'>";
-					  caseChangeHistory += "<table class='table table-striped'><tr><td>修改项</td><td>修改前</td><td>修改后</td></tr>"
+					  caseChangeHistory += "<table class='table table-striped'><tr><td>修改项</td><td>修改前</td><td>修改后</td></tr>";
 					  var operationlength = root.testcasedto.caseChangeHistorys[i].caseChangeOperations.length;
 					  for (j=0 ; j< operationlength ; j++){
 						  var oldValue = root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].oldValue;
@@ -821,7 +821,6 @@ function testtest(){
 							  caseChangeHistory += "<tr><td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].field + "</td>";
 							  caseChangeHistory += "<td><a href='#' title='"+oldValue+"'>"+oldValue.substring(0,3)+"...</a></td>";
 							  caseChangeHistory += "<td><a href='#' title='"+newValue+"'>"+newValue.substring(0,3)+"...</a></td></tr>";
-							  
 							  }
 						  else{
 							caseChangeHistory += "<tr><td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].field + "</td>";

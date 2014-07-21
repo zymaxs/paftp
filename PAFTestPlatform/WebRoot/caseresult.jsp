@@ -142,9 +142,28 @@ String testcaseresult_id = request.getAttribute("testcaseresult_id").toString();
 			  data : {testcaseresult_id:'<%=testcaseresult_id%>'},
 			  dataType : "json",
 			  success : function(root) {
-				  alert("zhow");
+				  $("#showCaseChangeHistoryDiv").html("");
 				  var caseChangeHistory="";
-				  var historylength = root.analysecommenthistoryDtoeslength;
+				  var historylength = root.analysecommenthistoryDtoes.length;
+				  for (i=0 ; i< historylength ;i++){
+					  caseChangeHistory += "<p><a href='#casechange"+ i +"' data-toggle='collapse'>" + root.analysecommenthistoryDtoes[i].createtime+ "</a>&nbsp;&nbsp;By&nbsp;&nbsp;<a href='getuserinfo.action?userid="+root.analysecommenthistoryDtoes[i].updator.id + "'>"+root.analysecommenthistoryDtoes[i].updator.displayName+"</a></p>";
+					  caseChangeHistory += "<div id='casechange"+ i +"' class='collapse'>";
+					  caseChangeHistory += "<table class='table table-striped'><tr><td>修改项</td><td>修改前</td><td>修改后</td></tr>";
+					  if (root.analysecommenthistoryDtoes[i].newstatus != ""){
+						  caseChangeHistory += "<tr><td>状态</td>";
+						  caseChangeHistory += "<td>"+root.analysecommenthistoryDtoes[i].oldstatus+"</td>";
+						  caseChangeHistory += "<td>"+root.analysecommenthistoryDtoes[i].newstatus+"</td></tr>";
+						  }
+					  if (root.analysecommenthistoryDtoes[i].newcomment != ""){
+						  caseChangeHistory += "<tr><td>Comment</td>";
+						  caseChangeHistory += "<td>"+root.analysecommenthistoryDtoes[i].oldcomment+"</td>";
+						  caseChangeHistory += "<td>"+root.analysecommenthistoryDtoes[i].newcomment+"</td></tr>";
+							}
+					 caseChangeHistory += "</table></div>";
+					 if (document.getElementById("showCaseChangeHistoryDiv").innerHTML.toString() == ""){
+					$("#showCaseChangeHistoryDiv").append(caseChangeHistory);
+					 }
+					  }
 			  },
 
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -398,6 +417,8 @@ String testcaseresult_id = request.getAttribute("testcaseresult_id").toString();
   </tr>
   </table>
   </form>
+  
+  <div id="showCaseChangeHistoryDiv"></div>
   
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
