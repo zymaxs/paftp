@@ -385,8 +385,8 @@ String testcaseresult_id = request.getAttribute("testcaseresult_id").toString();
   <td id="showcommentupdatetd" style="display:; vertical-align:top;" align="center"><input type="button"  class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="分析结果" onClick="updatecommentac()"></td>
   <td id="showcommentsavetd" style="display:none; vertical-align:top" align="center"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" value="确认结果" onClick="savecommentac()"></td>
   <td id="showcommenttd" style="display:block"><input id="showcomment" class="input-sm form-control" style="width:200px; vertical-align:top" value="" readonly></td>
-  <td id="showcommentoption" style="display:none"><input type="radio" name="updatecomment" value="缺陷" checked>
-                缺陷&nbsp;&nbsp;&nbsp;&nbsp;
+  <td id="showcommentoption" style="display:none"><input type="radio" name="updatecomment" value="其他" checked>
+                其他&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="updatecomment" value="关闭">
                 关闭&nbsp;&nbsp;&nbsp;&nbsp;</td>
   </tr>
