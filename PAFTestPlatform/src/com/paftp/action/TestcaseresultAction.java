@@ -35,6 +35,7 @@ public class TestcaseresultAction extends ActionSupport {
 	private String comment;
 	private Date createtime;
 	private List<AnalyseCommentHistory> analysecommenthistories = new ArrayList<AnalyseCommentHistory>();
+	private AnalyseCommentHistory analysehistory_model = new AnalyseCommentHistory();
 
 	@Resource
 	private TestcaseResultService testcaseresultService;
@@ -94,6 +95,8 @@ public class TestcaseresultAction extends ActionSupport {
 			history_model.setCreatetime(createdatetime);
 			history_model.setTestcase_result(testcaseresult);
 			analysecommenthistoryService.saveAnalyseCommentHistory(history_model);
+			
+			this.setAnalysehistory_model(history_model);
 			
 		} else {
 			this.setPrompt("The testcaseresult id is null!");
@@ -166,6 +169,14 @@ public class TestcaseresultAction extends ActionSupport {
 	public void setAnalysecommenthistories(
 			List<AnalyseCommentHistory> analysecommenthistories) {
 		this.analysecommenthistories = analysecommenthistories;
+	}
+	
+	public AnalyseCommentHistory getAnalysehistory_model() {
+		return analysehistory_model;
+	}
+
+	public void setAnalysehistory_model(AnalyseCommentHistory analysehistory_model) {
+		this.analysehistory_model = analysehistory_model;
 	}
 	
 }
