@@ -63,8 +63,9 @@ public class TestcaseresultAction extends ActionSupport {
 			Sut sut = testcaseresult.getTestsuite_result().getTestsuite().getSut();
 			user = util.getSessionUser();
 			if (util.isRoleOfSut(user, sut) == false){
-				request.setAttribute("error", "You must be talent to do the outstanding things!");
-				return "error";
+				request.setAttribute("isCurrentRole", false);
+			} else {
+				request.setAttribute("isCurrentRole", true);
 			}
 			
 			if (analysecomment_histories != null && analysecomment_histories.size() > 0) {

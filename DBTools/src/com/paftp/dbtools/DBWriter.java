@@ -27,11 +27,11 @@ public class DBWriter {
 	private String userName;
 	private String userPwd;
 
-	public void insertTestpass(Testpass testpass, String path) throws SQLException {
-		this.setDBParameters(path);
+	public void insertTestpass(Testpass testpass, String path, Boolean tag) throws SQLException {
+		this.setDBParameters(path, tag);
 		this.getConnection(this.getDbURL(), this.getUserName(), this.getUserPwd());
 		String sut_name = testpass.getSut_name();
-		ResultSet resultset = this.execute("select * from sut where name = '"
+		ResultSet resultset = this.execute("select * from Sut where name = '"
 				+ sut_name + "';");
 		String sut_id = null;
 		if (resultset != null) {
@@ -41,7 +41,7 @@ public class DBWriter {
 			return;
 		}
 		String version_num = testpass.getVersion_name();
-		resultset = this.execute("select * from version where version_num = '"
+		resultset = this.execute("select * from Version where version_num = '"
 				+ version_num + "';");
 		String version_id = null;
 			if (resultset.next()) {
@@ -56,7 +56,7 @@ public class DBWriter {
 		String testset = testpass.getTestset();
 		String name = createtime.toString();
 		String env = testpass.getEnv();
-		String sql = "INSERT INTO testpass(createtime,testset,sut_id,version_id,name, env) VALUES (?,?,?,?,?,?);";
+		String sql = "INSERT INTO Testpass(createtime,testset,sut_id,version_id,name, env) VALUES (?,?,?,?,?,?);";
 		PreparedStatement st;
 		try {
 			st = dbConn.prepareStatement(sql);
@@ -77,25 +77,25 @@ public class DBWriter {
 		for (int i = 0; i < testsuite_results.size(); i++) {
 			TestsuiteResult testsuite_result = testsuite_results.get(i);
 			String suitename = testsuite_result.getSuitename();
-			resultset = this.execute("select * from testpass where name = '"
+			resultset = this.execute("select * from Testpass where name = '"
 					+ name + "';");
 			String testpass_id = this.getResult(resultset, "id");
 			String testsuite_name = testsuite_result.getSuitename();
-			resultset = this.execute("select * from testsuite where name = '"
+			resultset = this.execute("select * from Testsuite where name = '"
 					+ testsuite_name + "';");
 			String testsuite_id = null;
 			if (resultset.next()){
 				testsuite_id = resultset.getString(1);
 			}else{
 				System.out.println("The testsuite is not exist:" + testsuite_name);
-				break;
+				continue;
 			}
 //			String checksql = "select * from testsuiteresult where suitename = '" + testsuite_name + "' and testpass_id = '" + testpass_id + "'";
 //			resultset = this.execute(checksql);
 //			if (resultset.next()){
 //				break;
 //			}
-			sql = "INSERT INTO testsuiteresult(suitename,testpass_id,testsuite_id) VALUES (?,?,?);";
+			sql = "INSERT INTO TestsuiteResult(suitename,testpass_id,testsuite_id) VALUES (?,?,?);";
 			PreparedStatement st_testsuite_result;
 			try {
 				st_testsuite_result = dbConn.prepareStatement(sql);
@@ -114,25 +114,25 @@ public class DBWriter {
 				String casename = testcase_result.getCasename();
 				Boolean Ispass = testcase_result.getIspass();
 				String testcase_description = testcase_result.getDescription();
-				resultset = this.execute("select * from testsuiteresult where suitename = '"
+				resultset = this.execute("select * from TestsuiteResult where suitename = '"
 						+ suitename + "';");
 				String testsuiteresult_id = this.getResult(resultset, "id");
 				String testcase_name = testcase_result.getCasename();
-				resultset = this.execute("select * from testcase where casename = '"
+				resultset = this.execute("select * from Testcase where casename = '"
 						+ testcase_name + "';");
 				String testcase_id = null;
 				if (resultset.next()){
 					testcase_id = resultset.getString(1);
 				}else{
 					System.out.println("The testcase is not exist:" + testcase_name);
-					break;
+					continue;
 				}
 //				checksql = "select * from testcaseresult where casename = '" + testcase_name + "' and testsuiteresult_id = '" + testsuiteresult_id + "'";
 //				resultset = this.execute(checksql);
 //				if (resultset.next()){
 //					break;
 //				}
-				sql = "INSERT INTO testcaseresult(casename,ispass,description,testsuiteresult_id,testcase_id) VALUES (?,?,?,?,?);";
+				sql = "INSERT INTO TestcaseResult(casename,ispass,description,testsuiteresult_id,testcase_id) VALUES (?,?,?,?,?);";
 				PreparedStatement st_testcase_result;
 				try {
 					st_testcase_result = dbConn.prepareStatement(sql);
@@ -154,10 +154,10 @@ public class DBWriter {
 					String status = testcaseresult_content.getType();
 					String result = testcaseresult_content.getResult();
 					String value = testcaseresult_content.getValue();
-					resultset = this.execute("select * from testcaseresult where casename = '"
+					resultset = this.execute("select * from TestcaseResult where casename = '"
 							+ casename + "';");
 					String testcaseresult_id = this.getResult(resultset, "id");	
-					sql = "INSERT INTO testcaseresultcontent(status,result,value,testcase_id) VALUES (?,?,?,?);";
+					sql = "INSERT INTO TestcaseResultContent(status,result,value,testcase_id) VALUES (?,?,?,?);";
 					PreparedStatement st_testcaseresult_content;
 					try {
 						st_testcaseresult_content = dbConn.prepareStatement(sql);
@@ -229,8 +229,13 @@ public class DBWriter {
 		return result;
 	}
 	
-	private void setDBParameters(String path){
-		Properties p = this.getProperties(path + "\\db.properties");
+	private void setDBParameters(String path, Boolean tag){
+		Properties p;
+		if (tag){
+			p = this.getProperties(path + "/db.properties");
+		}else{
+			p = this.getProperties(path + "\\db.properties");
+		}
 		
 		this.setDbURL(p.getProperty("dbUrl"));
 		this.setUserName(p.getProperty("userName"));

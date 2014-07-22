@@ -23,20 +23,32 @@ import com.paftp.bean.*;
 
 public class ResultParser {
 
-	public Testpass getTestpass(String path) {
+	public Testpass getTestpass(String path, Boolean tag) {
 
 		Testpass testpass = new Testpass();
-
-		Properties p = this.getProperties(path + "\\testpass.properties");
+		Properties p;
+		File[] files;
+		if (tag){
+			p = this.getProperties(path + "/testpass.properties");
+			files = this.getFiles(path + "/result/");
+		}else{
+			p = this.getProperties(path + "\\testpass.properties");
+			files = this.getFiles(path + "\\result\\");
+		}
 		testpass.setSut_name(p.getProperty("sut"));
 		testpass.setVersion_name(p.getProperty("version"));
 		testpass.setTestset(p.getProperty("testset"));
 		testpass.setEnv(p.getProperty("env"));
-		File[] files = this.getFiles(path + "\\result\\");
 		List<TestsuiteResult> testsuite_results = new ArrayList<TestsuiteResult>();
 		for (int i = 0; i < files.length; i++) {
-			TestsuiteResult testsuite_result = this.getTestsuiteResult(path
+			TestsuiteResult testsuite_result;
+			if(tag){
+				testsuite_result = this.getTestsuiteResult(path
+						+ "/result/" + files[i].getName());
+			}else{
+				testsuite_result = this.getTestsuiteResult(path
 					+ "\\result\\" + files[i].getName());
+			}
 			testsuite_results.add(testsuite_result);
 		}
 		testpass.setTestsuite_results(testsuite_results);
