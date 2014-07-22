@@ -189,7 +189,7 @@ public class TestpassAction extends ActionSupport {
 		return "success";
 	}
 
-	public String getSpecialTestpassContent() {
+	public String querySpecialTestpassContent() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -252,7 +252,7 @@ public class TestpassAction extends ActionSupport {
 		return "success";
 	}
 
-	public String getSpecialTestsuiteResultContent() {
+	public String querySpecialTestsuiteResultContent() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -290,7 +290,7 @@ public class TestpassAction extends ActionSupport {
 
 	}
 
-	public String getSpecialTestcaseResultContent() {
+	public String querySpecialTestcaseResultContent() {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 
