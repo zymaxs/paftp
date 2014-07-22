@@ -12,16 +12,18 @@ public class DBTools {
 		// TODO Auto-generated method stub
 		
 		String root;
+		Boolean tag = false;
 		if (args.length > 0 && args[0] != null && args[0].equals("") == false){
 			root = args[0];
+			tag = true;
 		} else {
 			root = "C:\\GitHub\\paftp\\DBTools\\results";
 		}
 		
 		ResultParser rp = new ResultParser();
 		DBWriter dbw = new DBWriter();
-		Testpass testpass = rp.getTestpass(root);
-		dbw.insertTestpass(testpass, root);
+		Testpass testpass = rp.getTestpass(root, tag);
+		dbw.insertTestpass(testpass, root, tag);
 		
 	}
 
