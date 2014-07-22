@@ -83,12 +83,18 @@ public class DBWriter {
 			String testsuite_name = testsuite_result.getSuitename();
 			resultset = this.execute("select * from Testsuite where name = '"
 					+ testsuite_name + "';");
-			String testsuite_status = this.getResult(resultset, "status");
+			
 			String testsuite_id = null;
-			if (resultset.next() && testsuite_status.equals("discard") == false){
+			String testsuite_status = null;
+			if (resultset.next()){
 				testsuite_id = resultset.getString(1);
-			}else{
-				System.out.println("The testsuite is not exist or abanded:" + testsuite_name);
+				testsuite_status = this.getResult(resultset, "status");
+				if (testsuite_status != null && testsuite_status.equals("discard") == true){
+					System.out.println("The testsuite is abanded:" + testsuite_name);
+					continue;
+				}
+			} else {
+				System.out.println("The testsuite is not exist: " + testsuite_name);
 				continue;
 			}
 //			String checksql = "select * from testsuiteresult where suitename = '" + testsuite_name + "' and testpass_id = '" + testpass_id + "'";
