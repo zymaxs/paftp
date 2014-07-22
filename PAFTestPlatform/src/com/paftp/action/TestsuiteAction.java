@@ -236,7 +236,7 @@ public class TestsuiteAction extends ActionSupport {
 		testsuite.setChangetag(temp_changetag);
 		testsuiteService.updateTestsuite(testsuite);
 
-		if (this.getIsdiscard().equals("已废弃")) {
+		if (this.getIsdiscard().equals("discard")) {
 			this.updateTestcaseSpecial(testsuite, "0", sourceName, targetName);
 		}
 
@@ -270,8 +270,8 @@ public class TestsuiteAction extends ActionSupport {
 					this.getTestsuite_name(), sut.getId());
 			if (testsuite != null) {
 
-				if (testsuite.getStatus().equals("已废弃")) {
-					testsuite.setStatus("正在使用");
+				if (testsuite.getStatus().equals("discard")) {
+					testsuite.setStatus("using");
 					testsuiteService.updateTestsuite(testsuite);
 				}
 
