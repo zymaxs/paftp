@@ -16,12 +16,9 @@ import com.paftp.dto.AnalyseCommentHistoryDto;
 import com.paftp.entity.AnalyseCommentHistory;
 import com.paftp.entity.Sut;
 import com.paftp.entity.TestcaseResult;
-import com.paftp.entity.TestcaseResultContent;
-import com.paftp.entity.TestsuiteResult;
 import com.paftp.entity.User;
 import com.paftp.service.AnalyseCommentHistory.AnalyseCommentHistoryService;
 import com.paftp.service.TestcassResult.TestcaseResultService;
-import com.paftp.service.TestsuiteResult.TestsuiteResultService;
 import com.paftp.service.user.UserService;
 import com.paftp.util.Util;
 
@@ -58,11 +55,13 @@ public class TestcaseresultAction extends ActionSupport {
 		if (this.getTestcaseresult_id() != null) {
 			
 			TestcaseResult testcaseresult = testcaseresultService.findTestcaseResultById(this.getTestcaseresult_id());
+			Sut sut = testcaseresult.getTestsuite_result().getTestpass().getSut();
 			List<AnalyseCommentHistory> analysecomment_histories = analysecommenthistoryService.findAllListByTime(testcaseresult.getId());
 			
-			Sut sut = testcaseresult.getTestsuite_result().getTestsuite().getSut();
+			request.setAttribute("ispass", testcaseresult.getIspass());
+			
 			user = util.getSessionUser();
-			if (util.isRoleOfSut(user, sut) == false){
+			if (user == null || util.isRoleOfSut(user, sut) == false){
 				request.setAttribute("isCurrentRole", false);
 			} else {
 				request.setAttribute("isCurrentRole", true);
@@ -107,26 +106,34 @@ public class TestcaseresultAction extends ActionSupport {
 			
 			AnalyseCommentHistory history_model = new AnalyseCommentHistory();
 			if (history_models != null && history_models.size() > 0) {
-				if (this.getStatus() != null && this.getStatus().equals(history_models.get(0).getOldstatus()) == false){
+				if (this.getStatus() != null && this.getStatus().equals(history_models.get(0).getNewstatus()) == false){
 					history_model.setOldstatus(history_models.get(0).getNewstatus());
 					history_model.setNewstatus(this.getStatus());
 					tag = true;
+				} else {
+					history_model.setNewstatus(history_models.get(0).getNewstatus());
 				}
-				if (this.getComment() != null && this.getComment().equals(history_models.get(0).getOldcomment()) == false){
+				if (this.getComment() != null && this.getComment().equals(history_models.get(0).getNewcomment()) == false){
 					history_model.setOldcomment(history_models.get(0).getNewcomment());
 					history_model.setNewcomment(this.getComment());
 					tag = true;
+				} else {
+					history_model.setNewcomment(history_models.get(0).getNewcomment());
 				}
 			} else {
 				if (this.getStatus() != null){	
 					history_model.setOldstatus("未处理");
 					history_model.setNewstatus(this.getStatus());
 					tag = true;
+				} else {
+					history_model.setNewstatus("未处理");
 				}
 				if (this.getComment() != null){
-					history_model.setOldcomment("");
+					history_model.setOldcomment("此结果还没有评价！");
 					history_model.setNewcomment(this.getComment());
 					tag = true;
+				} else {
+					history_model.setNewcomment("此结果还没有评价！");
 				}
 			}
 			

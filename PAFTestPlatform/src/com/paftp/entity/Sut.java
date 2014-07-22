@@ -9,11 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -30,8 +28,6 @@ public class Sut {
 	private List<Role> role_results;
 	private List<Testpass> testpasses;
 	private List<Testsuite> testsuites;
-//	private List<Testpass> testpass_results;
-//	private List<StressResult> stress_results;
 	
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
