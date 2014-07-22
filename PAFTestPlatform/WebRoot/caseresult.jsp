@@ -60,7 +60,8 @@ else { isCurrentRole = "n";};
 	TEXT-DECORATION: none
 }
 </style>
-<script type="text/javascript">
+<script type="text/javascript"> 
+	
 	function loginac() {
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
@@ -73,6 +74,7 @@ else { isCurrentRole = "n";};
 		<%
 		String caseresult = "";
 		String rowtype = "";
+		String rowvalue = "";
 		for (int i=0 ; i < testcaseresult_contents.size(); i++){
 			if ( testcaseresult_contents.get(i).getResult() == null){
 				rowtype = "";
@@ -82,10 +84,14 @@ else { isCurrentRole = "n";};
 				}
 			else {rowtype = "style='background-color:#00ff00;font-weight:bloder;'";}
 			
+			rowvalue = testcaseresult_contents.get(i).getValue();
+			rowvalue = rowvalue.replaceAll(/</g,"&lt;");
+			rowvalue = rowvalue.replaceAll(/>/g,"&gt;");
+			
 			//TODO
 			caseresult += "<tr>";
 			caseresult += "<td width='100px'>" + testcaseresult_contents.get(i).getStatus() + "</td>";
-			caseresult += "<td "+rowtype+">" + testcaseresult_contents.get(i).getValue() + "</td>";
+			caseresult += "<td "+rowtype+">" + rowvalue + "</td>";
 			caseresult += "</tr>";
 			}
 		%>

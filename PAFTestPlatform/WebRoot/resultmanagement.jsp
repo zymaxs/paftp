@@ -288,7 +288,7 @@ $(document).ready(function(){
   </ul>
   <!--主体-->
   <div id="sutgrouptab">
-  <h2>用例管理</h2>
+  <h2>结果管理</h2>
   </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
