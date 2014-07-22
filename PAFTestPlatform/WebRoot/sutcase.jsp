@@ -281,16 +281,9 @@ function demo_create() {
  
  // 创建TestSuite
   function newTestSuiteac(){
-	  var isdiscard_value;
-	  isdiacard_radio = document.getElementsByName('isdiscard');
-	  for(i=0;i<isdiacard_radio.length;i++){  
-	  	if(isdiacard_radio[i].checked){
-	    	isdiscard_value = isdiacard_radio[i].value;
-	  	}
-	  };
 	  var testsuite_name;
 	  testsuite_name = "Ts_" + $("#testsuite_name").val();
-	  var tsparams = {testsuite_name:testsuite_name,sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:"正在使用",version:$("#version").val()};
+	  var tsparams = {testsuite_name:testsuite_name,sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:"using",version:$("#version").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestsuite.action",
@@ -615,7 +608,13 @@ function testtest(){
 					else {
 				 document.getElementById('showtestsuite_id').value = root.testsuitedto.id;
 				 document.getElementById('showtestsuite_description').value = root.testsuitedto.description;
-				 document.getElementById('showisdiscard').value = root.testsuitedto.status;
+				 if (root.testsuitedto.status == "using"){
+					 document.getElementById('showisdiscard').value = "正在使用";
+					 }
+					 else if (root.testsuitedto.status == "discard"){
+						 document.getElementById('showisdiscard').value = "废弃";
+						 }
+
 				 document.getElementById('showtestsuite_changetag').value = root.changetag;
 				 var obj_status = document.getElementsByName('updateisdiscard');
 				  for (i=0 ; i < obj_status.length ; i++){
@@ -1624,9 +1623,9 @@ $('#jstree').jstree('select_node', 'j1_1');
             <tr>
               <td align="right" width="100px">状态  :&nbsp;&nbsp;</td>
               <td id="showisdiscardtd" style="display:block"><input id="showisdiscard" value="" class="form-control input-sm" style="width:200px" readonly></td>
-              <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="正在使用" checked>
+              <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="using" checked>
                 正在使用&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateisdiscard" value="已废弃">
+                <input type="radio" name="updateisdiscard" value="discard">
                 已废弃&nbsp;&nbsp;&nbsp;&nbsp; </td>
             </tr>
             <tr>
