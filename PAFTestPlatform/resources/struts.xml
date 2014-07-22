@@ -290,17 +290,17 @@
 			<result name="success">/result.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="getSpecialTestpassContent" method="getSpecialTestpassContent"
+		<action name="getSpecialTestpassContent" method="querySpecialTestpassContent"
 			class="com.paftp.action.TestpassAction">
 			<result name="success">/tsresult.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="getSpecialTestsuiteResultContent" method="getSpecialTestsuiteResultContent"
+		<action name="getSpecialTestsuiteResultContent" method="querySpecialTestsuiteResultContent"
 			class="com.paftp.action.TestpassAction">
 			<result name="success">/tsdetail.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
-		<action name="getSpecialTestcaseResultContent" method="getSpecialTestcaseResultContent"
+		<action name="getSpecialTestcaseResultContent" method="querySpecialTestcaseResultContent"
 			class="com.paftp.action.TestpassAction">
 			<result name="success">/caseresult.jsp</result>
 			<result name="error">/error.jsp</result>

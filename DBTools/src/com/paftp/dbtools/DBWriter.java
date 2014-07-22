@@ -83,11 +83,18 @@ public class DBWriter {
 			String testsuite_name = testsuite_result.getSuitename();
 			resultset = this.execute("select * from Testsuite where name = '"
 					+ testsuite_name + "';");
+			
 			String testsuite_id = null;
+			String testsuite_status = null;
 			if (resultset.next()){
 				testsuite_id = resultset.getString(1);
-			}else{
-				System.out.println("The testsuite is not exist:" + testsuite_name);
+				testsuite_status = this.getResult(resultset, "status");
+				if (testsuite_status != null && testsuite_status.equals("discard") == true){
+					System.out.println("The testsuite is abanded:" + testsuite_name);
+					continue;
+				}
+			} else {
+				System.out.println("The testsuite is not exist: " + testsuite_name);
 				continue;
 			}
 //			String checksql = "select * from testsuiteresult where suitename = '" + testsuite_name + "' and testpass_id = '" + testpass_id + "'";
@@ -168,6 +175,7 @@ public class DBWriter {
 						st_testcaseresult_content.executeUpdate();
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
+						System.out.println("TestcaseContent long value is : " + casename );
 						e1.printStackTrace();
 					}
 				
