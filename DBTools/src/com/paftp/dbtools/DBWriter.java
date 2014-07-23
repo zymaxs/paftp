@@ -37,7 +37,7 @@ public class DBWriter {
 		if (resultset != null) {
 			sut_id = this.getResult(resultset, "id");
 		} else {
-			System.out.println("The Sut is not exist:" + sut_name);
+			System.out.print("The Sut is not exist:" + sut_name + "\n");
 			return;
 		}
 		String version_num = testpass.getVersion_name();
@@ -47,7 +47,7 @@ public class DBWriter {
 			if (resultset.next()) {
 				version_id = resultset.getString(1);
 			} else {
-				System.out.println("The Version is not exist:" + version_num);
+				System.out.print("The Version is not exist:" + version_num + "\n");
 				return;
 			}
 		
@@ -90,11 +90,11 @@ public class DBWriter {
 				testsuite_id = resultset.getString(1);
 				testsuite_status = this.getResult(resultset, "status");
 				if (testsuite_status != null && testsuite_status.equals("discard") == true){
-					System.out.println("The testsuite is abanded:" + testsuite_name);
+					System.out.print("The testsuite is abanded:" + testsuite_name  + "\n");
 					continue;
 				}
 			} else {
-				System.out.println("The testsuite is not exist: " + testsuite_name);
+				System.out.print("The testsuite is not exist: " + testsuite_name + "\n");
 				continue;
 			}
 //			String checksql = "select * from testsuiteresult where suitename = '" + testsuite_name + "' and testpass_id = '" + testpass_id + "'";
@@ -131,7 +131,7 @@ public class DBWriter {
 				if (resultset.next()){
 					testcase_id = resultset.getString(1);
 				}else{
-					System.out.println("The testcase is not exist:" + testcase_name);
+					System.out.print("The testcase is not exist:" + testcase_name + "\n");
 					continue;
 				}
 //				checksql = "select * from testcaseresult where casename = '" + testcase_name + "' and testsuiteresult_id = '" + testsuiteresult_id + "'";
@@ -175,7 +175,7 @@ public class DBWriter {
 						st_testcaseresult_content.executeUpdate();
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
-						System.out.println("TestcaseContent long value is : " + casename );
+						System.out.print("TestcaseContent long value is : " + casename + "\n");
 						e1.printStackTrace();
 					}
 				
@@ -190,7 +190,7 @@ public class DBWriter {
 		try {
 			Class.forName(driverName);
 			dbConn = DriverManager.getConnection(dbUrl, userName, userPwd);
-			System.out.println("Connection Successful!");
+			System.out.print("Connection Successful!" + "\n");
 		} catch (Exception e) {
 			// e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -227,7 +227,6 @@ public class DBWriter {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.print("\t");
 			}
 
 		} catch (SQLException e) {
