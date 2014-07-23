@@ -405,7 +405,7 @@ public class TestpassAction extends ActionSupport {
 					+ testcaseresultfail_quantity;
 			Float percentage = (float) testcaseresultpass_quantity
 					/ (float) total;
-			Float percentage_foursets = (float) (Math.round(percentage * 10000)) / 10000;
+			Float percentage_foursets = (float) ((Math.round(percentage * 10000)) / 10000.0);
 
 			TestpassDto testpassDto = testpassService.getTestpassDto(
 					testpasses.get(i), testcaseresultpass_quantity,
