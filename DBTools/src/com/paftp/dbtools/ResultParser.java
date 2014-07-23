@@ -30,10 +30,10 @@ public class ResultParser {
 		File[] files;
 		if (tag){
 			p = this.getProperties(path + "/testpass.properties");
-			files = this.getFiles(path + "/result/");
+			files = this.getFiles(path + "/Results/");
 		}else{
 			p = this.getProperties(path + "\\testpass.properties");
-			files = this.getFiles(path + "\\result\\");
+			files = this.getFiles(path + "\\Results\\");
 		}
 		testpass.setSut_name(p.getProperty("sut"));
 		testpass.setVersion_name(p.getProperty("version"));
@@ -44,10 +44,10 @@ public class ResultParser {
 			TestsuiteResult testsuite_result;
 			if(tag){
 				testsuite_result = this.getTestsuiteResult(path
-						+ "/result/" + files[i].getName());
+						+ "/Results/" + files[i].getName());
 			}else{
 				testsuite_result = this.getTestsuiteResult(path
-					+ "\\result\\" + files[i].getName());
+					+ "\\Results\\" + files[i].getName());
 			}
 			testsuite_results.add(testsuite_result);
 		}
