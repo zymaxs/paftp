@@ -169,10 +169,10 @@ function inidata(){
 							  }
 						  
 						  if ( value.tag == null){
-							  $("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
+							  $("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
 							  }
 						  else{
-							  $("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
+							  $("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
 							  }
 						  
 					  })
@@ -222,10 +222,10 @@ function inidata(){
 									}
 								
 								if ( value.tag == null){
-									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
 									}
 								else{
-									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
 									}
 								
 							})
@@ -273,10 +273,10 @@ function inidata(){
 									}
 								
 								if ( value.tag == null){
-									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
 									}
 								else{
-									$("#resultFormTab").append("<tr "+ rowtype +"><td>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
 									}
 								
 							})

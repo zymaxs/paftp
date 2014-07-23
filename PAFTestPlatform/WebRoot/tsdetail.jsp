@@ -45,6 +45,38 @@ List<TestcaseResult> testcase_results = (List<TestcaseResult>)request.getAttribu
 	COLOR: #ffffff;
 	TEXT-DECORATION: none
 }
+.redlink A:link {
+	COLOR: #00ff00;
+	TEXT-DECORATION: none
+}
+.redlink A:visited {
+	COLOR: #00ff00;
+	TEXT-DECORATION: none
+}
+.redlink A:hover {
+	COLOR: #00ff00;
+	TEXT-DECORATION: none
+}
+.redlink A:active {
+	COLOR: #00ff00;
+	TEXT-DECORATION: none
+}
+.greenlink A:link {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.greenlink A:visited {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.greenlink A:hover {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.greenlink A:active {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
 </style>
 <script type="text/javascript">
 	function loginac() {
@@ -55,14 +87,24 @@ List<TestcaseResult> testcase_results = (List<TestcaseResult>)request.getAttribu
 	function inidata(){
 		<%
 		String caseinfo = "";
-		String redtype = "style='background-color:#ff0000;font-weight:bloder;'";
-		String greentype = "style='background-color:#00ff00;font-weight:bloder;'";
+		String Ispass = "";
+		String redtype = "color:#ff0000;style='font-weight:bloder;'";
+		String greentype = "color:#00ff00;style='font-weight:bloder;'";
 		for (int i=0 ; i < testcase_results.size(); i++){
+			if (String.valueOf(testcase_results.get(i).getIspass()) == "true"){
+				Ispass = "成功";
+				}
+				else {
+					Ispass = "失败";
+					}
+			
+			
+			
 			caseinfo += "<tr>";
 			if (String.valueOf(testcase_results.get(i).getIspass()) == "true"){
-			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+greentype+"><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + testcase_results.get(i).getIspass() + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";}
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td class='redlink'><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + Ispass + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";}
 			else {
-			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td "+redtype+"><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + testcase_results.get(i).getIspass() + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td class='greenlink'><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + Ispass + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";
 				}
 			caseinfo += "</tr>";}
 		%>

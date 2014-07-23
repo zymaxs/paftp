@@ -281,16 +281,9 @@ function demo_create() {
  
  // 创建TestSuite
   function newTestSuiteac(){
-	  var isdiscard_value;
-	  isdiacard_radio = document.getElementsByName('isdiscard');
-	  for(i=0;i<isdiacard_radio.length;i++){  
-	  	if(isdiacard_radio[i].checked){
-	    	isdiscard_value = isdiacard_radio[i].value;
-	  	}
-	  };
 	  var testsuite_name;
 	  testsuite_name = "Ts_" + $("#testsuite_name").val();
-	  var tsparams = {testsuite_name:testsuite_name,sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:"正在使用",version:$("#version").val()};
+	  var tsparams = {testsuite_name:testsuite_name,sut_name:$("#sut_name").val(),testsuite_description:$("#testsuite_description").val(),isdiscard:"using",version:$("#version").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestsuite.action",
@@ -615,7 +608,13 @@ function testtest(){
 					else {
 				 document.getElementById('showtestsuite_id').value = root.testsuitedto.id;
 				 document.getElementById('showtestsuite_description').value = root.testsuitedto.description;
-				 document.getElementById('showisdiscard').value = root.testsuitedto.status;
+				 if (root.testsuitedto.status == "using"){
+					 document.getElementById('showisdiscard').value = "正在使用";
+					 }
+					 else if (root.testsuitedto.status == "discard"){
+						 document.getElementById('showisdiscard').value = "废弃";
+						 }
+
 				 document.getElementById('showtestsuite_changetag').value = root.changetag;
 				 var obj_status = document.getElementsByName('updateisdiscard');
 				  for (i=0 ; i < obj_status.length ; i++){
@@ -812,7 +811,7 @@ function testtest(){
 				  for (i=0 ; i< historylength ;i++){
 					  caseChangeHistory += "<p><a href='#casechange"+ i +"' data-toggle='collapse'>" + root.testcasedto.caseChangeHistorys[i].update_time +"</a>&nbsp;&nbsp;By&nbsp;&nbsp;<a href='getuserinfo.action?userid="+ root.testcasedto.caseChangeHistorys[i].updator.id+"'>"+root.testcasedto.caseChangeHistorys[i].updator.displayName+"</a></p>";
 				 	  caseChangeHistory += "<div id='casechange"+ i +"' class='collapse'>";
-					  caseChangeHistory += "<table class='table table-striped'><tr><td>修改项</td><td>修改前</td><td>修改后</td></tr>"
+					  caseChangeHistory += "<table class='table table-striped'><tr><td>修改项</td><td>修改前</td><td>修改后</td></tr>";
 					  var operationlength = root.testcasedto.caseChangeHistorys[i].caseChangeOperations.length;
 					  for (j=0 ; j< operationlength ; j++){
 						  var oldValue = root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].oldValue;
@@ -821,7 +820,6 @@ function testtest(){
 							  caseChangeHistory += "<tr><td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].field + "</td>";
 							  caseChangeHistory += "<td><a href='#' title='"+oldValue+"'>"+oldValue.substring(0,3)+"...</a></td>";
 							  caseChangeHistory += "<td><a href='#' title='"+newValue+"'>"+newValue.substring(0,3)+"...</a></td></tr>";
-							  
 							  }
 						  else{
 							caseChangeHistory += "<tr><td>" + root.testcasedto.caseChangeHistorys[i].caseChangeOperations[j].field + "</td>";
@@ -1625,9 +1623,9 @@ $('#jstree').jstree('select_node', 'j1_1');
             <tr>
               <td align="right" width="100px">状态  :&nbsp;&nbsp;</td>
               <td id="showisdiscardtd" style="display:block"><input id="showisdiscard" value="" class="form-control input-sm" style="width:200px" readonly></td>
-              <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="正在使用" checked>
+              <td id="showisdiscardoption" style="display:none"><input type="radio" name="updateisdiscard" value="using" checked>
                 正在使用&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="updateisdiscard" value="已废弃">
+                <input type="radio" name="updateisdiscard" value="discard">
                 已废弃&nbsp;&nbsp;&nbsp;&nbsp; </td>
             </tr>
             <tr>
@@ -1718,11 +1716,11 @@ $('#jstree').jstree('select_node', 'j1_1');
             </tr>
             <tr>
               <td>描述</td>
-              <td colspan="3"><textarea  rows="4" name="showcasedescription" class="form-control" id="showcasedescription" style="max-height:50px; max-width:400px; width:400px; height:50px;" readonly></textarea></td>
+              <td colspan="3"><textarea  rows="4" name="showcasedescription" class="form-control" id="showcasedescription" style="max-height:50px; max-width:550px; width:5500px; height:50px;" readonly></textarea></td>
             </tr>
             <tr>
               <td>步骤</td>
-              <td colspan="3"><textarea  rows="4" name="showcasesteps"  class="form-control" id="showcasesteps" style="max-height:150px; max-width:400px; width:400px; height:150px;"  readonly></textarea></td>
+              <td colspan="3"><textarea  rows="4" name="showcasesteps"  class="form-control" id="showcasesteps" style="max-height:150px; max-width:550px; width:550px; height:150px;"  readonly></textarea></td>
             </tr>
             <tr align="left">
               <td colspan="4" id="upTestCaseTd" style="display:" align="center"><button type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center"  onClick="updateTestCaseac()" id="upTestCase" name="upTestCase" >更新</button></td>
