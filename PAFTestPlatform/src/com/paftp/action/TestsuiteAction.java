@@ -100,6 +100,7 @@ public class TestsuiteAction extends ActionSupport {
 	private String prompt;
 	private String isSelf;
 	private String changetag;
+	private Integer testcase_execount;
 
 	private Testcase testcase;
 	private Testsuite testsuite;
@@ -345,6 +346,8 @@ public class TestsuiteAction extends ActionSupport {
 					} else {
 						this.setIsSelf("false");
 					}
+					
+					this.setTestcase_execount(testcase.getTestcase_results().size());
 				} else {
 					this.setPrompt("The testcase " + this.getTestcase_name()
 							+ " is not exist!");
@@ -1299,6 +1302,14 @@ public class TestsuiteAction extends ActionSupport {
 
 	public void setChangetag(String changetag) {
 		this.changetag = changetag;
+	}
+
+	public Integer getTestcase_execount() {
+		return testcase_execount;
+	}
+
+	public void setTestcase_execount(Integer testcase_execount) {
+		this.testcase_execount = testcase_execount;
 	}
 
 }
