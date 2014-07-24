@@ -98,13 +98,17 @@ List<TestcaseResult> testcase_results = (List<TestcaseResult>)request.getAttribu
 					Ispass = "失败";
 					}
 			
-			
+		String Description = testcase_results.get(i).getTestcase().getDescription();
+		Description = Description.replaceAll("<", "&lt;");
+			Description = Description.replaceAll(">", "&gt;");
+			Description = Description.replaceAll("\"", "&#34;");
+			Description = Description.replaceAll("\n","");
 			
 			caseinfo += "<tr>";
 			if (String.valueOf(testcase_results.get(i).getIspass()) == "true"){
-			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td class='redlink'><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + Ispass + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";}
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td class='redlink'><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + Ispass + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + Description + "</td>";}
 			else {
-			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td class='greenlink'><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + Ispass + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + testcase_results.get(i).getTestcase().getDescription() + "</td>";
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td class='greenlink'><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + Ispass + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" +Description + "</td>";
 				}
 			caseinfo += "</tr>";}
 		%>

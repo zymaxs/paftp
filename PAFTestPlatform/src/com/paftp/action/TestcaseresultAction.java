@@ -52,6 +52,12 @@ public class TestcaseresultAction extends ActionSupport {
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
+		user = util.getSessionUser();
+		if (user == null){
+			request.setAttribute("error", "Please log in firstly!");
+			return "error";
+		}
+		
 		if (this.getTestcaseresult_id() != null) {
 			
 			TestcaseResult testcaseresult = testcaseresultService.findTestcaseResultById(this.getTestcaseresult_id());
@@ -60,7 +66,6 @@ public class TestcaseresultAction extends ActionSupport {
 			
 			request.setAttribute("ispass", testcaseresult.getIspass());
 			
-			user = util.getSessionUser();
 			if (user == null || util.isRoleOfSut(user, sut) == false){
 				request.setAttribute("isCurrentRole", false);
 			} else {
