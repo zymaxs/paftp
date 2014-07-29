@@ -284,6 +284,8 @@ public class TestsuiteAction extends ActionSupport {
 				testcase.setStatus(this.getStatus());
 				testcase.setTestcase_approval(this.getTestcase_approval());
 				testcase.setApproval_comments(this.getApproval_comments());
+				Version version = versionService.findVersionByVersionNum(this.getVersion());
+				testcase.setVersion(version);
 				testcase.setCasetype(this.getCasetype());
 				this.setCasesteps(util.full2HalfChange(this.getCasesteps()));
 				testcase.setCasesteps(this.getCasesteps());
@@ -503,6 +505,17 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 
+		if (testcase.getVersion().getVersionNum().equals(this.getVersion()) == false) {
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getVersion().getVersionNum());
+			casechangeoperation.setNewValue(this.getVersion());
+			casechangeoperation.setField("用例版本");
+			casechangeoperations.add(casechangeoperation);
+			testcase.setCasetype(this.getVersion());
+			i++;
+		}
+		
 		this.setCasesteps(util.full2HalfChange(this.getCasesteps()));
 		if (testcase.getCasesteps().equals(this.getCasesteps()) == false) {
 			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
@@ -582,11 +595,11 @@ public class TestsuiteAction extends ActionSupport {
 		Sut sut = sutService.findSutByName(this.getSut_name());
 		
 		List<Testsuite> testsuites = null;
-		if (this.getVersion() != null){
-			testsuites = testsuiteService.findTestsuiteByVersionAndSutid(this.getVersion(), sut.getId());
-		} else {
+//		if (this.getVersion() != null){
+//			testsuites = testsuiteService.findTestsuiteByVersionAndSutid(this.getVersion(), sut.getId());
+//		} else {
 			testsuites = sut.getTestsuites();
-		}
+//		}
 		
 		Integer testcasenum = 0;
 
@@ -595,6 +608,7 @@ public class TestsuiteAction extends ActionSupport {
 			Testsuite testsuite = testsuites.get(i);
 			TestcaseProject testcaseproject = testcaseProjectService
 					.findTestcaseProjectByName(this.getProject_name());
+			Version version = versionService.findVersionByVersionNum(this.getVersion());
 
 			HashMap<String, Object> conditions = new HashMap<String, Object>();
 			conditions.put("status", this.getStatus());
@@ -605,6 +619,9 @@ public class TestsuiteAction extends ActionSupport {
 				conditions.put("testcaseproject.id", testcaseproject.getId());
 			}
 			conditions.put("testsuite.id", testsuite.getId());
+			if (version != null){
+			conditions.put("version.versionNum", version.getVersionNum());
+			}
 			List<Testcase> testcases = testcaseService
 					.findAllCaseByMultiConditions(conditions);
 			

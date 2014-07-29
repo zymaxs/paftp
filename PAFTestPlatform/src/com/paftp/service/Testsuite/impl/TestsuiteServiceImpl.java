@@ -110,6 +110,10 @@ public TestcaseDto getTestcaseDto(Testcase testcase, List<CaseChangeHistory> cas
 	testcasedto.setTestcase_approval(testcase.getTestcase_approval());
 	testcasedto.setApproval_comments(testcase.getApproval_comments());
 	
+	Version testcasedto_version = new Version();
+	testcasedto_version.setVersionNum(testcase.getVersion().getVersionNum());
+	testcasedto.setVersion(testcasedto_version);
+	
 	TestcaseProject testcaseproject = new TestcaseProject();
 	if(testcase.getTestcaseproject() != null){
 		testcaseproject.setName(testcase.getTestcaseproject().getName());

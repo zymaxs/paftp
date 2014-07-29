@@ -10,6 +10,7 @@ CREATE TABLE `Testcase` (
     `description` varchar(512) DEFAULT NULL,
     `changetag` int(11) not null,
     `creator_id` int(11) DEFAULT NULL,
+    `version_id` int(11) DEFAULT NULL,
     `create_time` datetime DEFAULT NULL,
 	`casetype` varchar(10) DEFAULT NULL,
     `casesteps` varchar(3072) DEFAULT NULL,
@@ -26,6 +27,10 @@ CREATE TABLE `Testcase` (
     FOREIGN KEY (project_id)
         REFERENCES TestcaseProject (id)
         ON DELETE no action,
+    INDEX version_ind (version_id),
+    FOREIGN KEY (version_id)
+    	REFERENCES Version (id)
+    	ON DELETE cascade,
         PRIMARY KEY (`id`)
 )  ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 

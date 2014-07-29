@@ -9,6 +9,7 @@ import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.TestcaseStep;
 import com.paftp.entity.Testsuite;
 import com.paftp.entity.User;
+import com.paftp.entity.Version;
 
 public class TestcaseDto {
 
@@ -21,6 +22,7 @@ public class TestcaseDto {
 	private Date createTime;
 	private String casesteps;
 	private String casetype;
+	private Version version;
 	private String testcase_approval;
 	private String approval_comments;
 	private TestcaseProject testcaseproject;
@@ -159,6 +161,14 @@ public class TestcaseDto {
 
 	public void setApproval_comments(String approval_comments) {
 		this.approval_comments = approval_comments;
+	}
+
+	public Version getVersion() {
+		return version;
+	}
+
+	public void setVersion(Version version) {
+		this.version = version;
 	}
 
 }

@@ -29,6 +29,7 @@ public class Testcase {
 	private String status;
 	private String priority;
 	private User creator;
+	private Version version;
 	private Date createTime;
 	private String casesteps;
 	private String casetype;
@@ -203,6 +204,16 @@ public class Testcase {
 
 	public void setChangetag(Integer changetag) {
 		this.changetag = changetag;
+	}
+
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@JoinColumn(name = "version_id")
+	public Version getVersion() {
+		return version;
+	}
+
+	public void setVersion(Version version) {
+		this.version = version;
 	}
 
 }
