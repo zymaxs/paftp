@@ -19,6 +19,8 @@ public interface TestsuiteService {
 	public Testsuite findTestsuiteById(int id);
 	
 	public Testsuite findTestsuiteByNameAndSutid(String name, Integer id);
+	
+	public List<Testsuite> findTestsuiteByVersionAndSutid(String version_num, Integer id);
 
 	public void deleteTestsuite(Testsuite testsuite);
 

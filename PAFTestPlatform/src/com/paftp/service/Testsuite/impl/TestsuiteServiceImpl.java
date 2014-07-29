@@ -64,6 +64,13 @@ public class TestsuiteServiceImpl implements TestsuiteService {
 	}
 
 	@Override
+	public List<Testsuite> findTestsuiteByVersionAndSutid(String version_num, Integer id) {
+		// TODO Auto-generated method stub
+		return baseDAO.find(" from Testsuite u where version.versionNum = ? and sut.id = ?",
+				new Object[] { version_num, id });
+	}
+	
+	@Override
 	public List<Testsuite> findAllSuiteByMultiConditions(
 			HashMap<String, Object> conditions) {
 		// TODO Auto-generated method stub
@@ -144,5 +151,7 @@ public TestcaseDto getTestcaseDto(Testcase testcase, List<CaseChangeHistory> cas
 	
 	return testcasedto;
 }
+
+
 
 }

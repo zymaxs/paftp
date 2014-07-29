@@ -580,8 +580,14 @@ public class TestsuiteAction extends ActionSupport {
 		List<Testsuite> testsuite_results = new ArrayList<Testsuite>();
 		
 		Sut sut = sutService.findSutByName(this.getSut_name());
-
-		List<Testsuite> testsuites = sut.getTestsuites();
+		
+		List<Testsuite> testsuites = null;
+		if (this.getVersion() != null){
+			testsuites = testsuiteService.findTestsuiteByVersionAndSutid(this.getVersion(), sut.getId());
+		} else {
+			testsuites = sut.getTestsuites();
+		}
+		
 		Integer testcasenum = 0;
 
 		for (int i = 0; i < testsuites.size(); i++) {
