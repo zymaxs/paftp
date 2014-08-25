@@ -6,6 +6,7 @@ public class TestcaseResultDto {
 	private Boolean ispass;
 	private String description;
 	private String casename;
+	private String status;
 
 	public Integer getId() {
 		return id;
@@ -37,6 +38,14 @@ public class TestcaseResultDto {
 
 	public void setCasename(String casename) {
 		this.casename = casename;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

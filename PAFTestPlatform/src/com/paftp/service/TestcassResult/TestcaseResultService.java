@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.paftp.dto.TestcaseResultDto;
+import com.paftp.entity.AnalyseCommentHistory;
 import com.paftp.entity.TestcaseResult;
 
 public interface TestcaseResultService {
@@ -23,5 +24,5 @@ public interface TestcaseResultService {
 
 	public Integer findCountOfCaseresults(HashMap<String, Object> conditions);
 	
-	public TestcaseResultDto getTestcaseResultDto(TestcaseResult testcaseresult);
+	public TestcaseResultDto getTestcaseResultDto(TestcaseResult testcaseresult, AnalyseCommentHistory analyseCommentHistory);
 }

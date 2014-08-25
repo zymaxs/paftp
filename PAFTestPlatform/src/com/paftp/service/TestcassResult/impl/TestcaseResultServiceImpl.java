@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
 import com.paftp.dto.TestcaseResultDto;
+import com.paftp.entity.AnalyseCommentHistory;
 import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.Testsuite;
 import com.paftp.service.TestcassResult.TestcaseResultService;
@@ -95,7 +96,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 	}
 
 	@Override
-	public TestcaseResultDto getTestcaseResultDto(TestcaseResult testcaseresult) {
+	public TestcaseResultDto getTestcaseResultDto(TestcaseResult testcaseresult, AnalyseCommentHistory analyseCommentHistory) {
 		// TODO Auto-generated method stub
 		TestcaseResultDto testcaseresultDto = new TestcaseResultDto();
 		
@@ -103,6 +104,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 		testcaseresultDto.setIspass(testcaseresult.getIspass());
 		testcaseresultDto.setDescription(testcaseresult.getDescription());
 		testcaseresultDto.setCasename(testcaseresult.getCasename());
+		testcaseresultDto.setStatus(analyseCommentHistory.getNewstatus());
 		
 		return testcaseresultDto;
 	}
