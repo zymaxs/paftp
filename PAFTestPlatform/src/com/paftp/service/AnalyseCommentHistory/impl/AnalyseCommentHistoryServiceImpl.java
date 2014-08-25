@@ -69,6 +69,13 @@ public class AnalyseCommentHistoryServiceImpl implements AnalyseCommentHistorySe
 		// TODO Auto-generated method stub
 		return baseDAO.getgroup("from AnalyseCommentHistory a where testcase_result.id = ? order by a.createtime desc", new Object[] { id });
 	}
+	
+
+	@Override
+	public AnalyseCommentHistory findRecentOne(Integer testcaseresult_id) {
+		// TODO Auto-generated method stub
+		return baseDAO.get("from AnalyseCommentHistory a where testcase_result.id = ? order by a.createtime desc limit 1", new Object[] { testcaseresult_id });
+	}
 
 	@Override
 	public List<AnalyseCommentHistoryDto> getAnalyseCommentHistoriesDto(List<AnalyseCommentHistory> analysecommenthistories){
@@ -96,4 +103,5 @@ public class AnalyseCommentHistoryServiceImpl implements AnalyseCommentHistorySe
 		return analyseCommentHistoryDtoes;
 		
 	}
+
 }

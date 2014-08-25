@@ -15,6 +15,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.paftp.dto.TestcaseResultDto;
 import com.paftp.dto.TestpassDto;
 import com.paftp.dto.TestsuiteDto;
+import com.paftp.entity.AnalyseCommentHistory;
 import com.paftp.entity.Sut;
 import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.TestcaseResultContent;
@@ -23,6 +24,7 @@ import com.paftp.entity.Testsuite;
 import com.paftp.entity.TestsuiteResult;
 import com.paftp.entity.User;
 import com.paftp.entity.Version;
+import com.paftp.service.AnalyseCommentHistory.AnalyseCommentHistoryService;
 import com.paftp.service.TestcassResult.TestcaseResultService;
 import com.paftp.service.Testpass.TestpassService;
 import com.paftp.service.Testsuite.TestsuiteService;
@@ -52,6 +54,8 @@ public class TestpassAction extends ActionSupport {
 	private TestsuiteService testsuiteService;
 	@Resource
 	private TestsuiteResultService testsuiteresultService;
+	@Resource
+	private AnalyseCommentHistoryService analysecommenthistoryService;
 
 	private String sut_id;
 	private String sut_name;
@@ -297,8 +301,10 @@ public class TestpassAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 
 			if (this.getTestpass_id() != null && this.getTestpass_id().equals("") == false) {
+				
+				Testpass testpass = testpassService.findTestpassById(this.getTestpass_id());
 
-				List<TestcaseResult> testcase_results = this.getSpecialTestcaseResults(this.getTestpass_id());
+				List<TestcaseResult> testcase_results = this.getSpecialTestcaseResults(testpass);
 
 				this.setRow(10);
 				this.setPagenum("1");
@@ -319,6 +325,7 @@ public class TestpassAction extends ActionSupport {
 				
 				request.setAttribute("pages", this.pages);
 				request.setAttribute("testcaseresultdtoes", testcaserange_dtoes);
+				request.setAttribute("testpassname", testpass.getName());
 
 				return "success";
 
@@ -335,7 +342,9 @@ public class TestpassAction extends ActionSupport {
 
 			if (this.getTestpass_id() != null && this.getTestpass_id().equals("") == false) {
 
-				List<TestcaseResult> testcase_results = this.getSpecialTestcaseResults(this.getTestpass_id());
+				Testpass testpass = testpassService.findTestpassById(this.getTestpass_id());
+				
+				List<TestcaseResult> testcase_results = this.getSpecialTestcaseResults(testpass);
 
 				this.setRow(10);
 				Integer size = testcase_results.size();
@@ -391,9 +400,7 @@ public class TestpassAction extends ActionSupport {
 
 	}
 	
-	private List<TestcaseResult> getSpecialTestcaseResults(Integer testpassId){
-		
-		Testpass testpass = testpassService.findTestpassById(testpassId);
+	private List<TestcaseResult> getSpecialTestcaseResults(Testpass testpass){
 
 		List<TestcaseResult> testcaseresults_summary = new ArrayList<TestcaseResult>();
 			
@@ -419,7 +426,8 @@ public class TestpassAction extends ActionSupport {
 		List<TestcaseResultDto> testcaseresult_dtoes = new ArrayList<TestcaseResultDto>();
 		
 		while(start<end){
-			TestcaseResultDto testcaseresultDto = testcaseresultService.getTestcaseResultDto(testcaseResults.get(start));
+			AnalyseCommentHistory analyseCommentHistory = analysecommenthistoryService.findRecentOne(testcaseResults.get(start).getId());
+			TestcaseResultDto testcaseresultDto = testcaseresultService.getTestcaseResultDto(testcaseResults.get(start), analyseCommentHistory);
 			testcaseresult_dtoes.add(testcaseresultDto);
 			start++;
 		}

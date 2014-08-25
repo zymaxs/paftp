@@ -17,10 +17,11 @@ public interface AnalyseCommentHistoryService {
 
 	public List<AnalyseCommentHistory> findAllList();
 
-	List<String> findAllStatues(Integer id);
+	public List<String> findAllStatues(Integer id);
 	
-	List<AnalyseCommentHistory> findAllListByTime(Integer id);
+	public List<AnalyseCommentHistory> findAllListByTime(Integer id);
 
-	List<AnalyseCommentHistoryDto> getAnalyseCommentHistoriesDto(
-			List<AnalyseCommentHistory> analysecommenthistories);
+	public List<AnalyseCommentHistoryDto> getAnalyseCommentHistoriesDto(List<AnalyseCommentHistory> analysecommenthistories);
+
+	public AnalyseCommentHistory findRecentOne(Integer testcaseresult_id);
 }
