@@ -102,6 +102,7 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 		testcaseresultDto.setId(testcaseresult.getId());
 		testcaseresultDto.setIspass(testcaseresult.getIspass());
 		testcaseresultDto.setDescription(testcaseresult.getDescription());
+		testcaseresultDto.setCasename(testcaseresult.getCasename());
 		
 		return testcaseresultDto;
 	}

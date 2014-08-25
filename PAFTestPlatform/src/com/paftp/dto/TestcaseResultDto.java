@@ -5,6 +5,7 @@ public class TestcaseResultDto {
 	private Integer id;
 	private Boolean ispass;
 	private String description;
+	private String casename;
 
 	public Integer getId() {
 		return id;
@@ -28,6 +29,14 @@ public class TestcaseResultDto {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getCasename() {
+		return casename;
+	}
+
+	public void setCasename(String casename) {
+		this.casename = casename;
 	}
 
 }
