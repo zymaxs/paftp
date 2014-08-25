@@ -620,7 +620,7 @@ public class TestsuiteAction extends ActionSupport {
 			}
 			conditions.put("testsuite.id", testsuite.getId());
 			if (version != null){
-			conditions.put("version.versionNum", version.getVersionNum());
+				conditions.put("version.id", version.getId());
 			}
 			List<Testcase> testcases = testcaseService
 					.findAllCaseByMultiConditions(conditions);
