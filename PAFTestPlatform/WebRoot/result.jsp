@@ -70,7 +70,7 @@ function inidata(){
 		iniinsertdata +="<td>"+testpassdots.get(i).getEnv()+"</td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getVersion().getVersionNum()+"</td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getPasscount()+"</td>";
-		iniinsertdata +="<td>"+testpassdots.get(i).getFailcount()+"</td>";
+		iniinsertdata +="<td><a href='failresult.jsp?testpass_id="+testpassdots.get(i).getId()+"'>"+testpassdots.get(i).getFailcount()+"</a></td>";
 		iniinsertdata +="<td>"+testpassdots.get(i).getTotal()+"</td>";
 		iniinsertdata +="<td>"+(testpassdots.get(i).getPercentage()*100)+"%</td>";
 		if (testpassdots.get(i).getTag() == null){
@@ -169,10 +169,10 @@ function inidata(){
 							  }
 						  
 						  if ( value.tag == null){
-							  $("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
+							  $("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
 							  }
 						  else{
-							  $("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
+							  $("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
 							  }
 						  
 					  })
@@ -222,10 +222,10 @@ function inidata(){
 									}
 								
 								if ( value.tag == null){
-									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
 									}
 								else{
-									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td>"+value.failcount+"</td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
 									}
 								
 							})

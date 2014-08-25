@@ -310,6 +310,11 @@
 			<result name="success">/caseresult.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
+		<action name="queryFailedTestcases" method="queryFailedTestcases"
+			class="com.paftp.action.TestpassAction">
+			<result name="success">/failresult.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
 
 
 	</package>
