@@ -425,7 +425,7 @@ function newTestCaseac(){
 	  };
 	  var testcase_name;
 	  testcase_name = $("#pre_stname").text() + $("#testcase_name").val();
-	  var tsparams = {testcase_name:testcase_name,sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待评审",project_name:$("#project").val()};
+	  var tsparams = {testcase_name:testcase_name,sut_name:$("#casesut_name").val(),testsuite_name:$("#casetestsuite_name").val(),description:$("#description").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#casesteps").val(),testcase_approval:"待评审",project_name:$("#project").val(),version:$("#caseversion").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "createTestcase.action",
@@ -1125,7 +1125,8 @@ function queryinterfaceac(){
 	var querytype = $("#querytype").val();
 	var queryapproval = $("#queryapproval").val();
 	var queryproject = $("#queryproject").val();
-	var queryparams = {status:querystatus,priority:querypriority,casetype:querytype,testcase_approval:queryapproval,project_name:queryproject,sut_name:'<%=sut_name%>'};
+	var queryversion = $("#queryversion").val();
+	var queryparams = {status:querystatus,priority:querypriority,casetype:querytype,testcase_approval:queryapproval,project_name:queryproject,version:queryversion,sut_name:'<%=sut_name%>'};
 	$.ajax({
 			  type : "POST",
 			  url : "queryCombineConditions.action",
@@ -1541,10 +1542,11 @@ $('#jstree').jstree('select_node', 'j1_1');
       <td id="interfacesearchTd" style="display:none; width:1000px" height="467px"><table id="interfaceSearchTable" style="width:100%;" class="table table-striped">
           <tr style="text-align:center">
             <td width="20%">自动化</td>
-            <td width="20%">优先级</td>
-            <td width="20%">正/反例</td>
-            <td width="20%">用例评审</td>
-            <td width="20%">项目</td>
+            <td width="16%">优先级</td>
+            <td width="16%">正/反例</td>
+            <td width="16%">用例评审</td>
+            <td width="16%">项目</td>
+            <td width="16%">版本</td>
           </tr>
           <tr>
             <td><select id="querystatus" style="width:100%">
@@ -1553,7 +1555,7 @@ $('#jstree').jstree('select_node', 'j1_1');
                 <option value="手动">手动</option>
                 <option value="废弃">废弃</option>
               </select></td>
-            <td><select id="querypriority" style="width:100%">
+            <td><select id="querypriority" style="width:100%" >
                 <option value="All" selected>All</option>
                 <option value="P1">P1</option>
                 <option value="P2">P2</option>
@@ -1576,9 +1578,15 @@ $('#jstree').jstree('select_node', 'j1_1');
                 <option value="<%=testcaseprojects.get(i).getName()%>"><%=testcaseprojects.get(i).getName()%></option>
                 <%}%>
               </select></td>
+            <td><select id="queryversion" style="width:100%">
+                <option value="All" selected>All</option>
+                <% for (int i =0; i< versions.size();i++ ){%>
+                <option value="<%=versions.get(i).getVersionNum()%>"><%=versions.get(i).getVersionNum()%></option>
+                <%}%>
+              </select></td>
           </tr>
           <tr>
-            <td colspan="5" style="text-align:center"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="queryinterfaceac()" value="搜索"></td>
+            <td colspan="6" style="text-align:center"><input type="button" class="btn btn-primary btn-sm" style="width:80px; text-align:center" onClick="queryinterfaceac()" value="搜索"></td>
           </tr>
         </table>
         <div id="interfaceSearchResultDiv" style="text-align:center"></div></td>
@@ -1600,7 +1608,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             </tr>
             <tr>
               <td  align="right" width="100px">所属系统  :&nbsp;&nbsp;</td>
-              <td><input id="showsut_name" name="showsut_name" value="<%=sut_name%>" class="form-control input-sm" style="width:200px" readonly></td>
+              <td><input id="showsut_name" name="showsut_name" value="<%=sut_name%>"  class="form-control input-sm" style="width:200px" readonly></td>
             </tr>
             <tr>
               <td  align="right" width="100px">起始版本  :&nbsp;&nbsp;</td>
@@ -1801,6 +1809,16 @@ $('#jstree').jstree('select_node', 'j1_1');
                 <option value="<%=testcaseprojects.get(0).getName()%>" selected><%=testcaseprojects.get(0).getName()%></option>
                 <% for (int i =1; i< testcaseprojects.size();i++ ){%>
                 <option value="<%=testcaseprojects.get(i).getName()%>"><%=testcaseprojects.get(i).getName()%></option>
+                <%}%>
+              </select></td>
+        </tr>
+        <tr>
+          <td>项目</td>
+          <td>
+          <select id="caseversion"  name="caseversion" style="width:150px">
+                <option value="<%=versions.get(0).getVersionNum()%>" selected><%=versions.get(0).getVersionNum()%></option>
+                <% for (int i =1; i< versions.size();i++ ){%>
+                <option value="<%=versions.get(i).getVersionNum()%>"><%=versions.get(i).getVersionNum()%></option>
                 <%}%>
               </select></td>
         </tr>
