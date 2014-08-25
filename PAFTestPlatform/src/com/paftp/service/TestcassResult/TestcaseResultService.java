@@ -3,8 +3,8 @@ package com.paftp.service.TestcassResult;
 import java.util.HashMap;
 import java.util.List;
 
+import com.paftp.dto.TestcaseResultDto;
 import com.paftp.entity.TestcaseResult;
-import com.paftp.entity.Testsuite;
 
 public interface TestcaseResultService {
 	public void saveTestcaseResult(TestcaseResult testcaseResult);
@@ -21,5 +21,7 @@ public interface TestcaseResultService {
 	
 	public List<TestcaseResult> findAllCaseresultByMultiConditions(HashMap<String, Object> conditions);
 
-	Integer findCountOfCaseresults(HashMap<String, Object> conditions);
+	public Integer findCountOfCaseresults(HashMap<String, Object> conditions);
+	
+	public TestcaseResultDto getTestcaseResultDto(TestcaseResult testcaseresult);
 }

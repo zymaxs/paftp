@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.paftp.dao.BaseDAO;
+import com.paftp.dto.TestcaseResultDto;
 import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.Testsuite;
 import com.paftp.service.TestcassResult.TestcaseResultService;
@@ -91,6 +92,18 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 		Long i = baseDAO.count(sqlbuffer.toString());
 		return Integer.parseInt(i.toString());
 
+	}
+
+	@Override
+	public TestcaseResultDto getTestcaseResultDto(TestcaseResult testcaseresult) {
+		// TODO Auto-generated method stub
+		TestcaseResultDto testcaseresultDto = new TestcaseResultDto();
+		
+		testcaseresultDto.setId(testcaseresult.getId());
+		testcaseresultDto.setIspass(testcaseresult.getIspass());
+		testcaseresultDto.setDescription(testcaseresult.getDescription());
+		
+		return testcaseresultDto;
 	}
 
 }

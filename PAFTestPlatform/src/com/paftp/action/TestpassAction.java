@@ -12,6 +12,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.paftp.dto.TestcaseResultDto;
 import com.paftp.dto.TestpassDto;
 import com.paftp.dto.TestsuiteDto;
 import com.paftp.entity.Sut;
@@ -76,6 +77,7 @@ public class TestpassAction extends ActionSupport {
 	private String flag;
 
 	private List<TestpassDto> testpassdots = new ArrayList<TestpassDto>();
+	private List<TestcaseResultDto> testcaseresultdtoes = new ArrayList<TestcaseResultDto>();
 
 	private Util util = new Util();
 
@@ -289,6 +291,78 @@ public class TestpassAction extends ActionSupport {
 		}
 
 	}
+	
+	public String queryFailedTestcases() {
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+			if (this.getTestpass_id() != null && this.getTestpass_id().equals("") == false) {
+
+				List<TestcaseResult> testcase_results = this.getSpecialTestcaseResults(this.getTestpass_id());
+
+				this.setRow(10);
+				this.setPagenum("1");
+				Integer size = testcase_results.size();
+				if (size % 10 == 0){
+					this.pages = (long) (size/ this.getRow());
+				} else {
+					this.pages = (long) (size/ this.getRow() + 1);
+				}
+				
+				Integer start = (Integer.parseInt(this.getPagenum()) - 1) * this.getRow();
+				Integer end = (Integer.parseInt(this.getPagenum())) * this.getRow();
+				if (Integer.parseInt(this.getPagenum()) == this.pages){
+					end = size % this.getRow();
+				}
+				
+				List<TestcaseResultDto> testcaserange_dtoes = this.getSpecilRangeTestcaseResults(testcase_results, start, end);
+				
+				request.setAttribute("pages", this.pages);
+				request.setAttribute("testcaseresultdtoes", testcaserange_dtoes);
+
+				return "success";
+
+			} else {
+				request.setAttribute("error", "The testpass id is null!");
+				request.setAttribute("flag", false);
+				return "error";
+			}
+		} 
+
+	public String queryFailedTestcasesByPage() {
+
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+			if (this.getTestpass_id() != null && this.getTestpass_id().equals("") == false) {
+
+				List<TestcaseResult> testcase_results = this.getSpecialTestcaseResults(this.getTestpass_id());
+
+				this.setRow(10);
+				Integer size = testcase_results.size();
+				if (size % 10 == 0){
+					this.pages = (long) (size/ this.getRow());
+				} else {
+					this.pages = (long) (size/ this.getRow() + 1);
+				}
+				
+				Integer start = (Integer.parseInt(this.getPagenum()) - 1) * this.getRow();
+				Integer end = (Integer.parseInt(this.getPagenum())) * this.getRow();
+				if (Integer.parseInt(this.getPagenum()) == this.pages){
+					end = size % this.getRow();
+				}
+				
+				List<TestcaseResultDto> testcaserange_dtoes = this.getSpecilRangeTestcaseResults(testcase_results, start, end);
+				
+				this.setTestcaseresultdtoes(testcaserange_dtoes);
+
+				return "success";
+
+			} else {
+				request.setAttribute("error", "The testpass id is null!");
+				request.setAttribute("flag", false);
+				return "error";
+			}
+		} 
 
 	public String querySpecialTestcaseResultContent() {
 
@@ -315,6 +389,43 @@ public class TestpassAction extends ActionSupport {
 			return "error";
 		}
 
+	}
+	
+	private List<TestcaseResult> getSpecialTestcaseResults(Integer testpassId){
+		
+		Testpass testpass = testpassService.findTestpassById(testpassId);
+
+		List<TestcaseResult> testcaseresults_summary = new ArrayList<TestcaseResult>();
+			
+		List<TestsuiteResult> testsuite_results = testpass.getTestsuite_results();
+		for (int i=0; i<testsuite_results.size(); i++){
+			
+			HashMap<String, Object> conditions = new HashMap<String, Object>();
+			conditions.put("ispass", false);
+			conditions.put("testsuite.id", this.getTestsuite_id());
+			List<TestcaseResult> testcase_results = testcaseresultService.findAllCaseresultByMultiConditions(conditions);
+
+			for (int j=0; j< testcase_results.size(); j++){
+				testcaseresults_summary.add(testcase_results.get(j));
+			}
+	
+		}
+		
+		return testcaseresults_summary;
+	}
+	
+	private List<TestcaseResultDto> getSpecilRangeTestcaseResults(List<TestcaseResult> testcaseResults, Integer start, Integer end){
+		
+		List<TestcaseResultDto> testcaseresult_dtoes = new ArrayList<TestcaseResultDto>();
+		
+		while(start<end){
+			TestcaseResultDto testcaseresultDto = testcaseresultService.getTestcaseResultDto(testcaseResults.get(start));
+			testcaseresult_dtoes.add(testcaseresultDto);
+			start++;
+		}
+		
+		return testcaseresult_dtoes;
+		
 	}
 
 	private List<TestpassDto> getTestpasses(Sut sut) throws ParseException {
@@ -567,5 +678,13 @@ public class TestpassAction extends ActionSupport {
 
 	public void setTestcaseresult_id(Integer testcaseresult_id) {
 		this.testcaseresult_id = testcaseresult_id;
+	}
+
+	public List<TestcaseResultDto> getTestcaseresultdtoes() {
+		return testcaseresultdtoes;
+	}
+
+	public void setTestcaseresultdtoes(List<TestcaseResultDto> testcaseresultdtoes) {
+		this.testcaseresultdtoes = testcaseresultdtoes;
 	}
 }
