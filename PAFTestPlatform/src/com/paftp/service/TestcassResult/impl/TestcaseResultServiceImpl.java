@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.paftp.dao.BaseDAO;
 import com.paftp.dto.TestcaseResultDto;
 import com.paftp.entity.AnalyseCommentHistory;
+import com.paftp.entity.Testcase;
 import com.paftp.entity.TestcaseResult;
 import com.paftp.entity.Testsuite;
 import com.paftp.service.TestcassResult.TestcaseResultService;
@@ -104,6 +105,14 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 		testcaseresultDto.setIspass(testcaseresult.getIspass());
 		testcaseresultDto.setDescription(testcaseresult.getDescription());
 		testcaseresultDto.setCasename(testcaseresult.getCasename());
+		
+		Testcase testcase = new Testcase();
+		if(testcaseresult.getTestcase() != null){
+			testcase.setDescription(testcaseresult.getTestcase().getDescription());
+			testcase.setCasetype(testcaseresult.getTestcase().getCasetype());
+		}
+		testcaseresultDto.setTestcase(testcase);
+		
 		if (analyseCommentHistory != null){
 			testcaseresultDto.setStatus(analyseCommentHistory.getNewstatus());
 		} else {
