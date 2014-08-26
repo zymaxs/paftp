@@ -104,7 +104,11 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 		testcaseresultDto.setIspass(testcaseresult.getIspass());
 		testcaseresultDto.setDescription(testcaseresult.getDescription());
 		testcaseresultDto.setCasename(testcaseresult.getCasename());
-		testcaseresultDto.setStatus(analyseCommentHistory.getNewstatus());
+		if (analyseCommentHistory != null){
+			testcaseresultDto.setStatus(analyseCommentHistory.getNewstatus());
+		} else {
+			testcaseresultDto.setStatus("未处理");
+		}
 		
 		return testcaseresultDto;
 	}

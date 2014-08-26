@@ -74,7 +74,7 @@ public class AnalyseCommentHistoryServiceImpl implements AnalyseCommentHistorySe
 	@Override
 	public AnalyseCommentHistory findRecentOne(Integer testcaseresult_id) {
 		// TODO Auto-generated method stub
-		return baseDAO.get("from AnalyseCommentHistory a where testcase_result.id = ? order by a.createtime desc limit 1", new Object[] { testcaseresult_id });
+		return baseDAO.get("from AnalyseCommentHistory a where testcase_result.id = ? order by a.createtime desc", new Object[] { testcaseresult_id });
 	}
 
 	@Override

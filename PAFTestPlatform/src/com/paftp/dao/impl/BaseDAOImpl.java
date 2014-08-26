@@ -151,7 +151,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 			return null;
 		}
 	}
-
+	
 	public Long count(String hql) {
 		Query q = this.getCurrentSession().createQuery(hql);
 		Long quantity =(Long) q.uniqueResult();
