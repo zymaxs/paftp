@@ -314,17 +314,8 @@ public class TestpassAction extends ActionSupport {
 				} else {
 					this.pages = (long) (size/ this.getRow() + 1);
 				}
-				
-				Integer start = (Integer.parseInt(this.getPagenum()) - 1) * this.getRow();
-				Integer end = (Integer.parseInt(this.getPagenum())) * this.getRow();
-				if (Integer.parseInt(this.getPagenum()) == this.pages){
-					end = size % this.getRow();
-				}
-				
-				List<TestcaseResultDto> testcaserange_dtoes = this.getSpecilRangeTestcaseResults(testcase_results, start, end);
-				
+					
 				request.setAttribute("pages", this.pages);
-				request.setAttribute("testcaseresultdtoes", testcaserange_dtoes);
 				request.setAttribute("testpassname", testpass.getName());
 				request.setAttribute("flag", true);
 

@@ -1,5 +1,7 @@
 package com.paftp.dto;
 
+import com.paftp.entity.Testcase;
+
 public class TestcaseResultDto {
 
 	private Integer id;
@@ -7,6 +9,7 @@ public class TestcaseResultDto {
 	private String description;
 	private String casename;
 	private String status;
+	private Testcase testcase;
 
 	public Integer getId() {
 		return id;
@@ -46,6 +49,14 @@ public class TestcaseResultDto {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Testcase getTestcase() {
+		return testcase;
+	}
+
+	public void setTestcase(Testcase testcase) {
+		this.testcase = testcase;
 	}
 
 }
