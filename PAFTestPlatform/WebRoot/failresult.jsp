@@ -73,7 +73,7 @@ $(document).ready( function(){
 								Ispass = "失败";
 								}
 						
-					var Description = root.testcaseresultdtoes[i].description;
+					var Description = root.testcaseresultdtoes[i].testcase.description;
 					if (Description != null){
 					Description = Description.replace(/</g, "&lt;");
 					Description = Description.replace(/>/g, "&gt;");
@@ -86,6 +86,7 @@ $(document).ready( function(){
 					caseinfo += "<tr>";
 					caseinfo += "<td>"+ root.testcaseresultdtoes[i].casename +"</td>";
 					caseinfo += "<td class='redlink'><a href='caseresult.jsp?testcaseresult_id="+root.testcaseresultdtoes[i].id+"'>"+ Ispass +"</a></td>";
+					caseinfo += "<td>"+ root.testcaseresultdtoes[i].testcase.casetype +"</td>";
 					caseinfo += "<td>"+ Description +"</td>";
 					caseinfo += "<td>"+ root.testcaseresultdtoes[i].status +"</td>";
 					caseinfo += "</tr>";
@@ -373,6 +374,7 @@ $(document).ready( function(){
     <tr>
 		<td>case名称</td>
 		<td>结果</td>
+		<td>正例/反例</td>
 		<td>描述</td>
 		<td>状态</td>		
 	</tr>
