@@ -326,6 +326,7 @@ public class TestpassAction extends ActionSupport {
 				request.setAttribute("pages", this.pages);
 				request.setAttribute("testcaseresultdtoes", testcaserange_dtoes);
 				request.setAttribute("testpassname", testpass.getName());
+				request.setAttribute("flag", true);
 
 				return "success";
 

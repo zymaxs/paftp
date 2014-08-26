@@ -99,7 +99,7 @@ List<TestcaseResult> testcase_results = (List<TestcaseResult>)request.getAttribu
 					}
 			
 		String Description = testcase_results.get(i).getTestcase().getDescription();
-		Description = Description.replaceAll("<", "&lt;");
+			Description = Description.replaceAll("<", "&lt;");
 			Description = Description.replaceAll(">", "&gt;");
 			Description = Description.replaceAll("\"", "&#34;");
 			Description = Description.replaceAll("\n","");
