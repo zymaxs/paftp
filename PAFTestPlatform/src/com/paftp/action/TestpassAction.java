@@ -394,8 +394,7 @@ public class TestpassAction extends ActionSupport {
 			return "success";
 
 		} else {
-			request.setAttribute("error", "The testcaseresult id is null!");
-			request.setAttribute("flag", false);
+			this.setPrompt("The testcaseresult id is null!");
 			return "error";
 		}
 
