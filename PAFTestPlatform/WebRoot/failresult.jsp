@@ -56,13 +56,14 @@ $(document).ready( function(){
 		link_string : '/?page={page_number}',
 		max_page : pagentotal, 
 		paged : function(page) {
-		params = {pagenum:page};
+		params = {pagenum:page,testpass_id:testpass_id};
 		$.ajax({
 				type : "POST",
-				url : "queryTestpasses.action",
+				url : "queryFailedTestcasesByPage.action",
 				data : params,
 				dataType : "json",
 				success : function(root) {
+					alert("test");
 					
 				},
 

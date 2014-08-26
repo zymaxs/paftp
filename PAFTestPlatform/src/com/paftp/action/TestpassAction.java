@@ -409,7 +409,7 @@ public class TestpassAction extends ActionSupport {
 			
 			HashMap<String, Object> conditions = new HashMap<String, Object>();
 			conditions.put("ispass", false);
-			conditions.put("testsuite.id", this.getTestsuite_id());
+			conditions.put("testsuite_result.id", testsuite_results.get(i).getId());
 			List<TestcaseResult> testcase_results = testcaseresultService.findAllCaseresultByMultiConditions(conditions);
 
 			for (int j=0; j< testcase_results.size(); j++){
