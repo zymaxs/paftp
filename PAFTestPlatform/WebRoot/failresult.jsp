@@ -22,9 +22,11 @@ List<TestcaseResultDto> testcaserange_dtoes = (List<TestcaseResultDto>)request.g
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<link href="css/jqpagination.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jquery.jqpagination.js"></script>
 <Script language="javascript">
 function GetRequest() {
    var url = location.search; //获取url中"?"符后的字串
@@ -48,9 +50,7 @@ testpass_id = Request['testpass_id'];
 var pagentotal = <%=pagenum%>;
 
 $(document).ready( function(){
-	alert(testpass_id);
-	
-	$('.pagination').jqPagination('option', 'max_page', root.pages);
+	//alert(testpass_id);
 	
 	$('.pagination').jqPagination({
 		link_string : '/?page={page_number}',
@@ -77,7 +77,7 @@ $(document).ready( function(){
 		}
 		});
 	
-	
+	$('.pagination').jqPagination('option', 'max_page', pagentotal);
 	
 });
 
@@ -337,7 +337,14 @@ $(document).ready( function(){
     <tbody id="caseinfoTab">
     </tbody>
   </table>
-  
+  <div align="center">
+  <div class="pagination"> <a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
+			class="previous" data-action="previous">&lsaquo;</a>
+    <input
+			type="text" readonly="readonly"/>
+    <a href="#"
+			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
+			data-action="last">&raquo;</a> </div></div>
   
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
