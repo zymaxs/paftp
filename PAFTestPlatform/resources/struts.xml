@@ -88,6 +88,11 @@
 			<result type="json">
 			</result>
 		</action>
+		<action name="queryFailedTestcasesByPage" method="queryFailedTestcasesByPage"
+			class="com.paftp.action.TestpassAction">
+			<result type="json">
+			</result>
+		</action>
 	</package>
 
 	<package name="s2sh" extends="struts-default">
