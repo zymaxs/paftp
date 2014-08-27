@@ -307,9 +307,8 @@ public class TestpassAction extends ActionSupport {
 				List<TestcaseResult> testcase_results = this.getSpecialTestcaseResults(testpass);
 
 				this.setRow(10);
-				this.setPagenum("1");
 				Integer size = testcase_results.size();
-				if (size % 10 == 0){
+				if (size % this.getRow() == 0){
 					this.pages = (long) (size/ this.getRow());
 				} else {
 					this.pages = (long) (size/ this.getRow() + 1);
@@ -340,7 +339,7 @@ public class TestpassAction extends ActionSupport {
 
 				this.setRow(10);
 				Integer size = testcase_results.size();
-				if (size % 10 == 0){
+				if (size % this.getRow() == 0){
 					this.pages = (long) (size/ this.getRow());
 				} else {
 					this.pages = (long) (size/ this.getRow() + 1);
@@ -348,8 +347,8 @@ public class TestpassAction extends ActionSupport {
 				
 				Integer start = (Integer.parseInt(this.getPagenum()) - 1) * this.getRow();
 				Integer end = (Integer.parseInt(this.getPagenum())) * this.getRow();
-				if (Integer.parseInt(this.getPagenum()) == this.pages){
-					end = size % this.getRow();
+				if ((Integer.parseInt(this.getPagenum()) == this.pages) && ((size % this.getRow()) > 0) ){
+					end = size;
 				}
 				
 				List<TestcaseResultDto> testcaserange_dtoes = this.getSpecilRangeTestcaseResults(testcase_results, start, end);

@@ -63,6 +63,7 @@ $(document).ready( function(){
 				data : params,
 				dataType : "json",
 				success : function(root) {
+					$("#caseinfoTab").html("");
 					var caseinfo = "";
 					var Ispass = "";
 					for ( i=0 ; i < root.testcaseresultdtoes.length; i++){
