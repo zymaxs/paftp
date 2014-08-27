@@ -505,14 +505,15 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 
-		if (testcase.getVersion().getVersionNum().equals(this.getVersion()) == false) {
+		if (testcase.getVersion() != null && testcase.getVersion().getVersionNum().equals(this.getVersion()) == false) {
 			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getVersion().getVersionNum());
 			casechangeoperation.setNewValue(this.getVersion());
 			casechangeoperation.setField("用例版本");
 			casechangeoperations.add(casechangeoperation);
-			testcase.setCasetype(this.getVersion());
+			Version version = versionService.findVersionByVersionNum(this.getVersion());
+			testcase.setVersion(version);
 			i++;
 		}
 		
