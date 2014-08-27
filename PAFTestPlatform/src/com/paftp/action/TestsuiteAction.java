@@ -505,7 +505,7 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 
-		if (testcase.getVersion().getVersionNum().equals(this.getVersion()) == false) {
+		if (testcase.getVersion() != null && testcase.getVersion().getVersionNum().equals(this.getVersion()) == false) {
 			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
 			casechangeoperation.setOldValue(testcase.getVersion().getVersionNum());
