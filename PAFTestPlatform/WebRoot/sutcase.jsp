@@ -773,6 +773,17 @@ function testtest(){
 					  
 					  };
 				  
+				  document.getElementById('showcasestatus').value = root.testcasedto.version;
+				  var ojb_version = document.getElementsById('testcaseversion');
+				  for(var i=0; i<ojb_version.options.length; i++){  
+					    if(ojb_version.options[i].innerHTML == root.testcasedto.version){  
+					    	ojb_version.options[i].selected = true;  
+					        break;  
+					    }  
+					}  
+					  
+					  
+					  
 				  document.getElementById('showcasestatus').value = root.testcasedto.status;
 				  var obj_status = document.getElementsByName('updatestatus');
 				  for (i=0 ; i < obj_status.length ; i++){
@@ -985,6 +996,8 @@ function initype(){
 	document.getElementById('saveTestSuiteTd').style.display = "none";
 	document.getElementById('showtestcase_name').readOnly = true;
 	document.getElementById('showcaseprioritytd').style.display = "block";
+	document.getElementById('showtestcase_versiontd').style.display = "block";
+	document.getElementById('showtestcase_versionoption').style.display = "none";
 	document.getElementById('showcasepriorityoption').style.display = "none";
 	document.getElementById('showcasestatustd').style.display = "block";
 	document.getElementById('showcasestatusoption').style.display = "none";
@@ -1660,10 +1673,22 @@ $('#jstree').jstree('select_node', 'j1_1');
             </tr>
             <tr>
               <td width="90px">用例名称</td>
-              <td colspan="3"><div class="input-group"> <span class="input-group-addon" id="pre_casename"></span>
+              <td><div class="input-group"> <span class="input-group-addon" id="pre_casename"></span>
                   <input id="showtestcase_name" class="form-control input-sm" name="showtestcase_name" value="" style="width:100px" onKeyUp="quanjiao(this);" readonly>
                 </div>
                 </td>
+              <td width="90px">版本</td>
+              <td id="showtestcase_versiontd" style="display:block"><input id="showtestcase_version" value="" class="form-control input-sm" style="width:200px" readonly></td>  
+              <td id="showtestcase_versionoption" style="display:none">
+              <select id="testcaseversion"  name="testcaseversion" style="width:100px">
+                <option value="<%=versions.get(0).getVersionNum()%>" selected><%=versions.get(0).getVersionNum()%></option>
+                <% for (int i =1; i< versions.size();i++ ){%>
+                <option value="<%=versions.get(i).getVersionNum()%>"><%=versions.get(i).getVersionNum()%></option>
+                <%}%>
+              </select>
+              
+              
+              </td>
               <td rowspan="10" style="vertical-align:top"><div id="showCaseChangeHistoryDiv" style="height:430px;overflow:scroll;"> </div></td>
             </tr>
             <tr>
