@@ -475,6 +475,8 @@ function updateTestCaseac(){
 			document.getElementById('showcasestatusoption').style.display = "block";
 			document.getElementById('showcasetypetd').style.display = "none";
 			document.getElementById('showcasetypeoption').style.display = "block";
+			document.getElementById('showtestcase_versiontd').style.display = "none";
+			document.getElementById('showtestcase_versionoption').style.display = "block";
 			document.getElementById('showprojecttd').style.display = "none";
 			document.getElementById('showprojectoption').style.display = "block";
 			document.getElementById('showcasedescription').readOnly = false;
@@ -511,7 +513,7 @@ function saveTestCaseac(){
 	  var approval_value = document.getElementById('showapproval').value;
 	  var sut_name = '<%=sut_name%>';
 	  var testcase_name = $('#pre_casename').text() + $("#showtestcase_name").val();
-	  var tsparams = {testcase_name:testcase_name,sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val(),changetag:$("#showtestcase_changetag").val()};
+	  var tsparams = {testcase_name:testcase_name,sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:priority_value,status:status_value,casetype:type_value,casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val(),changetag:$("#showtestcase_changetag").val(),version:$("#testcaseversion").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "updateTestcase.action",
@@ -549,6 +551,8 @@ function saveTestCaseac(){
 			   	  document.getElementById('showcasesteps').readOnly = true;	
 				  document.getElementById('upTestCaseTd').style.display = "";
 				  document.getElementById('saveTestCaseTd').style.display = "none";
+				  document.getElementById('showtestcase_versiontd').style.display = "block";
+				  document.getElementById('showtestcase_versionoption').style.display = "none";
 					}
 			  },
 
@@ -773,12 +777,11 @@ function testtest(){
 					  
 					  };
 				  
-				  document.getElementById('showcasestatus').value = root.testcasedto.version;
-				  var ojb_version = document.getElementsById('testcaseversion');
-				  for(var i=0; i<ojb_version.options.length; i++){  
-					    if(ojb_version.options[i].innerHTML == root.testcasedto.version){  
+				  document.getElementById('showtestcase_version').value = root.testcasedto.version.versionNum;
+				  var ojb_version = document.getElementById('testcaseversion');
+				  for(i=0; i<ojb_version.options.length; i++){  
+					    if(ojb_version.options[i].innerHTML == root.testcasedto.version.versionNum){  
 					    	ojb_version.options[i].selected = true;  
-					        break;  
 					    }  
 					}  
 					  
@@ -1680,7 +1683,7 @@ $('#jstree').jstree('select_node', 'j1_1');
               <td width="90px">版本</td>
               <td id="showtestcase_versiontd" style="display:block"><input id="showtestcase_version" value="" class="form-control input-sm" style="width:200px" readonly></td>  
               <td id="showtestcase_versionoption" style="display:none">
-              <select id="testcaseversion"  name="testcaseversion" style="width:100px">
+              <select id="testcaseversion"  name="testcaseversion" style="width:200px">
                 <option value="<%=versions.get(0).getVersionNum()%>" selected><%=versions.get(0).getVersionNum()%></option>
                 <% for (int i =1; i< versions.size();i++ ){%>
                 <option value="<%=versions.get(i).getVersionNum()%>"><%=versions.get(i).getVersionNum()%></option>
