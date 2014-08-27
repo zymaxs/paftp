@@ -968,7 +968,7 @@ public class TestsuiteAction extends ActionSupport {
 				parentNode00.add(childNode00);
 
 			}
-			JSONObject childNode000 = util.childNode(1, "接口案例",
+			JSONObject childNode000 = util.childNode(1, "测试集",
 					"interfacetestsuite", parentNode00);
 			parentNode000.add(childNode000);
 			JSONObject childNode0000 = util.childNode(suts.get(i).getId(), suts
@@ -997,7 +997,7 @@ public class TestsuiteAction extends ActionSupport {
 						.nodeType("0"), parentNode0);
 				parentNode00.add(childNode00);
 			}
-			JSONObject childNode000 = util.childNode(1, "接口案例",
+			JSONObject childNode000 = util.childNode(1, "测试集",
 					"interfacetestsuite", parentNode00);
 			parentNode000.add(childNode000);
 			JSONObject childNode0000 = util.childNode(suts.get(i).getId(), suts

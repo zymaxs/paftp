@@ -63,8 +63,37 @@ $(document).ready( function(){
 				data : params,
 				dataType : "json",
 				success : function(root) {
-					alert("test");
+					$("#caseinfoTab").html("");
+					var caseinfo = "";
+					var Ispass = "";
+					for ( i=0 ; i < root.testcaseresultdtoes.length; i++){
+						if (root.testcaseresultdtoes[i].ispass == "true"){
+							Ispass = "成功";
+							}
+							else {
+								Ispass = "失败";
+								}
+						
+					var Description = root.testcaseresultdtoes[i].testcase.description;
+					if (Description != null){
+					Description = Description.replace(/</g, "&lt;");
+					Description = Description.replace(/>/g, "&gt;");
+					Description = Description.replace(/\"/g, "&#34;");
+					Description = Description.replace(/\n/g,"");
+					}
+					else Description ="";
 					
+					
+					caseinfo += "<tr>";
+					caseinfo += "<td>"+ root.testcaseresultdtoes[i].casename +"</td>";
+					caseinfo += "<td class='redlink'><a href='caseresult.jsp?testcaseresult_id="+root.testcaseresultdtoes[i].id+"'>"+ Ispass +"</a></td>";
+					caseinfo += "<td>"+ root.testcaseresultdtoes[i].testcase.casetype +"</td>";
+					caseinfo += "<td>"+ Description +"</td>";
+					caseinfo += "<td>"+ root.testcaseresultdtoes[i].status +"</td>";
+					caseinfo += "</tr>";
+						
+					}
+					$("#caseinfoTab").append(caseinfo);
 				},
 
 				error : function(root) {
@@ -102,6 +131,22 @@ $(document).ready( function(){
 }
 .whitelink A:active {
 	COLOR: #ffffff;
+	TEXT-DECORATION: none
+}
+.redlink A:link {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.redlink A:visited {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.redlink A:hover {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.redlink A:active {
+	COLOR: #ff0000;
 	TEXT-DECORATION: none
 }
 </style>
