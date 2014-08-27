@@ -512,7 +512,8 @@ public class TestsuiteAction extends ActionSupport {
 			casechangeoperation.setNewValue(this.getVersion());
 			casechangeoperation.setField("用例版本");
 			casechangeoperations.add(casechangeoperation);
-			testcase.setCasetype(this.getVersion());
+			Version version = versionService.findVersionByVersionNum(this.getVersion());
+			testcase.setVersion(version);
 			i++;
 		}
 		
