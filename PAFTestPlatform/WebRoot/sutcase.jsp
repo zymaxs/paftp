@@ -1199,7 +1199,7 @@ function saveapprovalac(){
 	  };
 	var sut_name = '<%=sut_name%>';
 	var testcase_name = $("#pre_casename").text() + $("#showtestcase_name").val();
-	var tsparams = {testcase_name:testcase_name,sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:$("#showcasepriority").val(),status:$("#showcasestatus").val(),casetype:$("#showcasetype").val(),casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val(),approval_comments:$("#approval_comments").val(),changetag:$("#showtestcase_changetag").val()};
+	var tsparams = {testcase_name:testcase_name,sut_name:sut_name,testcase_id:$("#showtestcase_id").val(),testsuite_name:$("#showcasetestsuite_name").val(),description:$("#showcasedescription").val(),priority:$("#showcasepriority").val(),status:$("#showcasestatus").val(),casetype:$("#showcasetype").val(),casesteps:$("#showcasesteps").val(),testcase_approval:approval_value,project_name:$("#updateproject").val(),approval_comments:$("#approval_comments").val(),changetag:$("#showtestcase_changetag").val(),version:$("#testcaseversion").val()};
 	  $.ajax({
 			  type : "POST",
 			  url : "updateTestcase.action",
@@ -1775,7 +1775,7 @@ $('#jstree').jstree('select_node', 'j1_1');
             </tr>
             <tr id="approval_commentsTd" style="display:none;">
               <td>拒绝原因</td>
-              <td align="center" colspan="3"><input class="form-control input-sm" style="width:639px;"  id="approval_comments" name="approval_comments" value="请输入拒绝原因，最大输入三十个字!" readonly maxlength="30"></td>
+              <td align="center" colspan="3"><input class="form-control input-sm" style="width:639px;"  id="approval_comments" name="approval_comments" value="请输入拒绝原因，最大输入六十个字!" readonly maxlength="60"></td>
             </tr>
           </table>
         </form></td>
