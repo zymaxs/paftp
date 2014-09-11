@@ -539,17 +539,28 @@ public class TestsuiteAction extends ActionSupport {
 				casechangeoperation.setField("审批状态");
 				casechangeoperations.add(casechangeoperation);
 				testcase.setTestcase_approval(this.getTestcase_approval());
-				testcase.setApproval_comments(this.getApproval_comments());
 				i++;
+				
+				if(this.getTestcase_approval().equals("未通过")){
+					CaseChangeOperation casechangeoperation_comment = new CaseChangeOperation();
+					casechangeoperation_comment.setCaseChangeHistory(casechangehistory);
+					casechangeoperation_comment
+							.setOldValue("");
+					casechangeoperation_comment.setNewValue(this.getApproval_comments());
+					casechangeoperation_comment.setField("审批建议");
+					casechangeoperations.add(casechangeoperation_comment);
+					testcase.setApproval_comments(this.getApproval_comments());
+					i++;
+				}
 			}
-		} else if (testcase.getTestcase_approval().equals("待评审") == false) {
+		} else if (testcase.getTestcase_approval().equals("未通过") == true && this.getApproval_comments() != null && this.getApproval_comments().equals(testcase.getApproval_comments()) == false) {
 			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
 			casechangeoperation.setCaseChangeHistory(casechangehistory);
-			casechangeoperation.setOldValue(testcase.getTestcase_approval());
-			casechangeoperation.setNewValue("待评审");
-			casechangeoperation.setField("审批状态");
+			casechangeoperation.setOldValue(testcase.getApproval_comments());
+			casechangeoperation.setNewValue(this.getApproval_comments());
+			casechangeoperation.setField("审批建议");
 			casechangeoperations.add(casechangeoperation);
-			testcase.setTestcase_approval("待评审");
+			testcase.setApproval_comments(this.getApproval_comments());
 			i++;
 		}
 
