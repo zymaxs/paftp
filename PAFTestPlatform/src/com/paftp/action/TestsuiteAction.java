@@ -482,17 +482,7 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 
-		this.setDescription(util.full2HalfChange(this.getDescription()));
-		if (testcase.getDescription().equals(this.getDescription()) == false) {
-			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
-			casechangeoperation.setCaseChangeHistory(casechangehistory);
-			casechangeoperation.setOldValue(testcase.getDescription());
-			casechangeoperation.setNewValue(this.getDescription());
-			casechangeoperation.setField("描述");
-			casechangeoperations.add(casechangeoperation);
-			testcase.setDescription(this.getDescription());
-			i++;
-		}
+	
 
 		if (testcase.getCasetype().equals(this.getCasetype()) == false) {
 			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
@@ -517,17 +507,6 @@ public class TestsuiteAction extends ActionSupport {
 			i++;
 		}
 		
-		this.setCasesteps(util.full2HalfChange(this.getCasesteps()));
-		if (testcase.getCasesteps().equals(this.getCasesteps()) == false) {
-			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
-			casechangeoperation.setCaseChangeHistory(casechangehistory);
-			casechangeoperation.setOldValue(testcase.getCasesteps());
-			casechangeoperation.setNewValue(this.getCasesteps());
-			casechangeoperation.setField("用例步骤");
-			casechangeoperations.add(casechangeoperation);
-			testcase.setCasesteps(this.getCasesteps());
-			i++;
-		}
 
 		if (testcase.getTestcase_approval().equals(this.getTestcase_approval()) == false) {
 			if (user.getAlias().equals(testcase.getCreator().getAlias()) == false) {
@@ -578,7 +557,34 @@ public class TestsuiteAction extends ActionSupport {
 			testcase.setTestcaseproject(testcaseproject);
 			i++;
 		}
+		
+		this.setDescription(util.full2HalfChange(this.getDescription()));
+		if (testcase.getDescription().equals(this.getDescription()) == false) {
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getDescription());
+			casechangeoperation.setNewValue(this.getDescription());
+			casechangeoperation.setField("描述");
+			casechangeoperations.add(casechangeoperation);
+			testcase.setDescription(this.getDescription());
+			testcase.setTestcase_approval("待评审");
+			i++;
 
+		}
+
+		this.setCasesteps(util.full2HalfChange(this.getCasesteps()));
+		if (testcase.getCasesteps().equals(this.getCasesteps()) == false) {
+			CaseChangeOperation casechangeoperation = new CaseChangeOperation();
+			casechangeoperation.setCaseChangeHistory(casechangehistory);
+			casechangeoperation.setOldValue(testcase.getCasesteps());
+			casechangeoperation.setNewValue(this.getCasesteps());
+			casechangeoperation.setField("用例步骤");
+			casechangeoperations.add(casechangeoperation);
+			testcase.setCasesteps(this.getCasesteps());
+			testcase.setTestcase_approval("待评审");
+			i++;
+		}
+		
 		Testcase checktestcase = testcaseService.findTestcaseById(testcase
 				.getId());
 		Integer targetchangetag = checktestcase.getChangetag();
