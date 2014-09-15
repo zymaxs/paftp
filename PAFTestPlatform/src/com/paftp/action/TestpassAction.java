@@ -2,6 +2,7 @@ package com.paftp.action;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -428,6 +429,10 @@ public class TestpassAction extends ActionSupport {
 
 	private List<TestpassDto> getTestpasses(Sut sut) throws ParseException {
 
+//		Long now = System.currentTimeMillis();
+//		System.out.println("1 The time is:" + now);
+//		Long old = now;
+		
 		HashMap<String, Object> testpass_conditions = new HashMap<String, Object>();
 		if (this.getStarttime() != null
 				&& this.getStarttime().equals("") == false) {
@@ -495,16 +500,25 @@ public class TestpassAction extends ActionSupport {
 				conditions.put("testsuite_result.id", testsuite_results.get(j)
 						.getId());
 				conditions.put("ispass", true);
-				Integer caseresults_count = testcaseresultService
-						.findCountOfCaseresults(conditions);
+				
+//				now = System.currentTimeMillis();
+//				System.out.println("2 The time is:" + i + j + " : time : " + (now-old));
+//				old = System.currentTimeMillis();
+				
+				List<Integer> counts = testcaseresultService.findCountsOfCaseresults(testsuite_results.get(j).getId());
+				
+//				Integer caseresults_count = testcaseresultService
+//						.findCountOfCaseresults(conditions);
+				Integer caseresults_count = Integer.parseInt(counts.get(0)+"");
 				testcaseresult_passcounts.put(testsuite_results.get(j)
 						.getSuitename(), caseresults_count);
 				testcaseresultpass_quantity += caseresults_count;
 
-				conditions.remove("ispass");
-				conditions.put("ispass", false);
-				caseresults_count = testcaseresultService
-						.findCountOfCaseresults(conditions);
+//				conditions.remove("ispass");
+//				conditions.put("ispass", false);
+//				caseresults_count = testcaseresultService
+//						.findCountOfCaseresults(conditions);
+				caseresults_count = Integer.parseInt(counts.get(1)+"");
 				testcaseresult_failcounts.put(testsuite_results.get(j)
 						.getSuitename(), caseresults_count);
 				testcaseresultfail_quantity += caseresults_count;
@@ -516,6 +530,10 @@ public class TestpassAction extends ActionSupport {
 					/ (float) total;
 			Float percentage_foursets = (float) ((Math.round(percentage * 10000)) / 10000.0);
 
+//			now = System.currentTimeMillis();
+//			System.out.println("3 The time is:" + (now-old));
+//			old = System.currentTimeMillis();
+			
 			TestpassDto testpassDto = testpassService.getTestpassDto(
 					testpasses.get(i), testcaseresultpass_quantity,
 					testcaseresultfail_quantity, total, percentage_foursets);

@@ -24,5 +24,7 @@ public interface TestcaseResultService {
 
 	public Integer findCountOfCaseresults(HashMap<String, Object> conditions);
 	
+	public List<Integer> findCountsOfCaseresults(Integer testsuite_id);
+	
 	public TestcaseResultDto getTestcaseResultDto(TestcaseResult testcaseresult, AnalyseCommentHistory analyseCommentHistory);
 }
