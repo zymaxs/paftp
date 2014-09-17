@@ -2,6 +2,7 @@ package com.paftp.action;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,8 @@ import com.paftp.service.TestsuiteResult.TestsuiteResultService;
 import com.paftp.service.sut.SutService;
 import com.paftp.service.user.UserService;
 import com.paftp.service.version.VersionService;
+import com.paftp.util.CompareTestsuiteDtoName;
+import com.paftp.util.CompareTestsuiteName;
 import com.paftp.util.Util;
 
 @Controller
@@ -243,6 +246,8 @@ public class TestpassAction extends ActionSupport {
 			testsuitedtoes.add(testsuitedto);
 		}
 
+		this.sortTestsuiteDto(testsuitedtoes);
+		
 		Integer total = testcaseresultpass_quantity
 				+ testcaseresultfail_quantity;
 		Float percentage = (float) testcaseresultpass_quantity / (float) total;
@@ -542,6 +547,13 @@ public class TestpassAction extends ActionSupport {
 
 		return testpassdots;
 
+	}
+	
+	private List<TestsuiteDto> sortTestsuiteDto(List<TestsuiteDto> testsuitedtoes) {
+
+		CompareTestsuiteDtoName compare = new CompareTestsuiteDtoName();
+		Collections.sort(testsuitedtoes, compare);
+		return testsuitedtoes;
 	}
 
 	public String getSut_name() {
