@@ -510,11 +510,12 @@ public class TestpassAction extends ActionSupport {
 //				System.out.println("2 The time is:" + i + j + " : time : " + (now-old));
 //				old = System.currentTimeMillis();
 				
-				List<Integer> counts = testcaseresultService.findCountsOfCaseresults(testsuite_results.get(j).getId());
+				//List<Integer> counts = testcaseresultService.findCountsOfCaseresults(testsuite_results.get(j).getId());
 				
 //				Integer caseresults_count = testcaseresultService
 //						.findCountOfCaseresults(conditions);
-				Integer caseresults_count = Integer.parseInt(counts.get(0)+"");
+				//Integer caseresults_count = Integer.parseInt(counts.get(0)+"");
+				Integer caseresults_count = Integer.parseInt(testcaseresultService.findPassedCounts(testsuite_results.get(j).getId()).get(0)+"");
 				testcaseresult_passcounts.put(testsuite_results.get(j)
 						.getSuitename(), caseresults_count);
 				testcaseresultpass_quantity += caseresults_count;
@@ -523,7 +524,8 @@ public class TestpassAction extends ActionSupport {
 //				conditions.put("ispass", false);
 //				caseresults_count = testcaseresultService
 //						.findCountOfCaseresults(conditions);
-				caseresults_count = Integer.parseInt(counts.get(1)+"");
+				caseresults_count = Integer.parseInt(testcaseresultService.findFailedCounts(testsuite_results.get(j).getId()).get(0)+"");
+				//caseresults_count = Integer.parseInt(counts.get(1)+"");
 				testcaseresult_failcounts.put(testsuite_results.get(j)
 						.getSuitename(), caseresults_count);
 				testcaseresultfail_quantity += caseresults_count;

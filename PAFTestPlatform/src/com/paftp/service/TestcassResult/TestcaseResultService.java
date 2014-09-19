@@ -27,4 +27,8 @@ public interface TestcaseResultService {
 	public List<Integer> findCountsOfCaseresults(Integer testsuite_id);
 	
 	public TestcaseResultDto getTestcaseResultDto(TestcaseResult testcaseresult, AnalyseCommentHistory analyseCommentHistory);
+
+	public List<Integer> findPassedCounts(Integer testsuite_id);
+
+	public List<Integer> findFailedCounts(Integer testsuite_id);
 }
