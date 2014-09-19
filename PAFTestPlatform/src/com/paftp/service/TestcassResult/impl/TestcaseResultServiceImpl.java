@@ -22,6 +22,8 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 
 	@Resource
 	private BaseDAO<TestcaseResult> baseDAO;
+	@Resource
+	private BaseDAO<Integer> baseIntegerDAO;
 	
 	@Override
 	public void saveTestcaseResult(TestcaseResult testcaseResult) {
@@ -95,6 +97,13 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 		return Integer.parseInt(i.toString());
 
 	}
+	
+
+	@Override
+	public List<Integer> findCountsOfCaseresults(Integer testsuite_id) {
+		// TODO Auto-generated method stub
+		return baseIntegerDAO.find("select count(*) from TestcaseResult t where testsuite_result.id = ? group by ispass", new Object[] { testsuite_id });
+	}
 
 	@Override
 	public TestcaseResultDto getTestcaseResultDto(TestcaseResult testcaseresult, AnalyseCommentHistory analyseCommentHistory) {
@@ -121,5 +130,6 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 		
 		return testcaseresultDto;
 	}
+
 
 }

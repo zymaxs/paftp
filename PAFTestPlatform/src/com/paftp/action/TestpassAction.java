@@ -2,6 +2,8 @@ package com.paftp.action;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +34,8 @@ import com.paftp.service.TestsuiteResult.TestsuiteResultService;
 import com.paftp.service.sut.SutService;
 import com.paftp.service.user.UserService;
 import com.paftp.service.version.VersionService;
+import com.paftp.util.CompareTestsuiteDtoName;
+import com.paftp.util.CompareTestsuiteName;
 import com.paftp.util.Util;
 
 @Controller
@@ -242,6 +246,8 @@ public class TestpassAction extends ActionSupport {
 			testsuitedtoes.add(testsuitedto);
 		}
 
+		this.sortTestsuiteDto(testsuitedtoes);
+		
 		Integer total = testcaseresultpass_quantity
 				+ testcaseresultfail_quantity;
 		Float percentage = (float) testcaseresultpass_quantity / (float) total;
@@ -428,6 +434,10 @@ public class TestpassAction extends ActionSupport {
 
 	private List<TestpassDto> getTestpasses(Sut sut) throws ParseException {
 
+//		Long now = System.currentTimeMillis();
+//		System.out.println("1 The time is:" + now);
+//		Long old = now;
+		
 		HashMap<String, Object> testpass_conditions = new HashMap<String, Object>();
 		if (this.getStarttime() != null
 				&& this.getStarttime().equals("") == false) {
@@ -495,16 +505,25 @@ public class TestpassAction extends ActionSupport {
 				conditions.put("testsuite_result.id", testsuite_results.get(j)
 						.getId());
 				conditions.put("ispass", true);
-				Integer caseresults_count = testcaseresultService
-						.findCountOfCaseresults(conditions);
+				
+//				now = System.currentTimeMillis();
+//				System.out.println("2 The time is:" + i + j + " : time : " + (now-old));
+//				old = System.currentTimeMillis();
+				
+				List<Integer> counts = testcaseresultService.findCountsOfCaseresults(testsuite_results.get(j).getId());
+				
+//				Integer caseresults_count = testcaseresultService
+//						.findCountOfCaseresults(conditions);
+				Integer caseresults_count = Integer.parseInt(counts.get(0)+"");
 				testcaseresult_passcounts.put(testsuite_results.get(j)
 						.getSuitename(), caseresults_count);
 				testcaseresultpass_quantity += caseresults_count;
 
-				conditions.remove("ispass");
-				conditions.put("ispass", false);
-				caseresults_count = testcaseresultService
-						.findCountOfCaseresults(conditions);
+//				conditions.remove("ispass");
+//				conditions.put("ispass", false);
+//				caseresults_count = testcaseresultService
+//						.findCountOfCaseresults(conditions);
+				caseresults_count = Integer.parseInt(counts.get(1)+"");
 				testcaseresult_failcounts.put(testsuite_results.get(j)
 						.getSuitename(), caseresults_count);
 				testcaseresultfail_quantity += caseresults_count;
@@ -516,6 +535,10 @@ public class TestpassAction extends ActionSupport {
 					/ (float) total;
 			Float percentage_foursets = (float) ((Math.round(percentage * 10000)) / 10000.0);
 
+//			now = System.currentTimeMillis();
+//			System.out.println("3 The time is:" + (now-old));
+//			old = System.currentTimeMillis();
+			
 			TestpassDto testpassDto = testpassService.getTestpassDto(
 					testpasses.get(i), testcaseresultpass_quantity,
 					testcaseresultfail_quantity, total, percentage_foursets);
@@ -524,6 +547,13 @@ public class TestpassAction extends ActionSupport {
 
 		return testpassdots;
 
+	}
+	
+	private List<TestsuiteDto> sortTestsuiteDto(List<TestsuiteDto> testsuitedtoes) {
+
+		CompareTestsuiteDtoName compare = new CompareTestsuiteDtoName();
+		Collections.sort(testsuitedtoes, compare);
+		return testsuitedtoes;
 	}
 
 	public String getSut_name() {

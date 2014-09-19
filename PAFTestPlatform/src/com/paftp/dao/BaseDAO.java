@@ -93,6 +93,7 @@ public interface BaseDAO<T> {
 	 * @param rows
 	 * @return
 	 */
+	
 	public List<T> find(String hql, List<Object> param, Integer page,
 			Integer rows);
 
