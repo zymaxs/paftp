@@ -108,8 +108,7 @@
 			<result name="session" type="redirect">/sutindex.jsp</result>
 		</global-results>
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
-			<result name="success" type="redirect">/index_1.jsp</result>
-			<result name="logsuccess">/index_1.jsp</result>
+			<result name="logsuccess" type="redirect">/index_1.jsp</result>
 			<result name="error">/error.jsp</result>
 			<result name="update">/changeinipwd.jsp</result>
 		</action>
@@ -181,7 +180,7 @@
 		</action>
 		<action name="reguserinfo" method="userinfo"
 			class="com.paftp.action.StaticAction">
-			<result name="success">/register.jsp</result>
+			<result name="success">/reg.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
 		<action name="upuserinfo" method="userinfo"

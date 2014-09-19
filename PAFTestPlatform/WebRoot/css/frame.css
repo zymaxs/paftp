@@ -1,0 +1,116 @@
+/*
+Theme Name: Vanilla Slice
+Description:  Themed developed in July 2011, new clean and simplified layout.
+Author: Tim Keay, Miroslav Kosteckij
+Version: 1.0
+*/
+
+/*
+=============================
+  C O R E   E L E M E N T S
+=============================
+*/
+
+body { 
+	margin: 0;
+	padding: 0; 
+	font-family: 'Nobile', Arial, sans-serif;
+	font-size: 12px;
+	color: #333;
+}
+a img {
+	border: none;
+	border-radius: 10px;
+}
+p { margin: 0; padding: 0;}
+/** Layout */
+.wrapper {
+	margin: 0 auto;
+	width: 950px;
+	clear: left;
+}
+h1.title_name {
+	font-family: "Trebuchet MS","Myriad Pro",Arial,sans-serif;
+	font-weight: normal;
+	font-size: 4em;
+	color: #333;
+	margin: 0;
+	padding: 20px 0 0 0;
+	text-align: center;
+	line-height: 1em;
+}
+h1.title_name span {
+	font-family: normal Georgia,'Times New Roman',Times,serif;
+	color: #FF6600;
+	font-size: 0.9em;
+}
+h1.title_name small {
+	display: block;
+	font-family: normal Verdana,Arial,Helvetica,sans-serif;
+	font-size: 0.3em;
+	font-weight: bold;
+	letter-spacing: 0.5em;
+	text-transform: uppercase;
+	color: #AAA;
+	text-shadow: none;
+}
+span{ color:red;}
+.follow { padding-left: 10px;}
+#fixed-header-slide { width: 100%; height: 50px; background: #428bca; border-bottom: solid 1px #CCC; position: fixed; top: 0px; z-index: 2; }
+#fixed-header-wrap { width: 100%; height: 50px; position: absolute; bottom: 0px; }
+#fixed-header { width: 100%; height: 20px; margin: 0 auto; position: relative; z-index: 1; }
+#header-wrap { width: 100%; height: 145px; border-bottom: solid 1px #CCC; margin-bottom: 40px; z-index: 3; position: relative;color: white }
+#header { width: 100%; height: 145px; margin:auto; position: relative; z-index: 3; }
+#main-wrap { width: 100%; min-height: 600px; z-index: 1; margin-bottom: 100px; position: relative; }
+#container { width: 90%; min-height: 600px; padding: 0px 10px; margin: 0 auto; }
+#container h2 { font-size: 24px;}
+#container p { font-size: 110%; line-height: 150%;}
+#container p img { float: left; padding-right: 15px;}
+/*
+===============
+  H E A D E R
+===============
+*/
+
+/* Main Nav */
+#main-nav { position: absolute; top: 125px;}
+ul.main-menu { list-style-type: none; margin: 0px; }
+.main-menu li { float: left; display: block; margin: 0px 35px 0 0px; background:#428bca }
+.main-menu a { font-size: 16px; line-height: 16px; font-weight: bold; color: white; text-decoration: none; }
+.main-menu a:hover { color: #428bca; text-decoration: none; background:white }
+
+/* Fixed Header */
+#fixed-header .fixed-header-heading { width: 280px; float: left; margin-top: 7px; color: #878787; font-size: 36px; line-height: 36px; font-weight: bold; }
+#fixed-header .fixed-header-nav {overflow: hidden; margin-top: 15px; height:50px}
+#fixed-header .main-menu li { width: auto; margin: 0px 25px 0px 0px; }
+/*
+===============
+  F O O T E R
+===============
+*/
+#fixed-footer-wrap { width: 100%; height: 50px; background: #428bca; border-top: solid 1px #CCC; position: fixed; bottom: 0px; z-index: 3; overflow: visible; }
+#footer-wrap { position: relative; height: 0px; }
+#footer { width: 100%; position: absolute; left: 0px; bottom: 0px; background: #428bca; border: solid 1px #CCC; border-top:0px; }
+#fixed-footer { width: 950px; margin: auto; padding-top: 5px;text-align: center;color:white}
+#footer-toggle { display: block; border: solid 1px #CCC; border-bottom: 0px; width: 38px; height: 21px; position: absolute; top: -22px; right: 2%;  background: #428bca; /*left: 50%; margin-left: 429px;*/ }
+#footer-toggle span { display: block; width: 38px; height: 21px; opacity: 0.7; }
+#footer-toggle span:hover { opacity: 1 }
+#footer-toggle.expanded span { background-position: bottom; }
+#toggling { display: none; }
+#toggling h3 { width: 950px; margin: 0 auto; padding: 20px 0; line-height: 150%;}
+/* Footer Toggle */
+.border-top {
+    border-top: 1px solid #CCCCCC;
+}
+/* Footer Top */
+#footer-top { padding: 15px 0; }
+#footer-top a { color: #222; text-decoration: none; }
+#footer-top a:hover { color: #FF6600; }
+#footer-social { float: left; clear: left; }
+#footer-social iframe { width: 61px !important; float: left; display: inline-block;  }
+#footer-social ul { overflow: hidden; }
+#footer-social li { float: left; margin-right: 20px; }
+#footer-social li.no-margin { margin-right: 0px; }
+
+/* iOS fixes */
+#fixed-footer-wrap.mobile-fix { position: relative; }

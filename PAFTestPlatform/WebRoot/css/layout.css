@@ -1,0 +1,66 @@
+/* Layout */
+.whitelink A:link {
+	COLOR: #ffffff;
+	TEXT-DECORATION: none
+}
+.whitelink A:visited {
+	COLOR: #ffffff;
+	TEXT-DECORATION: none
+}
+.whitelink A:hover {
+	COLOR: #ffffff;
+	TEXT-DECORATION: none
+}
+.whitelink A:active {
+	COLOR: #ffffff;
+	TEXT-DECORATION: none
+}
+.page_select{border-bottom: 1px solid white}
+
+/*
+===============
+  H E A D E R
+===============
+*/
+.head_com{
+		font-size:15px; 
+		font-family:Microsoft YaHei;
+	}
+.head_register{
+		font-size:15px; 
+		font-family:Microsoft YaHei; 
+		text-align:right
+	}
+.head_platform{
+		text-align:center; 
+		font-size:35px; 
+		font-family:Microsoft YaHei
+	}
+.head_version{
+		text-align:right;
+		font-size:15px; 
+		font-family:Microsoft YaHei
+	}
+.top_table {
+		margin-bottom: 15px;
+		margin-top: 15px;
+		width:100%;
+}
+#top_banner {
+		background:#428bca;
+		height:100%
+}
+ul.top_navi {list-style-type:none; margin: 0px;font-size: larger;font-weight: bold;}
+.top_navi li {float:left; display: block; margin: 0px 35px 0 0px}
+.top_navi  a {color:white;padding-bottom:5px}
+.top_navi  a:hover{background:white; color:#428bca;text-decoration:none;}
+
+.login_box {width:100px}
+.login_pwd {margin-top: 20px}
+
+
+/*
+===============
+  F O O T E R
+===============
+*/

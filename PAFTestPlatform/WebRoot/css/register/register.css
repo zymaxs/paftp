@@ -1,0 +1,7 @@
+.reg_addon_front {width:100px}
+.reg_addon_after{width:100px;text-align:left}
+.reg_input_group_div{margin: 0 0 10px 0;}
+#department{width: 177px;margin: 0 10px 0 0;}
+#position{width: 177px;margin: 0 10px 0 0;}
+#otherinfo{height:100px; max-height:100px; width:300px; max-width:300px;}
+.errormsg{color:red;}
