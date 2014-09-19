@@ -107,13 +107,13 @@ public class TestcaseResultServiceImpl implements TestcaseResultService{
 	@Override
 	public List<Integer> findPassedCounts(Integer testsuite_id) {
 		// TODO Auto-generated method stub
-		return baseIntegerDAO.find("select count(*) from TestcaseResult t where testsuite_result.id = ? and ispass=0", new Object[] { testsuite_id });
+		return baseIntegerDAO.find("select count(*) from TestcaseResult t where testsuite_result.id = ? and ispass=1", new Object[] { testsuite_id });
 	}
 
 	@Override
 	public List<Integer> findFailedCounts(Integer testsuite_id) {
 		// TODO Auto-generated method stub
-		return baseIntegerDAO.find("select count(*) from TestcaseResult t where testsuite_result.id = ? and ispass=1", new Object[] { testsuite_id });
+		return baseIntegerDAO.find("select count(*) from TestcaseResult t where testsuite_result.id = ? and ispass=0", new Object[] { testsuite_id });
 	}
 	
 	@Override
