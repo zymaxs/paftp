@@ -9,7 +9,7 @@
 <%
 session.invalidate();//Ïú»Ù»á»°
 out.println("<script language='javascript'>");
-out.println("window.location.href='index_1.jsp'");
+out.println("window.location.href='index.jsp'");
 out.println("</script>");
 %> 
 

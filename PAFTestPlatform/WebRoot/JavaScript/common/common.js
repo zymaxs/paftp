@@ -30,7 +30,7 @@ return false;
 function IsValidateEmail(str) {
     //如果为空，则通过校验
     if (str == "" || str.length == 0) {
-        return false;
+        return true;
     }
 
     //正则表达式

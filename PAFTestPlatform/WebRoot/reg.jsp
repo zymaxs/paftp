@@ -46,7 +46,7 @@
           </tr>
           <tr>
             <td colspan="2"><div class="input-group reg_input_group_div"> <span class="input-group-addon reg_addon_front">* 真实姓名</span>
-                <input type="text" class="form-control" name="displayname"/>
+                <input type="text" class="form-control" name="displayname" id="regDisplayName" maxlength="10"/>
               </div></td>
           </tr>
           <tr>

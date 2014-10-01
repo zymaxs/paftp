@@ -39,7 +39,7 @@
 						if (session.getAttribute("user") == null) {
 					%>
 					<td colspan="2" class="whitelink head_register"><a
-						href="register.jsp">注册</a> | <a href="#" data-toggle='modal'
+						href="reg.jsp">注册</a> | <a href="#" data-toggle='modal'
 						data-target='#loginModal'>登录</a></td>
 					<%
 						} else {
