@@ -20,8 +20,8 @@
 	<%@ include file="head.jsp"%>
 
 	<div id="main-wrap">
-		<div id="container"></div>
-		<!-- #container -->
+		<div id="container">
+		</div><!-- #container -->
 	</div>
 
 
