@@ -7,7 +7,7 @@
 					<li><a href="index.jsp" class="hover">主页</a></li>
 					<li><a href="casemanagement.jsp">用例管理</a></li>
 					<li><a href="resultmanagement.jsp">结果管理</a></li>
-					<li><a href="sutindex.jsp">接入申请</a></li>
+					<li><a href="sut.jsp">接入申请</a></li>
 					<li><a href="rolemanagement.jsp">用户权限</a></li>
 					<%
 						if (session.getAttribute("isAdmin") != null) {
@@ -44,11 +44,11 @@
 					<%
 						} else {
 							User user = (User) session.getAttribute("user");
-							String name = user.getAlias();
+							String header_name = user.getAlias();
 					%>
 					<td colspan="2" class="whitelink"
 						style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a
-						href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a>
+						href="updateuserinfo.jsp"><%=header_name%> </a>| <a href="logout.jsp">登出</a>
 					</td>
 					<%
 						}
@@ -68,7 +68,7 @@
 				<li><a href="index.jsp">主页</a></li>
 				<li><a href="casemanagement.jsp">用例管理</a></li>
 				<li><a href="resultmanagement.jsp">结果管理</a></li>
-				<li><a href="sutindex.jsp">接入申请</a></li>
+				<li><a href="sut.jsp">接入申请</a></li>
 				<li><a href="rolemanagement.jsp">用户权限</a></li>
 				<%
 					if (session.getAttribute("isAdmin") != null) {
@@ -127,7 +127,7 @@
 				<div align="center">
 					<button type="button" class="btn btn-primary login_box"
 						onclick="loginac()">登录</button>
-					<button type="button" class="btn btn-primary login_box">忘记密码</button>
+					<button type="button" class="btn btn-primary login_box" onClick="window.location.href='findpassword.jsp'">忘记密码</button>
 				</div>
 			</div>
 		</div>

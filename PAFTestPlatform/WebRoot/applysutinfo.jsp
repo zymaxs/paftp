@@ -1,477 +1,175 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.util.*,com.paftp.entity.*"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/";
-%>
+	import="java.util.*,com.paftp.entity.*" errorPage=""%>
 <!DOCTYPE HTML>
 <html>
 <head>
 <%
-	if (request.getAttribute("flag")==null){
-request.getRequestDispatcher("${pageContext.request.contextPath}/showsutgroup.action").forward(request,response);}
-List<String> sutgroup = (List<String>)request.getAttribute("sutgroupnames");
-String isLogin = "test";
-String isAdmin = "test";
-String alias = "";
-Integer sut_id = 0;
-if (session.getAttribute("user") != null){
-	 isLogin = "y";
-	 User userinfo = (User) session.getAttribute("user");
-	 alias = userinfo.getAlias();
-} else { isLogin = "n";};
+	if (request.getAttribute("flag") == null) {
+		request.getRequestDispatcher(
+		"${pageContext.request.contextPath}/showsutgroup.action")
+		.forward(request, response);
+	}
+	List<String> sutgroup = (List<String>) request
+	.getAttribute("sutgroupnames");
+	String isLogin = "test";
+	String isAdmin = "test";
+	String alias = "";
+	Integer sut_id = 0;
+	if (session.getAttribute("user") != null) {
+		isLogin = "y";
+		User userinfo = (User) session.getAttribute("user");
+		alias = userinfo.getAlias();
+	} else {
+		isLogin = "n";
+	}
+	;
 
+	if ((String) request.getAttribute("isAdmin") != null) {
+		isAdmin = "y";
+	} else {
+		isAdmin = "n";
+	}
+	;
 
-if ((String)request.getAttribute("isAdmin") != null){
-	isAdmin = "y";
-	}else { isAdmin = "n";};
-	
-	
-ApplySut applySut = (ApplySut)request.getAttribute("applySut");
-if (request.getAttribute("sut_id") != null){
-	sut_id = (Integer)request.getAttribute("sut_id");
-}
-String applyer = applySut.getUser().getAlias();
-int id = applySut.getId();
+	ApplySut applySut = (ApplySut) request.getAttribute("applySut");
+	if (request.getAttribute("sut_id") != null) {
+		sut_id = (Integer) request.getAttribute("sut_id");
+	}
+	String applyer = applySut.getUser().getAlias();
+	int id = applySut.getId();
 %>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
-<title>无标题文档</title>
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/shou.css" rel="stylesheet">
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
-<script type="text/javascript" src="js/jquery.validate.js"></script>
-<script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
-<script type="text/javascript" src="js/jQSelect.js"></script>
-<style>
-.whitelink A:link {
-	COLOR: #ffffff;
-	TEXT-DECORATION: none
-}
-.whitelink A:visited {
-	COLOR: #ffffff;
-	TEXT-DECORATION: none
-}
-.whitelink A:hover {
-	COLOR: #ffffff;
-	TEXT-DECORATION: none
-}
-.whitelink A:active {
-	COLOR: #ffffff;
-	TEXT-DECORATION: none
-}
-</style>
 <script type="text/javascript">
-//todo
 var alias = '<%=alias%>';
 var isLogin = '<%=isLogin%>';
 var isAdmin = '<%=isAdmin%>';
 var applyer = '<%=applyer%>';
-	function inipermission() {
-		if (alias == null) {
-			alert("inside if");
-			document.getElementById('approvebtn').style.display = "none";
-			document.getElementById('rejectbtn').style.display = "none";
-			document.getElementById('updatebtnTd').style.display = "none";
-		} else {
-			if (isAdmin == "y") {
-				document.getElementById('approvebtn').style.display = "block";
-				document.getElementById('rejectbtn').style.display = "block";
-				document.getElementById('updatebtnTd').style.display = "block";
-			} else {
-				if (alias == applyer) {
-					document.getElementById('approvebtn').style.display = "none";
-					document.getElementById('rejectbtn').style.display = "none";
-					document.getElementById('updatebtnTd').style.display = "block";
-				} else if (alias != applyer) {
-					document.getElementById('approvebtn').style.display = "none";
-					document.getElementById('rejectbtn').style.display = "none";
-					document.getElementById('updatebtnTd').style.display = "none";
-				}
-
-			}
-		}
-	}
+var selected_groupname = '<%=applySut.getGroup().getName()%>';
 </script>
-<script type="text/javascript">
-	function loginac() {
-		document.loginform.action = "${pageContext.request.contextPath}/login.action";
-		document.loginform.submit();
-	}
-	function approveac() {
-		document.sutinfoform.action = "${pageContext.request.contextPath}/approveSut.action?status=Pass";
-		document.sutinfoform.submit();
-	}
-	function rejectac() {
-		document.sutinfoform.action = "${pageContext.request.contextPath}/approveSut.action?status=Reject";
-		document.sutinfoform.submit();
-	}
-	function updateac() {
-		document.getElementById('sutname').readOnly = false;
-		document.getElementById('groupname').readOnly = false;
-		document.getElementById('code').readOnly = false;
-		document.getElementById('description').readOnly = false;
-		document.getElementById('updatebtnTd').style.display = "none";
-		document.getElementById('grouplist').style.display = "block";
-		document.getElementById('savebtnTd').style.display = "block";
-
-	}
-	function saveac() {
-		if($("#sutinfoform").valid()){
-			document.sutinfoform.action = "${pageContext.request.contextPath}/updateSut.action";
-			document.sutinfoform.submit();
-			}
-	}
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#sutgroup").jQSelect({});
-		inipermission();
-		$("#sutinfoform").validate({
-        rules: {
-            "sutname":{
-                required: true,
-				maxlength: 20
-            },
-			 "code":{
-                required: true,
-				maxlength: 30
-            },
-			"description":{
-                required: true,
-				maxlength: 60
-            }
-        },
-        messages: {
-            "sutname":{
-                required: "请输入系统名",
-				maxlength: $.validator.format("系统名最大不超过20个字符")
-            },
-			"code":{
-                required: "请输入系统中文名",
-				maxlength: $.validator.format("系统中文名最大不超过30个字符")
-            },
-			"description":{
-                required: "请输入系统描述",
-				maxlength: $.validator.format("系统描述最大不超过60个字符")
-            }
-        }
-    });
-	});
-</script>
-<style>
-/*导航默认样式，可根据实际情况修改*/
-* {
-	margin:0;
-	padding:0
-}
-.daohang {
-	width:100%;
-	height:30px;
-	list-style:none;
-	position:relative;
-}
-.daohang li {
-	display:inline-block;
-	margin:0;
-	position:relative;
-	overflow:hidden;
-	height:30px; /*建议此高度大于等于里面的a标签高度*/
-	float:left;
-}
-.daohang li span {
-	display:inline-block;
-	overflow:hidden
-}
-.daohang li a {
-	text-decoration:none;
-	outline:none;
-	color:#428bca;
-	display:inline-block;
-	padding:0 10px;
-	text-align:center;
-	background-color: #FFFFFF;
-	font-weight:bold;
-	height:30px;
-	line-height:30px;
-}
-/*鼠标经过时样式*/
-.daohang li a.over {
-	background-color:#428bca;
-	color:#FFF
-}
-</style>
-<script type="text/javascript">
-(function($){
-		  $.fn.dynamicdaohang=function(options){
-			  
-			   //默认配置
-				 var defaults = {
-					 direction:"up", //动画切换方向，总共4种up 、down 、left 、right
-					 duration:100  //三种预定速度之一的字符串("slow", "normal", or "fast")或表示动画时长的毫秒数值(如：1000)
-					 };   
-					 
-                // 覆盖默认配置
-				var opts = $.extend(defaults, options);
-			    
-				this.each(function(){
-					var daohangList=$(this).find("li"),
-						daohangLink=daohangList.find("a");
-								
-						//在a标签外侧插入span
-						daohangList.wrapInner("<span></span>");
-								 
-						var span=daohangLink.parent();
-								 
-						//判断是否垂直切换
-						if(opts.direction=="up" || opts.direction=="down"){
-							var v=true;
-									 }
-									 
-						//判断是否改变span初始位置及a样式	 
-						if(opts.direction=="right" || opts.direction=="down"){
-							var restSpan=true;
-								 }
-								 
- 						daohangLink.each(function(){
-													   
-							//获取a高度和宽度
-							var w=$(this).outerWidth(),
-								p=$(this).parent();
-														   
-							//初始复制现有a标签   
-							$(this).clone().appendTo(p).addClass("over");
- 													
-								//如果是垂直切换
-								if(v){	   
- 									p.css("width",w);				      
-								      }else{
-										p.css("width",2*w).parent().css("width",w);	
-										}
-														 
-  								});
-								 
-						//如果向右或向下切换，改变span初始位置及a样式
-						if(restSpan){
-						span.each(function(){
-													
- 								if(opts.direction=="right"){
-									$(this).css({"margin-left":-$(this).outerWidth()/2});
-									}
-														
-								if(opts.direction=="down"){
-									$(this).css({"margin-top" : -$(this).outerHeight()/2});
-									}
- 													
-								$(this)
-								.find('a')
-								.last()
-								.removeClass("over")
-								.prev()
-								.addClass("over");
-							});
-								 }
-								
-						//鼠标经过时动画函数
-						function over(o){
-  							o.animate(v?{"margin-top": -o.outerHeight()/2}:{"margin-left": -o.outerWidth()/2}, opts.duration);
- 									}
-								
-						//鼠标移开时动画函数
-						function out(o){
-							o.animate(v?{"margin-top":0}:{"margin-left": 0}, opts.duration);
-									}
-								
-						//鼠标经过和离开	
-						span.hover(function(){
-										restSpan ? out($(this)) : over($(this));
-											},function(){
-												restSpan ? over($(this)) : out($(this));
-											});
- 							 
-				 });
-		 };
-			  
- })(jQuery);
-    $(function(){
-		    //向上
-		   $("#navigator").dynamicdaohang({
-								direction:"up", 
-								duration:400 
-								});
-		   });
-</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+<title>系统申请详情</title>
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/frame.css" rel="stylesheet" />
+<link href="css/layout.css" rel="stylesheet" />
+<script type="text/javascript" src="JavaScript/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="JavaScript/bootstrap.min.js"></script>
+<script src="JavaScript/index/index.js"></script>
+<script src="JavaScript/common/common.js"></script>
+<script src="JavaScript/applysutinfo/applysutinfo.js"></script>
 </head>
 
 <body>
-<div class="container-fluid"> 
-  <!--网页头部-->
-  <div style="background:#428bca; color:#ffffff;"> <br>
-  <table width="100%">
-  <tr>
-  	<td>&nbsp;&nbsp;</td>
-  	<td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
-    <td colspan="7">&nbsp;</td>
-    <%if (session.getAttribute("user") == null) {%>
-    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </td>
-    <%} else { User user = (User) session.getAttribute("user");
-                      String name = user.getAlias(); %>
-    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </td>
-    <%}%>
-    <td>&nbsp;&nbsp;</td>
-  </tr>
-  <tr>
-  	<td colspan="12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</td>
-  </tr>
-  <tr>
-  	<td colspan="10">&nbsp;</td>
-    <td style="text-align:right;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</td>
-    <td>&nbsp;&nbsp;</td>
-  </tr>
-  </table>
-  <br>
-  </div>
-  <!--登录-->
-  <div id="loginmodal" style="display:none;" align="center">
-    <div>
-      <p>用户登录</p>
-    </div>
-    <form id="loginform" name="loginform" method="post" action="">
-      <label for="alias" style="Microsoft YaHei; font-size:12px;">Username:</label>
-      <input type="text" name="alias" id="alias" tabindex="1">
-      <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
-      <input type="password" name="password" id="password" tabindex="2">
-      <div>
-      	<br/>
-        <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
-        <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
-      </div>
-    </form>
-  </div>
-  <script type="text/javascript">
-			$(function() {
-				$('#login').leanModal({
-					top : 110,
-					overlay : 0.45,
-					closeButton : ".hidemodal"
-				});
-			});
-		</script> 
-  <!--导航-->
-  <ul class="daohang" id="navigator">
-    <li><a href="index_1.jsp">主页</a></li>
-    <li><a href="casemanagement.jsp">用例管理</a></li>
-    <li><a href="resultmanagement.jsp">结果管理</a></li>
-    <li><a href="sutindex.jsp">接入申请</a></li>
-    <li><a href="rolemanagement.jsp">用户权限</a></li>
-    <%if (session.getAttribute("isAdmin") != null){
-        String UserIsAdmin = String.valueOf(session.getAttribute("isAdmin"));
-        if (UserIsAdmin == "true"){%>
-    <li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
-    <li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
-    <%}}%>
-  </ul>
-  <!--主体-->
-  <form id="sutinfoform" name="sutinfoform" class="form-horizontal"
-			method="post" action="">
-    <fieldset>
-      <legend> 接入系统申请详情页 <small>(带*号标志为必输项)</small> </legend>
-      <table>
-        <tr>
-          <td style="text-align:right">* 系统名 :&nbsp;&nbsp;</td>
-          <td><input type="text" class="form-control input-sm" style="width:200px" id="sutname"
-							name="sutname" value="<%=applySut.getName()%>" readonly></td>
-        </tr>
-        <tr style="display:none">
-        	<td><input type="text" class="form-control input-sm" id="sut_id" name="sut_id" value="<%=sut_id%>" ></td>
-        </tr>
-        <tr>
-         <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td style="text-align:right">申请状态 :&nbsp;&nbsp;</td>
-          <td><input type="text"  class="form-control input-sm" style="width:200px" id="sutstatus"
-							name="sutstatus"
-							value="<%=applySut.getApplysutstatus().getDescription()%>" disabled></td>
-        </tr>
-        <tr>
-         <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td style="text-align:right">* 系统所属平台 :&nbsp;&nbsp;</td>
-          <td><div id="sutgroup" class="selectbox">
-              <div class="cartes">
-                <input type="text" value="<%=applySut.getGroup().getName()%>"
-										id="groupname" name="groupname" class="listTxt" readonly />
-                <div class="listBtn"> <b></b> </div>
-                <input type="hidden" value="<%=sutgroup.get(0)%>"
-										class="listVal" />
-              </div>
-              <div class="lists">
-                <ul class="list" id="grouplist" style="display:none">
-                  <%
-											for (int i = 0; i < sutgroup.size(); i++) {
+	<!-- Header -->
+	<%@ include file="head.jsp"%>
+
+	<div id="main-wrap">
+		<div id="container">
+			<form id="sutinfoform" name="sutinfoform" class="form-horizontal"
+				method="post" action="">
+				<fieldset>
+					<legend>
+						接入系统申请详情页 <small>(带*号标志为必输项)</small>
+					</legend>
+					<table>
+						<tr>
+							<td><div class="input-group">
+									<span class="input-group-addon">* 系统名 :</span> <input
+										type="text" class="form-control" name="sutname" id="sutname"
+										value="<%=applySut.getName()%>" readonly />
+								</div>
+							</td>
+						</tr>
+						<tr style="display:none">
+							<td><input type="text" class="form-control" id="sut_id"
+								name="sut_id" value="<%=sut_id%>">
+							</td>
+						</tr>
+						<tr>
+							<td><div class="input-group">
+									<span class="input-group-addon">申请状态 :</span> <input
+										type="text" class="form-control" name="sutstatus"
+										id="sutstatus"
+										value="<%=applySut.getApplysutstatus().getDescription()%>"
+										disabled />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><div class="input-group">
+									<span class="input-group-addon">* 系统所属平台 :</span> <input
+										type="text" class="form-control"
+										value="<%=applySut.getGroup().getName()%>" id="show_groupname"
+										readonly /> <select class="form-control" id="groupname"
+										name="groupname" style="display:none">
+										<option value="<%=sutgroup.get(0)%>" selected><%=sutgroup.get(0)%></option>
+										<%
+											for (int i = 1; i < sutgroup.size(); i++) {
 										%>
-                  <li id=<%=i%>><%=sutgroup.get(i)%></li>
-                  <%
+										<option value="<%=sutgroup.get(i)%>"><%=sutgroup.get(i)%></option>
+										<%
 											}
 										%>
-                </ul>
-              </div>
-            </div></td>
-        </tr>
-        <tr>
-         <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td style="text-align:right">* 系统中文名 :&nbsp;&nbsp;</td>
-          <td><input type="text"  class="form-control input-sm" style="width:200px" id="code"
-							name="code" value="<%=applySut.getCode()%>" readonly></td>
-        </tr>
-        <tr>
-         <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td style="text-align:right">* 系统描述 :&nbsp;&nbsp;</td>
-          <td><textarea rows="4"  class="form-control" style="width:200px" id="description"
-								name="description" readonly><%=applySut.getDescription()%></textarea></td>
-        </tr>
-        <tr>
-        <td colspan="2"><input type="text" id="id" name="id" value="<%=id %>" style="display:none"></td>
-        </tr>
-        <tr>
-        <td colspan="2">&nbsp;</td>
-        </tr>
-        <tr>
-        <td colspan="2">
-          <table>
-            <tr>
-              <td width="100px"><input type="button" id="approvebtn" name="approvebtn"
-							class="btn btn-primary btn-sm" style="width:80px; text-align:center"		value="通过" onClick="approveac()"></td>
-              <td width="100px"><input type="button" id="rejectbtn" name="rejectbtn"
-							class="btn btn-primary btn-sm" style="width:80px; text-align:center"		value="拒绝" onClick="rejectac()"></td>
-              <td width="100px" id="updatebtnTd" style="display:block"><input type="button" id="updatebtn" name="uptadebtn"
-							class="btn btn-primary btn-sm" style="width:80px; text-align:center;"		value="修改" onClick="updateac()"></td>
-              <td width="100px" id="savebtnTd" style="display:none"><input type="button" id="savebtn" name="savebtn"
-							class="btn btn-primary btn-sm" style="width:80px; text-align:center;"		value="更新" onClick="saveac()"></td>
-            </tr>
-            <tr>
-        		<td colspan="2">&nbsp;</td>
-        	</tr>
-          </table>
-        </td>
-        </tr>
-      </table>
-    </fieldset>
-  </form>
-  <!--网页底部-->
-  <div style="background:#428bca; color:#ffffff; text-align:center">
-    <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
-      Solution<br />
-      Copyright© 2013-2016 平安付科技中心移动研发系统测试</small> </p>
-  </div>
-</div>
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><div class="input-group">
+									<span class="input-group-addon">* 系统中文名 :</span> <input
+										type="text" class="form-control" name="code" id="code"
+										value="<%=applySut.getCode()%>" readonly />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="input-group">
+									<span class="input-group-addon">* 系统描述 :</span>
+									<textarea class="form-control" id="description"
+										name="description"
+										style=" width:100px; max-height:100px; width:200px; max-width:200px"
+										readonly><%=applySut.getDescription()%></textarea>
+								</div></td>
+						</tr>
+						<tr>
+							<td><input type="text" id="id" name="id" value="<%=id%>"
+								style="display:none"></td>
+						</tr>
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td width="100px"><input type="button" id="approvebtn"
+											name="approvebtn" class="btn btn-primary btn-sm"
+											style="width:80px; text-align:center" value="通过"
+											onClick="approveac()"></td>
+										<td width="100px"><input type="button" id="rejectbtn"
+											name="rejectbtn" class="btn btn-primary btn-sm"
+											style="width:80px; text-align:center" value="拒绝"
+											onClick="rejectac()"></td>
+										<td width="100px" id="updatebtnTd" style="display:block"><input
+											type="button" id="updatebtn" name="uptadebtn"
+											class="btn btn-primary btn-sm"
+											style="width:80px; text-align:center;" value="修改"
+											onClick="updateac()"></td>
+										<td width="100px" id="savebtnTd" style="display:none"><input
+											type="button" id="savebtn" name="savebtn"
+											class="btn btn-primary btn-sm"
+											style="width:80px; text-align:center;" value="更新"
+											onClick="saveac()"></td>
+									</tr>
+								</table></td>
+						</tr>
+					</table>
+				</fieldset>
+			</form>
+		</div>
+		<!-- #container -->
+	</div>
+
+
+	<!-- Footer -->
+	<%@ include file="foot.jsp"%>
+
 </body>
 </html>

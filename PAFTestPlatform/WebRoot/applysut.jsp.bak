@@ -1,5 +1,5 @@
-<%@ page contentType="text/html" language="java"
-	import="java.util.*,com.paftp.entity.*" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8" language="java"
+	import="java.util.*,com.paftp.entity.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -11,12 +11,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+<% 
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/applysutgroup.action").forward(request,response);}
+List<String> sutgroup = (List<String>)request.getAttribute("sutgroupnames");
+%>
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<link href="css/shou.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jQSelect.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -36,10 +44,60 @@
 }
 </style>
 <script type="text/javascript">
+$(document).ready(function(){
+    $("#applysutform").validate({
+        rules: {
+            "sutname":{
+                required: true,
+				maxlength: 20
+            },
+			 "code":{
+                required: true,
+				maxlength: 30
+            },
+			"description":{
+                required: true,
+				maxlength: 60
+            }
+        },
+        messages: {
+            "sutname":{
+                required: "请输入系统名",
+				maxlength: $.validator.format("系统名最大不超过20个字符")
+            },
+			"code":{
+                required: "请输入系统中文名",
+				maxlength: $.validator.format("系统中文名最大不超过30个字符")
+            },
+			"description":{
+                required: "请输入系统描述",
+				maxlength: $.validator.format("系统描述最大不超过60个字符")
+            }
+        }
+    });
+});
+</script>
+<script type="text/javascript">
 	function loginac() {
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+	function applysutac() {
+		if ('<%=session.getAttribute("user")%>' != "null"){
+			document.applysutform.action = "${pageContext.request.contextPath}/applySut.action";
+			if($("#applysutform").valid()){
+    		 $("#applysutform").submit();
+ 			}
+		}
+		else{
+		alert("请登录后再提交表单!");
+		}
+	}
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#sutgroup").jQSelect({});
+});	
 </script>
 <style>
 /*导航默认样式，可根据实际情况修改*/
@@ -224,8 +282,9 @@
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
       <div>
-        <button type="button" class="btn btn-primary" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
-        <button type="button" class="btn btn-primary" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
+      	<br/>
+        <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -240,7 +299,7 @@
 		</script> 
   <!--导航-->
   <ul class="daohang" id="navigator">
-    <li><a href="index.jsp">主页</a></li>
+    <li><a href="index_1.jsp">主页</a></li>
     <li><a href="casemanagement.jsp">用例管理</a></li>
     <li><a href="resultmanagement.jsp">结果管理</a></li>
     <li><a href="sutindex.jsp">接入申请</a></li>
@@ -253,59 +312,62 @@
     <%}}%>
   </ul>
   <!--主体-->
-<div id="createVersionDiv">
-<form id="crateversionForm" name="createversionForm" method="post" action="${pageContext.request.contextPath}/createVersion.action">
-<table>
-<tr>
-<td>创建版本<input id="createversion" name="version_num"></td>
-<td><input type="submit" id="createversionbtn" value="创建版本"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createProjectDiv">
-<form id="crateprojectForm" name="crateprojectForm" method="post" action="${pageContext.request.contextPath}/createTestcaseproject.action">
-<table>
-<tr>
-<td>创建项目<input type="text" id="createproject" name="name"></td>
-<td><input type="submit" id="createprojectbtn" value="创建项目"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createSutGroupDiv">
-<form id="cratesutgroupForm" name="cratesutgroupForm" method="post" action="${pageContext.request.contextPath}/createSutGroup.action">
-<table>
-<tr>
-<td>创建平台<input type="text" id="createsutgroup" name="name"></td>
-<td><input type="submit" id="createsutgroupbtn" value="创建平台"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createPositionDiv">
-<form id="cratepositionForm" name="cratepositionForm" method="post" action="${pageContext.request.contextPath}/createPosition.action">
-<table>
-<tr>
-<td>创建职位<input type="text" id="createpositionname" name="position"></td>
-<td>职位描述<input type="text" id="createpositiondes" name="positionDesc"></td>
-<td><input type="submit" id="createpositionbtn" value="创建职位"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createDepartmentDiv">
-<form id="cratedepartmentForm" name="cratedepartmentForm" method="post" action="${pageContext.request.contextPath}/createDepartment.action">
-<table>
-<tr>
-<td>创建部门<input type="text" id="createdepartmentname" name="department"></td>
-<td>部门描述<input type="text" id="createdepartmentdes" name="departmentDesc"></td>
-<td><input type="submit" id="createdepartmentbtn" value="创建部门"></td>
-</tr>
-</table>
-</form>
-</div>
-
+  <div >
+    <form id="applysutform" name="applysutform" class="form-horizontal" method="post" action="">
+      <fieldset>
+        <legend>接入系统申请 <small>(带*号标志为必输项)</small></legend>
+        <table>
+          <tr>
+            <td style="text-align:right">* 系统名 :&nbsp;&nbsp;</td>
+            <td><input type="text" class="input-xlarge" id="sutname" onKeyUp="quanjiao(this);" name="sutname"></td>
+          </tr>
+          <tr>
+          <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="text-align:right">* 系统所属平台 :&nbsp;&nbsp;</td>
+            <td><div id="sutgroup" class="selectbox">
+                <div class="cartes">
+                  <input type="text" value="<%=sutgroup.get(0)%>" id="groupname" name="groupname" class="listTxt" readonly />
+                  <div class="listBtn"><b></b></div>
+                  <input type="hidden" value="" class="listVal" />
+                </div>
+                <div class="lists">
+                  <ul class="list">
+                    <% for (int i =0; i<sutgroup.size(); i++){%>
+                    <li id=<%=i%>><%=sutgroup.get(i)%></li>
+                    <%}%>
+                  </ul>
+                </div>
+              </div></td>
+          </tr>
+          <tr>
+          <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="text-align:right">* 系统中文名 :&nbsp;&nbsp;</td>
+            <td><input type="text" class="input-xlarge" id="code" name="code"></td>
+          </tr>
+          <tr>
+          <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="text-align:right">* 系统描述 :&nbsp;&nbsp;</td>
+            <td><textarea  rows="4" name="description" class="input-xlarge" id="description" style=" width:100px; max-height:100px; width:200px; max-width:200px"></textarea></td>
+          </tr>
+          <tr>
+          <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2"><input type="button" class="btn btn-primary" style="width:80px; text-align:center" name="apsut" id="apsut" onClick="applysutac()" value="提交申请"></td>
+          </tr>
+          <tr>
+          <td>&nbsp;</td>
+          </tr>
+        </table>
+      </fieldset>
+    </form>
+  </div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.util.*,com.paftp.entity.*" errorPage=""%>
+	import="java.util.*,com.paftp.entity.*,com.paftp.dto.*" errorPage=""%>
 <!DOCTYPE HTML>
 <html>
 <head>

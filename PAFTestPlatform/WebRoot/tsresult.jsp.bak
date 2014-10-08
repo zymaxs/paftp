@@ -1,5 +1,5 @@
-<%@ page contentType="text/html" language="java"
-	import="java.util.*,com.paftp.entity.*" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8" language="java"
+	import="java.util.*,com.paftp.entity.*,com.paftp.dto.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -9,6 +9,33 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<% 
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/getSpecialTestpassContent.action").forward(request,response);}
+TestpassDto testpassDto = (TestpassDto)request.getAttribute("testpassdto");
+List<TestsuiteDto> testsuitedtoes = (List<TestsuiteDto>)request.getAttribute("testsuitedtoes");
+String testpass_id = testpassDto.getId().toString();
+String env = testpassDto.getEnv();
+String tspasssum = testpassDto.getPasscount().toString();
+String tsfailsum = testpassDto.getFailcount().toString();
+String tstotalsum = testpassDto.getTotal().toString();
+float tspassrate = testpassDto.getPercentage()*100;
+String exec_time = testpassDto.getCreatetime().toString();
+String exec_st = testpassDto.getName().toString();
+String categories = "";
+String catefail = "";
+String catepass = "";
+String catetotal = "";
+String url_path = "localhost:8080/PAFTestPlatform/";
+int height = (testsuitedtoes.size()*80+100);
+for (int i =0 ; i < testsuitedtoes.size(); i ++ ){
+	categories += "'<a href=\"http://"+url_path +"tsdetail.jsp?testpass_id="+testpass_id+"&testsuite_id="+testsuitedtoes.get(i).getId()+"\">" + testsuitedtoes.get(i).getName()+"</a>'" + ",";
+	catefail += testsuitedtoes.get(i).getFailcount() + ",";
+	catepass += testsuitedtoes.get(i).getPasscount() + ",";
+	catetotal += testsuitedtoes.get(i).getTotal() + ",";
+	 
+}
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
 <title>无标题文档</title>
@@ -17,6 +44,8 @@
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/highcharts.js"></script>
+<script type="text/javascript" src="js/exporting.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -189,29 +218,29 @@
 <div class="container-fluid"> 
   <!--网页头部-->
   <div style="background:#428bca; color:#ffffff;"> <br>
-  <table width="100%">
-  <tr>
-  	<td>&nbsp;&nbsp;</td>
-  	<td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
-    <td colspan="7">&nbsp;</td>
-    <%if (session.getAttribute("user") == null) {%>
-    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </td>
-    <%} else { User user = (User) session.getAttribute("user");
+    <table width="100%">
+      <tr>
+        <td>&nbsp;&nbsp;</td>
+        <td style="font-size:15px; font-family:Microsoft YaHei;">平安付科技中心</td>
+        <td colspan="7">&nbsp;</td>
+        <%if (session.getAttribute("user") == null) {%>
+        <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a></td>
+        <%} else { User user = (User) session.getAttribute("user");
                       String name = user.getAlias(); %>
-    <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </td>
-    <%}%>
-    <td>&nbsp;&nbsp;</td>
-  </tr>
-  <tr>
-  	<td colspan="12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</td>
-  </tr>
-  <tr>
-  	<td colspan="10">&nbsp;</td>
-    <td style="text-align:right;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</td>
-    <td>&nbsp;&nbsp;</td>
-  </tr>
-  </table>
-  <br>
+        <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a></td>
+        <%}%>
+        <td>&nbsp;&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="12" style="text-align:center; font-size:35px; font-family:Microsoft YaHei;">移动研发自动化测试平台</td>
+      </tr>
+      <tr>
+        <td colspan="10">&nbsp;</td>
+        <td style="text-align:right;font-size:15px; font-family:Microsoft YaHei;">Version : beta 0.3.0</td>
+        <td>&nbsp;&nbsp;</td>
+      </tr>
+    </table>
+    <br>
   </div>
   <!--登录-->
   <div id="loginmodal" style="display:none;" align="center">
@@ -223,9 +252,9 @@
       <input type="text" name="alias" id="alias" tabindex="1">
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
-      <div>
-        <button type="button" class="btn btn-primary" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
-        <button type="button" class="btn btn-primary" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
+      <div> <br/>
+        <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -240,7 +269,7 @@
 		</script> 
   <!--导航-->
   <ul class="daohang" id="navigator">
-    <li><a href="index.jsp">主页</a></li>
+    <li><a href="index_1.jsp">主页</a></li>
     <li><a href="casemanagement.jsp">用例管理</a></li>
     <li><a href="resultmanagement.jsp">结果管理</a></li>
     <li><a href="sutindex.jsp">接入申请</a></li>
@@ -253,59 +282,92 @@
     <%}}%>
   </ul>
   <!--主体-->
-<div id="createVersionDiv">
-<form id="crateversionForm" name="createversionForm" method="post" action="${pageContext.request.contextPath}/createVersion.action">
-<table>
-<tr>
-<td>创建版本<input id="createversion" name="version_num"></td>
-<td><input type="submit" id="createversionbtn" value="创建版本"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createProjectDiv">
-<form id="crateprojectForm" name="crateprojectForm" method="post" action="${pageContext.request.contextPath}/createTestcaseproject.action">
-<table>
-<tr>
-<td>创建项目<input type="text" id="createproject" name="name"></td>
-<td><input type="submit" id="createprojectbtn" value="创建项目"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createSutGroupDiv">
-<form id="cratesutgroupForm" name="cratesutgroupForm" method="post" action="${pageContext.request.contextPath}/createSutGroup.action">
-<table>
-<tr>
-<td>创建平台<input type="text" id="createsutgroup" name="name"></td>
-<td><input type="submit" id="createsutgroupbtn" value="创建平台"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createPositionDiv">
-<form id="cratepositionForm" name="cratepositionForm" method="post" action="${pageContext.request.contextPath}/createPosition.action">
-<table>
-<tr>
-<td>创建职位<input type="text" id="createpositionname" name="position"></td>
-<td>职位描述<input type="text" id="createpositiondes" name="positionDesc"></td>
-<td><input type="submit" id="createpositionbtn" value="创建职位"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createDepartmentDiv">
-<form id="cratedepartmentForm" name="cratedepartmentForm" method="post" action="${pageContext.request.contextPath}/createDepartment.action">
-<table>
-<tr>
-<td>创建部门<input type="text" id="createdepartmentname" name="department"></td>
-<td>部门描述<input type="text" id="createdepartmentdes" name="departmentDesc"></td>
-<td><input type="submit" id="createdepartmentbtn" value="创建部门"></td>
-</tr>
-</table>
-</form>
-</div>
-
+  <div style="text-align:center">
+    <table class="table table-bordered" align="center" style="width:60%; margin:auto">
+      <tr>
+        <td colspan='4'>测试环境<%=env%></td>
+      </tr>
+      <tr>
+        <td >Total</td>
+        <td >Pass</td>
+        <td >Fail</td>
+        <td >Pass Rate</td>
+      </tr>
+      <tr>
+        <td><%=tstotalsum%></td>
+        <td><%=tspasssum%></td>
+        <td><%=tsfailsum%></td>
+        <td><%=tspassrate%>%</td>
+      </tr>
+    </table>
+    </div>
+  <div id="container" style=" width:80%;height:<%=height%>px; margin:auto"></div>
+<script>
+$(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: '<%=exec_time%>'
+            },
+            subtitle: {
+                text: '<%=exec_st%>'
+            },
+            xAxis: {
+                categories: [<%=categories%>],
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Case (number)',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ''
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -30,
+                y: 0,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF',
+                shadow: true
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Fail',
+                data: [<%=catefail%>]
+            }, {
+                name: 'Pass',
+                data: [<%=catepass%>]
+            }, {
+                name: 'Total',
+                data: [<%=catetotal%>]
+            }]
+        });
+    });
+</script> 
+  
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

@@ -1,16 +1,33 @@
-<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*,java.util.*,com.paftp.entity.*" errorPage="" %>
+<%@ page contentType="text/html; charset=utf-8" language="java"
+	import="java.sql.*,java.util.*,com.paftp.entity.*" errorPage=""%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ "/";
+%>
 <!DOCTYPE HTML>
 <html>
 <head>
+<% 
+List<Role> roles = (List<Role>)request.getAttribute("currentPageRoles");
+String pagenum = request.getAttribute("pages").toString();
+User users = (User)request.getAttribute("user");
+UserInfo userinfo = (UserInfo) users.getUserInfo();
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<link href="css/shou.css" rel="stylesheet">
+<link href="css/jqpagination.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jQSelect.js"></script>
+<script type="text/javascript" src="js/jquery.jqpagination.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -29,24 +46,112 @@
 	TEXT-DECORATION: none
 }
 </style>
-<script type="text/javascript">
-$().ready(function() {
- $("#updatepwdForm").validate({
-        rules: {
-   alias: "required"
-  },
-        messages: {
-   alias: "请输入用户名"
-  }
-    });
+<%  
+Integer id = 0;
+String username = "";
+String displayname = "";
+String department = "";
+String position = "";
+String mobile = "";
+String telephone = "";
+String othermail = "";
+String otherinfo ="";
 
-});
+if(users.getId() != null){
+	id = users.getId();
+}
 
+if (users.getAlias() != null) {
+	username = users.getAlias();
+}
 
-function loginac() {
-		document.loginform.action = "${pageContext.request.contextPath}/login.action";
-		document.loginform.submit();
+if (users.getDisplayName() != null) {
+	displayname = users.getDisplayName();
+}
+
+if (userinfo.getDepartment() != null && userinfo.getDepartment().getName() != null) {
+	department = userinfo.getDepartment().getName();
+}
+
+if (userinfo.getPosition() != null && userinfo.getPosition().getName() != null) {
+	position = userinfo.getPosition().getName();
+}
+
+if (userinfo.getMobile() != null) {
+	mobile = userinfo.getMobile();
+}
+
+if (userinfo.getTelephone() != null) {
+	telephone = userinfo.getTelephone();
+}
+
+if (userinfo.getOthermail() != null) {
+	othermail = userinfo.getOthermail();
+}
+if (userinfo.getOtherinfo() != null) {
+		otherinfo = userinfo.getOtherinfo();
 	}
+	;
+%>
+<script type="text/javascript">
+var pagentotal = <%=pagenum%>;
+var params;
+$(document).ready( function(){
+	$("#roleFormTab").append(inidata());
+		
+	$('.pagination').jqPagination({
+		link_string : '/?page={page_number}',
+		max_page : pagentotal, 
+		paged : function(page) {
+		params = {pagenum:page,userid:<%=id%>};
+		$.ajax({
+				type : "POST",
+				url : "getUserInfoAjax.action",
+				data : params,
+				dataType : "json",
+				success : function(root) {
+
+					$("#roleFormTab").html("");
+					$(root.currentPageRoleDtoes).each(function(i,value){
+					$("#roleFormTab").append("<tr><td>"+value.name+"</td><td>"+value.sutdto.name+"</td><td>"+value.description+"</td></tr>");
+					})
+				},
+
+				error : function(root) {
+
+					alert("failed");
+
+					return false;
+
+				}
+			})
+		}
+		});
+	
+  });
+</script>
+<script type="text/javascript">
+
+function inidata(){
+	<%
+	String iniinsertdata="";
+	
+	for(int i=0; i< roles.size() ;i++ ){
+		iniinsertdata +="<tr>";
+		iniinsertdata +="<td>"+roles.get(i).getName()+"</td>";
+		if (roles.get(i).getSut() != null){
+			iniinsertdata +="<td>"+roles.get(i).getSut().getName()+"</td>";
+		}
+		else {
+			iniinsertdata += "<td></td>";
+			}
+		iniinsertdata +="<td>"+roles.get(i).getDescription()+"</td>";
+		iniinsertdata +="</tr>";
+	}
+	%>
+	return "<%=iniinsertdata%>";
+}
+
 </script>
 <style>
 /*导航默认样式，可根据实际情况修改*/
@@ -190,12 +295,18 @@ function loginac() {
 								});
 		   });
 </script>
+<script type="text/javascript">
+	function loginac() {
+		document.loginform.action = "${pageContext.request.contextPath}/login.action";
+		document.loginform.submit();
+	}
+</script>
 </head>
 
 <body>
 <div class="container-fluid"> 
   <!--网页头部-->
- <div style="background:#428bca; color:#ffffff;"> <br>
+  <div style="background:#428bca; color:#ffffff;"> <br>
   <table width="100%">
   <tr>
   	<td>&nbsp;&nbsp;</td>
@@ -203,8 +314,8 @@ function loginac() {
     <td colspan="7">&nbsp;</td>
     <%if (session.getAttribute("user") == null) {%>
     <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="register.jsp">注册</a> | <a href="#loginmodal" id="login">登录</a> </td>
-    <%} else { User user = (User) session.getAttribute("user");
-                      String name = user.getAlias(); %>
+    <%} else { User loginuser = (User) session.getAttribute("user");
+                      String name = loginuser.getAlias(); %>
     <td colspan="2" class="whitelink" style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a href="updateuserinfo.jsp"><%=name%> </a>| <a href="logout.jsp">登出</a> </td>
     <%}%>
     <td>&nbsp;&nbsp;</td>
@@ -220,7 +331,7 @@ function loginac() {
   </table>
   <br>
   </div>
-   <!--登录-->
+  <!--登录-->
   <div id="loginmodal" style="display:none;" align="center">
     <div>
       <p>用户登录</p>
@@ -230,17 +341,20 @@ function loginac() {
       <input type="text" name="alias" id="alias" tabindex="1">
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
-      <div>
-      	<br/>
+      <div> <br/>
         <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
         <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
   <script type="text/javascript">
-	$(function(){
-	$('#login').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
-	});
+			$(function() {
+				$('#login').leanModal({
+					top : 110,
+					overlay : 0.45,
+					closeButton : ".hidemodal"
+				});
+			});
   </script> 
   <!--导航-->
   <ul class="daohang" id="navigator">
@@ -258,23 +372,73 @@ function loginac() {
   </ul>
   <!--主体-->
   <div>
-    <form id="findpwdForm" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/getbakpwd.action">
-      <fieldset>
-        <legend>找回密码</legend>
-        <table class="table" style="width:40%" align="left">
-        <tr align="center">
-        <td>* 用户名 :</td>
-        <td><input type="text" id="alias" name="alias" style="width:200px"></td>
-        <td><button type="submit" class="btn btn-primary btn-sm" style="width:80px; text-align:center">确定</button></td>
+    <fieldset>
+      <legend> 用户信息 </legend>
+      <table style="width:40%" align="left" class="table table-striped">
+      	<tr>
+        <td>&nbsp;&nbsp;Alias&nbsp;&nbsp;:</td>
+        <td><%=username%></td>
         </tr>
-        </table>
-      </fieldset>
-    </form>
+        <tr>
+          <td>真实姓名 :</td>
+          <td ><%=displayname%></td>
+        </tr>
+        <tr>
+          <td>所属部门 :</td>
+          <td ><%=department%></td>
+        </tr>
+        <tr>
+          <td>当前职位 :</td>
+          <td ><%=position%></td>
+        </tr>
+        <tr>
+          <td>移动电话 :</td>
+          <td ><%=mobile%></td>
+        </tr>
+        <tr>
+          <td>座式电话 :</td>
+          <td ><%=telephone%></td>
+        </tr>
+        <tr>
+          <td>其他邮件 :</td>
+          <td ><%=othermail%></td>
+        </tr>
+        <tr>
+          <td>备注信息 :</td>
+          <td><%=otherinfo%></td>
+        </tr>
+      </table>
+    </fieldset>
   </div>
+  <div>
+    <fieldset>
+      <legend> 用户权限</legend>
+      <table id="roleForm" class="table table-bordered" style="width:80%" align="left">
+        <thead>
+          <tr>
+            <td>角色</td>
+            <td>系统</td>
+            <td>描述</td>
+          </tr>
+        </thead>
+        <tbody id="roleFormTab">
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
+  <div class="pagination"> <a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
+			class="previous" data-action="previous">&lsaquo;</a>
+    <input
+			type="text" readonly="readonly"/>
+    <a href="#"
+			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
+			data-action="last">&raquo;</a> </div>
+  
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
-    <p><small><b>自动化测试</b>：WebService | App | Web | Stress | Solution<br/>
-      Copyright© 2013-2016 平安付科技中心移动研发系统测试</small></p>
+    <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |
+      Solution<br />
+      Copyright© 2013-2016 平安付科技中心移动研发系统测试</small> </p>
   </div>
 </div>
 </body>

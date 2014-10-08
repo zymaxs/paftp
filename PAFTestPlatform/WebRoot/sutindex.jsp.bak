@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"
-	import="java.util.*,com.paftp.entity.*"%>
+	import="java.util.*,com.paftp.entity.*,com.paftp.dto.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -9,14 +9,26 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<% 
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/initialSuts.action").forward(request,response);}
+List<ApplySut> inisutdata = (List<ApplySut>)request.getAttribute("suts");
+String pagenum = request.getAttribute("pages").toString();
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<link href="css/easyui/themes/default/easyui.css" rel="stylesheet">
+<link href="css/easyui/themes/icon.css" rel="stylesheet">
+<link href="css/easyui/demo.css" rel="stylesheet">
+<link href="css/jqpagination.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="js/jquery.jqpagination.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -36,15 +48,101 @@
 }
 </style>
 <script type="text/javascript">
+var pagentotal = <%=pagenum%>;
+var params;
+$(document).ready( function(){
+
+	$("#sutForm").append(inidata());
+	
+	$("#querysut").click(function(){
+		params = {pagenum:1,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue")};
+		
+		$.ajax({
+						type : "POST",
+						url : "querySutsAjax.action",
+						data : params,
+						dataType : "json",
+						success : function(test) {
+							$("#sutFormTab").html("");
+							$(test.applySutDtos).each(function(i,value){
+								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td><a href='getuserinfo.action?userid="+value.user_id+"'>"+value.applyer+"</td>"+"<td>"+value.applytime+"</td>"+"<td><a href='initialSut.action?id="+value.id+"'>"+value.applysutstatusdto.description+"</a></td>"+"</tr>");
+							});
+							
+							$('.pagination').jqPagination('option', 'max_page', test.pages);
+							
+						},
+						error : function(root) {
+
+							alert("json=" + root);
+
+							return false;
+
+						}
+				});
+		
+	
+				
+		});
+	
+	
+	$('.pagination').jqPagination({
+				link_string : '/?page={page_number}',
+				max_page : pagentotal, 
+				paged : function(page) {
+				params = {pagenum:page,sutname:$("#sutname").val(),applyer:$("#applyer").val(),starttime:$("#starttime").datetimebox("getValue"),endtime:$("#endtime").datetimebox("getValue")};
+				$.ajax({
+						type : "POST",
+						url : "querySutsAjax.action",
+						data : params,
+						dataType : "json",
+						success : function(root) {
+	
+							$("#sutFormTab").html("");
+							$(root.applySutDtos).each(function(i,value){
+								$("#sutFormTab").append("<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td><a href='getuserinfo.action?userid="+value.user_id+"'>"+value.applyer+"</a></td>"+"<td>"+value.applytime+"</td>"+"<td><a href='initialSut.action?id="+value.id+"'>"+value.applysutstatusdto.description+"</a></td>"+"</tr>");
+							})
+						},
+
+						error : function(root) {
+
+							alert("json=" + root);
+
+							return false;
+
+						}
+					})
+				}
+				});
+  });
+  
+function inidata(){
+	<%
+	String iniinsertdata="";
+	
+	for(int i=0; i< inisutdata.size() ;i++ ){
+		iniinsertdata +="<tr>";
+		iniinsertdata +="<td>"+inisutdata.get(i).getId()+"</td>";
+		iniinsertdata +="<td>"+inisutdata.get(i).getName()+"</td>";
+		iniinsertdata +="<td><a href='getuserinfo.action?userid="+inisutdata.get(i).getUser().getId()+"'>"+inisutdata.get(i).getUser().getAlias()+"</a></td>";
+		iniinsertdata +="<td>"+inisutdata.get(i).getApplytime()+"</td>";
+		iniinsertdata +="<td><a href='initialSut.action?id="+inisutdata.get(i).getId()+"'>"+inisutdata.get(i).getApplysutstatus().getDescription()+"</a></td>";
+		iniinsertdata +="</tr>";
+	}
+	%>
+	return "<%=iniinsertdata%>";
+}
+</script>
+<script type="text/javascript">
 	function loginac() {
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+
+	
 </script>
 <style>
 /*导航默认样式，可根据实际情况修改*/
 * {
-	margin:0;
 	padding:0
 }
 .daohang {
@@ -223,7 +321,8 @@
       <input type="text" name="alias" id="alias" tabindex="1">
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
-      <div> <br/>
+      <div>
+      	<br/>
         <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
         <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
@@ -253,7 +352,61 @@
     <%}}%>
   </ul>
   <!--主体-->
-  <div align="center"> Hello World! </div>
+  <table width="100%">
+  <tr align="left">
+  <td>
+  	<button type="button" class="btn btn-primary btn-success" style="width:80px;text-align:center" onClick="window.location.href='applysut.jsp'">申请接入</button>
+  </td>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  </tr>
+  </table>
+  <form id="queryForm" name="queryForm" action="">
+    <table width="100%">
+      <tr>
+        <td style="width:50px">系统名</td>
+        <td><input type="text" id="sutname" name="sutname" style="width:100px"></td>
+        <td style="width:50px">申请人</td>
+        <td><input type="text" id="applyer" name="applyer" style="width:100px"></td>
+        <td>起始日期</td>
+        <td><input class="easyui-datetimebox"  id="starttime" name="starttime" editable="false" ></td>
+        <td>截止日期</td>
+        <td><input class="easyui-datetimebox"  id="endtime" name="endtime" editable="false"></td>
+      </tr>
+      <tr>
+      	<td colspan="8">&nbsp;</td>
+      </tr>
+      <tr align="center">
+          <td colspan="8">
+        <input type="button" id="querysut" class="btn btn-primary btn-sm"  style="width:80px" name="querysut" value="搜索">
+          </td>
+      </tr>
+    </table>
+  </form>
+  
+  <!--TABLE展示-->
+  <table id="sutForm" class="table table-striped" style="text-align:center; width:100%" align="center">
+    <thead>
+      <tr>
+        <td>申请序号</td>
+        <td>系统名称</td>
+        <td>申请人</td>
+        <td>申请日期</td>
+        <td>状态</td>
+      </tr>
+    </thead>
+    <tbody id="sutFormTab">
+    </tbody>
+  </table>
+  <div align="center">
+  <div class="pagination"> <a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
+			class="previous" data-action="previous">&lsaquo;</a>
+    <input
+			type="text" readonly="readonly"/>
+    <a href="#"
+			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
+			data-action="last">&raquo;</a> </div></div>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

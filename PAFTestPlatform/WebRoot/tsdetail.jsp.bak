@@ -1,5 +1,5 @@
-<%@ page contentType="text/html" language="java"
-	import="java.util.*,com.paftp.entity.*" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8" language="java"
+	import="java.util.*,com.paftp.entity.*,com.paftp.dto.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -9,6 +9,15 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<% 
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/getSpecialTestsuiteResultContent.action").forward(request,response);}
+Testsuite testsuite = (Testsuite)request.getAttribute("testsuite");
+String ts_name = testsuite.getName().toString();
+String ts_desc = testsuite.getDescription().toString();
+String ts_id = testsuite.getId().toString();
+List<TestcaseResult> testcase_results = (List<TestcaseResult>)request.getAttribute("testcaseresults");
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
 <title>无标题文档</title>
@@ -17,6 +26,8 @@
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/highcharts.js"></script>
+<script type="text/javascript" src="js/exporting.js"></script>
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -34,12 +45,81 @@
 	COLOR: #ffffff;
 	TEXT-DECORATION: none
 }
+.redlink A:link {
+	COLOR: #00ff00;
+	TEXT-DECORATION: none
+}
+.redlink A:visited {
+	COLOR: #00ff00;
+	TEXT-DECORATION: none
+}
+.redlink A:hover {
+	COLOR: #00ff00;
+	TEXT-DECORATION: none
+}
+.redlink A:active {
+	COLOR: #00ff00;
+	TEXT-DECORATION: none
+}
+.greenlink A:link {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.greenlink A:visited {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.greenlink A:hover {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.greenlink A:active {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
 </style>
 <script type="text/javascript">
 	function loginac() {
 		document.loginform.action = "${pageContext.request.contextPath}/login.action";
 		document.loginform.submit();
 	}
+	
+	function inidata(){
+		<%
+		String caseinfo = "";
+		String Ispass = "";
+		String redtype = "color:#ff0000;style='font-weight:bloder;'";
+		String greentype = "color:#00ff00;style='font-weight:bloder;'";
+		for (int i=0 ; i < testcase_results.size(); i++){
+			if (String.valueOf(testcase_results.get(i).getIspass()) == "true"){
+				Ispass = "成功";
+				}
+				else {
+					Ispass = "失败";
+					}
+			
+		String Description = testcase_results.get(i).getTestcase().getDescription();
+			Description = Description.replaceAll("<", "&lt;");
+			Description = Description.replaceAll(">", "&gt;");
+			Description = Description.replaceAll("\"", "&#34;");
+			Description = Description.replaceAll("\n","");
+			
+			caseinfo += "<tr>";
+			if (String.valueOf(testcase_results.get(i).getIspass()) == "true"){
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td class='redlink'><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + Ispass + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" + Description + "</td>";}
+			else {
+			caseinfo += "<td>" + testcase_results.get(i).getCasename() + "</td><td class='greenlink'><a href='caseresult.jsp?testcaseresult_id="+testcase_results.get(i).getId()+"'>" + Ispass + "</a></td><td>" + testcase_results.get(i).getTestcase().getCasetype() + "</td><td>" +Description + "</td>";
+				}
+			caseinfo += "</tr>";}
+		%>
+		return "<%=caseinfo%>";
+		
+	}
+	
+	$(document).ready( function(){
+		$("#caseinfoTab").html("");
+		$("#caseinfoTab").append(inidata());
+		});
 </script>
 <style>
 /*导航默认样式，可根据实际情况修改*/
@@ -223,9 +303,9 @@
       <input type="text" name="alias" id="alias" tabindex="1">
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
-      <div>
-        <button type="button" class="btn btn-primary" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
-        <button type="button" class="btn btn-primary" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
+      <div> <br/>
+        <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -240,7 +320,7 @@
 		</script> 
   <!--导航-->
   <ul class="daohang" id="navigator">
-    <li><a href="index.jsp">主页</a></li>
+    <li><a href="index_1.jsp">主页</a></li>
     <li><a href="casemanagement.jsp">用例管理</a></li>
     <li><a href="resultmanagement.jsp">结果管理</a></li>
     <li><a href="sutindex.jsp">接入申请</a></li>
@@ -253,59 +333,30 @@
     <%}}%>
   </ul>
   <!--主体-->
-<div id="createVersionDiv">
-<form id="crateversionForm" name="createversionForm" method="post" action="${pageContext.request.contextPath}/createVersion.action">
-<table>
-<tr>
-<td>创建版本<input id="createversion" name="version_num"></td>
-<td><input type="submit" id="createversionbtn" value="创建版本"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createProjectDiv">
-<form id="crateprojectForm" name="crateprojectForm" method="post" action="${pageContext.request.contextPath}/createTestcaseproject.action">
-<table>
-<tr>
-<td>创建项目<input type="text" id="createproject" name="name"></td>
-<td><input type="submit" id="createprojectbtn" value="创建项目"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createSutGroupDiv">
-<form id="cratesutgroupForm" name="cratesutgroupForm" method="post" action="${pageContext.request.contextPath}/createSutGroup.action">
-<table>
-<tr>
-<td>创建平台<input type="text" id="createsutgroup" name="name"></td>
-<td><input type="submit" id="createsutgroupbtn" value="创建平台"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createPositionDiv">
-<form id="cratepositionForm" name="cratepositionForm" method="post" action="${pageContext.request.contextPath}/createPosition.action">
-<table>
-<tr>
-<td>创建职位<input type="text" id="createpositionname" name="position"></td>
-<td>职位描述<input type="text" id="createpositiondes" name="positionDesc"></td>
-<td><input type="submit" id="createpositionbtn" value="创建职位"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createDepartmentDiv">
-<form id="cratedepartmentForm" name="cratedepartmentForm" method="post" action="${pageContext.request.contextPath}/createDepartment.action">
-<table>
-<tr>
-<td>创建部门<input type="text" id="createdepartmentname" name="department"></td>
-<td>部门描述<input type="text" id="createdepartmentdes" name="departmentDesc"></td>
-<td><input type="submit" id="createdepartmentbtn" value="创建部门"></td>
-</tr>
-</table>
-</form>
-</div>
-
+  <p><h2><%=ts_name%>测试结果</h2></p>
+  <table class="table table-bordered">
+  	<tr>
+    	<td>测试集</td>
+		<td><%=ts_name%></td>
+	</tr>
+	<tr>
+		<td>描述</td>
+		<td><%=ts_desc%></td>
+	</tr>
+  </table>
+  <br>
+  <table class="table table-bordered">
+  	<thead>
+    <tr>
+		<td>case名称</td>
+		<td>结果</td>
+		<td>正例/反例</td>
+		<td>描述</td>		
+	</tr>
+    </thead>
+    <tbody id="caseinfoTab">
+    </tbody>
+  </table>
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

@@ -55,7 +55,7 @@
 							class="form-control" id="password" name="password" />
 					</div>
 					<div class="input-group init_margin_bottom">
-						<span class="input-group-addon init_addon_front">*新密码 ：</span> <input type="password"
+						<span class="input-group-addon init_addon_front">*新密码确认 ：</span> <input type="password"
 							class="form-control" id="confirm_password" name="confirm_password" />
 					</div>
 					<p>初始密码已发送到您的平安邮箱，收到后请修改初始密码，如果三分钟内未收到，请点击下方的重新获取密码</p>

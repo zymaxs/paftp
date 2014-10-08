@@ -1,5 +1,5 @@
-<%@ page contentType="text/html" language="java"
-	import="java.util.*,com.paftp.entity.*" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8" language="java"
+	import="java.util.*,com.paftp.entity.*,com.paftp.dto.*"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -9,14 +9,107 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<%
+if (request.getAttribute("flag")==null){
+request.getRequestDispatcher("${pageContext.request.contextPath}/queryFailedTestcases.action").forward(request,response);}
+String pagenum = request.getAttribute("pages").toString();
+String testpassname = request.getAttribute("testpassname").toString();
+List<TestcaseResultDto> testcaserange_dtoes = (List<TestcaseResultDto>)request.getAttribute("testcaseresultdtoes");
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
 <title>无标题文档</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<link href="css/jqpagination.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="js/jquery.jqpagination.js"></script>
+<Script language="javascript">
+function GetRequest() {
+   var url = location.search; //获取url中"?"符后的字串
+   var theRequest = new Object();
+   if (url.indexOf("?") != -1) {
+      var str = url.substr(1);
+      strs = str.split("&");
+      for(var i = 0; i < strs.length; i ++) {
+         theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+      }
+   }
+   return theRequest;
+}
+
+var Request = new Object();
+Request = GetRequest();
+var testpass_id;
+testpass_id = Request['testpass_id'];
+
+var pagentotal = <%=pagenum%>;
+
+$(document).ready( function(){
+	//alert(testpass_id);
+	
+	$('.pagination').jqPagination({
+		link_string : '/?page={page_number}',
+		max_page : pagentotal, 
+		paged : function(page) {
+		params = {pagenum:page,testpass_id:testpass_id};
+		$.ajax({
+				type : "POST",
+				url : "queryFailedTestcasesByPage.action",
+				data : params,
+				dataType : "json",
+				success : function(root) {
+					$("#caseinfoTab").html("");
+					var caseinfo = "";
+					var Ispass = "";
+					for ( i=0 ; i < root.testcaseresultdtoes.length; i++){
+						if (root.testcaseresultdtoes[i].ispass == "true"){
+							Ispass = "成功";
+							}
+							else {
+								Ispass = "失败";
+								}
+						
+					var Description = root.testcaseresultdtoes[i].testcase.description;
+					if (Description != null){
+					Description = Description.replace(/</g, "&lt;");
+					Description = Description.replace(/>/g, "&gt;");
+					Description = Description.replace(/\"/g, "&#34;");
+					Description = Description.replace(/\n/g,"");
+					}
+					else Description ="";
+					
+					
+					caseinfo += "<tr>";
+					caseinfo += "<td>"+ root.testcaseresultdtoes[i].casename +"</td>";
+					caseinfo += "<td class='redlink'><a href='caseresult.jsp?testcaseresult_id="+root.testcaseresultdtoes[i].id+"'>"+ Ispass +"</a></td>";
+					caseinfo += "<td>"+ root.testcaseresultdtoes[i].testcase.casetype +"</td>";
+					caseinfo += "<td>"+ Description +"</td>";
+					caseinfo += "<td>"+ root.testcaseresultdtoes[i].status +"</td>";
+					caseinfo += "</tr>";
+						
+					}
+					$("#caseinfoTab").append(caseinfo);
+				},
+
+				error : function(root) {
+
+					alert("json=" + root);
+
+					return false;
+
+				}
+			})
+		}
+		});
+	
+	$('.pagination').jqPagination('option', 'max_page', pagentotal);
+	
+});
+</script>
+
 <style>
 .whitelink A:link {
 	COLOR: #ffffff;
@@ -32,6 +125,22 @@
 }
 .whitelink A:active {
 	COLOR: #ffffff;
+	TEXT-DECORATION: none
+}
+.redlink A:link {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.redlink A:visited {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.redlink A:hover {
+	COLOR: #ff0000;
+	TEXT-DECORATION: none
+}
+.redlink A:active {
+	COLOR: #ff0000;
 	TEXT-DECORATION: none
 }
 </style>
@@ -223,9 +332,9 @@
       <input type="text" name="alias" id="alias" tabindex="1">
       <label for="password" style="Microsoft YaHei; font-size:12px;">Password:</label>
       <input type="password" name="password" id="password" tabindex="2">
-      <div>
-        <button type="button" class="btn btn-primary" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
-        <button type="button" class="btn btn-primary" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
+      <div> <br/>
+        <button type="button" class="btn btn-primary btn-sm" onClick="loginac()" id="loginbtn" name="loginbtn" tabindex="3">LogIn</button>
+        <button type="button" class="btn btn-primary btn-sm" onClick="window.location.href='findpwd.jsp'" id="findpwdbtn" name="findpwdbtn" tabindex="4">找回密码</button>
       </div>
     </form>
   </div>
@@ -240,7 +349,7 @@
 		</script> 
   <!--导航-->
   <ul class="daohang" id="navigator">
-    <li><a href="index.jsp">主页</a></li>
+    <li><a href="index_1.jsp">主页</a></li>
     <li><a href="casemanagement.jsp">用例管理</a></li>
     <li><a href="resultmanagement.jsp">结果管理</a></li>
     <li><a href="sutindex.jsp">接入申请</a></li>
@@ -253,59 +362,30 @@
     <%}}%>
   </ul>
   <!--主体-->
-<div id="createVersionDiv">
-<form id="crateversionForm" name="createversionForm" method="post" action="${pageContext.request.contextPath}/createVersion.action">
-<table>
-<tr>
-<td>创建版本<input id="createversion" name="version_num"></td>
-<td><input type="submit" id="createversionbtn" value="创建版本"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createProjectDiv">
-<form id="crateprojectForm" name="crateprojectForm" method="post" action="${pageContext.request.contextPath}/createTestcaseproject.action">
-<table>
-<tr>
-<td>创建项目<input type="text" id="createproject" name="name"></td>
-<td><input type="submit" id="createprojectbtn" value="创建项目"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createSutGroupDiv">
-<form id="cratesutgroupForm" name="cratesutgroupForm" method="post" action="${pageContext.request.contextPath}/createSutGroup.action">
-<table>
-<tr>
-<td>创建平台<input type="text" id="createsutgroup" name="name"></td>
-<td><input type="submit" id="createsutgroupbtn" value="创建平台"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createPositionDiv">
-<form id="cratepositionForm" name="cratepositionForm" method="post" action="${pageContext.request.contextPath}/createPosition.action">
-<table>
-<tr>
-<td>创建职位<input type="text" id="createpositionname" name="position"></td>
-<td>职位描述<input type="text" id="createpositiondes" name="positionDesc"></td>
-<td><input type="submit" id="createpositionbtn" value="创建职位"></td>
-</tr>
-</table>
-</form>
-</div>
-<div id="createDepartmentDiv">
-<form id="cratedepartmentForm" name="cratedepartmentForm" method="post" action="${pageContext.request.contextPath}/createDepartment.action">
-<table>
-<tr>
-<td>创建部门<input type="text" id="createdepartmentname" name="department"></td>
-<td>部门描述<input type="text" id="createdepartmentdes" name="departmentDesc"></td>
-<td><input type="submit" id="createdepartmentbtn" value="创建部门"></td>
-</tr>
-</table>
-</form>
-</div>
-
+  <p><h2><%=testpassname%>失败案例集合</h2></p>
+  
+  <table class="table table-bordered">
+  	<thead>
+    <tr>
+		<td>case名称</td>
+		<td>结果</td>
+		<td>正例/反例</td>
+		<td>描述</td>
+		<td>状态</td>		
+	</tr>
+    </thead>
+    <tbody id="caseinfoTab">
+    </tbody>
+  </table>
+  <div align="center">
+  <div class="pagination"> <a href="#" class="first" data-action="first">&laquo;</a> <a href="#"
+			class="previous" data-action="previous">&lsaquo;</a>
+    <input
+			type="text" readonly="readonly"/>
+    <a href="#"
+			class="next" data-action="next">&rsaquo;</a> <a href="#" class="last"
+			data-action="last">&raquo;</a> </div></div>
+  
   <!--网页底部-->
   <div style="background:#428bca; color:#ffffff; text-align:center">
     <p> <small><b>自动化测试</b>：WebService | App | Web | Stress |

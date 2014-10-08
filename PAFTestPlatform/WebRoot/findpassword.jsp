@@ -5,27 +5,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
-<title>错误信息</title>
+<title>主页</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/frame.css" rel="stylesheet" />
 <link href="css/layout.css" rel="stylesheet" />
+<link href="css/findpassword/findpassword.css" rel="stylesheet">
 <script type="text/javascript" src="JavaScript/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="JavaScript/bootstrap.min.js"></script>
 <script src="JavaScript/index/index.js"></script>
 <script src="JavaScript/common/common.js"></script>
-<script language="javascript">
- var i=2;
- window.setInterval("settime()",1000);
- window.setTimeout("toload()",3000);
- function settime(){
-    var divinner=document.getElementById("settime");
-    divinner.innerText=i;
-    i--;
- }
- function toload(){
-    history.go(-1);
- }
-</script>
+<script src="JavaScript/findpassword/findpassword.js"></script>
 </head>
 
 <body>
@@ -34,13 +23,21 @@
 
 	<div id="main-wrap">
 		<div id="container">
-			<div style="text-align:center">
-				<p>操作失败！</p>
-				<p><%=request.getAttribute("error")%></p>
-				<p>
-					<span id="settime">3</span>秒后自动返回上一级!
-				</p>
-			</div>
+			<form id="findpwdForm" class="form-horizontal" method="post"
+				action="${pageContext.request.contextPath}/getbakpwd.action">
+				<div style="text-align: -webkit-center;">
+					<h3>找回密码</h3>
+					<div class="input-group findpwd_input">
+						<span class="input-group-addon">* 用户名:</span> <input
+							type="password" class="form-control" id="alias" name="alias" />
+					</div>
+					<p>用户名为您的平安邮箱前缀，邮件将发送至您的平安邮箱，请注意查收！</p>
+					<button type="button" class="btn btn-primary findpwd_submitBtn"
+						onclick="findpassword()">确定</button>
+				</div>
+			</form>
+
+
 
 		</div>
 		<!-- #container -->

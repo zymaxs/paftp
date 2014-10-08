@@ -105,7 +105,7 @@
 		</interceptors>
 		<global-results>
 			<!-- 下面定义的结果对所有的Action都有效 -->
-			<result name="session" type="redirect">/sutindex.jsp</result>
+			<result name="session" type="redirect">/sut.jsp</result>
 		</global-results>
 		<action name="login" method="login" class="com.paftp.action.LoginAction">
 			<result name="logsuccess" type="redirect">/index.jsp</result>
@@ -136,7 +136,7 @@
 		<action name="updateuserinfo" method="updateUserInfo"
 			class="com.paftp.action.UserProfileAction">
 			<interceptor-ref name="sessionExpirayStack" />
-			<result name="success">/index_1.jsp</result>
+			<result name="success">/index.jsp</result>
 		</action>
 		<action name="updatepassword" method="updatePassword"
 			class="com.paftp.action.UserProfileAction">
@@ -151,19 +151,19 @@
 		<action name="applySut" method="applySut"
 			class="com.paftp.action.ApplySutAction">
 			<interceptor-ref name="sessionExpirayStack" />
-			<result name="success">/sutindex.jsp</result>
+			<result name="success" type="redirect">/sut.jsp</result>
 			<result name="error">/error.jsp</result>
 			<result name="exist">/error.jsp</result>
 		</action>
 		<action name="approveSut" method="approveSut"
 			class="com.paftp.action.ApplySutAction">
 			<interceptor-ref name="sessionExpirayStack" />
-			<result name="success">/sutindex.jsp</result>
-			<result name="error">/error.jsp</result>
+			<result name="success" type="redirect">/sut.jsp</result>
+			<result name="error" type="redirect">/error.jsp</result>
 		</action>
 		<action name="initialSuts" method="initialSuts"
 			class="com.paftp.action.ApplySutAction">
-			<result name="success">/sutindex.jsp</result>
+			<result name="success">/sut.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
 		<action name="initialSut" method="initialSut"
@@ -175,7 +175,7 @@
 		<action name="updateSut" method="updateSut"
 			class="com.paftp.action.ApplySutAction">
 			<interceptor-ref name="sessionExpirayStack" />
-			<result name="success">/sutindex.jsp</result>
+			<result name="success" type="redirect">/sut.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
 		<action name="reguserinfo" method="userinfo"
@@ -215,7 +215,7 @@
 		</action>
 		<action name="initialroles" method="initialRoles"
 			class="com.paftp.action.RoleAction">
-			<result name="success">/roleindex.jsp</result>
+			<result name="success">/role.jsp</result>
 			<result name="error">/error.jsp</result>
 		</action>
 		<action name="sutinitialAddRelationship" method="initialAddRelationship"
