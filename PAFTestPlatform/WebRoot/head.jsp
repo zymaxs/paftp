@@ -4,11 +4,11 @@
 		<div id="fixed-header">
 			<div class="fixed-header-nav">
 				<ul class="top_navi">
-					<li><a href="index.jsp" class="hover">主页</a></li>
-					<li><a href="casemanagement.jsp">用例管理</a></li>
-					<li><a href="resultmanagement.jsp">结果管理</a></li>
-					<li><a href="sut.jsp">接入申请</a></li>
-					<li><a href="rolemanagement.jsp">用户权限</a></li>
+					<li><a href="index.jsp" class="hover" style="font-family:Microsoft YaHei">主页</a></li>
+					<li><a href="casemanagement.jsp" style="font-family:Microsoft YaHei">用例管理</a></li>
+					<li><a href="resultmanagement.jsp" style="font-family:Microsoft YaHei">结果管理</a></li>
+					<li><a href="rolemanagement.jsp" style="font-family:Microsoft YaHei">用户权限</a></li>
+					<li><a href="sut.jsp" style="font-family:Microsoft YaHei">接入申请</a></li>
 					<%
 						if (session.getAttribute("isAdmin") != null) {
 							String UserIsAdmin = String.valueOf(session
@@ -65,11 +65,11 @@
 				</tr>
 			</table>
 			<ul class="top_navi">
-				<li><a href="index.jsp">主页</a></li>
-				<li><a href="casemanagement.jsp">用例管理</a></li>
-				<li><a href="resultmanagement.jsp">结果管理</a></li>
-				<li><a href="sut.jsp">接入申请</a></li>
-				<li><a href="rolemanagement.jsp">用户权限</a></li>
+				<li><a href="index.jsp" style="font-family:Microsoft YaHei">主页</a></li>
+				<li><a href="casemanagement.jsp" style="font-family:Microsoft YaHei">用例管理</a></li>
+				<li><a href="resultmanagement.jsp" style="font-family:Microsoft YaHei">结果管理</a></li>
+				<li><a href="rolemanagement.jsp" style="font-family:Microsoft YaHei">用户权限</a></li>
+				<li><a href="sut.jsp" style="font-family:Microsoft YaHei">接入申请</a></li>
 				<%
 					if (session.getAttribute("isAdmin") != null) {
 						String UserIsAdmin = String.valueOf(session

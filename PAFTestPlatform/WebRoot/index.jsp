@@ -28,10 +28,10 @@
 						</li>
 						<li><a href="resultmanagement.jsp">结果管理</a>
 						</li>
-						<li><a href="sut.jsp">接入申请</a>
-						</li>
 						<li><a href="rolemanagement.jsp">用户权限</a>
 						</li>
+						<li><a href="sut.jsp">接入申请</a>
+						</li>						
 						<%
 							if (session.getAttribute("isAdmin") != null) {
 								String UserIsAdmin = String.valueOf(session

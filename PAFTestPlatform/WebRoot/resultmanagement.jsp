@@ -18,7 +18,7 @@ List<SutGroup> sutGroup = (List<SutGroup>)request.getAttribute("sutgroups");
 <script type="text/javascript" src="JavaScript/bootstrap.min.js"></script>
 <script src="JavaScript/index/index.js"></script>
 <script src="JavaScript/common/common.js"></script>
-<script type="text/javascript">
+<%-- <script type="text/javascript">
 $(document).ready(function(){
 		$("#sutgrouptab").append(inisutgroup());
 		});
@@ -41,6 +41,35 @@ function inisutgroup() {
 			}%>
 		return "<%=inisutgroup%>";
 	};
+</script> --%>
+<script type="text/javascript">
+$(document).ready(function(){
+		$("#sutgroup").append(inisutgroup());
+		}
+		);
+
+	function inisutgroup() {
+		<%String inisutgroup = "";
+		for (int i=0; i < sutGroup.size(); i++){
+		  	inisutgroup += "<tr><td><legend style='color:#00000;font-family:Microsoft YaHei" + "'>" + sutGroup.get(i).getName() + "</legend></td></tr>";
+			inisutgroup += "<tr>";
+			String inisutgroupinfo = "";
+			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
+				inisutgroupinfo += "<td>";
+				inisutgroupinfo += "<div class='" +"jumbotron'" + " style='width:300px;height:300px;"+"'>";
+				inisutgroupinfo += "<h1 style='"+ "text-align:center;font-family:Microsoft YaHei'>" + sutGroup.get(i).getSuts().get(j).getName() + "</h1>";
+				inisutgroupinfo += "<p " +"style='text-align:center;font-family:Microsoft YaHei"+"'>共" + sutGroup.get(i).getSuts().get(j).getTestpasses().size()+ "次测试结果</p>";
+				inisutgroupinfo += "<p " +"style='text-align:center;font-family:Microsoft YaHei"+ "'><a class='" + "btn btn-primary btn-lg'" + " role='" + "button'" + " href='result.jsp?sut_id=" + sutGroup.get(i).getSuts().get(j).getId() + "'>查看测试结果</a></p>";
+				inisutgroupinfo += "</div>";
+				inisutgroupinfo += "</td>";
+				inisutgroupinfo += "<td><div>&nbsp;&nbsp;</div></td>";
+			}
+			
+			inisutgroup += inisutgroupinfo;
+			inisutgroup +="</tr>";
+		}%>
+		return "<%=inisutgroup%>";
+	};
 </script>
 </head>
 
@@ -50,7 +79,8 @@ function inisutgroup() {
 
 	<div id="main-wrap">
 		<div id="container">
-			<div id="sutgrouptab"></div>
+			<table id="sutgroup">
+			</table>
 		</div>
 		<!-- #container -->
 	</div>

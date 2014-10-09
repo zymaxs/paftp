@@ -55,9 +55,9 @@ $(document).ready(function(){
 			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
 				inisutgroupinfo += "<td>";
 				inisutgroupinfo += "<div class='" +"jumbotron'" + " style='width:300px;height:300px;"+"'>";
-				inisutgroupinfo += "<h1>" + sutGroup.get(i).getSuts().get(j).getName() + "</h1>";
-				inisutgroupinfo += "<p " +"style='word-wrap: break-word;"+"'>" + sutGroup.get(i).getSuts().get(j).getDescription()+ "</p>";
-				inisutgroupinfo += "<p><a class='" + "btn btn-primary btn-lg'" + " role='" + "button'" + " href='sutcase.jsp?sut_id=" + sutGroup.get(i).getSuts().get(j).getId() + "'>查看用例</a></p>";
+				inisutgroupinfo += "<h1 style='"+ "text-align:center;font-family:Microsoft YaHei'>" + sutGroup.get(i).getSuts().get(j).getName() + "</h1>";
+				inisutgroupinfo += "<p " +"style='text-align:center;font-family:Microsoft YaHei"+"'>共" + sutGroup.get(i).getSuts().get(j).getTestsuites().size()+ "个测试集</p>";
+				inisutgroupinfo += "<p " +"style='text-align:center;font-family:Microsoft YaHei"+ "'><a class='" + "btn btn-primary btn-lg'" + " role='" + "button'" + " href='sutcase.jsp?sut_id=" + sutGroup.get(i).getSuts().get(j).getId() + "'>查看用例</a></p>";
 				inisutgroupinfo += "</div>";
 				inisutgroupinfo += "</td>";
 				inisutgroupinfo += "<td><div>&nbsp;&nbsp;</div></td>";
