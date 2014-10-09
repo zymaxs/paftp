@@ -86,7 +86,7 @@
 					</tr>
 					<tr>
 						<td colspan="10">&nbsp;</td>
-						<td class="head_version">Version : beta 0.3.0</td>
+						<td class="head_version">Version : release 1.0.0</td>
 						<td>&nbsp;&nbsp;</td>
 					</tr>
 				</table>
@@ -149,10 +149,10 @@
 							<table width="100%" height="100%">
 								<tr>
 									<td
-										style="height:60%;background:#E07C24;text-align:center;color:#FFFFFF;font-size: 40px">用例管理</td>
+										style="height:75%;background:#E07C24;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">用例管理</td>
 								</tr>
 								<tr>
-									<td style="height:40%;background:#E3893B;text-align:center;color:#FFFFFF">编辑录入测试用例，用例评审，查询用例状态</td>
+									<td style="height:25%;background:#E3893B;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">编辑录入测试用例，用例评审，查询用例状态</td>
 								</tr>
 							</table>
 						</td>
@@ -161,10 +161,10 @@
 							<table width="100%" height="100%">
 								<tr>
 									<td
-										style="height:60%;background:#B33737;text-align:center;color:#FFFFFF;font-size: 40px;">结果管理</td>
+										style="height:75%;background:#B33737;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">结果管理</td>
 								</tr>
 								<tr>
-									<td style="height:40%;background:#C33C3C;text-align:center;color:#FFFFFF">测试结果统计及查询，测试结果分析</td>
+									<td style="height:25%;background:#C33C3C;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">测试结果统计及查询，测试结果分析</td>
 								</tr>
 							</table>
 						</td>
@@ -173,26 +173,26 @@
 						<td colspan="3"></td>
 					</tr>
 					<tr>
-						<td style="width:49.5%;cursor:pointer" onclick="window.location.href='sut.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
-							<table width="100%" height="100%">
-								<tr>
-									<td
-										style="height:60%;background:#2DB1C0;text-align:center;color:#FFFFFF;font-size: 40px">权限管理</td>
-								</tr>
-								<tr>
-									<td style="height:40%;background:#30BFCF;text-align:center;color:#FFFFFF">为待测系统分配用户权限，进行用例编辑和结果分析</td>
-								</tr>
-							</table>
-						</td>
-						<td style="width:10px"></td>
 						<td style="width:49.5%;cursor:pointer" onclick="window.location.href='rolemanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
 							<table width="100%" height="100%">
 								<tr>
 									<td
-										style="height:60%;background:#A4CB4E;text-align:center;color:#FFFFFF;font-size: 40px">接入申请</td>
+										style="height:75%;background:#2DB1C0;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">权限管理</td>
 								</tr>
 								<tr>
-									<td style="height:40%;background:#AED161;text-align:center;color:#FFFFFF">接入一个新的待测系统，进行自动化测试开发</td>
+									<td style="height:25%;background:#30BFCF;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">为待测系统分配用户权限，进行用例编辑和结果分析</td>
+								</tr>
+							</table>
+						</td>
+						<td style="width:10px"></td>
+						<td style="width:49.5%;cursor:pointer" onclick="window.location.href='sut.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
+							<table width="100%" height="100%">
+								<tr>
+									<td
+										style="height:75%;background:#A4CB4E;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">接入申请</td>
+								</tr>
+								<tr>
+									<td style="height:25%;background:#AED161;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">接入一个新的待测系统，进行自动化测试开发</td>
 								</tr>
 							</table>
 						</td>

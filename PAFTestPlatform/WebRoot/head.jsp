@@ -60,7 +60,7 @@
 				</tr>
 				<tr>
 					<td colspan="10">&nbsp;</td>
-					<td class="head_version">Version : beta 0.3.0</td>
+					<td class="head_version">Version : release 1.0.0</td>
 					<td>&nbsp;&nbsp;</td>
 				</tr>
 			</table>
