@@ -381,7 +381,7 @@ function updatetagac(){
 								<td><select id="tag" name="tag" style="width:150px;">
 										<option value="" selected>————</option>
 										<option value="冒烟测试">冒烟测试</option>
-										<option value="系统测试">系统测试测试</option>
+										<option value="系统测试">系统测试</option>
 										<option value="回归测试">回归测试</option>
 								</select>
 								</td>

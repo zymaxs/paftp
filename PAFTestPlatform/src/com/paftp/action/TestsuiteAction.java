@@ -114,7 +114,7 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 		if (user == null) {
-			this.setPrompt("Please log in firstly!");
+			this.setPrompt("请登录后进行操作");
 			return "success";
 		}
 		if (this.isRoleOfSut(user) == false) {
@@ -198,7 +198,7 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 		if (user == null) {
-			this.setPrompt("Please log in firstly!");
+			this.setPrompt("请登录后进行操作");
 			return "success";
 		}
 		if (this.isRoleOfSut(user) == false) {
@@ -256,7 +256,7 @@ public class TestsuiteAction extends ActionSupport {
 		user = getSessionUser();
 
 		if (user == null) {
-			this.setPrompt("Please log in firstly!");
+			this.setPrompt("请登录后进行操作");
 			return "success";
 		}
 		if (this.isRoleOfSut(user) == false) {
@@ -369,7 +369,7 @@ public class TestsuiteAction extends ActionSupport {
 
 		user = getSessionUser();
 		if (user == null) {
-			this.setPrompt("Please log in firstly!");
+			this.setPrompt("请登录后进行操作");
 			return "success";
 		}
 		if (this.isRoleOfSut(user) == false) {

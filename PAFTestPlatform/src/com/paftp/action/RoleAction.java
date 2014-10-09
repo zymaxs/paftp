@@ -74,7 +74,7 @@ public class RoleAction extends ActionSupport {
 
 		user = this.sessionUser();
 		if (user == null){
-			request.setAttribute("error", "Please log in firstly!");
+			request.setAttribute("error", "请登录后进行操作");
 			return "error";
 		}
 		

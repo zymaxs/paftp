@@ -54,7 +54,7 @@ public class TestcaseresultAction extends ActionSupport {
 		
 		user = util.getSessionUser();
 		if (user == null){
-			request.setAttribute("error", "Please log in firstly!");
+			request.setAttribute("error", "请登录后进行操作");
 			return "error";
 		}
 		
@@ -97,7 +97,7 @@ public class TestcaseresultAction extends ActionSupport {
 		
 		user = util.getSessionUser();
 		if (user == null){
-			this.setPrompt("Please log in firstly!");
+			this.setPrompt("请登录后进行操作");
 			return "success";
 		} else {
 			user = userService.findUserByAlias(user.getAlias());
