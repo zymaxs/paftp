@@ -18,7 +18,7 @@ List<SutGroup> sutGroup = (List<SutGroup>)request.getAttribute("sutgroups");
 <script type="text/javascript" src="JavaScript/bootstrap.min.js"></script>
 <script src="JavaScript/index/index.js"></script>
 <script src="JavaScript/common/common.js"></script>
-<script type="text/javascript">
+<%-- <script type="text/javascript">
 $(document).ready(function(){
 		$("#sutgrouptab").append(inisutgroup());
 		}
@@ -39,6 +39,35 @@ $(document).ready(function(){
 		}%>
 		return "<%=inisutgroup%>";
 	};
+</script> --%>
+<script type="text/javascript">
+$(document).ready(function(){
+		$("#sutgroup").append(inisutgroup());
+		}
+		);
+
+	function inisutgroup() {
+		<%String inisutgroup = "";
+		for (int i=0; i < sutGroup.size(); i++){
+		  	inisutgroup += "<tr><td><legend style='color:#00000;font-family:Microsoft YaHei" + "'>" + sutGroup.get(i).getName() + "</legend></td></tr>";
+			inisutgroup += "<tr>";
+			String inisutgroupinfo = "";
+			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
+				inisutgroupinfo += "<td>";
+				inisutgroupinfo += "<div class='" +"jumbotron'" + " style='width:300px;height:300px;"+"'>";
+				inisutgroupinfo += "<h1>" + sutGroup.get(i).getSuts().get(j).getName() + "</h1>";
+				inisutgroupinfo += "<p " +"style='word-wrap: break-word;"+"'>" + sutGroup.get(i).getSuts().get(j).getDescription()+ "</p>";
+				inisutgroupinfo += "<p><a class='" + "btn btn-primary btn-lg'" + " role='" + "button'" + " href='sutcase.jsp?sut_id=" + sutGroup.get(i).getSuts().get(j).getId() + "'>查看用例</a></p>";
+				inisutgroupinfo += "</div>";
+				inisutgroupinfo += "</td>";
+				inisutgroupinfo += "<td><div>&nbsp;&nbsp;</div></td>";
+			}
+			
+			inisutgroup += inisutgroupinfo;
+			inisutgroup +="</tr>";
+		}%>
+		return "<%=inisutgroup%>";
+	};
 </script>
 </head>
 
@@ -47,8 +76,9 @@ $(document).ready(function(){
 	<%@ include file="head.jsp"%>
 
 	<div id="main-wrap">
-		<div id="container">
-			<div id="sutgrouptab"></div>
+		<div id="container">			
+			<table id="sutgroup">
+			</table>
 		</div>
 		<!-- #container -->
 	</div>

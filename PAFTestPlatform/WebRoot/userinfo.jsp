@@ -139,7 +139,7 @@ function inidata(){
 					<legend> 用户信息 </legend>
 					<table style="width:40%" align="left" class="table table-striped">
 						<tr>
-							<td>&nbsp;&nbsp;Alias&nbsp;&nbsp;:</td>
+							<td>&nbsp;UM账号&nbsp;&nbsp;:</td>
 							<td><%=username%></td>
 						</tr>
 						<tr>
