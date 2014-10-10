@@ -61,26 +61,31 @@ $(function () {
                     // Headers
                     ren.label('DMZ-WEB', 20, 40)
                         .css({
+                        	color:'black',
                             fontWeight: 'bold'
                         })
                         .add();
                     ren.label('SERVER FARM', 220, 40)
                         .css({
+                        	color:'black',
                             fontWeight: 'bold'
                         })
                         .add();
                     ren.label('DB', 460, 40)
                         .css({
+                        	color:'black',
                             fontWeight: 'bold'
                         })
                         .add();
                     ren.label('WEB II', 390, 300)
                         .css({
+                        	color:'black',
                             fontWeight: 'bold'
                         })
                         .add();
                     ren.label('办公网', 25, 300)
                         .css({
+                        	color:'black',
                             fontWeight: 'bold'
                         })
                         .add();                    
@@ -192,7 +197,7 @@ $(function () {
                         .attr({
                             padding: 5,
                             r: 5,
-                            width: 130,
+                            width: 140,
                             fill: colors[5]
                         })
                         .css({

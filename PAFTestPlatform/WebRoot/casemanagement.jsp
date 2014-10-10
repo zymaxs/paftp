@@ -49,12 +49,12 @@ $(document).ready(function(){
 	function inisutgroup() {
 		<%String inisutgroup = "";
 		for (int i=0; i < sutGroup.size(); i++){
-		  	inisutgroup += "<tr><td><legend style='color:#00000;font-family:Microsoft YaHei" + "'>" + sutGroup.get(i).getName() + "</legend></td></tr>";
+		  	inisutgroup += "<tr><td><div style='color:#00000;font-family:Microsoft YaHei;font-size:20px;border-bottom:1px solid gray'>"+sutGroup.get(i).getName()  +"</div>" + "</td></tr>";
 			inisutgroup += "<tr>";
 			String inisutgroupinfo = "";
 			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
-				inisutgroupinfo += "<td>";
-				inisutgroupinfo += "<div class='" +"jumbotron'" + " style='width:300px;height:300px;"+"'>";
+				inisutgroupinfo += "<td style='padding:20px"+"'>";
+				inisutgroupinfo += "<div class='" +"jumbotron'" + " style='width:300px;height:300px"+"'>";
 				inisutgroupinfo += "<h1 style='"+ "text-align:center;font-family:Microsoft YaHei'>" + sutGroup.get(i).getSuts().get(j).getName() + "</h1>";
 				inisutgroupinfo += "<p " +"style='text-align:center;font-family:Microsoft YaHei"+"'>共" + sutGroup.get(i).getSuts().get(j).getTestsuites().size()+ "个测试集</p>";
 				inisutgroupinfo += "<p " +"style='text-align:center;font-family:Microsoft YaHei"+ "'><a class='" + "btn btn-primary btn-lg'" + " role='" + "button'" + " href='sutcase.jsp?sut_id=" + sutGroup.get(i).getSuts().get(j).getId() + "'>查看用例</a></p>";
