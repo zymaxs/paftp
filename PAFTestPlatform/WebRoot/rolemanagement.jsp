@@ -18,33 +18,6 @@ List<SutGroup> sutGroup = (List<SutGroup>)request.getAttribute("sutgroups");
 <script type="text/javascript" src="JavaScript/bootstrap.min.js"></script>
 <script src="JavaScript/index/index.js"></script>
 <script src="JavaScript/common/common.js"></script>
-<%-- <script type="text/javascript">
-$(document).ready(function(){
-		//alert(inisutgroup());
-		$("#sutgrouptab").append(inisutgroup());
-		}
-		);
-
-	function inisutgroup() {
-		<%String inisutgroup = "";
-			for (int i = 0; i < sutGroup.size(); i++) {
-				String inisutgroupinfo = "";
-				for (int j = 0; j < sutGroup.get(i).getSuts().size(); j++) {
-					inisutgroupinfo += "&nbsp;&nbsp;&nbsp;&nbsp;<a href='role.jsp?sut_id="
-							+ sutGroup.get(i).getSuts().get(j).getId()
-							+ "'>"
-							+ sutGroup.get(i).getSuts().get(j).getName()
-							+ "</a>" + " ";
-				}
-				inisutgroup += "<blockquote><p>";
-				inisutgroup += sutGroup.get(i).getName();
-				inisutgroup += "</p><small>";
-				inisutgroup += inisutgroupinfo;
-				inisutgroup += "</small></blockquote>";
-			}%>
-		return "<%=inisutgroup%>";
-	};
-</script> --%>
 <script type="text/javascript">
 $(document).ready(function(){
 		$("#sutgroup").append(inisutgroup());
