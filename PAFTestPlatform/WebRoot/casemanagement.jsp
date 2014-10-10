@@ -78,7 +78,7 @@ $(document).ready(function(){
 	<div id="main-wrap">
 		<div id="container">			
 			<table id="sutgroup">
-			</table>
+			</table>			
 		</div>
 		<!-- #container -->
 	</div>

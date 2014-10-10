@@ -87,7 +87,8 @@
 					<tr>
 						<td colspan="10">&nbsp;</td>
 						<td class="head_version whitelink">Version : release 1.0.0 | <a
-							href="logout.jsp">About</a></td>
+							href="intro.jsp">Intro </a>| <a
+							href="about.jsp">AboutUs</a></td>
 						<td>&nbsp;&nbsp;</td>
 					</tr>
 				</table>
