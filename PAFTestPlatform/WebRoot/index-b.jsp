@@ -21,18 +21,7 @@
 
 	<div id="main-wrap">
 		<div id="container">
-		<div align="center">
-			<table width="80%" height="400px">
-			<tr>
-			<td style="background:#FFE4E1">1</td>
-			<td style="background:#FF83FA">2</td>
-			</tr>
-			<tr>
-			<td style="background:#F0F8FF">3</td>
-			<td style="background:#F08080">4</td>
-			</tr>
-			</table>
-		</div>
+
 		</div><!-- #container -->
 	</div>
 
