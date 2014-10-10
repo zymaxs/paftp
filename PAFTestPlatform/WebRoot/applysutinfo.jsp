@@ -4,6 +4,11 @@
 <html>
 <head>
 <%
+	if (request.getAttribute("initialSutflag") == null) {
+		request.getRequestDispatcher(
+		"${pageContext.request.contextPath}/initialSut.action")
+		.forward(request, response);
+	}
 	if (request.getAttribute("flag") == null) {
 		request.getRequestDispatcher(
 		"${pageContext.request.contextPath}/showsutgroup.action")
@@ -43,7 +48,7 @@ var alias = '<%=alias%>';
 var isLogin = '<%=isLogin%>';
 var isAdmin = '<%=isAdmin%>';
 var applyer = '<%=applyer%>';
-var selected_groupname = '<%=applySut.getGroup().getName()%>';
+var selected_groupname = "<%=applySut.getGroup().getName()%>";
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">

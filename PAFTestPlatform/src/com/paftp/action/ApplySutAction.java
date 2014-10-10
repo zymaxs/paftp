@@ -189,6 +189,7 @@ public class ApplySutAction extends ActionSupport {
 			request.setAttribute("sut_id", temp_sut_id);
 		}
 		request.setAttribute("applySut", applySut);
+		request.setAttribute("initialSutflag", true);
 
 		return "success";
 	}

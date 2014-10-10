@@ -15,8 +15,7 @@ function initSelect() {
 }
 
 function inipermission() {
-	if (alias == null) {
-		alert("inside if");
+	if (alias == "") {
 		document.getElementById('approvebtn').style.display = "none";
 		document.getElementById('rejectbtn').style.display = "none";
 		document.getElementById('updatebtnTd').style.display = "none";
@@ -39,10 +38,7 @@ function inipermission() {
 		}
 	}
 }
-function loginac() {
-	document.loginform.action = "${pageContext.request.contextPath}/login.action";
-	document.loginform.submit();
-}
+
 function approveac() {
 	document.sutinfoform.action = "${pageContext.request.contextPath}/approveSut.action?status=Pass";
 	document.sutinfoform.submit();

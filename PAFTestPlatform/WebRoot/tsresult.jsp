@@ -20,7 +20,7 @@ String categories = "";
 String catefail = "";
 String catepass = "";
 String catetotal = "";
-String url_path = "localhost:8080/PAFTestPlatform/";
+String url_path = "10.189.6.190:8080/PAFTestPlatform/";
 int height = (testsuitedtoes.size()*80+100);
 for (int i =0 ; i < testsuitedtoes.size(); i ++ ){
 	categories += "'<a href=\"http://"+url_path +"tsdetail.jsp?testpass_id="+testpass_id+"&testsuite_id="+testsuitedtoes.get(i).getId()+"\">" + testsuitedtoes.get(i).getName()+"</a>'" + ",";
@@ -44,7 +44,7 @@ for (int i =0 ; i < testsuitedtoes.size(); i ++ ){
 <script src="JavaScript/common/common.js"></script>
 <script>
 $(function () {
-        $('#container').highcharts({
+        $('#high_container').highcharts({
             chart: {
                 type: 'bar'
             },
@@ -134,7 +134,7 @@ $(function () {
       </tr>
     </table>
     </div>
-  <div id="container" style=" width:80%;height:<%=height%>px; margin:auto"></div>
+  <div id="high_container" style=" width:80%;height:<%=height%>px; margin:auto"></div>
 		</div><!-- #container -->
 	</div>
 
