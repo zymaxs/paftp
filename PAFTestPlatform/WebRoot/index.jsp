@@ -144,28 +144,28 @@
 	<div id="main-wrap">
 		<div id="container">
 			<div align="center">
-				<table width="80%" height="400px">
+				<table width="80%" height="410px">
 					<tr>
-						<td style="width:49.5%;cursor:pointer " onclick="window.location.href='casemanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
+						<td style="width:49.5;cursor:pointer " onclick="window.location.href='casemanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
 							<table width="100%" height="100%">
 								<tr>
 									<td
-										style="height:75%;background:#E07C24;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">用例管理</td>
+										style="height:150px;background:#E07C24;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">用例管理</td>
 								</tr>
 								<tr>
-									<td style="height:25%;background:#E3893B;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">编辑录入测试用例，用例评审，查询用例状态</td>
+									<td style="height:50px;background:#E3893B;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">编辑录入测试用例，用例评审，查询用例状态</td>
 								</tr>
 							</table>
 						</td>
 						<td style="width:10px"></td>
-						<td style="width:49.5%;cursor:pointer" onclick="window.location.href='resultmanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
+						<td style="width:49.5;cursor:pointer" onclick="window.location.href='resultmanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
 							<table width="100%" height="100%">
 								<tr>
 									<td
-										style="height:75%;background:#B33737;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">结果管理</td>
+										style="height:150px;background:#B33737;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">结果管理</td>
 								</tr>
 								<tr>
-									<td style="height:25%;background:#C33C3C;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">测试结果统计及查询，测试结果分析</td>
+									<td style="height:50px;background:#C33C3C;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">测试结果统计及查询，测试结果分析</td>
 								</tr>
 							</table>
 						</td>
@@ -178,10 +178,10 @@
 							<table width="100%" height="100%">
 								<tr>
 									<td
-										style="height:75%;background:#2DB1C0;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">权限管理</td>
+										style="height:150px;background:#2DB1C0;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">权限管理</td>
 								</tr>
 								<tr>
-									<td style="height:25%;background:#30BFCF;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">为待测系统分配用户权限，进行用例编辑和结果分析</td>
+									<td style="height:50px;background:#30BFCF;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">为待测系统分配用户权限，进行用例编辑和结果分析</td>
 								</tr>
 							</table>
 						</td>
@@ -190,10 +190,10 @@
 							<table width="100%" height="100%">
 								<tr>
 									<td
-										style="height:75%;background:#A4CB4E;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">接入申请</td>
+										style="height:150px;background:#A4CB4E;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">接入申请</td>
 								</tr>
 								<tr>
-									<td style="height:25%;background:#AED161;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">接入一个新的待测系统，进行自动化测试开发</td>
+									<td style="height:50px;background:#AED161;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">接入一个新的待测系统，进行自动化测试开发</td>
 								</tr>
 							</table>
 						</td>
