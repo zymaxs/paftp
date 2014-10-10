@@ -389,6 +389,7 @@ $(function () {
         title: {
             text: '网络架构',
             style: {
+            	fontWeight: 'bold',
                 color: 'black'
             }
         }
