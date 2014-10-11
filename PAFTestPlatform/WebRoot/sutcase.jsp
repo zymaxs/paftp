@@ -1071,7 +1071,7 @@ function querySutCaseInfo(){
 				 }
 					
 				  var queryTestSuiteResult = "";
-				  queryTestSuiteResult += "<table class='table table-bordered' width='100%'><tr><td colspan='5'>接口总数</td><td colspan='6'>"+root.testsuite_quantity+"</td></tr>";
+				  queryTestSuiteResult += "<table class='table table-bordered' width='100%'><tr><td colspan='5'>测试集总数</td><td colspan='6'>"+root.testsuite_quantity+"</td></tr>";
 				  queryTestSuiteResult += "<tr><td colspan='5'>案例总数</td><td colspan='6'>"+root.testcase_quantity+"</td></tr>"
 				  queryTestSuiteResult += "<tr><td colspan='3'>自动化实现</td><td colspan='3'>优先级</td><td colspan='3'>用例评审</td><td colspan='2'>正/反例</td></tr>";
 				  queryTestSuiteResult += "<tr><td>已实现</td><td>手动</td><td>废弃</td><td>P1</td><td>P2</td><td>P3</td><td>待审批</td><td>通过</td><td>未通过</td><td>正例</td><td>反例</td></tr>";
