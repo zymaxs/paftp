@@ -33,7 +33,7 @@ $(document).ready(function(){
 			for (int j = 0; j< sutGroup.get(i).getSuts().size() ; j++){
 				inisutgroupinfo += "<td style='padding:20px"+"'>";
 				inisutgroupinfo += "<div class='" +"jumbotron'" + " style='width:300px;height:300px;"+"'>";
-				inisutgroupinfo += "<h1 style='"+ "text-align:center;font-family:Microsoft YaHei'>" + sutGroup.get(i).getSuts().get(j).getName() + "</h1>";
+				inisutgroupinfo += "<h1 style='"+ "text-align:center;font-family:Microsoft YaHei;font-size:40px'>" + sutGroup.get(i).getSuts().get(j).getName() + "</h1>";
 				inisutgroupinfo += "<p " +"style='text-align:center;word-wrap: break-word;font-family:Microsoft YaHei"+"'>" + sutGroup.get(i).getSuts().get(j).getDescription()+ "</p>";
 				inisutgroupinfo += "<p " +"style='text-align:center;font-family:Microsoft YaHei"+ "'><a class='" + "btn btn-primary btn-lg'" + " role='" + "button'" + " href='role.jsp?sut_id=" + sutGroup.get(i).getSuts().get(j).getId() + "'>查看权限</a></p>";
 				inisutgroupinfo += "</div>";
