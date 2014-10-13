@@ -375,7 +375,7 @@ function updatetagac(){
 						<table>
 							<tr>
 								<td><input type="text" id="testpass_id" name="testpass_id"
-									value="" style="display:none"></td>
+									value="<%=sut_id%>" style="display:none"></td>
 							</tr>
 							<tr>
 								<td><select id="tag" name="tag" style="width:150px;">
