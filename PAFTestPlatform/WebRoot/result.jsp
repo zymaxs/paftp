@@ -63,10 +63,10 @@ function inidata(){
 		iniinsertdata +="<td>"+testpassdots.get(i).getTotal()+"</td>";
 		iniinsertdata +="<td>"+(testpassdots.get(i).getPercentage()*100)+"%</td>";
 		if (testpassdots.get(i).getTag() == null){
-			iniinsertdata +="<td><a id='"+testpassdots.get(i).getId()+"' href='#' data-toggle='modal' data-target='#tagModal'>————</a></td>";
+			iniinsertdata +="<td><a id='"+testpassdots.get(i).getId()+"' href='#' data-toggle='modal' data-target='#tagModal' onclick='testpassId(this)'>————</a></td>";
 		}
 		else{
-		iniinsertdata +="<td><a id='"+testpassdots.get(i).getId()+"' href='#' data-toggle='modal' data-target='#tagModal'>"+testpassdots.get(i).getTag()+"</a></td>";
+		iniinsertdata +="<td><a id='"+testpassdots.get(i).getId()+"' href='#' data-toggle='modal' data-target='#tagModal' onclick='testpassId(this)'>"+testpassdots.get(i).getTag()+"</a></td>";
 		}
 		iniinsertdata +="</tr>";
 	}%>
@@ -107,10 +107,10 @@ $(document).ready( function(){
 									}
 								
 								if ( value.tag == null){
-									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' href='#' data-toggle='modal' data-target='#tagModal'>————</a></td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' href='#' data-toggle='modal' data-target='#tagModal' onclick='testpassId(this)'>————</a></td></tr>" );
 									}
 								else{
-									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' href='#' data-toggle='modal' data-target='#tagModal'>"+value.tag+"</a></td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' href='#' data-toggle='modal' data-target='#tagModal' onclick='testpassId(this)'>"+value.tag+"</a></td></tr>" );
 									}
 								
 							})
@@ -158,10 +158,10 @@ $(document).ready( function(){
 									}
 								
 								if ( value.tag == null){
-									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' href='#' data-toggle='modal' data-target='#tagModal'>————</a></td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' href='#' data-toggle='modal' data-target='#tagModal' onclick='testpassId(this)'>————</a></td></tr>" );
 									}
 								else{
-									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' href='#' data-toggle='modal' data-target='#tagModal'>"+value.tag+"</a></td></tr>" );
+									$("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' href='#' data-toggle='modal' data-target='#tagModal' onclick='testpassId(this)'>"+value.tag+"</a></td></tr>" );
 									}
 								
 							})
@@ -180,6 +180,11 @@ $(document).ready( function(){
 	
 	});
 	
+function testpassId(obj){
+	var test = obj.id;
+	document.getElementById('testpass_id').value = test;
+}
+	
 function updatetagac(){
 	if('<%=session.getAttribute("user")%>' == 'null'){
 		alert("请登录后再进行操作！");
@@ -189,6 +194,7 @@ function updatetagac(){
 			alert("您目前权限不足！");
 		}
 		else {
+			$('#tagModal').modal('hide')
 			$.ajax({
 			 	type : "POST",
 			 	 url : "updateTestpass.action",
@@ -218,10 +224,10 @@ function updatetagac(){
 							  }
 						  
 						  if ( value.tag == null){
-							  $("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>————</a></td></tr>" );
+							  $("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)' onclick='testpassId(this)'>————</a></td></tr>" );
 							  }
 						  else{
-							  $("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)'>"+value.tag+"</a></td></tr>" );
+							  $("#resultFormTab").append("<tr "+ rowtype +"><td><a href='tsresult.jsp?testpass_id="+value.id+"'>"+value.createtime+"</a></td><td>"+value.testset+"</td><td>"+value.env+"</td><td>"+value.version.versionNum+"</td><td>"+value.passcount+"</td><td><a href='failresult.jsp?testpass_id="+value.id+"'>"+value.failcount+"</a></td><td>"+value.total+"</td><td>"+(value.percentage*100)+"%</td><td><a id='"+value.id+"' onClick='tagac(this)' onclick='testpassId(this)'>"+value.tag+"</a></td></tr>" );
 							  }
 						  
 					  })
@@ -260,12 +266,10 @@ function updatetagac(){
 				<tr>
 					<td>起始日期</td>
 					<td><input class="easyui-datetimebox" id="starttime"
-						name="starttime" editable="false">
-					</td>
+						name="starttime" editable="false"></td>
 					<td>截止日期</td>
 					<td><input class="easyui-datetimebox" id="endtime"
-						name="endtime" editable="false">
-					</td>
+						name="endtime" editable="false"></td>
 					<td><input id="querytestset" class="form-control input-sm"
 						name="querytestset" value="" style="width:100%; height:24px">
 					</td>
@@ -274,8 +278,7 @@ function updatetagac(){
 							<option value="stg1">stg1</option>
 							<option value="stg2">stg2</option>
 							<option value="stg3">stg3</option>
-					</select>
-					</td>
+					</select></td>
 					<td><select id="queryversion" style="width:100%">
 							<option value="" selected>All</option>
 							<%
@@ -285,22 +288,19 @@ function updatetagac(){
 							<%
 								}
 							%>
-					</select>
-					</td>
+					</select></td>
 					<td><select id="querytag" style="width:100%">
 							<option value="" selected>All</option>
 							<option value="">————</option>
 							<option value="冒烟测试">冒烟测试</option>
 							<option value="系统测试">系统测试</option>
 							<option value="回归测试">回归测试</option>
-					</select>
-					</td>
+					</select></td>
 				</tr>
 				<tr>
 					<td colspan="8" style="text-align:center"><input type="button"
 						id="queryresult" class="btn btn-primary btn-sm" style="width:80px"
-						name="queryresult" value="搜索">
-					</td>
+						name="queryresult" value="搜索"></td>
 				</tr>
 			</table>
 			<table>
@@ -310,8 +310,7 @@ function updatetagac(){
 					<td width="30%">
 						<table class="table table-bordered">
 							<tr>
-								<th colspan="4"><center>Passrate</center>
-								</th>
+								<th colspan="4"><center>Passrate</center></th>
 							</tr>
 							<tr>
 								<td class="success" style="width:150px"><center>100%</center>
@@ -323,7 +322,8 @@ function updatetagac(){
 								<td class="danger" style="width:150px"><center>0%-49%</center>
 								</td>
 							</tr>
-						</table></td>
+						</table>
+					</td>
 				</tr>
 			</table>
 
@@ -375,7 +375,8 @@ function updatetagac(){
 						<table>
 							<tr>
 								<td><input type="text" id="testpass_id" name="testpass_id"
-									value="<%=sut_id%>" style="display:none"></td>
+									value="" style="display:none">
+								</td>
 							</tr>
 							<tr>
 								<td><select id="tag" name="tag" style="width:150px;">
@@ -383,8 +384,7 @@ function updatetagac(){
 										<option value="冒烟测试">冒烟测试</option>
 										<option value="系统测试">系统测试</option>
 										<option value="回归测试">回归测试</option>
-								</select>
-								</td>
+								</select></td>
 							</tr>
 						</table>
 					</form>
@@ -392,7 +392,7 @@ function updatetagac(){
 				<div class="modal-footer" align="center">
 					<div align="center">
 						<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-						<button class="btn btn-primary" onclick="updatetagac()">提交</button>
+						<button class="btn btn-primary" onclick="updatetagac(this)">提交</button>
 					</div>
 				</div>
 			</div>
