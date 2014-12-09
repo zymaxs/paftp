@@ -25,10 +25,13 @@ import com.paftp.entity.Version;
 public class VerifyCodeAction extends ActionSupport {
 
 	private static final long serialVersionUID = -3711384709023965402L;
+	
+	private String number;
+	private String stg;
 	private List<SmsDto> smsCodes ;
 	
 	
-	public String querySmsCode(String number, String stg) {
+	public String querySmsCode() {
 		SSHClient ssh = new SSHClient();
 		String url = "";
 		if(stg.equals("stg1")){
@@ -78,6 +81,26 @@ public class VerifyCodeAction extends ActionSupport {
 
 	public void setSmsCodes(List<SmsDto> smsCodes) {
 		this.smsCodes = smsCodes;
+	}
+
+
+	public String getNumber() {
+		return number;
+	}
+
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+
+	public String getStg() {
+		return stg;
+	}
+
+
+	public void setStg(String stg) {
+		this.stg = stg;
 	}
 
 
