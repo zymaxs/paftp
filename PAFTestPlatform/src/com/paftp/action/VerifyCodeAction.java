@@ -29,7 +29,6 @@ public class VerifyCodeAction extends ActionSupport {
 	private String number;
 	private String stg;
 	private List<SmsDto> smsCodes ;
-	private String teststr;
 	
 	public String querySmsCode() {
 		SSHClient ssh = new SSHClient();
@@ -62,14 +61,13 @@ public class VerifyCodeAction extends ActionSupport {
 					sms.setTime(record[3]);
 					smsdtos.add(sms);
 				}
-				this.setTeststr(s);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		//this.setSmsCodes(smsdtos);
+		this.setSmsCodes(smsdtos);
 		return SUCCESS;
 	}
 
@@ -103,15 +101,6 @@ public class VerifyCodeAction extends ActionSupport {
 		this.stg = stg;
 	}
 
-
-	public String getTeststr() {
-		return teststr;
-	}
-
-
-	public void setTeststr(String teststr) {
-		this.teststr = teststr;
-	}
 
 
 }
