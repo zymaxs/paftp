@@ -37,14 +37,7 @@ public class SSHClient {
 		InputStreamReader reader = new InputStreamReader(inp);
 		BufferedReader br = new BufferedReader(reader);
 		String line = null;
-		while (true)
-		{
-			line = br.readLine();
-			if (line == null) 
-			{
-				break;
-			}
-		}	
+		line = br.readLine();	
 		return line;		
 	}
 }

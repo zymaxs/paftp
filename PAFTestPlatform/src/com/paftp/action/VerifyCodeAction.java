@@ -29,7 +29,7 @@ public class VerifyCodeAction extends ActionSupport {
 	private String number;
 	private String stg;
 	private List<SmsDto> smsCodes ;
-	
+	private String teststr;
 	
 	public String querySmsCode() {
 		SSHClient ssh = new SSHClient();
@@ -52,7 +52,7 @@ public class VerifyCodeAction extends ActionSupport {
 			Boolean success = ssh.connect("192.168.21.172", "wls81", "Paic#234");
 			if(success){
 				String s = ssh.execute("sh /wls/wls81/PAFTPTools/querySmsCode.sh " + url + " " +  number);
-				String[] results = s.split("$");
+				String[] results = s.split("&");
 				for(int i=0;i<results.length;i++){
 					String[] record = results[i].split("#");
 					SmsDto sms = new SmsDto();
@@ -62,14 +62,14 @@ public class VerifyCodeAction extends ActionSupport {
 					sms.setTime(record[3]);
 					smsdtos.add(sms);
 				}
-				
+				this.setTeststr(s);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		this.setSmsCodes(smsdtos);
+		//this.setSmsCodes(smsdtos);
 		return SUCCESS;
 	}
 
@@ -101,6 +101,16 @@ public class VerifyCodeAction extends ActionSupport {
 
 	public void setStg(String stg) {
 		this.stg = stg;
+	}
+
+
+	public String getTeststr() {
+		return teststr;
+	}
+
+
+	public void setTeststr(String teststr) {
+		this.teststr = teststr;
 	}
 
 
