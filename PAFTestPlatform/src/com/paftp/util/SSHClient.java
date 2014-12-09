@@ -36,9 +36,15 @@ public class SSHClient {
 		InputStream inp = sess.getStdout();
 		InputStreamReader reader = new InputStreamReader(inp);
 		BufferedReader br = new BufferedReader(reader);
-		String line = br.readLine();
-		return line;
-
-		
+		String line = null;
+		while (true)
+		{
+			line = br.readLine();
+			if (line == null) 
+			{
+				break;
+			}
+		}	
+		return line;		
 	}
 }

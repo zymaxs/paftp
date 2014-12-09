@@ -14,6 +14,10 @@
 			class="com.paftp.action.ApplySutAction">
 			<result type="json"></result>
 		</action>
+		<action name="querySmsCodeAjax" method="querySmsCode"
+			class="com.paftp.action.VerifyCodeAction">
+			<result type="json"></result>
+		</action>
 		<action name="queryRolesAjax" method="queryRoles"
 			class="com.paftp.action.RoleAction">
 			<result type="json">
