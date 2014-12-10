@@ -147,7 +147,7 @@
 			<div align="center">
 				<table width="80%" height="410px">
 					<tr>
-						<td style="width:49.5;cursor:pointer " onclick="window.location.href='casemanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
+						<td style="width:33%;cursor:pointer " onclick="window.location.href='casemanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
 							<table width="100%" height="100%">
 								<tr>
 									<td
@@ -159,14 +159,26 @@
 							</table>
 						</td>
 						<td style="width:10px"></td>
-						<td style="width:49.5;cursor:pointer" onclick="window.location.href='resultmanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
+						<td style="width:33%;cursor:pointer" onclick="window.location.href='resultmanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
 							<table width="100%" height="100%">
 								<tr>
 									<td
-										style="height:150px;background:#B33737;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">结果管理</td>
+										style="height:150px;background:#C84C4C;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">结果管理</td>
 								</tr>
 								<tr>
-									<td style="height:50px;background:#C33C3C;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">测试结果统计及查询，测试结果分析</td>
+									<td style="height:50px;background:#CB5757;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">测试结果统计及查询，测试结果分析</td>
+								</tr>
+							</table>
+						</td>
+						<td style="width:10px"></td>
+						<td style="width:33%;cursor:pointer" onclick="window.location.href='sms.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
+							<table width="100%" height="100%">
+								<tr>
+									<td
+										style="height:150px;background:#8D8781;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">辅助工具</td>
+								</tr>
+								<tr>
+									<td style="height:50px;background:#97928C;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">辅助工具</td>
 								</tr>
 							</table>
 						</td>
@@ -175,7 +187,7 @@
 						<td colspan="3"></td>
 					</tr>
 					<tr>
-						<td style="width:49.5%;cursor:pointer" onclick="window.location.href='rolemanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
+						<td style="width:33%;cursor:pointer" onclick="window.location.href='rolemanagement.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
 							<table width="100%" height="100%">
 								<tr>
 									<td
@@ -187,7 +199,7 @@
 							</table>
 						</td>
 						<td style="width:10px"></td>
-						<td style="width:49.5%;cursor:pointer" onclick="window.location.href='sut.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
+						<td style="width:33%;cursor:pointer" onclick="window.location.href='sut.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
 							<table width="100%" height="100%">
 								<tr>
 									<td
@@ -195,6 +207,18 @@
 								</tr>
 								<tr>
 									<td style="height:50px;background:#AED161;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">接入一个新的待测系统，进行自动化测试开发</td>
+								</tr>
+							</table>
+						</td>
+						<td style="width:10px"></td>
+						<td style="width:33%;cursor:pointer" onclick="window.location.href='sut.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
+							<table width="100%" height="100%">
+								<tr>
+									<td
+										style="height:150px;background:#C663D9;text-align:center;color:#FFFFFF;font-size: 40px;font-family:Microsoft YaHei">接口文档</td>
+								</tr>
+								<tr>
+									<td style="height:50px;background:#CA6FDC;text-align:center;color:#FFFFFF;font-family:Microsoft YaHei">接口文档</td>
 								</tr>
 							</table>
 						</td>
