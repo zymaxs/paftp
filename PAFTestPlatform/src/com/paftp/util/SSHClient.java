@@ -40,4 +40,8 @@ public class SSHClient {
 		line = br.readLine();	
 		return line;		
 	}
+	
+	public void close(){
+		conn.close();
+	}
 }
