@@ -62,10 +62,14 @@ public class VerifyCodeAction extends ActionSupport {
 					smsdtos.add(sms);
 				}
 				
+			}else {
+				return "error";
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ssh.close();
+			return "error";
 		}
 		ssh.close();
 		this.setSmsCodes(smsdtos);
