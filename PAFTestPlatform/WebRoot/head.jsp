@@ -4,19 +4,32 @@
 		<div id="fixed-header">
 			<div class="fixed-header-nav">
 				<ul class="top_navi">
-					<li><a href="index.jsp" class="hover" style="font-family:Microsoft YaHei">主页</a></li>
-					<li><a href="casemanagement.jsp" style="font-family:Microsoft YaHei">用例管理</a></li>
-					<li><a href="resultmanagement.jsp" style="font-family:Microsoft YaHei">结果管理</a></li>
-					<li><a href="rolemanagement.jsp" style="font-family:Microsoft YaHei">用户权限</a></li>
-					<li><a href="sut.jsp" style="font-family:Microsoft YaHei">接入申请</a></li>
+					<li><a href="index.jsp" class="hover"
+						style="font-family:Microsoft YaHei">主页</a>
+					</li>
+					<li><a href="casemanagement.jsp"
+						style="font-family:Microsoft YaHei">用例管理</a>
+					</li>
+					<li><a href="resultmanagement.jsp"
+						style="font-family:Microsoft YaHei">结果管理</a>
+					</li>
+					<li><a href="rolemanagement.jsp"
+						style="font-family:Microsoft YaHei">用户权限</a>
+					</li>
+					<li><a href="sut.jsp" style="font-family:Microsoft YaHei">接入申请</a>
+					</li>
+					<li><a href="sms.jsp" style="font-family:Microsoft YaHei">短信验证码</a>
+					</li>
 					<%
 						if (session.getAttribute("isAdmin") != null) {
 							String UserIsAdmin = String.valueOf(session
 									.getAttribute("isAdmin"));
 							if (UserIsAdmin == "true") {
 					%>
-					<li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
-					<li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
+					<li><a href="inimanager.jsp">隐藏用户权限for Admin</a>
+					</li>
+					<li><a href="inidata.jsp">隐藏创建版本for Admin</a>
+					</li>
 					<%
 						}
 						}
@@ -40,7 +53,8 @@
 					%>
 					<td colspan="2" class="whitelink head_register"><a
 						href="reg.jsp">注册</a> | <a href="#" data-toggle='modal'
-						data-target='#loginModal'>登录</a></td>
+						data-target='#loginModal'>登录</a>
+					</td>
 					<%
 						} else {
 							User user = (User) session.getAttribute("user");
@@ -48,8 +62,8 @@
 					%>
 					<td colspan="2" class="whitelink"
 						style=";font-size:15px; font-family:Microsoft YaHei; text-align:right"><a
-						href="updateuserinfo.jsp"><%=header_name%> </a>| <a href="logout.jsp">登出</a>
-					</td>
+						href="updateuserinfo.jsp"><%=header_name%> </a>| <a
+						href="logout.jsp">登出</a></td>
 					<%
 						}
 					%>
@@ -61,25 +75,37 @@
 				<tr>
 					<td colspan="10">&nbsp;</td>
 					<td class="head_version whitelink">Version : 1.0.0 | <a
-							href="intro.jsp">Intro </a>| <a
-							href="aboutus.jsp">AboutUs</a></td>
+						href="intro.jsp">Intro </a>| <a href="aboutus.jsp">AboutUs</a>
+					</td>
 					<td>&nbsp;&nbsp;</td>
 				</tr>
 			</table>
 			<ul class="top_navi">
-				<li><a href="index.jsp" style="font-family:Microsoft YaHei">主页</a></li>
-				<li><a href="casemanagement.jsp" style="font-family:Microsoft YaHei">用例管理</a></li>
-				<li><a href="resultmanagement.jsp" style="font-family:Microsoft YaHei">结果管理</a></li>
-				<li><a href="rolemanagement.jsp" style="font-family:Microsoft YaHei">用户权限</a></li>
-				<li><a href="sut.jsp" style="font-family:Microsoft YaHei">接入申请</a></li>
+				<li><a href="index.jsp" style="font-family:Microsoft YaHei">主页</a>
+				</li>
+				<li><a href="casemanagement.jsp"
+					style="font-family:Microsoft YaHei">用例管理</a>
+				</li>
+				<li><a href="resultmanagement.jsp"
+					style="font-family:Microsoft YaHei">结果管理</a>
+				</li>
+				<li><a href="rolemanagement.jsp"
+					style="font-family:Microsoft YaHei">用户权限</a>
+				</li>
+				<li><a href="sut.jsp" style="font-family:Microsoft YaHei">接入申请</a>
+				</li>
+				<li><a href="sms.jsp" style="font-family:Microsoft YaHei">短信验证码</a>
+				</li>
 				<%
 					if (session.getAttribute("isAdmin") != null) {
 						String UserIsAdmin = String.valueOf(session
 								.getAttribute("isAdmin"));
 						if (UserIsAdmin == "true") {
 				%>
-				<li><a href="inimanager.jsp">隐藏用户权限for Admin</a></li>
-				<li><a href="inidata.jsp">隐藏创建版本for Admin</a></li>
+				<li><a href="inimanager.jsp">隐藏用户权限for Admin</a>
+				</li>
+				<li><a href="inidata.jsp">隐藏创建版本for Admin</a>
+				</li>
 				<%
 					}
 					}
@@ -110,8 +136,7 @@
 									<span class="input-group-addon login_box">用户名</span> <input
 										type="text" class="form-control" placeholder="UserName"
 										id="loginUserName" name="alias" />
-								</div>
-							</td>
+								</div></td>
 						</tr>
 						<tr>
 							<td>
@@ -119,8 +144,7 @@
 									<span class="input-group-addon login_box">密码</span> <input
 										type="password" class="form-control" placeholder="Password"
 										id="loginPwd" name="password" />
-								</div>
-							</td>
+								</div></td>
 						</tr>
 					</table>
 				</form>
@@ -129,7 +153,8 @@
 				<div align="center">
 					<button type="button" class="btn btn-primary login_box"
 						onclick="loginac()">登录</button>
-					<button type="button" class="btn btn-primary login_box" onClick="window.location.href='findpassword.jsp'">忘记密码</button>
+					<button type="button" class="btn btn-primary login_box"
+						onClick="window.location.href='findpassword.jsp'">忘记密码</button>
 				</div>
 			</div>
 		</div>

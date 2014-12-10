@@ -6,34 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
 <title>短信验证码</title>
-     <style type="text/css">
-         .main-wrap a {
-             font-size: 20px;
-         }
- 
-         .over {
-             display: none;
-             position: absolute;
-             top: 0;
-             left: 0;
-             width: 100%;
-             height: 100%;
-             background-color: #f5f5f5;
-             opacity:0.5;
-             z-index: 1000;
-         }
- 
-         .layout {
-             display: none;
-             position: absolute;
-             top: 40%;
-             left: 40%;
-             width: 20%;
-             height: 20%;
-             z-index: 1001;
-             text-align:center;
-         }
-     </style>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/frame.css" rel="stylesheet" />
 <link href="css/layout.css" rel="stylesheet" />
@@ -44,8 +16,11 @@
 <script src="JavaScript/common/common.js"></script>
 <script type="text/javascript">
 	function querySMSCode() {
-		document.getElementById("over").style.display = "block";
-        document.getElementById("layout").style.display = "block";
+		alert("123");
+		$("#queryButton").attr({
+			value : "加载中",
+			disabled : "disabled"
+		});
 		var phoneNum = $("#phoneNum").val();
 		var staging = $("#stg").val();
 		var queryparams = {
@@ -58,6 +33,7 @@
 			data : queryparams,
 			dataType : "json",
 			success : function(root) {
+				$("#queryButton").attr("value", "查询").removeAttr("disabled");
 				$("#smsFormTab").html("");
 				$(root.smsCodes).each(
 						function(i, value) {
@@ -68,14 +44,11 @@
 											+ "<td>" + value.time + "</td>"
 											+ "</tr>");
 						});
-						document.getElementById("over").style.display = "none";
-        				document.getElementById("layout").style.display = "none";
 
 			},
 
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				document.getElementById("over").style.display = "none";
-        		document.getElementById("layout").style.display = "none";
+				$("#queryButton").attr("value", "查询").removeAttr("disabled");
 				alert("查询失败，请稍后再试");
 			}
 		});
@@ -104,7 +77,8 @@
 			</div>
 
 			<div>
-				<input type="button" class="btn btn-primary btn-sm sms_button"
+				<input type="button" id="queryButton"
+					class="btn btn-primary btn-sm sms_button"
 					style="width:80px; text-align:center" onClick="querySMSCode()"
 					value="查询">
 			</div>
@@ -125,27 +99,6 @@
 		</div>
 		<!-- #container -->
 	</div>
-	<div id="over" class="over"></div>
-    <div id="layout" class="layout"><div class="spinner">
-  <div class="spinner-container container1">
-    <div class="circle1"></div>
-    <div class="circle2"></div>
-    <div class="circle3"></div>
-    <div class="circle4"></div>
-  </div>
-  <div class="spinner-container container2">
-    <div class="circle1"></div>
-    <div class="circle2"></div>
-    <div class="circle3"></div>
-    <div class="circle4"></div>
-  </div>
-  <div class="spinner-container container3">
-    <div class="circle1"></div>
-    <div class="circle2"></div>
-    <div class="circle3"></div>
-    <div class="circle4"></div>
-  </div>
-</div></div>
 
 
 	<!-- Footer -->
