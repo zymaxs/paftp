@@ -91,7 +91,7 @@
 		<div id="container">
 			<div class="input-group sms_phonenum">
 				<span class="input-group-addon">手机号</span> <input type="text"
-					class="form-control" placeholder="电话号码" id="phoneNum">
+					class="form-control" placeholder="可选填" id="phoneNum">
 			</div>
 			<div class="input-group sms_stg">
 				<span class="input-group-addon">测试环境</span> <select id="stg"
