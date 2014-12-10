@@ -16,7 +16,6 @@
 <script src="JavaScript/common/common.js"></script>
 <script type="text/javascript">
 	function querySMSCode() {
-		alert("123");
 		$("#queryButton").attr({
 			value : "加载中",
 			disabled : "disabled"
