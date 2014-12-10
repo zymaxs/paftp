@@ -1,0 +1,16 @@
+.sms_phonenum {
+	float: left;
+	width: 200px;
+}
+
+.sms_stg {
+	margin-left: 50px;
+	width: 200px;
+	float: left;
+}
+
+.sms_button {
+	float: left;
+	margin-left: 50px;
+	margin-bottom: 20px;
+}

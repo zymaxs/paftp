@@ -9,6 +9,7 @@
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/frame.css" rel="stylesheet" />
 <link href="css/layout.css" rel="stylesheet" />
+<link href="css/sms/sms.css" rel="stylesheet" />
 <script type="text/javascript" src="JavaScript/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="JavaScript/bootstrap.min.js"></script>
 <script src="JavaScript/index/index.js"></script>
@@ -17,14 +18,25 @@
 	function querySMSCode() {
 		var phoneNum = $("#phoneNum").val();
 		var staging = $("#stg").val();
-		var queryparams = {number:phoneNum,stg:staging};
+		var queryparams = {
+			number : phoneNum,
+			stg : staging
+		};
 		$.ajax({
 			type : "POST",
 			url : "querySmsCodeAjax.action",
 			data : queryparams,
 			dataType : "json",
 			success : function(root) {
-				alert(root);
+				$("#smsFormTab").html("");
+				$(root.smsCodes).each(
+						function(i, value) {
+							$("#smsFormTab").append(
+									"<tr>" + "<td>" + value.phoneNum + "</td>"
+											+ "<td>" + value.code + "</td>"
+											+ "<td>" + value.template + "</td>"
+											+ value.time + "</td>" + "</tr>");
+						});
 
 			},
 
@@ -45,23 +57,39 @@
 
 	<div id="main-wrap">
 		<div id="container">
-			<div>
-				<input type="text" id="phoneNum" style="width:100px">
+			<div class="input-group sms_phonenum">
+				<span class="input-group-addon">手机号</span> <input type="text"
+					class="form-control" placeholder="电话号码" id="phoneNum">
 			</div>
-			<div>
-				<select id="stg" style="width:100%">
+			<div class="input-group sms_stg">
+				<span class="input-group-addon">测试环境</span> <select id="stg"
+					class="form-control">
 					<option value="stg1" selected>stg1</option>
 					<option value="stg2">stg2</option>
 					<option value="stg3">stg3</option>
 					<option value="stg5">stg5</option>
 				</select>
-				</td>
 			</div>
+
 			<div>
-				<input type="button" class="btn btn-primary btn-sm"
+				<input type="button" class="btn btn-primary btn-sm sms_button"
 					style="width:80px; text-align:center" onClick="querySMSCode()"
 					value="查询">
 			</div>
+
+
+			<!--TABLE展示-->
+			<table id="smsForm" class="table table-striped"
+				style="text-align:center; width:100%" align="center">
+				<tr>
+					<td>手机号</td>
+					<td>验证码</td>
+					<td>模板号</td>
+					<td>发送时间</td>
+				</tr>
+				<tbody id="smsFormTab">
+				</tbody>
+			</table>
 		</div>
 		<!-- #container -->
 	</div>
