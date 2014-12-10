@@ -35,7 +35,8 @@
 									"<tr>" + "<td>" + value.phoneNum + "</td>"
 											+ "<td>" + value.code + "</td>"
 											+ "<td>" + value.template + "</td>"
-											+ value.time + "</td>" + "</tr>");
+											+ "<td>" + value.time + "</td>"
+											+ "</tr>");
 						});
 
 			},
