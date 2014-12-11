@@ -211,7 +211,7 @@
 							</table>
 						</td>
 						<td style="width:10px"></td>
-						<td style="width:33%;cursor:pointer" onclick="window.location.href='sut.jsp'" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
+						<td style="width:33%;cursor:pointer" onclick="window.open('/doc/')" onmouseover="$(this).addClass('homebody');" onmouseout="$(this).removeClass('homebody');">
 							<table width="100%" height="100%">
 								<tr>
 									<td
