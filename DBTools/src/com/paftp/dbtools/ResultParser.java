@@ -121,7 +121,9 @@ public class ResultParser {
 		} else if (testcasecontentElemet.getNodeName().equals("Error")){
 			testcaseresult_content.setType(testcasecontentElemet.getNodeName());
 			testcaseresult_content.setResult("1");
-		} else {
+		} else if(testcasecontentElemet.getNodeName().equals("Screenshot")){
+			testcaseresult_content.setType("Screenshot");
+		}else {
 			testcaseresult_content.setType(testcasecontentElemet.getNodeName());
 		}
 		testcaseresult_content.setValue(testcasecontentElemet.getTextContent());
