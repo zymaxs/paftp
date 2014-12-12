@@ -3,8 +3,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<% 
-if (request.getAttribute("flag")==null){
+<%
+	if (request.getAttribute("flag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/getSpecialTestcaseResultContent.action").forward(request,response);}
 if (request.getAttribute("commentflag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/getTRHistoryStatus.action").forward(request,response);}
@@ -47,8 +47,7 @@ else { isCurrentRole = "n";};
 	
 	
 	function inidata(){
-		<%
-		String caseresult = "";
+		<%String caseresult = "";
 		String rowtype = "";
 		String rowvalue = "";
 		for (int i=0 ; i < testcaseresult_contents.size(); i++){
@@ -63,6 +62,15 @@ else { isCurrentRole = "n";};
 			{
 				rowtype = "style='background-color:#ff0000;font-weight:bloder;'";
 				}
+			
+			if(testcaseresult_contents.get(i).getStatus().equals("Screenshot")){
+			rowvalue = testcaseresult_contents.get(i).getValue();
+			caseresult += "<tr>";
+			caseresult += "<td width='100px'>" + testcaseresult_contents.get(i).getStatus() + "</td>";
+			caseresult += "<td "+rowtype+"><a href='"+rowvalue+"'>ScreenShot</a></td>";
+			caseresult += "</tr>";
+			}
+			else{
 			rowvalue = testcaseresult_contents.get(i).getValue();
 			rowvalue = rowvalue.replaceAll("<", "&lt;");
 			rowvalue = rowvalue.replaceAll(">", "&gt;");
@@ -74,7 +82,7 @@ else { isCurrentRole = "n";};
 			caseresult += "<td "+rowtype+">" + rowvalue + "</td>";
 			caseresult += "</tr>";
 			}
-		%>
+			}%>
 		
 		
 		return "<%=caseresult%>";	
@@ -219,14 +227,12 @@ else { isCurrentRole = "n";};
 							align="center"><input type="button"
 							class="btn btn-primary btn-sm"
 							style="width:100px; text-align:center" value="分析结果"
-							onClick="updatecommentac()">
-						</td>
+							onClick="updatecommentac()"></td>
 						<td id="showcommentsavetd"
 							style="display:none; vertical-align:top" align="center"><input
 							type="button" class="btn btn-primary btn-sm"
 							style="width:100px; text-align:center" value="确认"
-							onClick="savecommentac()">
-						</td>
+							onClick="savecommentac()"></td>
 						<td id="showcommenttd" style="display:block"><input
 							id="showcomment" class="input-sm form-control"
 							style="width:200px; vertical-align:top" value="" readonly>
