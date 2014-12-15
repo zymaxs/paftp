@@ -35,6 +35,11 @@ public class VerifyCodeAction extends ActionSupport {
 	@Resource
 	private CountService countService;
 	
+	public String getQueryCount(){
+		this.setCount(countService.getCount(1));
+		return SUCCESS;
+	}
+	
 	public String querySmsCode() {
 		countService.addCount(1);
 		
