@@ -10,6 +10,7 @@ if (request.getAttribute("commentflag")==null){
 request.getRequestDispatcher("${pageContext.request.contextPath}/getTRHistoryStatus.action").forward(request,response);}
 String status =  request.getAttribute("status").toString();
 String comment = request.getAttribute("comment").toString();
+String testpassId = request.getAttribute("testpassId").toString();
 Testcase testcase = (Testcase)request.getAttribute("testcase");
 List<TestcaseResultContent> testcaseresult_contents = (List<TestcaseResultContent>)request.getAttribute("testcaseresultcontents");
 int size = testcaseresult_contents.size();
@@ -67,7 +68,7 @@ else { isCurrentRole = "n";};
 			rowvalue = testcaseresult_contents.get(i).getValue();
 			caseresult += "<tr>";
 			caseresult += "<td width='100px'>" + testcaseresult_contents.get(i).getStatus() + "</td>";
-			caseresult += "<td "+rowtype+"><a href='"+rowvalue+"'>ScreenShot</a></td>";
+			caseresult += "<td "+rowtype+"><a href='/Screenshot/"+testpassId+"/"+rowvalue+"'>"+rowvalue+"</a></td>";
 			caseresult += "</tr>";
 			}
 			else{
