@@ -154,6 +154,12 @@ public class TestcaseresultAction extends ActionSupport {
 			this.setPrompt("The testcaseresult id is null!");
 		}
 
+		if(this.getStatus().equals("其他")){
+			TestcaseResult testcaseresult = testcaseresultService.findTestcaseResultById(this.getTestcaseresult_id());
+			testcaseresult.setIspass(true);
+			testcaseresultService.updateTestcaseResult(testcaseresult);
+		}
+		
 		return "success";
 	}
 

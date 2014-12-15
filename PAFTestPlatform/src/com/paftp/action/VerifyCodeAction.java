@@ -13,6 +13,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.paftp.service.Count.CountService;
 import com.paftp.service.sut.SutService;
 import com.paftp.service.version.VersionService;
 import com.paftp.util.SSHClient;
@@ -30,7 +31,12 @@ public class VerifyCodeAction extends ActionSupport {
 	private String stg;
 	private List<SmsDto> smsCodes ;
 	
+	@Resource
+	private CountService countService;
+	
 	public String querySmsCode() {
+		countService.addCount(1);
+		
 		SSHClient ssh = new SSHClient();
 		String url = "";
 		if(stg.equals("stg1")){
