@@ -68,7 +68,7 @@ else { isCurrentRole = "n";};
 			rowvalue = testcaseresult_contents.get(i).getValue();
 			caseresult += "<tr>";
 			caseresult += "<td width='100px'>" + testcaseresult_contents.get(i).getStatus() + "</td>";
-			caseresult += "<td "+rowtype+"><a href='/Screenshot/"+testpassId+"/"+rowvalue+"'>"+rowvalue+"</a></td>";
+			caseresult += "<td "+rowtype+"><a href='/Screenshot/"+testpassId+"/"+rowvalue+"' target='_blank'>"+rowvalue+"</a></td>";
 			caseresult += "</tr>";
 			}
 			else{
