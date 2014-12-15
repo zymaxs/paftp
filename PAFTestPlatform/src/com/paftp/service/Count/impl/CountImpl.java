@@ -25,6 +25,12 @@ public class CountImpl implements CountService{
 		c.setCount(n+1);
 		baseDAO.update(c);
 	}
-
 	
+	@Override
+	public Long getCount(int id){
+		Count c = baseDAO.get(" from Count c where c.id = ?",
+				new Object[] { id });
+		Long n = c.getCount();
+		return n;
+	}
 }

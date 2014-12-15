@@ -30,6 +30,7 @@ public class VerifyCodeAction extends ActionSupport {
 	private String number;
 	private String stg;
 	private List<SmsDto> smsCodes ;
+	private Long count;
 	
 	@Resource
 	private CountService countService;
@@ -78,6 +79,7 @@ public class VerifyCodeAction extends ActionSupport {
 			return "error";
 		}
 		ssh.close();
+		this.setCount(countService.getCount(1));
 		this.setSmsCodes(smsdtos);
 		return SUCCESS;
 	}
@@ -110,6 +112,16 @@ public class VerifyCodeAction extends ActionSupport {
 
 	public void setStg(String stg) {
 		this.stg = stg;
+	}
+
+
+	public Long getCount() {
+		return count;
+	}
+
+
+	public void setCount(Long count) {
+		this.count = count;
 	}
 
 
