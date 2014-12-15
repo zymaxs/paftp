@@ -382,9 +382,12 @@ public class TestpassAction extends ActionSupport {
 			List<TestcaseResultContent> testcaseresult_contents = testcaseresult
 					.getTestcaseresult_contents();
 
+			int testpassId = testcaseresult.getTestsuite_result().getTestpass().getId();
+			
 			request.setAttribute("testcase", testcaseresult.getTestcase());
 			request.setAttribute("testcaseresultcontents",
 					testcaseresult_contents);
+			request.setAttribute("testpassId", testpassId);
 			request.setAttribute("flag", true);
 
 			return "success";
