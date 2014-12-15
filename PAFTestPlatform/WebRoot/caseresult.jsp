@@ -217,9 +217,7 @@ else { isCurrentRole = "n";};
 				<tbody id="caseinfoTab">
 				</tbody>
 			</table>
-			<%
-				if (caseresultstatus != "y") {
-			%>
+			
 			<form id="commentForm" name="commentForm">
 				<table>
 					<tr>
@@ -254,9 +252,7 @@ else { isCurrentRole = "n";};
 			</form>
 
 			<div id="showCaseChangeHistoryDiv"></div>
-			<%
-				}
-			%>
+			
 		</div>
 		<!-- #container -->
 	</div>
