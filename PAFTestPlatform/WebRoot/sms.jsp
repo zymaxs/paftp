@@ -43,7 +43,7 @@
 											+ "<td>" + value.time + "</td>"
 											+ "</tr>");
 						});
-				var smsCountHtml = "已累计查询"+root.count+"次";
+				var smsCountHtml = "已累计查询" + root.count + "次";
 				$("#queryCount").html(smsCountHtml);
 
 			},
@@ -55,6 +55,26 @@
 		});
 
 	};
+
+	function queryCount() {
+		$.ajax({
+			type : "POST",
+			url : "getQueryCountAjax.action",
+			dataType : "json",
+			success : function(root) {
+				var smsCountHtml = "已累计查询" + root.count + "次";
+				$("#queryCount").html(smsCountHtml);
+
+			},
+
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+			}
+		});
+	}
+
+	$(document).ready(function() {
+		queryCount();
+	});
 </script>
 </head>
 
@@ -83,7 +103,7 @@
 					style="width:80px; text-align:center" onClick="querySMSCode()"
 					value="查询">
 			</div>
-			
+
 			<p id="queryCount" class="sms_count"></p>
 
 
