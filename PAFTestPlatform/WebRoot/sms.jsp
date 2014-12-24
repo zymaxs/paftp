@@ -60,6 +60,7 @@
 		$.ajax({
 			type : "POST",
 			url : "getQueryCountAjax.action",
+			data : {countId:1},
 			dataType : "json",
 			success : function(root) {
 				var smsCountHtml = "已累计查询" + root.count + "次";

@@ -18,6 +18,10 @@
 			class="com.paftp.action.VerifyCodeAction">
 			<result type="json"></result>
 		</action>
+		<action name="queryMsgAjax" method="queryMsg"
+			class="com.paftp.action.VerifyCodeAction">
+			<result type="json"></result>
+		</action>
 		<action name="getQueryCountAjax" method="getQueryCount"
 			class="com.paftp.action.getQueryCount">
 			<result type="json"></result>
