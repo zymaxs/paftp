@@ -28,7 +28,7 @@
 		};
 		$.ajax({
 			type : "POST",
-			url : "querySmsCodeAjax.action",
+			url : "queryMsgAjax.action",
 			data : queryparams,
 			dataType : "json",
 			success : function(root) {
@@ -38,8 +38,9 @@
 						function(i, value) {
 							$("#smsFormTab").append(
 									"<tr>" + "<td>" + value.phoneNum + "</td>"
-											+ "<td>" + value.code + "</td>"
+											+ "<td>" + value.channel + "</td>"
 											+ "<td>" + value.template + "</td>"
+											+ "<td>" + value.msg + "</td>"
 											+ "<td>" + value.time + "</td>"
 											+ "</tr>");
 						});
@@ -60,7 +61,7 @@
 		$.ajax({
 			type : "POST",
 			url : "getQueryCountAjax.action",
-			data : {countId:1},
+			data : {countId:2},
 			dataType : "json",
 			success : function(root) {
 				var smsCountHtml = "已累计查询" + root.count + "次";
@@ -113,8 +114,9 @@
 				style="text-align:center; width:100%" align="center">
 				<tr>
 					<td>手机号</td>
-					<td>验证码</td>
+					<td>短信渠道</td>
 					<td>模板号</td>
+					<td>短信内容</td>
 					<td>发送时间</td>
 				</tr>
 				<tbody id="smsFormTab">
