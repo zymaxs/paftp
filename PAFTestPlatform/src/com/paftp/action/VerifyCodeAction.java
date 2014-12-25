@@ -40,7 +40,7 @@ public class VerifyCodeAction extends ActionSupport {
 	@Resource
 	private CountService countService;
 	
-	public String getQueryCount(){
+	public String queryCount(){
 		this.setCount(countService.getCount(this.countId));
 		return "success";
 	}
@@ -89,7 +89,8 @@ public class VerifyCodeAction extends ActionSupport {
 			return "error";
 		}
 		ssh.close();
-		this.setCount(countService.getCount(1));
+		Long c = countService.getCount(1);
+		this.setCount(c);
 		this.setSmsCodes(smsdtos);
 		return "success";
 	}
@@ -118,6 +119,7 @@ public class VerifyCodeAction extends ActionSupport {
 			Boolean success = ssh.connect("192.168.21.172", "wls81", "Paic#234");
 			if(success){
 				String s = ssh.execute("sh /wls/wls81/PAFTPTools/querySmsCode.sh " + url + " 2 " +  number);
+				System.out.println("查询返回: " + s);
 				String[] results = s.split("&");
 				for(int i=0;i<results.length;i++){
 					String[] record = results[i].split("#");
@@ -188,7 +190,7 @@ public class VerifyCodeAction extends ActionSupport {
 	}
 
 
-	public void setCount(Long count) {
+	private void setCount(Long count) {
 		this.count = count;
 	}
 

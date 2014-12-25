@@ -34,7 +34,7 @@
 			success : function(root) {
 				$("#queryButton").attr("value", "查询").removeAttr("disabled");
 				$("#smsFormTab").html("");
-				$(root.smsCodes).each(
+				$(root.msgs).each(
 						function(i, value) {
 							$("#smsFormTab").append(
 									"<tr>" + "<td>" + value.phoneNum + "</td>"
