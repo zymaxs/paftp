@@ -18,7 +18,7 @@
 					</li>
 					<li><a href="sut.jsp" style="font-family:Microsoft YaHei">接入申请</a>
 					</li>
-					<li><a href="sms.jsp" style="font-family:Microsoft YaHei">短信验证码</a>
+					<li><a href="tools.jsp" style="font-family:Microsoft YaHei">辅助工具</a>
 					</li>
 					<%
 						if (session.getAttribute("isAdmin") != null) {
@@ -94,7 +94,7 @@
 				</li>
 				<li><a href="sut.jsp" style="font-family:Microsoft YaHei">接入申请</a>
 				</li>
-				<li><a href="sms.jsp" style="font-family:Microsoft YaHei">短信验证码</a>
+				<li><a href="tools.jsp" style="font-family:Microsoft YaHei">辅助工具</a>
 				</li>
 				<%
 					if (session.getAttribute("isAdmin") != null) {

@@ -42,7 +42,7 @@ public class VerifyCodeAction extends ActionSupport {
 	
 	public String getQueryCount(){
 		this.setCount(countService.getCount(this.countId));
-		return SUCCESS;
+		return "success";
 	}
 	
 	public String querySmsCode() {
@@ -67,7 +67,7 @@ public class VerifyCodeAction extends ActionSupport {
 		try {
 			Boolean success = ssh.connect("192.168.21.172", "wls81", "Paic#234");
 			if(success){
-				String s = ssh.execute("sh /wls/wls81/PAFTPTools/querySmsCode.sh " + url + " " +  number + " 1");
+				String s = ssh.execute("sh /wls/wls81/PAFTPTools/querySmsCode.sh " + url + " 1 " + number );
 				String[] results = s.split("&");
 				for(int i=0;i<results.length;i++){
 					String[] record = results[i].split("#");
@@ -91,7 +91,7 @@ public class VerifyCodeAction extends ActionSupport {
 		ssh.close();
 		this.setCount(countService.getCount(1));
 		this.setSmsCodes(smsdtos);
-		return SUCCESS;
+		return "success";
 	}
 
 
@@ -117,7 +117,7 @@ public class VerifyCodeAction extends ActionSupport {
 		try {
 			Boolean success = ssh.connect("192.168.21.172", "wls81", "Paic#234");
 			if(success){
-				String s = ssh.execute("sh /wls/wls81/PAFTPTools/querySmsCode.sh " + url + " " +  number + " 2");
+				String s = ssh.execute("sh /wls/wls81/PAFTPTools/querySmsCode.sh " + url + " 2 " +  number);
 				String[] results = s.split("&");
 				for(int i=0;i<results.length;i++){
 					String[] record = results[i].split("#");
@@ -142,7 +142,7 @@ public class VerifyCodeAction extends ActionSupport {
 		ssh.close();
 		this.setCount(countService.getCount(2));
 		this.setMsgs(msgdtos);
-		return SUCCESS;
+		return "success";
 	}
 
 	

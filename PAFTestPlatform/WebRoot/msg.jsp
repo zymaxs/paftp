@@ -117,7 +117,7 @@
 					<td>短信渠道</td>
 					<td>模板号</td>
 					<td>短信内容</td>
-					<td>发送时间</td>
+					<td>请求时间</td>
 				</tr>
 				<tbody id="smsFormTab">
 				</tbody>
