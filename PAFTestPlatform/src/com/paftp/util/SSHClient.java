@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.apache.commons.io.IOUtils;
+
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
+import ch.ethz.ssh2.StreamGobbler;
 
 /************************************************************************************
  * @File name   :      SSHClient.java
@@ -33,12 +36,14 @@ public class SSHClient {
 	public String execute(String cmd) throws IOException{
 		Session sess = conn.openSession();
 		sess.execCommand(cmd);
-		InputStream inp = sess.getStdout();
-		InputStreamReader reader = new InputStreamReader(inp);
-		BufferedReader br = new BufferedReader(reader);
-		String line = null;
-		line = br.readLine();	
-		return line;		
+		InputStream stdoutStream = new StreamGobbler(sess.getStdout());
+		String out = IOUtils.toString(stdoutStream, "UTF-8");
+//		InputStream inp = sess.getStdout();
+//		InputStreamReader reader = new InputStreamReader(inp);
+//		BufferedReader br = new BufferedReader(reader);
+//		String line = null;
+//		line = br.readLine();	
+		return out;		
 	}
 	
 	public void close(){
